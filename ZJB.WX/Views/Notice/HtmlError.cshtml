@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>该页面没有找到</title>
+
+
+    <style type="text/css">
+    <!--
+
+    body {
+        background: url(/Images/Web/background.gif) repeat;
+        font: 12px "宋体", Arial;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    div {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    /*主体*/
+    .main0816 {
+        width: 371px;
+        margin: 0 auto;
+        margin-top: 47px;
+    }
+
+        .main0816 .logo {
+            text-align: center;
+			margin-top:180px
+        }
+
+    .mainbox {
+        width: 371px;
+        margin: 0 auto;
+    }
+
+        .mainbox .title {
+            width: 371px;
+            height: 17px;
+            background: url(/Images/Web/boxtop.gif) no-repeat;
+        }
+
+        .mainbox .content {
+            width: 365px;
+            margin: 0 auto;
+            height: 75px;
+            padding-top: 0px;
+            border: 0px solid #ccc;
+            border-top: 0px;
+        }
+
+            .mainbox .content .text {
+                width: 420px;
+                margin: 0 auto;
+                height: 32px;
+                line-height: 32px;
+                /*background: url(/Images/Web/boxicon.gif) no-repeat;*/
+                padding-top: 25px;
+                font-size: 16px;
+                font-weight: bold;
+				font-family: 'Microsoft YaHei', sans-serif;
+            }
+
+
+    -->
+</style>
+    <script language=javascript>
+        function countDown(secs, surl) {
+            if (--secs > 0) {
+                setTimeout("countDown(" + secs + ",'" + surl + "')", 1000);//设定超时时间
+            }
+            else {
+                location.href = surl;//跳转页面
+            }
+        }
+    </script>
+
+</head>
+
+
+
+
+
+<body>
+    <div class="main0816">
+        <div class="logo"><img src="/Images/404.png" /></div>
+        <div class="mainbox">
+            <!--<div class="title"></div>-->
+            <div class="content">
+                <div class="text">对不起，相关页面没有找到，3秒钟之后带您进入首页...</div>
+            </div>
+        </div>
+    </div>
+    <script language=javascript>countDown(3, '/');</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+﻿@{
+    Layout = null;
+    int totalSize = ViewBag.TotalSize;
+    int pi = ViewBag.pi;
+    int ps = ViewBag.ps;
+    int type = ViewBag.type;
+}
+@using ZJB.Api.Entity;
+@model List<ApiWord>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>接口列表</title>
+    <link href='/Content/common.css' rel='stylesheet' type='text/css' />
+    <link href='/Content/main.css' rel='stylesheet' type='text/css' />
+    <link href='/Content/notice.css' rel='stylesheet' type='text/css' />
+    <link href='/Content/fanye.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <div class="saleHouse">
+        <input type="hidden" value="SYS" id="noticeType">
+        <div class="saleHouse-main">
+            <div class="fbgg"><a class="btn_plugins_add" href="@Url.Action("ApiAdd", "Apis", new {  act = 1 })">发布新接口<i class="icon_common new"></i></a></div>
+            <div class="sale-tab-bg clear">
+                <ul class="sale-tab-sub">
+                    <li id="notice-system" class="sale-sub-menu @(type==0?"selected":"")"> <a href="@Url.Action("ApiList", new { pi = 1, ps = 20, type = 0 })">通用接口</a> </li>
+                    <li id="notice-system" class="sale-sub-menu @(type==1?"selected":"")"> <a href="@Url.Action("ApiList", new { pi = 1, ps = 20, type = 1 })">用户管理</a> </li>
+                    <li id="notice-system" class="sale-sub-menu @(type==2?"selected":"")"> <a href="@Url.Action("ApiList", new { pi = 1, ps = 20, type = 2 })">房源管理</a> </li>
+                    <li id="notice-system" class="sale-sub-menu @(type==3?"selected":"")"> <a href="@Url.Action("ApiList", new { pi = 1, ps = 20, type = 3 })">房源采集</a> </li>
+                    <li id="notice-system" class="sale-sub-menu @(type==4?"selected":"")"> <a href="@Url.Action("ApiList", new { pi = 1, ps = 20, type = 4 })">盒子圈</a> </li>
+                </ul>
+            </div>
+
+            <input type="hidden" id="basePath" value="" />
+            <div class="noticeList-main">
+                @if (totalSize > 0)
+                {
+                    <ul id="notice-lis-content" class="notice-list clear">
+                        @foreach (ApiWord item in Model)
+                        {
+                            string apiType = "通用接口";
+                            DateTime time = (DateTime)(item.CreateTime == null ? DateTime.Now : item.CreateTime);
+                            switch (item.Type)
+                            {
+                                case 0: apiType = "通用接口"; break;
+                                case 1: apiType = "用户管理"; break;
+                                case 2: apiType = "房源管理"; break;
+                                case 3: apiType = "房源采集"; break;
+                                case 4: apiType = "盒子圈"; break;  
+                                default: apiType = "通用接口"; break;
+                            }
+                            <li><a href="@Url.Action("ApiAdd", "Apis", new { apiId = item.ApiWordId })" class="apiTitle" id="@item.ApiWordId">【@item.Method】【@apiType】@item.Title </a><span class="noticeTime">@time.ToString("yyyy-MM-dd") | <a href="@Url.Action("ApiAdd", "Apis", new { apiId = item.ApiWordId ,act=1 })" style="float:none">[编辑]</a></span></li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="noticeTip-font">暂时没有该类型的接口！</div>
+                }
+                <div class="float-r">
+                    <div id="notice-fanye" class="commom-fanye notice-font"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+    <script src='/Scripts/notice.js' type='text/javascript'></script>
+    <script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+    <script type="text/javascript">
+        if (@(totalSize)>0) {
+            var totalSize=@(totalSize);
+            var pagecount = parseInt(totalSize / 20) + ((totalSize % 20) == 0 ? 0 : 1);
+            /*翻页控件*/
+            $("#notice-fanye").paginate({
+                count: pagecount,
+                start: '@pi',
+                display: 6,
+                border: false,
+                text_color: '#50b63f',
+                text_hover_color: '#fff',
+                background_color: '#fff',
+                background_hover_color: '#50b63f',
+                images: false,
+                mouse: 'click',
+                onChange: function (currentPage) {
+                    location.href = "/Apis/ApiList?pi="+currentPage+"&type="+@type;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

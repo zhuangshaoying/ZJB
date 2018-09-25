@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Core.Utilities
+@model List<ZJB.Api.Entity.HouseBasicInfo>
+
+@{
+    foreach (var item  in Model)
+    {
+        <li class="rec_common_con">
+            <a target="_blank"  title="@item.Title"  href="@Url.RouteUrl("HouseView",new{id=item.HouseID})"><img class="rec_common_img" title="@item.Title" width="180" height="135" src="@(item.HouseImgPath.IsNull() ? "/images/web/default_block.png" : item.HouseImgPath+"?imageMogr2/strip|imageView2/1/w/230/h/180/q/85")"></a><a target="_blank" data-sign="true" title="@item.Title" class="rec_common_title" href="@Url.RouteUrl("HouseView",new{id=item.HouseID})">@item.Title</a>
+            <p class="rec_common_price">@item.Price.ToString("F0")<span>@item.PriceUnit</span></p>
+            <p class="rec_common_info">@(item.Room)室@(item.Hall)厅，@(item.BuildArea.ToString("F0"))平米</p>
+            <p class="rec_common_name">@item.CommunityName</p>
+        </li>
+        }
+}

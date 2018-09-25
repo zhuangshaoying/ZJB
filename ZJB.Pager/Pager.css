@@ -1,0 +1,16 @@
+﻿.pageBlue span.current {
+	float: left;
+	padding:2px
+}
+.pageBlue a {
+	float: left;
+	padding: 1px 6px;
+	border: 1px solid #E3E4DD;
+	color: #888888;
+	margin:0px 1px
+}
+.pageBlue a:hover 
+{
+	background: #5DB1FF;
+	color:#ffffff           
+}

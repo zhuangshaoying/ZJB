@@ -1,0 +1,229 @@
+﻿
+@model List<Accusation>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>虚假举报-住家帮</title>
+    <meta name="description" content="住家帮二手房信息，房源信息真实可靠，方便您在线预约看房、买房、卖房。">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf/vendor.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf/detail.css" media="all">
+    <link rel="stylesheet" href="/Css/Esf/swipe.css" />
+    <script language="javascript" src="/Scripts/Esf/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/Esf/publicfuntion.js"></script>
+    <style type="text/css">
+        .mod-smallnote.scale .smallnote-text {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .mod-smallnote.smallnote-mobile .smallnote-text {
+            padding: 0 20px;
+            font-size: 14px;
+            line-height: 35px;
+            border-radius: .3rem;
+        }
+
+        .mod-smallnote .smallnote-text {
+            color: #fff;
+            background: #3f454e;
+            display: inline-block;
+            opacity: 0;
+            padding: 5px 14px 4px;
+            border-radius: 3px;
+            -webkit-transform: scale(1.2);
+            -webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+            transform: scale(1.2);
+            transition: transform .4s ease, opacity .4s ease;
+        }
+
+
+        .mod-smallnote.smallnote-mobile {
+            margin: auto;
+            top: 0;
+            padding: 0 20px;
+            height: .36rem;
+        }
+
+        .mod-smallnote {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            bottom: 0;
+            right: 0;
+            text-align: center;
+            height: 18px;
+            padding: 5px 14px 4px;
+            margin: 0 auto;
+            z-index: 100000;
+        }
+    </style>
+</head>
+<body>
+    <header id="newheader" class="header ">
+        <div class="left" style="width:44px;height:44px"><a href="javascript:;" onclick="goback()" class="back"><i></i></a></div>
+        <div class="cent">虚假举报</div>
+        <div class="clear"></div>
+    </header>
+    <div class="main">
+        <div class="esrjbboxcon">
+            <div class="openList" id="inputBoxes">
+                <dl class="not radio">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            <label class="wi55" for="r_@i">
+                                <input type="radio" class="ipt-rd" data_id="@Model[i].ID" name="reason" id="rd_@i" value="@Model[i].A_Name" checked="checked">@Model[i].A_Name
+                            </label>
+
+                        }
+                        else
+                        {
+                            <label for="rd_@i">
+                                <input type="radio" class="ipt-rd" name="reason" data_id="@Model[i].ID" id="rd_@i" value="@Model[i].A_Name">@Model[i].A_Name
+                            </label>
+
+                        }
+                    }
+                </dl>
+                <dl class="not" id="reasonsTextDl" style="position: relative">
+                    <textarea name="" cols="" rows="" id="reasonsText" placeholder="请详细说说你的举报理由" class="ipt-text textarea"></textarea>
+                    <div class="lastcount" id="canWrite">您还可以输入100个字</div>
+                    <p id="reasonsTextMsg"></p>
+                </dl>
+                @if (string.IsNullOrEmpty(ViewBag.Tel.ToString()))
+                {
+                    <dl>
+                        <dd>
+                            <div class="flexbox">
+                                <div class="ipt">
+                                    <input onkeyup="value = value.replace(/[^\d]/g, '')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" name="phone" maxlength="11" value="@ViewBag.Tel" type="text" class="ipt-text" id="txt_tel" placeholder="请输入手机号码">
+                                    <a href="javascript:void(0);" class="prompt" style="">提示</a>
+                                </div>
+                                @*@if (string.IsNullOrEmpty(ViewBag.Tel.ToString()))*@
+
+                                <a href="javascript:void(0);" onclick="@( ViewBag.Tel.ToString() == "" ? "" : "code()" )" style="@( ViewBag.Tel.ToString() == "" ? "" : "border: 1px solid #f66;color: #f66 !important;" )" id="modBtn" class="btn-oka">发送验证码</a>
+
+                            </div>
+                            <p id="phoneMsg"></p>
+                        </dd>
+                    </dl>
+
+                    <dl id="codeDl" style="">
+                        <dd>
+                            <div class="flexbox">
+                                <input name="" maxlength="4" type="text" class="ipt-text" id="code" value="" placeholder="输入短信验证码">
+                            </div>
+                            <p id="codeMsg"></p>
+                        </dd>
+                    </dl>
+                }
+                <a href="javascript:void(0)" id="subReport" onclick="@( ViewBag.Tel.ToString() == "" ? "" : "addjubao()" )" style="@( ViewBag.Tel.ToString() == "" ? "background: #999;" : "" )" class="btn-tj">提 交</a>
+            </div>
+        </div>
+    </div>
+    <script language="javascript">
+        var goback = function () {
+            history.length >= 2 ? history.go(-1) : window.location = 'http://wx.linlishe.cn/';
+        }
+        $(function () {
+            $("#code").keyup(function () {
+                if ($("#code").val().length == 4 && $("#txt_tel").val().length == 11) {
+                    $("#subReport").removeAttr("style");
+                    $("#subReport").attr("onclick", "addjubao(this)");
+                } else {
+                    $("#subReport").attr("style", "background: #999;");
+                    $("#subReport").removeAttr("onclick", "");
+                }
+                //code
+            });
+            $("#txt_tel").keyup(function () {
+                if ($("#txt_tel").val().length == 11) {
+                    $("#modBtn").attr("style", "  border: 1px solid #f66;color: #f66 !important;");
+                    $("#modBtn").attr("onclick", "code();");
+                } else {
+                    $("#modBtn").removeAttr("style");
+                    $("#modBtn").removeAttr("onclick", "");
+                }
+                if ($("#code").val().length == 4 && $("#txt_tel").val().length == 11) {
+                    $("#subReport").removeAttr("style");
+                    $("#subReport").attr("onclick", "addjubao(this)");
+                } else {
+                    $("#subReport").attr("style", "background: #999;");
+                    $("#subReport").removeAttr("onclick", "");
+                }
+                //code
+            });
+        });
+
+        function addjubao(obj) {
+            var pars = new Object();
+            var aid = 0;
+            var rad_val = "";
+            $.each($(".radio").find("input[type=radio]"), function(i, item) {
+                var a = "";
+                if ($(item).attr("checked")=="checked"||$(item).attr("checked")==true) {
+                    aid = $(item).attr("data_id");
+                    rad_val= $(item).attr("value");
+                }
+
+            });
+            pars["aid"] = aid;
+            pars["userid"] = @ViewBag.UserId;
+            pars["houseid"] = @ViewBag.HouseId;
+            pars["type"] = @ViewBag.Tpye;
+            if ("@ViewBag.Tel.ToString()"=="") {
+                pars["code"] = $("#code").val();
+                pars["tel"] =$("#txt_tel").val();
+               
+            } else {
+                pars["code"] = true;
+                pars["tel"] ="@ViewBag.Tel";
+            }
+            if (rad_val.trim()=="其他") {
+                if ($("#reasonsText").val()=="") {
+                    $("body").prepend(createDiv("举报理由不能为空！！"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        clearInterval(k);
+                    }, 1000);
+                    return;
+                }
+                pars["contents"] = $("#reasonsText").val();
+            } else {
+                pars["contents"] = rad_val;
+            }
+            $.ajax({
+                type: "post",
+                url: "/Esf/AddJuBao",
+                data: pars,
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success == 1) {
+                        goback();
+                    }
+                    $("body").prepend(createDiv(data.Message));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        clearInterval(k);
+                    }, 1000);
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

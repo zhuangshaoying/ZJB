@@ -1,0 +1,436 @@
+﻿
+
+@{
+    Layout = null;
+    bool isOpen = ViewBag.IsDebug;
+    isOpen = true;
+    
+}
+    
+
+
+@*<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>房源搬家</title>
+	<link href='/css/common.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div class="saleHouse" id="saleHouse">
+  <div class="saleHouse-main">
+        <div style="font-family:'微软雅黑';font-size:18px;padding:25px 0px 0px 20px;color:#222;line-height:24px">功能正在开发中，敬请期待……</div>
+    </div>
+</div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script> 
+<script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script> 
+<script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script> 
+<script src='/Scripts/updPass.js' type='text/javascript'></script> 
+<script src='/Scripts/common.js' type='text/javascript'></script>
+</body>
+</html>*@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>房源搬家</title>
+
+    <link href='/css/common.css' rel='stylesheet' type='text/css' />
+
+    <link href='/css/moveHouse.css?v=1.0' rel='stylesheet' type='text/css' />
+    <link href='/css/fanye.css' rel='stylesheet' type='text/css' />
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+
+    <script src='/Scripts/moveHouse.js?v=1.1' type='text/javascript'></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src='/Scripts/checkInput.js' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+    <script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script> 
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var trs = $("#moveHouseTable tr");
+
+            var saleCount = 0, rentCount = 0, doneCount = 0, notDoneCount = 0, doingCount = 0;
+
+            $.each(trs, function (i, n) {
+
+                var tr = trs.eq(i);
+
+                var tds = tr.find("td");
+                var postTypeTd = tds.eq(1);
+                if (postTypeTd.html() == "1") {
+
+                    saleCount++;
+
+                } else {
+
+                    rentCount++;
+
+                }
+
+                postTypeTd.html($(".moveHouse-saleType-content li[val=" + postTypeTd.html() + "]").html());
+
+
+
+                tds.eq(2).html($(".moveHouse-houseType-content li[val=" + tds.eq(2).html() + "]").html());
+
+
+
+                var statusTd = tds.eq(5);
+
+                var statusHtml = $(".moveHouse-status-content li[val=" + statusTd.html() + "]").html();
+
+                if (statusTd.html() == "0") {
+
+                    notDoneCount++;
+
+                } else if (statusTd.html() == "1") {
+
+                    doingCount++;
+
+                } else if (statusTd.html() == "2") {
+
+                    doneCount++;
+
+                } else if (statusTd.html() == "3") {
+
+                    statusHtml = "<a name='change_link' id='change_link" + i + "'>" + statusHtml + "</a>";
+
+                }
+
+                statusTd.html(statusHtml);
+
+            });
+
+            $("#moveHouse-all").html(trs.length);
+
+            $("#moveHouse-sale").html(saleCount);
+
+            $("#moveHouse-rent").html(rentCount);
+
+            $("#moveHouse-notDone").html(notDoneCount);
+
+            $("#moveHouse-done").html(doneCount);
+
+            $("#moveHouse-doing").html(doingCount);
+
+            if (doingCount > 0) {
+
+                pageForbidden();
+
+                setTimeout("search()", 3000);
+
+            } else {
+
+                pageAllowed();
+
+            }
+
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+   
+ 
+    
+    <div style="display: none">
+        <div id="add_account_win">
+            <ul class="form_body add_account_input">
+                <li style="margin-top:0px">
+                    <span style="display: inline-block;width: 85px;text-align: right;">用户名：</span>
+                    <input id="loginName" type="text" class="modify_user" />
+                </li>
+                <li style="margin-top:10px">
+                    <span style="display: inline-block;width: 85px;text-align: right;">密&nbsp;&nbsp;码：</span>
+                    <input id="loginPwd" type="password" class="modify_user" />
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="saleHouse" id="moveHouse">
+
+        <div class="saleHouse-main">
+
+            <ul class="sale-tab-sub">
+
+                <li class="sale-sub-menu selected"> <a href="javascript:">房源搬家</a></li>
+				<span style="text-align: left;float: left;color: #e5734b;line-height: 38px;display: none">（由于房产盒子发展迅猛，出于自身利益考虑，小蜜书屏蔽了盒子的导入功能，我们将尽快上线联合网与搜房的房源导入）</span>
+            </ul>
+
+            <div class="moveHouse-main">
+
+                <!-- 查询区 -->
+
+                <div class="moveHouse-select">
+
+                    <div class="moveHouse-account"> <span class="moveHouse-account-content" title="">账号:<span class="moveHouse-account-username"></span>
+                                                        
+                                                        
+                                                        <span class="deluser xzhtbg" style="display:none" onclick=" javascript: addxms(); " id="adduserSite">添加帐号</span>
+                                                        <span style="display:none" id="deluserSite"><span class="deluser" onclick=" javascript: delxms(); ">删除帐号</span></span>
+                                                       </span> </div>
+
+                    <ul class="moveHouseSelect-left float-l">
+
+                        <li>
+
+                            <input type="hidden" id="moveHouse-website-content" value="1">
+
+                            </input>
+
+                            <ul class="manage-list">
+
+                                <li class="manage-tip moveHouse-website" onclick="selectOption('moveHouse-website')"><span>联合网</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+
+                                <li>
+
+                                    <ul class="manage-list-content moveHouse-website-content" style="display:none">
+                                        <li val="1">联合网</li>
+                                        <li val="2">搜房帮</li>
+                                        <li val="1008" style="display:none;">小蜜书</li>
+                                       
+                                       
+                                       
+
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li>
+
+                            <input type="hidden" id="moveHouse-area-content" value="">
+
+                            </input>
+
+                            <ul class="manage-list">
+
+                                <li class="manage-tip moveHouse-area" onclick="selectOption('moveHouse-area')"><span>-全部小区-</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+
+                                <li>
+
+                                    <ul class="manage-list-content moveHouse-area-content" style="display:none">
+
+                                        <li val="">-全部小区-</li>
+
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li>
+
+                            <input type="hidden" id="moveHouse-houseType-content" value="1">
+
+                            </input>
+
+                            <ul class="manage-list">
+
+                                <li class="manage-tip moveHouse-houseType" onclick="selectOption('moveHouse-houseType')"><span>住宅</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+
+                                <li>
+
+                                    <ul class="manage-list-content moveHouse-houseType-content" style="display:none">
+                                        <li val="1">住宅</li>
+
+                                        <li val="2">别墅</li>
+
+                                        <li val="3">商铺</li>
+
+                                        <li val="4">写字楼</li>
+
+                                        <li val="5">厂房</li>
+
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li>
+
+                            <input type="hidden" id="moveHouse-saleType-content" value="1">
+
+                            </input>
+
+                            <ul class="manage-list">
+
+                                <li class="manage-tip moveHouse-saleType" onclick="selectOption('moveHouse-saleType')"><span>出售</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+
+                                <li>
+
+                                    <ul class="manage-list-content moveHouse-saleType-content" style="display:none">
+
+                              
+
+                                        <li val="1">出售</li>
+
+                                        <li val="3">出租</li>
+
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                        <li>
+
+                            <input type="hidden" id="moveHouse-status-content" value="-1">
+
+                            </input>
+
+                            <ul class="manage-list">
+
+                                <li class="manage-tip moveHouse-status" onclick="selectOption('moveHouse-status')"><span>-状态-</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+
+                                <li>
+
+                                    <ul class="manage-list-content moveHouse-status-content" style="display:none">
+
+                                        <li val="-1">-状态-</li>
+
+                                        <li val="0">未导入</li>
+
+                                        <li val="1">正在导入</li>
+
+                                        <li val="2">已导入</li>
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                    <ul class="moveHouseSelect-right float-l">
+
+                        <li>
+
+                            <input id="syncBtn" class="btn_g" type="button" value="同步列表">
+
+                            </input>
+
+                            <input id="impBtn" class="btn_g" type="button" value="搬家导入">
+
+                            </input>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- 表格区 -->
+
+                <div class="moveHouse-content clear">
+
+                    <div class="houseTitle-font">亲，暂时没有房源可以需要搬家哟，点击同步列表，获取最新房源^_^</div>
+
+                </div>
+
+                
+            </div>
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+
+        function addxms() {
+
+            art.dialog({
+                title: '添加账号',
+                content: document.getElementById("add_account_win"),
+                init: function() {
+
+                },
+                ok: function() {
+                    //var regexp = /(^\s*)|(\s*$)/g;
+                    var loginName = $("#loginName").val();
+                    var loginPwd = $("#loginPwd").val();
+                    var siteId = $("#moveHouse-website-content").val();
+                    if (!checkRangeWithHint(loginName.length, 1, 30, "用户名的长度")) {
+                        return false;
+                    }
+                    if (!checkRangeWithHint(loginPwd.length, 1, 30, "密码的长度")) {
+                        return false;
+                    }
+                    $.ajax({
+                        type: "post",
+                        url: "/PerSonManage/UserSiteAdd",
+                        data: "webBasicId=" + siteId + "&loginName=" + loginName +
+                            "&loginPwd=" + loginPwd + "&isDefault=1",
+                        dataType: "json",
+                        beforeSend: function(XMLHttpRequest) {
+                            parent.loadingShow();
+                        },
+                        success: function(data) {
+                            if (data.msg == "添加成功") {
+                                art.dialog.tips(data.msg);
+                                location.reload();
+                            } else {
+                                art.dialog.alert(data.msg);
+                            }
+                        },
+                        error: function(jqXHR) {
+                            art.dialog.alert($.parseJSON(jqXHR.responseText).msg);
+                        },
+                        complete: function(XMLHttpRequest, textStatus) {
+                            parent.loadingHide();
+                        }
+                    });
+                },
+                cancel: true
+            });
+        }
+
+        function delxms() {
+            var siteId = $("#moveHouse-website-content").val();
+            art.dialog.confirm('您确定要删除绑定账号？', function() {
+                $.ajax({
+                    type: "post",
+                    url: "/PerSonManage/UserSiteDelete",
+                    data: "SiteId="+siteId,
+                    success: function(data) {
+                        //art.dialog.tips(data.msg);
+                        location.reload();
+                    },
+                    error: function(jqXHR) {
+                        art.dialog.alert($.parseJSON(jqXHR.responseText).msg);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
+
+

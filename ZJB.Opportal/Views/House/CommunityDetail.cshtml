@@ -1,0 +1,343 @@
+﻿@model ZJB.Api.Models.Community.CommunityDetailModel
+
+@{
+    ViewBag.Title = "小区编辑";
+    var buildDic = new Dictionary<int, string>()
+    {
+        {1, "住宅"},
+        {2, "别墅"},
+        {3, "商铺"},
+        {4, "写字楼"},
+        {5, "厂房"}
+    };
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href='~/Content/common.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/saleImport.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/selectPic.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/Validform.css' rel='stylesheet' type='text/css' />
+    <link href="~/Content/uploadify.css" rel="stylesheet" type="text/css" />
+</head>
+<body id="importPage">
+    <div id="saleHouse" class="saleHouse">
+        <form id="form1" action="@Url.Action("UpdateCommunityDetail", "House")" method="POST">
+            <div class="sale-nav">
+                <span class="saleHouse-basic-header" id="basic">基本信息</span>
+                <label style="float:right;"><a href="/House/CommunityManage" class="btn-red-return" style=" width: 200px; padding-top:5px;padding-bottom:5px;">返回小区管理</a></label>
+            </div>
+            <div class="saleHouse-basic clear">
+                <ul>
+                    <li>
+                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>小区名称:</span>
+                        <span>
+                            <input type="hidden" id="sourceHiddenId" name="communityId" value="@Model.Community.CommunityID" />
+                            <input id="cell" name="communityName" type="text" class="iw200" datatype="cell" value="@Model.Community.Name" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>城市:</span>
+                        <select id="citySelect" name="distrct" class="iw92" onchange="javascript: changeCity();">
+                            <option value="0">请选择</option>
+                            @foreach (var dis in Model.CityList)
+                            {
+                                if (Model.Community.CityID == dis.RegionID)
+                                {
+                                    <option value="@dis.RegionID" selected="selected">@dis.Name</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@dis.RegionID">@dis.Name</option>
+                                }
+                            }
+                        </select>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>区域:</span>
+                        <span>
+                            <select id="distrctSelect" name="distrct" class="iw92" onchange="javascript: changePosite();">
+                                <option value="0">请选择</option>
+                                @foreach (var dis in Model.DistrctList)
+                                {
+                                    if (Model.Community.Distrctid == dis.RegionID)
+                                    {
+                                        <option value="@dis.RegionID" selected="selected">@dis.Name</option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@dis.RegionID">@dis.Name</option>
+                                    }
+                                }
+                            </select>
+                        </span>
+                        <span>
+                            @if (Model.Community.Distrctid == 0 && !string.IsNullOrEmpty(Model.Community.DistrctName))
+                            {
+                                <label style="color:red;">@Model.Community.DistrctName (抓取)</label>
+                            }
+                        </span>
+                        <span class="col-fd6e05 mr5">*</span>路段:
+                        <span>
+                            <select id="areaSelect" name="region" class="iw92">
+                                <option value="0">请选择</option>
+                                @foreach (var r in Model.RegionList)
+                                {
+                                    if (Model.Community.RegionID == r.RegionID)
+                                    {
+                                        <option value="@r.RegionID" selected="selected">@r.Name</option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@r.RegionID">@r.Name</option>
+                                    }
+                                }
+                            </select>
+                        </span>
+                        <span>
+                            @if ((Model.Community.RegionID == 0||Model.Community.Distrctid == 0) && !string.IsNullOrEmpty(Model.Community.RegionName))
+                            {
+                                <label style="color:red;">@Model.Community.RegionName (抓取)</label>
+                            }
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">是否可见:</span>
+                        <span>
+                            @if (Model.Community.Status == 1)
+                            {
+                                <input checked="checked" type="checkbox" name="status" value="1"/>
+                            }
+                            else
+                            {
+                                <input name="status" type="checkbox" value="1"/>
+                            }
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>类型:</span>
+                        <span>
+                            <select id="buildTypeSelect" name="buildType" class="iw92">
+                                @foreach (var r in buildDic)
+                                {
+                                    if (Model.Community.BuildType == r.Key)
+                                    {
+                                        <option value="@r.Key" selected="selected">@r.Value</option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@r.Key">@r.Value</option>
+                                    }
+                                }
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>地址:</span>
+                        <span>
+                            <input id="addr" name="addr" type="text" class="iw400" value="@Model.Community.Address" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">经纬度:</span>
+                        <span>
+                            <input id="lngText" name="lng" value="@Model.Community.Lng" />
+                            <input id="latText" name="lat" value="@Model.Community.Lat" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">周边配套设施:</span>
+                        <span>
+                            <input id="peitaoinput" name="peitao" type="text" class="iw400" value="@Model.Community.PeiTao" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">交通:</span>
+                        <span>
+                            <input id="trafficinput" name="traffic" type="text" class="iw400" value="@Model.Community.Traffic" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">开发公司:</span>
+                        <span>
+                            <input id="kaifashanginput" name="kaifashang" type="text" class="iw400" value="@Model.Community.KaiFaShang" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">物业公司:</span>
+                        <span>
+                            <input id="wuyeCompanyinput" name="wuyeCompany" type="text" class="iw400" value="@Model.Community.WuyeCompany" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">建成年份:</span>
+                        <span>
+                            <input id="completedateinput" name="completedate" type="text" class="iw400" value="@Model.Community.CompleteDate" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">小区均价:</span>
+                        <span>
+                            <input id="sellpriceinput" name="sellprice" type="text" class="iw400" value="@Model.Community.SellPrice" />
+                        </span>
+                    </li>
+                    <li style="margin-top:15px;height:250px">
+                        <span class="saleHouse-basic-left">小区封面:</span>
+                        <span style="display:inline-block">
+                            <img id="LeftHeadImg" src="@Model.Community.CoverImg?imageMogr2/strip|imageView2/1/w/200/h/200/q/85" title="小区封面" onerror="this.src='/images/txDefault.png'" />
+                            <a href="javascript:;" class="filebtn btn_upload" id="UploadBtn">上传图片</a>
+                            <div style="display: none; background: none;">
+                                <iframe id="imgupload" src="@Url.Action("Index","ImageUpload")" frameborder="0" scrolling="no" height="0" width="0"></iframe>
+                            </div>
+
+                            <input type="hidden" id="hdImageUrl" name="hdImageUrl" value="@Model.Community.CoverImg" />
+                        </span>
+                    </li>
+                    <li>
+                        <span class="saleHouse-basic-left">是否推荐:</span>
+                        <span>
+                            @if (Model.Community.Recommend == 1)
+                            {
+                                <input checked="checked" type="checkbox" name="recommend" value="1" />
+                            }
+                            else
+                            {
+                                <input name="recommend" type="checkbox" value="1" />
+                            }
+                        </span>
+                    </li>
+                </ul>
+                <!-- 底部按钮 -->
+                <ul class="footer-button clear" style="margin-top:10px;">
+                    <li>
+                        <input class="btn-saveHouse" type="button" onclick="UpdateCircleDetail();" value="保存小区" />
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+    <script src="~/Scripts/plugins/artDialog/jquery.artDialog.js"></script>
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+<link href="~/Scripts/plugins/artDialog/skins/chrome.css" rel="stylesheet"/>
+
+    <script src="~/Scripts/FuncTool.js"></script>
+    <script type="text/javascript">
+
+        function changeCity() {
+            var cityId = $("#citySelect").val();
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '/House/GetDistrictByCityId?cityId=' + cityId,
+                success: function (data) {
+                    var html = "";
+                    html += "<option  value=\"0\">请选择</option>";
+                    $.each(data, function (a, i) {
+                        if (i.Name != "") {
+                            html += "<option  value=\"" + i.RegionID + "\">" + i.Name + "</option>";
+                        }
+                    });
+                    $("#distrctSelect").html(html);
+                    $("#areaSelect").html("<option  value=\"0\">请选择</option>");
+                }
+            });
+        }
+
+        function changePosite() {
+            var postSiteId = $("#distrctSelect").val();
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '/House/GetRegionByDistictId?distictId=' + postSiteId,
+                success: function (data) {
+                    var html = "";
+                    html += "<option  value=\"0\">请选择</option>";
+                    $.each(data, function (a, i) {
+                        if (i.Name != "") {
+                            html += "<option  value=\"" + i.RegionID + "\">" + i.Name + "</option>";
+                        }
+                    });
+                    $("#areaSelect").html(html);
+                }
+            });
+        }
+
+        function UpdateCircleDetail() {
+            if ($("#areaSelect").val()== 0) {
+                art.dialog.alert("请选择路段!");
+                return false;
+            }
+
+            $.ajax({
+                url: "/house/UpdateCommunityDetail",
+                type: "post",
+                data: $("#form1").serialize(),
+                dataType: "json",
+                beforeSend: function(XMLHttpRequest) {
+                    top.loadingShow();
+                    return true;
+                },
+                success: function (result) {
+                    UpdateCircleDetailCallback(result);
+                    return false;
+                }
+            });
+        }
+
+        function UpdateCircleDetailCallback(result) {
+            if (result != null && result.Status == "成功") {
+                top.loadingHide();
+                art.dialog.alert("修改成功!");
+                if (result.Id > 0) {
+                    var href = window.location.pathname;
+                    window.location.href = href + "?Id=" + result.Id;
+                }
+                return false;
+            } else if (result != null) {
+                top.loadingHide();
+                art.dialog.alert(result.ErrMsg);
+            }
+        }
+        
+        /**************图片操作*********************/
+        var defaultHeadImg = "/images/txDefault.png";
+        var imageW200H200Q85 = "?imageMogr2/strip|imageView2/1/w/200/h/200/q/85";
+        var imageW140H140Q85 = "?imageMogr2/strip|imageView2/1/w/140/h/140/q/85";
+        var imageW50H50Q85 = "?imageMogr2/strip|imageView2/1/w/50/h/50/q/85";
+        var oldHeadImage = $("#LeftHeadImg").attr("id") != undefined ? $("#LeftHeadImg").attr("src").replace(imageW200H200Q85, "") : defaultHeadImg;
+        var newHeadImage = oldHeadImage;
+        function UploadHeadImageSuccess(msg) {
+            if (msg.length > 0) {
+                var data = msg[0];
+                newHeadImage = data.url;
+                var sizeLeft = imageW200H200Q85;
+                var sizeSquare = imageW140H140Q85;
+                var sizeRound = imageW140H140Q85;
+                $("#LeftHeadImg").attr("src", newHeadImage + sizeLeft);
+                $("#hdImageUrl").val(newHeadImage);
+
+            }
+            else {
+                jQuery.dialog.tips("上传图片太大", 1.5, "warning.png");
+            }
+        }
+
+        $("#UploadBtn").click(function () {
+            uploadFileHandler = new UploadFileHandler({ Success: function (data) { UploadHeadImageSuccess(data); } }); //上传文件控件
+            uploadFileHandler.UploadClick();
+        });
+
+ 
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+﻿@charset "utf-8";
+/*
+* @Author:      penghg	
+* @Update:      2014.2.25
+* @Update by:   penghg
+* @overview:    登陆页面
+*/
+/*登陆页面样式*/
+#login-background {
+	background-color: #fff;
+}
+#login-main {
+	/*background: url(../images/login_background.jpg) repeat-x top center;*/
+	font-family: 微软雅黑;
+}
+#login-content {
+	background: url(../images/login_content.jpg) no-repeat top center;
+	margin: 0 auto;
+	position: relative
+}
+/*中间登陆部分*/
+#login-center {
+	top:200px;
+	width: 400px;
+	height: 300px;
+	padding: 10px 25px 0;
+	margin: 0 auto;
+	position: relative;
+	background: #fff;
+    box-shadow: 0 0 8px #888;
+    border-radius: 5px;
+}
+#login-center li {
+	margin: 25px 42px;
+	height: 30px;
+	line-height: 30px
+}
+#login-center label {
+	display: block;
+	width: 50px;
+	float: left;
+	margin: 0 10px 0 0;
+	line-height: 36px
+}
+#login-center input {
+	width: 240px;
+	height: 34px;
+	line-height: 34px;
+	font-size: 16px;
+	padding: 0px 3px;
+	border: 1px solid #d2d2d2
+}
+.login-center {
+	display: inline-block;
+	width: 250px;
+	height: 38px;
+	line-height: 38px;
+	font-size: 16px;
+	border: none;
+	text-align: center;
+	color: #fff;
+	background: #24c08e;
+	font-family: 微软雅黑
+}
+#login_btn {
+	margin: 3px 5px 0 60px;/*background:url(../images/infoServer_pic.png) 0px 0px no-repeat;*/
+}
+#reset_btn {
+	margin: 3px 25px 0 15px;
+	background: url(../images/infoServer_pic.png) 0px 0px no-repeat;
+}
+#login-center-footer-btn {
+	clear: both;
+	font-size: 14px;
+	color: #999999;
+	left: 176px;
+	bottom: 25px;
+	position: absolute
+}
+.rg {
+	display: inline-block;
+	margin-left: 5px;
+	font-size: 16px;
+	color: #aaa;
+	font-family: 微软雅黑;
+	line-height: 36px;
+	background: #d1d0d0;
+	padding: 0px 25px;
+}
+.glhead {
+	padding: 10px 2px 0 7px;
+    font-size: 22px;
+    line-height: 48px;
+    color: #24c08e;
+    border-bottom: 2px solid #24c08e;
+}
+.glhead h3 {
+    font-weight: normal;
+}
+/*底部文字*/
+#login-footer {
+	display: block;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	bottom: 40px
+}
+/*重新登陆样式*/
+.reLogin {
+	position: absolute;
+	top: 20%;
+	left: 40%;
+	height: 280px;
+}
+.reLogin-tip {
+	width: 300px;
+	margin: 0 auto
+}
+.reLogin-tip span {
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 12px;
+	color: #fff;
+	height: 24px;
+	line-height: 24px;
+	width: 68px;
+	text-align: center;
+}
+.reLogin-main {
+	width: 300px;
+	margin: 0 auto;
+	height: 240px;
+	border: 2px solid #72c962;
+	border-radius: 10px
+}
+.reLogin-font {
+	margin: 20px 0;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	font-size: 14px;
+	color: #f00
+}
+.reLogin-content {
+	text-align: center;
+	font-size: 16px;
+	margin: 20px 0 0 0
+}
+.reLogin-content li {
+	height: 50px;
+	line-height: 50px
+}
+.reLogin-input {
+	width: 160px;
+	height: 30px;
+	border: 1px solid #72c962;
+	font-size: 16px
+}
+/*浏览器版本提示*/
+.navigator {
+	width: 800px;
+	height: 100px;
+	background-color: #fff;
+	border: 5px solid #419d31;
+	padding: 10px;
+	margin: 0 auto;
+	z-index: 999;
+	bottom: 20px;
+	position: absolute
+}
+.navigator h5 {
+	text-align: center;
+	font-size: 24px;
+	color: #419d31
+}
+.navigator li {
+	height: 24px;
+	line-height: 24px;
+	font-size: 14px;
+	color: #419d31
+}
+.navigator-margin {
+	margin-left: 24px
+}
+/*版权信息*/
+.mainRight-bottom {
+	height: 40px;
+	width: 100%
+}
+.footer_background {
+	width: 100%;
+	color: #000;
+	position: absolute;
+	left: 0px;
+	bottom: 0px
+}
+.footer-content {
+	height: 40px;
+	line-height: 40px;
+	width: 100%;
+	text-align: center
+}

@@ -1,0 +1,1031 @@
+﻿@model ZJB.Api.Entity.Community
+@{
+    Layout = null;
+
+    List<List<HouseBasicInfoModel>> roomHouseInfos = this.ViewBag.Houses;// new List<List<HouseBasicInfoModel>>();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <title>@(Model.Name)小区-住家帮看房价</title>
+    <link rel="stylesheet" type="text/css" href="/css/esf/common.css" />
+    <link rel="stylesheet" type="text/css" href="/css/esf/mui.min.css?v=1.3" />
+    <link rel="stylesheet" type="text/css" href="/css/esf/Msubshare.css" />
+    <link rel="stylesheet" type="text/css" href="/css/esf/Mcomprehensive.css" />
+    <link rel="stylesheet" type="text/css" href="/css/esf/McompreS.css" />
+    <link rel="stylesheet" type="text/css" href="/css/esf/court-detail-common.css?v=16111017" />
+    <link rel="stylesheet" type="text/css" href="/css/esf/court-detail.css?v=16111017/">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=M9eUn7hfYWSZECuQCSlX4jNn"></script>
+    <script src="/Scripts/esf/jquery-2.1.3.min.js"></script>
+    <!--<script src="/Scripts/esf/common.js"></script>-->
+    <script>
+        var goback = function () {
+            history.length >= 2 ? history.go(-1) : window.location = '/Community/Search';
+        }
+    </script>
+</head>
+<body class="mui-android mui-android-6 mui-android-6-0">
+    <style type="text/css">
+        /* overwrite mui.css */
+        body {
+            line-height: 1.3;
+        }
+
+        th, td {
+            padding: initial;
+        }
+        /* overwrite end */
+        .mark-left {
+            margin-left: 5px;
+            padding-left: 8px;
+            border-left: 5px solid #fd5056;
+        }
+
+        .fix-bottom-transition {
+            -moz-transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+        /* subscribe */
+        .layui-layer {
+            background-color: initial !important;
+            box-shadow: 1px 1px 50px rgba(0,0,0,0) !important;
+        }
+
+        .layui-layer-setwin .layui-layer-close2 {
+            width: 0px !important;
+        }
+
+        #mask {
+            background-color: #000;
+            opacity: 0.75;
+            height: 500px;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .login {
+            left: 30%;
+            top: 30%;
+            position: fixed;
+            background-color: white;
+            z-index: 1001;
+            width: 250px;
+            height: 400px;
+        }
+
+        .mui-content1 {
+            margin: 0px 35px;
+        }
+
+        .gray {
+            filter: grayscale(100%);
+            -ms-filter: grayscale(100%);
+            -o-filter: grayscale(100%);
+            -moz-filter: grayscale(100%);
+            -webkit-filter: grayscale(100%) !important;
+        }
+        /* subscribe end *
+
+        /* share */
+        #sharecontent {
+            width: 80%;
+            -webkit-user-select: text;
+            border: 1px solid #6C6C6C;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+        #pic {
+            width: 100px;
+            height: 100px; /*border: 1px dashed #CCCCCC;*/
+        }
+
+        .none {
+            display: none;
+        }
+
+        .version-twoss {
+            height: 88px;
+        }
+
+            .version-twoss div:nth-child(1) {
+                float: left;
+            }
+
+                .version-twoss div:nth-child(1) img {
+                    margin-top: 26px;
+                    width: 34px;
+                    height: 36px;
+                }
+
+            .version-twoss div:nth-child(2) {
+                float: left;
+            }
+
+            .version-twoss div:nth-child(3) {
+                float: right;
+            }
+
+            .version-twoss div:nth-child(4) {
+                clear: both;
+            }
+
+            .version-twoss div:nth-child(1) {
+                border-top: 1px solid #bfbfc1;
+                width: 166px;
+                line-height: 87px;
+                text-align: center;
+            }
+
+            .version-twoss div:nth-child(2) {
+                line-height: 88px;
+                text-align: center;
+                width: 292px;
+                font-size: 30px;
+                color: white;
+                background-color: #1baea8;
+            }
+
+            .version-twoss div:nth-child(3) {
+                color: #fff;
+                line-height: 88px;
+                text-align: center;
+                width: 292px;
+                background-color: #f9525a;
+                font-size: 32px;
+            }
+
+        .sharehref {
+            width: 80%;
+            -webkit-user-select: text;
+            border: 1px solid #6C6C6C;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+            margin-bottom: .5em;
+        }
+        /* share end */
+        /*免费下载*/
+        .btn-court-trade-more {
+            display: block;
+            width: 678px;
+            height: 66px;
+            line-height: 66px;
+            margin: 35px 35px 0;
+            font-size: 29px;
+            color: #000;
+            text-align: center;
+            background-color: #E5E5E5;
+            border-radius: 8px;
+        }
+
+        .basic-sec {
+            padding: 10px 15px 15px;
+        }
+
+            .basic-sec li {
+                line-height: 24px;
+                font-size: 14px;
+            }
+
+        .gaikuang {
+            padding: 10px 15px;
+            background: #fff;
+            line-height: 24px;
+            margin-bottom: 10px;
+        }
+
+        .more_xq {
+            display: block;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            background: #fff url(/images/esf/center_more.png) center center no-repeat;
+            background-size: auto 8px;
+        }
+
+        .xqIntro {
+            max-height: 336px;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+            .xqIntro.myall {
+                max-height: none;
+            }
+
+        .more_xq.up {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+        }
+
+        .layermbox {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 19891014;
+        }
+
+        .layermmain, .laymshade {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .laymshade {
+            background-color: rgba(0,0,0,.5);
+            pointer-events: auto;
+        }
+
+        .layermmain {
+            display: table;
+            font-family: Helvetica,arial,sans-serif;
+            pointer-events: none;
+        }
+
+        .layermmain, .laymshade {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+            .layermmain .section {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+        .layermanim {
+            animation-name: bounceIn;
+            -webkit-animation-name: bounceIn;
+        }
+
+        .layermchild {
+            text-align: left;
+            background-color: #fff;
+            font-size: 14px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(0,0,0,.1);
+            pointer-events: auto;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-duration: .18s;
+            animation-duration: .18s;
+        }
+
+        .layermbtn span, .layermchild {
+            display: inline-block;
+            position: relative;
+        }
+
+        .layermbox1 .layermchild {
+            border: none;
+            border-radius: 0;
+        }
+
+        .layermcont {
+            padding: 20px 15px;
+            line-height: 22px;
+            border-radius: 5px;
+        }
+
+        .layermbox1 .layermcont {
+            padding: 0;
+        }
+    </style>
+    <div class="frame-mobile">
+        <div class="frame-block block-head frame-block-loading" id="frame-mobile">
+            <div class="head-top" id="headerX" style="z-index:9999;">
+                <div class="head-div">
+                    <div class="head-title">@Model.Name</div>
+                    <a class=" btn-back" onclick="goback()"><img src="/images/esf/btn-back.png" /></a>
+                    <span id="guanzhu">关注</span>
+                </div>
+            </div>
+            <div class="head-top-block" id="head-top-block"></div>
+            <div class="head-tag clear-fix">
+                <div class="district-info">@Model.DistrctName-@Model.RegionName</div>
+                <div class="cnt-follow">@*322人关注*@</div>
+                <div class="tags">
+                    <div class="tag1">二手房</div>
+                    <div class="tag1">@Model.CompleteDate 建成</div>
+                </div>
+            </div>
+            <div class="head-sale-info">
+                <div class="info-bargain">
+                    <p></p>
+                    <div class="info-title">最近参考行情</div>
+                    <p></p>
+                    <span class="info-price">@((int)Model.SellPrice)</span> <span class="info-unit">元/m<sup>2</sup></span>
+                    <!--<div> <span class="info-last-bargain" style="padding-left: 10px;">@*64平 | 3室*@</span> </div>-->
+                </div>
+                <div class="info-room">
+                    <span class="info-title">最近价格变化</span>
+                    @if ((Model.SellPriceChange ?? 0) != 0)
+                    {
+                    <span class="info-salecount">@(Math.Abs(Model.SellPriceChange ?? 0))</span> <span class="info-unit">%</span>
+                    <span class="info-sale-trend">
+                        @if ((Model.SellPriceChange ?? 0) > 0)
+                        {
+                            <i class="icon-rise"></i><span>上涨</span>
+                        }
+                        else if ((Model.SellPriceChange ?? 0) < 0)
+                        {
+                            <i class="icon-fall"></i><span>下跌</span>
+                        }
+                    </span>
+}
+else
+{
+    <span class="info-salecount">----</span> <span class="info-unit"></span>
+}
+</div>
+</div>
+@*<div class="head-sale-none"> 最近没有成交 </div>*@
+</div>
+@if (Model.LastPostTime != null)
+{
+    <div id="lastTimeInfo" style="text-align: center; display: block; color: rgb(253, 80, 86);"><span class="lastTimeSawUp"></span><span class="lastTimeSawUp_text">最后更新日期，@Model.LastPostTime.Value.ToString("yyyy-MM-dd") </span></div>
+}
+<div class="frame-block">
+    <ul class="basic-sec" id="basicSec">
+        @*<li>
+                <label>竣工时间：</label>2011月06日
+            </li>*@
+        @if (Model.WuyePrice > 0)
+        {
+            <li>
+                <label>物&nbsp;&nbsp;业&nbsp;&nbsp;费：</label>@Model.WuyePrice 元/m²/月
+            </li>
+        }
+        @if (Model.BuildType > 0)
+        {
+            <li>
+                <label>物业类型：</label>@(HDictionary.Instance.BuildingType(Model.BuildType.ToString())) 普通住宅
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.KaiFaShang))
+        {
+            <li>
+                <label>开&nbsp;&nbsp;发&nbsp;&nbsp;商：</label>@Model.KaiFaShang
+            </li>
+        }
+        @*@if (!string.IsNullOrEmpty(Model.RongJi) && Model.RongJi!="0.00")
+            {
+                            <li>
+                                <label>容&nbsp;&nbsp;积&nbsp;&nbsp;率：</label>@Model.RongJi
+                            </li>
+            }*@
+        @if (false)
+        {
+            <li>
+                <label>出&nbsp;&nbsp;租&nbsp;&nbsp;率：</label>26%
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.WuyeCompany))
+        {
+            <li>
+                <label>物业公司：</label>@Model.WuyeCompany
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.AllArea) && Model.AllArea != "0.00")
+        {
+            <li>
+                <label>总&nbsp;&nbsp;建&nbsp;&nbsp;面：</label>@Model.AllArea m²
+            </li>
+        }
+        @if (Model.PersonNum > 0)
+        {
+            <li>
+                <label>总&nbsp;&nbsp;户&nbsp;&nbsp;数：</label>@(Model.PersonNum)户
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.CarNum))
+        {
+            <li>
+                <label>停&nbsp;&nbsp;车&nbsp;&nbsp;位：</label>地下停车位 @Model.CarNum
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.LvHua) && Model.LvHua != "0.00")
+        {
+            <li>
+                <label>绿&nbsp;&nbsp;化&nbsp;&nbsp;率：</label>@(Model.LvHua)%
+            </li>
+        }
+    </ul>
+</div>
+@if (roomHouseInfos != null)
+{
+    <div class="frame-block-title other-tl">本小区二手房</div>
+        <section id="houseListInfo" class="comm-mod exposure" data-trace="{exp_community_esf:1}">
+            <div class="pro-nav" id="proNav">
+                <nav class="nav-info" id="navInfo" style="-webkit-box-pack: inherit;width: 390px; transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                    <span class="on">全部</span>
+                    @{
+                        var houseNameIndex = 0;
+                    }
+                    @foreach (var houseInfos in roomHouseInfos)
+                    {
+                        if (houseNameIndex++ > 0)
+                        {
+                            var roomName = "";
+                            var room = houseNameIndex - 1;
+                            if (houseInfos.FirstOrDefault() != null)
+                            {
+                                room = houseInfos.FirstOrDefault().Room;
+                            }
+                            switch (room)
+                            {
+                                case 1:
+                                    roomName = "一";
+                                    break;
+                                case 2:
+                                    roomName = "二";
+                                    break;
+                                case 3:
+                                    roomName = "三";
+                                    break;
+                                case 4:
+                                    roomName = "四";
+                                    break;
+                                case 5:
+                                    roomName = "五";
+                                    break;
+                                case 6:
+                                    roomName = "六";
+                                    break;
+                                case 7:
+                                    roomName = "七";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            <span class="">@roomName 室</span>
+                        }
+                    }
+                </nav>
+            </div>
+            @{
+                var houseIndex = 0;
+            }
+            @foreach (var houseInfos in roomHouseInfos)
+            {
+                <div class="mod-house pro @(houseIndex++==0?"pro-show":"")">
+                    @foreach (var item in houseInfos)
+                    {
+                        <a href="/Esf/EsfDetail?houseid=@item.HouseID" class="house-li soj" data-soj="community_esf_rec&amp;isauction=201">
+                            <img src="@item.HouseImgPath" data-src="@item.HouseImgPath" class="" width="107" height="78" alt="">
+                            <div class="house-info">
+                                <div class="htly">@item.Title</div>
+                                <p class="f01">
+                                    @Model.DistrctName-@Model.RegionName &nbsp;
+                                </p>
+                                <p class="info-des">
+                                    <span class="room f01">
+                                        @item.Room 室 @item.Hall 厅&nbsp;@item.BuildArea m²
+                                    </span>
+                                    <span class="price"><em>@((int)item.Price)</em>@item.PriceUnit</span>
+                                </p>
+                                <p class="info-label">
+                                </p>
+                            </div>
+                        </a>
+                    }
+
+                    <a href="/Esf/list?cell=@HttpUtility.UrlEncode(Model.Name)" class="house-li more-house soj" data-soj="community">更多二手房</a>
+                </div>
+            }
+            @*<div class="mod-house pro pro-show">
+                    <a href="http://m.anjuke.com/xm/sale/A641435845/" class="house-li soj" data-soj="community_esf_rec&amp;isauction=201">
+                        <img src="http://pic1.ajkimg.com/m/cc4145cbe041325f391aeae1c62973dc/107x78.jpg?t=1" data-src="http://pic1.ajkimg.com/m/cc4145cbe041325f391aeae1c62973dc/200x150.jpg?t=1" class="" width="107" height="78" alt="">
+                        <div class="house-info">
+                            <h3>集美 新华都 BRT旁 2居 家具家电全送175万 可做三房</h3>
+                            <p class="f01">
+                                集美-集美文教区&nbsp;
+                                禹洲大学城
+                            </p>
+                            <p class="info-des">
+                                <span class="room f01">
+                                    2室2厅&nbsp;86m²
+                                </span>
+                                <span class="price"><em>179</em>万</span>
+                            </p>
+                            <p class="info-label">
+                            </p>
+                        </div>
+                    </a>
+
+                    <a href="http://m.anjuke.com/xm/community/352557/esf/" class="house-li more-house soj" data-soj="community">更多二手房</a>
+                </div>*@
+        </section>
+                }
+
+                @*<!--2.1新加距离上一次查看涨幅预测-->
+                    <div id="lastTimeSaw" style="text-align: center; display: block; color: rgb(253, 80, 86);"><span class="lastTimeSawUp"></span><span class="lastTimeSawUp_text">距您上一次查看本小区，价格持平</span></div>
+                    <div class="frame-block block-rank">
+                        <div class="rank-star rank-star-5"></div>
+                        <div class="rank-description">中海万锦城二期LOFT项目位于上海内环线以内，闸北区新客站北广场的东侧，长兴路188号，属于闸北区新一轮旧区改造项目，坐享四轨交，八商圈。 中海万锦城二期LOFT是中海地产2011年在上海内环内强力打造的高档社区，5.5米稀缺loft，46-95小户型，不限购不限贷。</div>
+                    </div>
+                    <!--2.0新加涨幅预测-->
+                    <div class="frame-block-title" id="riseForecast-title">涨跌预测</div>
+                    <div class="frame-block block-recommend-feature blockFlag" id="riseForecast-text">
+                        <table class="recommend-table">
+                            <tbody>
+                                <tr>
+                                    <td class="td-most">
+                                        <div><span class="riseForecast-up-icon"></span><span class="riseForecast-up-text">4.2</span><span class="riseForecast-up-rate">%</span></div>
+                                        <div class="tip">3个月价格增长</div>
+                                    </td>
+                                    <td class="v-line"><hr></td>
+                                    <td class="td-highest">
+                                        <div><span class="riseForecast-up-icon"></span><span class="riseForecast-up-text">120</span><span class="riseForecast-up-rate">%</span></div>
+                                        <div class="tip">3个月成交量增长</div>
+                                    </td>
+                                    <td class="v-line"><hr></td>
+                                    <td class="td-lowest">
+                                        <div class="riseForecast-up-result" style="color:#fd5056">上涨</div>
+                                        <div class="tip">未来30天房价预测</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="frame-block-title" id="hlprice-title">最多最高最低 <span style="color: #666;font-size: 25px;position: absolute;left: 220px;font-weight:initial">（三个月内）</span> </div>
+                    <div class="frame-block-title">
+                        <div class="maximum">
+                            <div class="price-active">总价</div>
+                            <div>单价</div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                    <!--总价-->
+                    <div class="frame-block block-hl-price" id="hlprice-container-0" style="display: block;">
+                        <table class="hl-price-table">
+                            <tbody>
+                                <tr class="tr-m-price">
+                                    <td rowspan="2" class="icon icon-m"><div class="m-price-bg"></div></td>
+                                    <td class="total total-m" style="text-align: left;display: block; width: 200px !important;">300-500万</td>
+                                    <td class="room-info room-info-m" style="min-width: 135px;">55%</td>
+                                    <!--<td class="agent agent-h">&nbsp;</td>-->
+                                    <td class="date date-m" style="padding-right: 0px;">6</td>
+                                </tr>
+                                <tr class="tr-m-price">
+                                    <td class="price price-m" style="text-align: left;">总价区间</td>
+                                    <!--<td class="date date-h">&nbsp;</td>-->
+                                    <td class="floor-info floor-info-m">成交占比</td>
+                                    <td class="fixed fixed-m" style="padding-right: 0px;">成交套数</td>
+                                </tr>
+                                <tr id="hlprice-container-one">
+                                    <td colspan="4"><hr></td>
+                                </tr>
+                                <tr class="tr-h-price">
+                                    <td rowspan="2" class="icon icon-h"><div class="h-price-bg"></div></td>
+                                    <td class="total total-h" style="text-align: left;">394万</td>
+                                    <td class="room-info room-info-h">62平</td>
+                                    <!--<td class="agent agent-h">&nbsp;</td>-->
+                                    <td class="date date-h" style="padding-right: 0px;">2016.08.20</td>
+                                </tr>
+                                <tr class="tr-h-price">
+                                    <td class="price price-h" style="text-align: left;">63572元/平</td>
+                                    <!--<td class="date date-h">&nbsp;</td>-->
+                                    <td class="floor-info floor-info-h">中楼层</td>
+                                    <td class="fixed fixed-h" style="padding-right: 0px;">成交日期</td>
+                                </tr>
+                                <tr id="hlprice-container-two">
+                                    <td colspan="4"><hr></td>
+                                </tr>
+                                <tr class="tr-l-price">
+                                    <td rowspan="2" class="icon icon-l"><div class="l-price-bg"></div></td>
+                                    <td class="total total-l" style="text-align: left;">204万</td>
+                                    <td class="room-info room-info-l">68平</td>
+                                    <!--<td class="agent agent-l">&nbsp;</td>-->
+                                    <td class="date date-l" style="padding-right: 0px;">2016.07.14</td>
+                                </tr>
+                                <tr class="tr-l-price">
+                                    <td class="price price-l" style="text-align: left;">30026元/平</td>
+                                    <!--<td class="date date-l">&nbsp;</td>-->
+                                    <td class="floor-info floor-info-l">1号中楼层</td>
+                                    <td class="fixed fixed-l" style="padding-right: 0px;">成交日期</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--单价-->
+                    <div class="frame-block block-hl-price" id="hlprice-container-1" style="display: none;">
+                        <table class="hl-price-table">
+                            <tbody>
+                                <tr class="tr-m-price">
+                                    <td rowspan="2" class="icon icon-m"><div class="m-price-bg"></div></td>
+                                    <td class="total total-m" style="text-align: left;display: block; width: 200px !important;">45000-47000元</td>
+                                    <td class="room-info room-info-m" style="min-width: 135px;">36%</td>
+                                    <td class="date date-m" style="padding-right: 0px;">4</td>
+                                </tr>
+                                <tr class="tr-m-price">
+                                    <td class="price price-m" style="text-align: left;">单价区间</td>
+                                    <td class="floor-info floor-info-m">成交占比</td>
+                                    <td class="fixed fixed-m" style="padding-right: 0px;">成交套数</td>
+                                </tr>
+                                <tr id="hlprice-container-one">
+                                    <td colspan="4"><hr></td>
+                                </tr>
+                                <tr class="tr-h-price">
+                                    <td rowspan="2" class="icon icon-h"><div class="h-price-bg"></div></td>
+                                    <td class="total total-h" style="text-align: left;">63572元/平</td>
+                                    <td class="room-info room-info-h">62平</td>
+                                    <td class="date date-h" style="padding-right: 0px;">2016.08.20</td>
+                                </tr>
+                                <tr class="tr-h-price">
+                                    <td class="price price-h" style="text-align: left;">394万</td>
+                                    <td class="floor-info floor-info-h">中楼层</td>
+                                    <td class="fixed fixed-h" style="padding-right: 0px;">成交日期</td>
+                                </tr>
+                                <tr id="hlprice-container-two">
+                                    <td colspan="4"><hr></td>
+                                </tr>
+                                <tr class="tr-l-price">
+                                    <td rowspan="2" class="icon icon-l"><div class="l-price-bg"></div></td>
+                                    <td class="total total-l" style="text-align: left;">30026元/平</td>
+                                    <td class="room-info room-info-l">68平</td>
+                                    <!--<td class="agent agent-l">&nbsp;</td>-->
+                                    <td class="date date-l" style="padding-right: 0px;">2016.07.14</td>
+                                </tr>
+                                <tr class="tr-l-price">
+                                    <td class="price price-l" style="text-align: left;">204万</td>
+                                    <!--<td class="date date-l">&nbsp;</td>-->
+                                    <td class="floor-info floor-info-l">1号中楼层</td>
+                                    <td class="fixed fixed-l" style="padding-right: 0px;">成交日期</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="frame-block-title">
+                        房源成交实例
+                        <div class="block-title-more court-trade-more">更多真实交易</div>
+                    </div>
+                    <div class="frame-block block-court-trade">
+                        <div class="trade-table">
+                            <div class="row">
+                                <table class="top">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-1"><img src="images/icon-bargain_red.png"></td>
+                                            <td class="col-2 fwb">62829元/平<span class="tag" style="background: #fd5056;color: #fff;">签约实价</span></td>
+                                            <td class="col-3 fwb tc"> 低楼层</td>
+                                        </tr>
+                                        <tr class="mt10 row-2">
+                                            <td class="col-1 fwb tl pt15"><span id="col-1">402</span></td>
+                                            <td class="col-2"><button class="info" style="color: #666464">64平</button></td>
+                                            <td class="col-3 tr"><button class="info" style="color: #666464">2016.10.15</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="divide-line"></div>
+                            <div class="row">
+                                <table class="top">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-1"><img src="images/icon-bargain_red.png"></td>
+                                            <td class="col-2 fwb">66359元/平<span class="tag" style="background: #fd5056;color: #fff;">签约实价</span></td>
+                                            <td class="col-3 fwb tc"> 低楼层</td>
+                                        </tr>
+                                        <tr class="mt10 row-2">
+                                            <td class="col-1 fwb tl pt15"><span id="col-1">491</span></td>
+                                            <td class="col-2"><button class="info" style="color: #666464">74平</button></td>
+                                            <td class="col-3 tr"><button class="info" style="color: #666464">2016.10.11</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="divide-line"></div>
+                            <div class="row">
+                                <table class="top">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-1"><img src="images/icon-bargain_red.png"></td>
+                                            <td class="col-2 fwb">33707元/平<span class="tag" style="background: #00aca8;color: #fff;">行情复原</span></td>
+                                            <td class="col-3 fwb tc"> 中楼层</td>
+                                        </tr>
+                                        <tr class="mt10 row-2">
+                                            <td class="col-1 fwb tl pt15"><span id="col-1">290</span></td>
+                                            <td class="col-2"><button class="info" style="color: #666464">86平</button></td>
+                                            <td class="col-3 tr"><button class="info" style="color: #666464">2016.09.14</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="divide-line"></div>
+                            <div class="row">
+                                <table class="top">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-1"><img src="images/icon-bargain_red.png"></td>
+                                            <td class="col-2 fwb">35945元/平<span class="tag" style="background: #fd5056;color: #fff;">签约实价</span></td>
+                                            <td class="col-3 fwb tc">1号 小高层</td>
+                                        </tr>
+                                        <tr class="mt10 row-2">
+                                            <td class="col-1 fwb tl pt15"><span id="col-1">311</span></td>
+                                            <td class="col-2"><button class="info" style="color: #666464">87平</button></td>
+                                            <td class="col-3 tr"><button class="info" style="color: #666464">2016.09.14</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="divide-line"></div>
+                            <div class="row">
+                                <table class="top">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-1"><img src="images/icon-bargain_red.png"></td>
+                                            <td class="col-2 fwb">33707元/平<span class="tag" style="background: #00aca8;color: #fff;">行情复原</span></td>
+                                            <td class="col-3 fwb tc"> 高楼层</td>
+                                        </tr>
+                                        <tr class="mt10 row-2">
+                                            <td class="col-1 fwb tl pt15"><span id="col-1">290</span></td>
+                                            <td class="col-2"><button class="info" style="color: #666464">86平</button></td>
+                                            <td class="col-3 tr"><button class="info" style="color: #666464">2016.09.14</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div><a class="btn-court-trade-more">查看更多成交实例</a></div>
+                    </div>
+                    <div class="frame-block-title">成交机构</div>
+                    <div class="frame-block block-agent-trade">
+                        <img id="chartAgentTrade" src="images/chart.png" style="display: inline-block;vertical-align: baseline;width: 750px;height: 380px;">
+                        </canvas>
+                        <table class="chart-inner">
+                            <tbody>
+                                <tr>
+                                    <td class="chart-inner-text">近三个月内共计成交<span>17</span>套房产成交最多的是<span>众原</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="agent-ex-info" style="display: none;">
+                            <div class="agent-tab-frame"></div>
+                            <div class="agent-list-frame"></div>
+                        </div>
+                        <div class="agent-trade-label agent-trade-label-right" data-label="众原 2套" style="top: 106px; left: 523px; border-color: rgb(246, 140, 178);"></div>
+                        <div class="agent-trade-label agent-trade-label-right" data-label="中海 2套" style="top: 396px; left: 457px; border-color: rgb(255, 172, 172);"></div>
+                        <div class="agent-trade-label agent-trade-label-left" data-label="链家 2套" style="top: 267px; left: 39px; border-color: rgb(244, 224, 153);"></div>
+                        <div class="agent-trade-label agent-trade-label-left" data-label="志怡 1套" style="top: 53px; left: 142px; border-color: rgb(159, 219, 159);"></div>
+                    </div>
+                    <div class="frame-block-title" id="trade-chart-title">
+                        成交价走势
+                        <div class="block-title-share trade-chart-share"><a class="btn-chart-share">分享</a></div>
+                    </div>
+                    <div class="frame-block block-trade-chart frame-block-loading" id="trade-chart-container">
+                        <div class="trade-chart-tab">
+                            <div class="tab tab-active" data-key="0">全部</div>
+                            <div class="tab" data-key="1">1房</div>
+                            <div class="tab" data-key="2">2房</div>
+                        </div>
+                        <div class="trade-chart-legend"> <span class="hand-icon hand-icon-first"></span> <span class="hand-icon hand-icon-second">成交月均价（元/平）</span> </div>
+                        <div class="trade-chart-area">
+                            <hr class="v v-0" />
+                            <hr class="v v-1" />
+                            <hr class="v v-2" />
+                            <hr class="v v-3" />
+                            <hr class="v v-4" />
+                            <hr class="v v-5" />
+                            <hr class="h h-0" />
+                            <div class="y y-0"></div>
+                            <div class="y y-1"></div>
+                            <div class="y y-2"></div>
+                            <div class="y y-3"></div>
+                            <div class="x x-0"></div>
+                            <div class="x x-1"></div>
+                            <div class="x x-2"></div>
+                            <div class="x x-3"></div>
+                            <div class="x x-4"></div>
+                            <div class="x x-5"></div>
+                            <div class="frame-line frame-line-second"></div>
+                            <div class="frame-line frame-line-first"></div>
+                            <div class="dot dot-second dot-second-0"></div>
+                            <div class="dot dot-second dot-second-1"></div>
+                            <div class="dot dot-second dot-second-2"></div>
+                            <div class="dot dot-second dot-second-3"></div>
+                            <div class="dot dot-second dot-second-4"></div>
+                            <div class="dot dot-second dot-second-5"></div>
+                            <div class="dot dot-first dot-first-0"></div>
+                            <div class="dot dot-first dot-first-1"></div>
+                            <div class="dot dot-first dot-first-2"></div>
+                            <div class="dot dot-first dot-first-3"></div>
+                            <div class="dot dot-first dot-first-4"></div>
+                            <div class="dot dot-first dot-first-5"></div>
+                        </div>
+                        <div class="trade-chart-info">
+                            <table class="chart-info-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="info-price">
+                                            <div class="tip"> 本月均价 </div>
+                                            <div class="info">33899元/平</div>
+                                        </td>
+                                        <td class="v-line"><hr></td>
+                                        <td class="info-m3">
+                                            <div class="tip">三个月增长率</div>
+                                            <div class="info info-fail">-48%</div>
+                                        </td>
+                                        <td class="v-line"><hr></td>
+                                        <td class="info-m6">
+                                            <div class="tip">六个月增长率</div>
+                                            <div class="info info-rise">13%</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>*@
+                <div id="map-block">
+                    <div class="frame-block-title" id="surrounding-title" style="white-space: nowrap;">地址: @Model.Address</div>
+                    <div style="background: #fff; padding: 15px;margin-bottom: 10px;">
+                        <img src="http://api.map.baidu.com/staticimage?width=400&amp;height=200&amp;zoom=13&amp;markers=@(Model.Lng),@(Model.Lat)&amp;markerStyles=m,Y" class="lazyload" width="100%" alt=""
+                             onclick="location.href='http://m.ZJB.com/house/map.aspx?Lng=@Model.Lng&Lat=@Model.Lat&address=@Model.Address'" />
+
+                        <div id="surrounding-map" style="display:none; width: 100%; height: 350px;position: static;line-height: 200px;text-align: center;"></div>
+
+                    </div>
+                </div>
+                <div class="frame-block-title">小区概况</div>
+                <div class="frame-block gaikuang"><div class="xqIntro">@Model.Description</div><a href="javascript:void(0);" class="more_xq"></a></div>
+                @*<div class="frame-block-title title-recommend-feature" id="recommend-1">同总价段热门（200万-300万）</div>
+                    <div class="frame-block block-recommend-feature" id="recommend">
+                        <div class="recommend-row">
+                            <span class="col">
+                                <div class="frame red-border td-most" data-hid="19804" data-event="35">
+                                    <div class="head red">成交最多</div>
+                                    <div class="content most-sale">万业紫辰苑(新房</div>
+                                </div>
+                            </span><span class="col">
+                                <div class="frame red-border td-highest" data-hid="7405" data-event="36">
+                                    <div class="head red">单价最高</div>
+                                    <div class="content most-price">晶珑坊(新房)</div>
+                                </div>
+                            </span><span class="col ">
+                                <div class="frame green-border td-lowest" data-hid="20491" data-event="37">
+                                    <div class="head green">单价最低</div>
+                                    <div class="content lowest-price">远洋万和四季(新</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="frame-block-title" id="recommend-2">同街道热门<span class="plateTag">不夜城板块</span></div>
+                    <div class="frame-block block-recommend-nearby" id="recommend">
+                        <div class="recommend-row">
+                            <span class="col">
+                                <div class="frame red-border td-most" data-hid="3432" data-event="32">
+                                    <div class="head red">成交最多</div>
+                                    <div class="content most-sale">共贺公寓</div>
+                                </div>
+                            </span><span class="col">
+                                <div class="frame red-border td-highest" data-hid="21310" data-event="33">
+                                    <div class="head red">单价最高</div>
+                                    <div class="content most-price">嘉里不夜城卓悦居</div>
+                                </div>
+                            </span><span class="col ">
+                                <div class="frame green-border td-lowest" data-hid="18719" data-event="34">
+                                    <div class="head green">单价最低</div>
+                                    <div class="content lowest-price">中房华东大厦</div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="frame-block-title" id="time-line">小区时光机</div>
+                    <div class="frame-block block-timeline">
+                        <table class="timeline-table">
+                            <tbody>
+                                <tr>
+                                    <td class="timeline-date">2011.01.01</td>
+                                    <td class="timeline-dot"><div></div></td>
+                                    <td class="timeline-text">中海万锦城二期建成。</td>
+                                </tr>
+                                <tr>
+                                    <td class="timeline-date">2013.06.26</td>
+                                    <td class="timeline-dot"><div></div></td>
+                                    <td class="timeline-text">自2013年来卖出了第1套2手房。</td>
+                                </tr>
+                                <tr>
+                                    <td class="timeline-date">2014.04.20</td>
+                                    <td class="timeline-dot"><div></div></td>
+                                    <td class="timeline-text">成交价40208元／平米，是自2013年来的最高价。</td>
+                                </tr>
+                                <tr>
+                                    <td class="timeline-date">2015.04.26</td>
+                                    <td class="timeline-dot"><div></div></td>
+                                    <td class="timeline-text">自2013年来卖出了第10套房子。</td>
+                                </tr>
+                                <tr>
+                                    <td class="timeline-date">2016.10.15</td>
+                                    <td class="timeline-dot"><div></div></td>
+                                    <td class="timeline-text">中海万锦城二期最新成交价62829元／平米。</td>
+                                </tr>
+                                <tr>
+                                    <td class="timeline-date">2016.11.04</td>
+                                    <td class="timeline-dot"><div></div></td>
+                                    <td class="timeline-text">中海万锦城二期自2013年兔博士大数据观测启动以来，到现在总共卖出了118套。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="frame-block recommend-agent" id="estate-agent-content">
+                        <div class="row">
+                            <span class="left">
+                                <div class="photo" style="background-image: url(images/r051.jpg)"></div>
+                            </span><span class="right">
+                                <div class="top"><span class="tag"><img src="images/most-sales.png" alt=""></span></div>
+                                <div class="bottom">
+                                    <span>杨焕</span><span>中原地产-西藏北路店</span><span class="icon">
+                                        <div>联系我</div>
+                                        <a href="tel:18116371462"><img phonenum="18116371462" name="杨焕" class="recommend-agent-phone" src="images/phone.png" alt=""></a>
+                                    </span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <span class="left">
+                                <div class="photo"></div>
+                            </span><span class="right">
+                                <div class="top"><span class="tag"><img src="images/fastest.png" alt=""></span></div>
+                                <div class="bottom">
+                                    <span>朱壮壮</span><span>中原地产-中海万锦城店</span><span class="icon">
+                                        <div>联系我</div>
+                                        <a href="tel:18521322766"><img phonenum="18521322766" name="朱壮壮" class="recommend-agent-phone" src="images/phone.png" alt=""></a>
+                                    </span>
+                                </div>
+                            </span>
+                        </div>
+                    </div>*@
+            </div>
+            @{ Html.RenderPartial("EsfNav"); }
+            <div id="layermbox1" class="layermbox layermbox1" index="1" style="display: none;">
+                <div class="laymshade"></div>
+                <div class="layermmain">
+                    <div class="section">
+                        <div class="layermchild  layermanim" style="width: 100%;">
+                            <div class="layermcont">
+                                <div style="text-align: center; width: 100%">
+                                    <img style="width: 100%" src="/images/esf/qrcodells.jpg" border="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script language="javascript">
+                $(function () {
+                    //price_switch();
+                    //load_surrounding_map();
+                    //展开收起
+                    $(".more_xq").bind("click", function () {
+                        $(this).toggleClass("up");
+                        $(this).parent().find("div").toggleClass("myall");
+                    });
+                    $("#guanzhu").bind("click", function () {
+                        $("#layermbox1").show();
+                    });
+                    $(".laymshade").bind("click", function () {
+                        $("#layermbox1").hide();
+                    });
+                    $("#navInfo").click(function (e) {
+                        var item = e.target;
+                        $(item).parent().children().removeClass("on");
+                        $(item).addClass("on");
+                        console.log(item);
+                        console.log($(item).index());
+                        $("#houseListInfo").find(".mod-house").removeClass("pro-show");
+                        $("#houseListInfo").find(".mod-house").eq($(item).index()).addClass("pro-show");
+                    });
+                })
+            </script>
+            <script>
+                var website = 'http://wx.linlishe.cn';
+                var url = location.href.split('#')[0];
+                city_id = '592';
+                share = {
+                    'title': document.title,
+                    'desc': "透明房价，ZJB为你坚持到底。",
+                    'imgUrl': website + "/images/share_logo.png",
+                    'link': url
+                };
+            </script>
+            <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+            <script src="/Scripts/esf/share.js"></script>
+            @{ Html.RenderPartial("Cnzz"); }
+        </body>
+    </html>

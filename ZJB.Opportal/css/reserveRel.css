@@ -1,0 +1,62 @@
+﻿@charset "utf-8";
+/*
+* @Author:      penghg	
+* @Update:      2014.2.25
+* @Update by:   penghg
+* @overview:    个人预约发布
+*/
+.reserveRel-href {
+	float:left;
+	display:block;
+	height:30px;
+	line-height:30px
+}
+.reserve-house {
+	width:230px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.reserveRel-webSite {
+	width:68px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.schedule-appointment {
+	color:#f00;
+	border:1px solid #83cf63;
+	padding:2px;
+	margin-left:8px
+}
+/*修改时间弹框*/
+.modifyTime {
+	width:200px;
+	margin:15px auto
+}
+.modifyTime li {
+	height:24px;
+	line-height:24px;
+	text-align:center
+}
+.modifyTime select {
+	width:60px;
+	height:24px;
+	border:1px solid #5ea552
+}
+/*成功记录*/
+.houseLog-select>li {
+	float:left;
+	margin:8px 8px
+}
+.houseLog-select .houseLog-time {
+	width:108px
+}
+.houseLog-select .houseLog-time-tip {
+	width:120px;
+	height:26px;
+	line-height:26px;
+	border:1px solid #64ac58;
+	border-radius:3px;
+	margin:0px
+}

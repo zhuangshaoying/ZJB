@@ -1,0 +1,92 @@
+﻿@using System.Data
+@{
+    Layout = null;
+}
+
+
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>房屋详情-住家帮</title>
+
+    <link rel="stylesheet" href="/css/esf/common.css">
+    <link rel="stylesheet" href="/css/esf/manage.css">
+    <script type="text/javascript" src="/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/Esf/base.js"></script>
+</head>
+
+<body>
+<div class="mod-manage" style="padding-bottom: 0.86rem;">
+    <div class="mod-prod-detail">
+
+
+        @if (ViewBag.Interview != null && ((System.Data.DataSet) ViewBag.Interview).Tables.Count > 0)
+        {
+            int i = 0;
+            foreach (DataRow dr in (((System.Data.DataSet) ViewBag.Interview).Tables[0]).Rows)
+            {
+                if (i == 0)
+                {
+                    <div class="mod-prod-addr mod-addr-sell">
+                        @*<span>待审核</span>*@
+
+                        <a href="EsfDetail?houseid=@dr["HouseID"]">
+                            <h2>@dr["CommunityName"] </h2>
+                        </a>
+                        <p>@dr["Address"] </p>
+                    </div>
+
+
+                    <div class="mod-prod-rel">
+                        <dl>
+                            <dt>
+                                <strong class="cl-hlight"> 期望售价：<span id="j-expect-price">@dr["Price"]</span> @dr["PriceUnit"] </strong>
+                                <div class="price_item">
+                                    <b id="unitprice"> 单价：@dr["UnitPrice"] /平</b>
+                                </div>
+                                @*</dt>
+                                <dt>*@
+                                <ul class="mod-attr-list clearfix">
+                                    <li>户型：<b>@dr["Room"] 室 @dr["Hall"] 厅 @dr["Toilet"] 卫</b></li>
+                                    <li>面积：<b> @dr["BuildArea"] ㎡</b></li>
+                                </ul>
+                            </dt>
+                        </dl>
+                    </div>
+
+
+
+                }
+
+                <div class="mod-prod-rel">
+                    <dl style="padding-right: 10px;">
+                        <dt style="position: relative; background: url(/images/esf/icon-title-more.png) no-repeat right center; background-size: auto 16px;">
+                            @*<strong class="cl-hlight"> @dr["NickName"]：<span id="j-expect-price">@dr["tel"] </strong>*@
+                            <div class="price_item">
+                                <b id="unitprice">@dr["NickName"]：<a href="tel:@dr["tel"]">@dr["tel"]</a> </b>
+                            </div>
+                            <div class="price_item"><b id="unitprice"> @Convert.ToDateTime(dr["AddDate"]).ToString("yyyy-MM-dd HH:mm:ss")</b>
+                            </div>
+                        </dt>
+
+                    </dl>
+                </div>
+
+
+                i++;
+            }
+        }
+
+
+
+
+        <div id="j-seek-history"></div>
+    </div>
+</div>
+    @{ Html.RenderPartial("EsfNav", new { height = "35px", curNav = "add" }); }
+    @*<nav class="nav-bar"> <a class="active" href="@Url.Action("Index")">首页<b class="iconfont">&#xd608;</b></a> <a href="@Url.Action("Delegate")">发布房源<b class="iconfont">혇</b></a> <a href="@Url.Action("Me")">我的<b class="iconfont">혂</b></a> </nav>*@
+</body>
+</html>

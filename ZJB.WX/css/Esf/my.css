@@ -1,0 +1,489 @@
+.mod-smallnote {
+	position: fixed;
+	left: 0;
+	top: 50px;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	height: 18px;
+	padding: 5px 14px 4px;
+	margin: 0 auto;
+	z-index: 100000
+}
+.mod-smallnote.smallnote-mobile {
+	margin: auto;
+	top: 0;
+	padding: 0 20px;
+	height: .36rem
+}
+.mod-smallnote .smallnote-text {
+	color: #fff;
+	background: #3f454e;
+	display: inline-block;
+	opacity: 0;
+	padding: 5px 14px 4px;
+	border-radius: 3px;
+	-webkit-transform: scale(1.2);
+	-webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+	transform: scale(1.2);
+	transition: transform .4s ease, opacity .4s ease
+}
+.mod-smallnote.smallnote-mobile .smallnote-text {
+	padding: 0 .12rem;
+	font-size: .14rem;
+	line-height: .36rem;
+	border-radius: .3rem
+}
+.mod-smallnote.scale .smallnote-text {
+	opacity: 1;
+	-webkit-transform: scale(1);
+	transform: scale(1)
+}
+.mod-smallnote.smallnote-error .smallnote-text {
+	color: #fff;
+	background-color: #e84a01
+}
+.mask {
+	-webkit-transition: opacity .4s ease;
+	transition: opacity .4s ease;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	opacity: 0;
+	background: rgba(0,0,0,.5)
+}
+.mask.opacity {
+	opacity: 1
+}
+.nav-bar {
+	z-index: 25;
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: .48rem;
+	background: #fff
+}
+.nav-bar a:active, .nav-bar a:hover, .nav-bar a:link, .nav-bar a:visited {
+	position: relative;
+	font-size: .12rem;
+	padding-top: .3rem;
+	width: 32%;
+	color: #666;
+	display: inline-block
+}
+.nav-bar .iconfont {
+	position: absolute;
+	display: block;
+	font-size: .2rem;
+	color: #666;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0
+}
+.nav-bar a.active, .nav-bar a.active .iconfont {
+	color: #e84a01
+}
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
+-webkit-appearance:none!important;
+margin:0
+}
+.dialog-mobile {
+	font-size: .14rem
+}
+.content {
+	padding: 0 9pt
+}
+.container {
+	padding-bottom: .48rem;
+	width: 100%
+}
+a:hover {
+	text-decoration: none
+}
+.gray_btn .gray_btn, .gray_btn .gray_btn:active {
+	background: #fff;
+	color: #bdbdbd;
+.dialog-mobile {
+font-size:.14rem
+}
+.content {
+	padding: 0 9pt
+}
+.container {
+	padding-bottom: .48rem;
+	width: 100%
+}
+a:hover {
+	text-decoration: none
+}
+.gray_btn .gray_btn, .gray_btn .gray_btn:active {
+	background: #fff;
+	color: #bdbdbd
+}
+.iconfont {
+	font-size: .16rem;
+	position: absolute;
+	right: .06rem;
+	top: 0;
+	color: #bdbdbd
+}
+.text_title {
+	font-size: .14rem;
+	color: #757575;
+	line-height: .16rem;
+	padding-bottom: .16rem
+}
+.text_input {
+	border-radius: .04rem;
+	height: .48rem;
+	line-height: .16rem;
+	border: 1px solid #f5f5f5;
+	display: inline-block;
+	font-size: .16rem;
+	width: 100%;
+	background: #f5f5f5;
+	outline: 0;
+	box-sizing: border-box;
+	margin-bottom: .08rem
+}
+.text_input:focus {
+	background: #fff
+}
+.next_btn, .save_btn, .send_code {
+	width: 100%;
+	background: #e84a01;
+	height: .48rem;
+	line-height: .48rem;
+	border: 0 none;
+	font-size: .16rem;
+	display: inline-block;
+	text-align: center;
+	color: #fff;
+	border-radius: .04rem;
+	transition: all .2s
+}
+.next_btn:active, .save_btn:active, .send_code:active {
+	color: #757575
+}
+.modify_name, .modify_phone, .modify_phone2, .modify_sex {
+	padding: .16rem;
+	background: #fff;
+	box-sizing: border-box;
+	width: 100%;
+	position: fixed;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	z-index: 26
+}
+.item {
+	background: #fff;
+	height: .44rem;
+	line-height: .44rem;
+	border-bottom: .01rem solid #ddd
+}
+.item a {
+	font-size: .16rem;
+	height: .44rem;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	padding: 0 .16rem
+}
+.item a:active {
+	background: #f5f5f5
+}
+.item span {
+	position: absolute;
+	top: 0
+}
+.item span.left {
+	left: .16rem;
+	color: #212121;
+	text-align: left
+}
+.item span.right {
+	right: .24rem;
+	color: #bdbdbd;
+	text-align: right;
+	width: 2rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden
+}
+.item b {
+	margin-left: .08rem
+}
+.modify_name {
+	left: 100%;
+	top: 0
+}
+.modify_name .text_input {
+	padding: 0 .08rem
+}
+.modify_name .save_btn.save_btn_gray {
+	background: #d9d9d9;
+	color: #bdbdbd
+}
+.modify_name.tab {
+	left: 0
+}
+.modify_name .gray_btn {
+	background: #d9d9d9
+}
+.modify_sex {
+	background: #e5e5e5;
+	text-align: center;
+	bottom: -1.9rem;
+	left: 0
+}
+.modify_sex a {
+	border-radius: .04rem;
+	color: #212121;
+	font-size: .16rem;
+	margin-bottom: .08rem;
+	display: block;
+	height: .44rem;
+	line-height: .44rem;
+	background: hsla(0,0%,100%,.5)
+}
+.modify_sex a:active {
+	background: #ccc
+}
+.modify_sex a.cancle {
+	margin-bottom: 0
+}
+.modify_sex.tab {
+	bottom: 0
+}
+.modify_phone, .modify_phone2 {
+	top: 0;
+	left: 100%;
+	width: 100%
+}
+.modify_phone2 .box, .modify_phone .box {
+	position: relative
+}
+.modify_phone2 .send_code, .modify_phone .send_code {
+	right: 0;
+	width: 1.2rem;
+	height: auto;
+	position: absolute;
+	left: auto;
+	top: 0
+}
+.modify_phone2 .gray_btn, .modify_phone2 .gray_btn:active, .modify_phone .gray_btn, .modify_phone .gray_btn:active {
+	background: #d9d9d9
+}
+.modify_phone2 .box_w, .modify_phone .box_w {
+	margin-right: 1.34rem
+}
+.modify_phone2 .text_input, .modify_phone .text_input {
+	padding-left: .16rem
+}
+.modify_phone2.tab, .modify_phone.tab {
+	left: 0
+}
+}
+.iconfont {
+	font-size: .16rem;
+	position: absolute;
+	right: .06rem;
+	top: 0;
+	color: #bdbdbd
+}
+.text_title {
+	font-size: .14rem;
+	color: #757575;
+	line-height: .16rem;
+	padding-bottom: .16rem
+}
+.text_input {
+	border-radius: .04rem;
+	height: .48rem;
+	line-height: .16rem;
+	border: 1px solid #f5f5f5;
+	display: inline-block;
+	font-size: .16rem;
+	width: 100%;
+	background: #f5f5f5;
+	outline: 0;
+	box-sizing: border-box;
+	margin-bottom: .08rem
+}
+.text_input:focus {
+	background: #fff
+}
+.next_btn, .save_btn, .send_code {
+	width: 100%;
+	background: #e84a01;
+	height: .48rem;
+	line-height: .48rem;
+	border: 0 none;
+	font-size: .16rem;
+	display: inline-block;
+	text-align: center;
+	color: #fff;
+	border-radius: .04rem;
+	transition: all .2s
+}
+.next_btn:active, .save_btn:active, .send_code:active {
+	color: #757575
+}
+.modify_name, .modify_phone, .modify_phone2, .modify_sex {
+	padding: .16rem;
+	background: #fff;
+	box-sizing: border-box;
+	width: 100%;
+	position: fixed;
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	z-index: 26
+}
+.item {
+	background: #fff;
+	height: .44rem;
+	line-height: .44rem;
+	border-bottom: .01rem solid #ddd
+}
+.item a {
+	font-size: .16rem;
+	height: .44rem;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	padding: 0 .16rem
+}
+.item a:active {
+	background: #f5f5f5
+}
+.item span {
+	position: absolute;
+	top: 0
+}
+.item span.left {
+	left: .16rem;
+	color: #212121;
+	text-align: left
+}
+.item span.right {
+	right: .24rem;
+	color: #bdbdbd;
+	text-align: right;
+	width: 2rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden
+}
+.item b {
+	margin-left: .08rem
+}
+.modify_name {
+	left: 100%;
+	top: 0
+}
+.modify_name .text_input {
+	padding: 0 .08rem
+}
+.modify_name .save_btn.save_btn_gray {
+	background: #d9d9d9;
+	color: #bdbdbd
+}
+.modify_name.tab {
+	left: 0
+}
+.modify_name .gray_btn {
+	background: #d9d9d9
+}
+.modify_sex {
+	background: #e5e5e5;
+	text-align: center;
+	bottom: -1.9rem;
+	left: 0
+}
+.modify_sex a {
+	border-radius: .04rem;
+	color: #212121;
+	font-size: .16rem;
+	margin-bottom: .08rem;
+	display: block;
+	height: .44rem;
+	line-height: .44rem;
+	background: hsla(0,0%,100%,.5)
+}
+.modify_sex a:active {
+	background: #ccc
+}
+.modify_sex a.cancle {
+	margin-bottom: 0
+}
+.modify_sex.tab {
+	bottom: 0
+}
+.modify_phone, .modify_phone2 {
+	top: 0;
+	left: 100%;
+	width: 100%
+}
+.modify_phone2 .box, .modify_phone .box {
+	position: relative
+}
+.modify_phone2 .send_code, .modify_phone .send_code {
+	right: 0;
+	width: 1.2rem;
+	height: auto;
+	position: absolute;
+	left: auto;
+	top: 0
+}
+.modify_phone2 .gray_btn, .modify_phone2 .gray_btn:active, .modify_phone .gray_btn, .modify_phone .gray_btn:active {
+	background: #d9d9d9
+}
+.modify_phone2 .box_w, .modify_phone .box_w {
+	margin-right: 1.34rem
+}
+.modify_phone2 .text_input, .modify_phone .text_input {
+	padding-left: .16rem
+}
+.modify_phone2.tab, .modify_phone.tab {
+	left: 0
+}
+.code_position {
+	position: absolute;
+	left: 150%;
+	top: 0;
+	width: 100%;
+	background: #fff;
+	transition: -webkit-transform .25s ease;
+	-webkit-transform: translate3d(0, 0, 0);
+	z-index: 100
+}
+.code_position.tab {
+	-webkit-transform: translate3d(-150%, 0, 0)
+}
+.code_position .send_code {
+	height: .48rem;
+	overflow: hidden
+}
+.code_position .send_code img {
+	width: 100%;
+	height: 100%;
+	overflow: hidden
+}
+.code_style {
+	padding: .16rem;
+	padding-top: .32rem
+}
+#d2 {
+	margin-top: .36rem;
+	padding-bottom: .4rem
+}
+#d2 .code_style {
+	padding-top: .16rem
+}

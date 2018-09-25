@@ -1,0 +1,152 @@
+﻿
+@{
+    Layout = null;
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>每日统计-房产盒子</title>
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script src="~/Scripts/highcharts.js"></script>
+    <script src="~/Scripts/WebCalendar.js"></script>
+	<link href="~/Content/common.css" rel="stylesheet" />
+    <link href="~/Content/totop.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Scripts/common.js"></script>
+    <script type="text/javascript">
+     
+        $(function () {
+            getStatData();
+        });
+
+        function getStatData()
+        {
+            var ps = $("#HidePs").val();
+            var currentTime = $("#Txt_Date").val();
+            $.ajax({
+                type: 'get',
+                url: '/Stat/GetEveryDayStat',
+                data: { ps: ps, currentTime: currentTime },
+                beforeSend: function () {
+                    $('#container').html("加载中....");
+                },
+                success: function (result) {
+                    var timeList = result.timeList;
+                    var loginList = result.UserLoginStat;
+                    var houseAddList = result.HouseAddStat;
+                    var pushHouseList = result.PushHouseStat;
+                    var tjDateHtml = [];//x轴 日期数据
+                    var tjLoginHtml = [];//登陆数据
+                    var tjHouseAddHtml = [];//新增房源数据
+                    var tjPushSuccessHouseHtml = [];//推送成功数据
+                    var tjPushFailHouseHtml = [];//推送失败数据
+                    var tjPushPersonHtml = [];//推送发布人数
+                    for (var i = 0; i < timeList.length; i++) {
+                        tjDateHtml.push(timeList[i].Time);
+                    }
+                    if (loginList != null) {
+                        for (var i = 0; i < loginList.length; i++) {
+                            tjLoginHtml.push(loginList[i].Count);
+                        }
+                    }
+                    if (houseAddList != null) {
+                        for (var i = 0; i < houseAddList.length; i++) {
+                            tjHouseAddHtml.push(houseAddList[i].Count);
+                        }
+                    }
+                    if (pushHouseList != null)
+                    {
+                        for (var i = 0; i < pushHouseList.length; i++) {
+                            tjPushSuccessHouseHtml.push(pushHouseList[i].SuccessCount);
+                            tjPushFailHouseHtml.push(pushHouseList[i].FailCount);
+                            tjPushPersonHtml.push(pushHouseList[i].Count);
+                        }
+
+                    }
+                    $('#container').highcharts({
+                        title: {
+                            text: '每日统计',
+                            x: -20 //center
+                        },
+                        subtitle: {
+                            text: '时间',
+                            x: -20
+                        },
+                        xAxis: {
+                            categories: tjDateHtml
+                        },
+                        yAxis: {
+                            title: {
+                                text: ''
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: ''
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true
+                                }
+                            }
+                        },
+                        series: [
+
+                        {
+                            name: '每日登陆用户(人)',
+                            data: tjLoginHtml
+                        },
+                        {
+                            name: '每日新增房源(条)',
+                            data: tjHouseAddHtml,
+                            visible: false
+                        },
+                        {
+                            name: '发布成功房源(条)',
+                            data: tjPushSuccessHouseHtml,
+                            visible: false
+                        },
+                        {
+                            name: '发布失败房源(条)',
+                            data: tjPushFailHouseHtml,
+                            visible: false
+                        },
+                        {
+                            name: '发布人数(人)',
+                            data: tjPushPersonHtml,
+                            visible: false
+                        }
+                        ]
+                    });
+                }
+            });
+        }
+        </script>
+</head>
+<body>
+<div class="saleHouse" id="saleHouse">
+	<div class="saleHouse-main">
+    <div class="tongji_sr">
+     <h2 class="date_sr">
+     <input name="Txt_Date" type="text" value="" id="Txt_Date" readonly="readonly" class="txtDate mydate" onfocus="SelectDate(this, 'yyyy-MM-dd')">
+     取选定日期的前<input name="HidePs" type="text" value="10" id="HidePs" class="ttmydate">天数据
+      <input type="submit" name="BtnSeach" value="搜索" id="BtnSeach" class="btn_primary" onclick="getStatData()"> 
+     </h2>
+    </div>
+   <div id="container" style="min-width: 310px; height: 400px; margin-top: 6px" data-highcharts-chart="0">
+
+   </div>
+   </div>
+   </div>
+</body>
+</html>

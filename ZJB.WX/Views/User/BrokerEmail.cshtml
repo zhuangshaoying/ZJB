@@ -1,0 +1,44 @@
+﻿@using ZJB.Api.Entity;
+@model VPublicUser
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BrokerEmail</title>
+	<link href='/css/common.css' rel='stylesheet' type='text/css' />
+	<link href='/css/main.css' rel='stylesheet' type='text/css' />
+	<link href='/css/user_info.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div id="saleHouse" class="saleHouse">
+	<div class="saleHouse-main shejiao_main">
+		<div class="main_hd">
+		  <ul class="sale-tab-sub">
+			<li class="sale-sub-menu selected"> <a href="javascript:">修改邮箱</a> </li>
+		  </ul>
+		</div>
+		<div class="user_xiangqing">
+			<div class="userxq_item mb15 clearfix"><label>原邮箱地址：</label><span class="mytels">@Model.Email</span></div>
+			<div class="userxq_item mb15 clearfix">
+            	<label>新邮箱地址：</label>
+                <input type="text" class="inputStyle" id="email" name="email">
+            </div>
+			<div class="userxq_item mb15 clearfix">
+            	<label></label>
+                <input type="button" value="确认修改" class="btnStyle" id="email_submit">
+				<a href="@Url.Action("BrokerInfo", "User")" class="js_btn">取消</a>
+            </div>
+		</div>
+    </div>
+</div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+<script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+<script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+<script src="~/Scripts/BrokerInfo.js"></script>
+<script src='/Scripts/common.js' type='text/javascript'></script>
+</body>
+</html>

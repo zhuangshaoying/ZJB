@@ -1,0 +1,1727 @@
+﻿.frame-block {
+	position: relative;
+	margin: 0 0 10px;
+	background-color: #FFF;
+}
+.frame-block-loading {
+}
+.frame-block-fail {
+}
+.frame-block-fail:after {
+	content: attr(data-fail);
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
+	font-family: consolas, monospace;
+	font-size: 15px;
+	color: #FFF;
+	background-color: rgba(0,0,0,0.8);
+	overflow: hidden;
+}
+.frame-block-title {
+    position: relative;
+    font-size: 15px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 15px;
+    border-bottom: 1px solid #D7D7D7;
+    background-color: #FFF;
+}
+.frame-block-title .plateTag {
+	border: solid 2px #eb5877;
+	position: absolute;
+	right: 50px;
+	top: 30px;
+	height: 36px;
+	line-height: 30px;
+	padding: 0 0.8rem;
+	border-radius: 18px;
+	color: #eb5877;
+}
+.block-title-more {
+	position: absolute;
+	display: inline-block;
+	font-size: 29px;
+	height: 94px;
+	line-height: 94px;
+	top: 0;
+	right: 80px;
+}
+.block-title-more:after {
+	position: absolute;
+	content: '\200B';
+	top: 50%;
+	right: -40px;
+	margin-top: -10px;
+	width: 14px;
+	height: 25px;
+	background: url('../images/icon-title-more.png') 0 0 no-repeat;
+}
+.block-title-share {
+	position: absolute;
+	display: inline-block;
+	font-size: 29px;
+	height: 94px;
+	line-height: 94px;
+	top: 0;
+	right: 40px;
+}
+.block-head {
+	position: relative;
+    margin-bottom: 0;
+    background-color: #30c774;
+    color: #FFF;
+}
+.head-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    line-height: 48px;
+    font-size: 18px;
+    z-index: 5;
+}
+.head-div {
+	max-width: 640px;
+    margin: 0px auto;
+    position: relative;
+    background: #30c774;
+}
+.head-top a {
+	position: absolute;
+    display: block;
+    top: 0;
+    height: 48px;
+    line-height: 48px;
+}
+.head-top a img {
+	/*vertical-align: middle;*/
+}
+/*.head-top a:nth-child(1) img:nth-child(1) {width: 38%;}*/
+.btn-back img {
+	width: 28%;
+}
+.head-top .head-title {
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.head-top .btn-back {
+	left: 15px;
+	min-width: 1.8em;
+}
+.head-top .btn-share {
+	right: 105px;
+}
+.head-top .btn-msg {
+	right: 35px;
+}
+.head-top .btn-msg[data-cnt]:after {
+	content: attr(data-cnt);
+	position: absolute;
+	top: 50%;
+	right: -13px;
+	margin-top: -27px;
+	width: 27px;
+	height: 27px;
+	line-height: 27px;
+	font-size: 21px;
+	color: #FD5056;
+	text-align: center;
+	border-radius: 50%;
+	background-color: #FFF;
+}
+.head-top-block {
+	position: relative;
+	height: 50px;
+}
+#guanzhu {
+	display: inline-block;
+    border: 1px solid #fff;
+    line-height: 18px;
+    font-size: 12px;
+    color: #fff;
+    padding: 0px 8px;
+    border-radius: 1px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.head-tag {
+	position: relative;
+    margin: 10px 0;
+    font-size: 14px;
+    padding: 0px 15px;
+}
+.head-tag .tag {
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	min-width: 5em;
+	margin: 0 5px;
+	padding: 0 0.5em;
+	text-align: center;
+	border-radius: 8px;
+	box-sizing: border-box;
+	background-color: rgba(255,255,255,0.25);
+}
+.head-tag .cnt-follow {
+	float: right;
+	height: 40px;
+	line-height: 40px;
+}
+.head-tag .district-info {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin-bottom: 10px;
+    background: #06a261;
+    border-radius: 20px;
+    padding: 0 0.8rem;
+}
+.head-tag .tags {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.head-tag .tag1 {
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    min-width: 5em;
+    margin: 0px 1px;
+    padding: 0 0.5em;
+    text-align: center;
+    border-radius: 20px;
+    box-sizing: border-box;
+    border: solid 1px white;
+}
+.head-sale-info {
+    position: relative;
+    font-size: 16px;
+    padding: 20px 15px 15px 15px;
+    display: -webkit-box;
+}
+.head-sale-info .info-title {
+	font-weight: bold;
+	width: 100%;
+	font-size: 16px;
+}
+.head-sale-info .info-bargain {
+    position: relative;
+    margin: 10px 0;
+    width: 58%;
+    border-right: solid 1px white;
+}
+.head-sale-info .info-price {
+	display: inline-block;
+	font-size: 36px;
+	font-weight: bolder;
+	font-family: '方正正粗黑简体';
+}
+.head-sale-info .info-unit {
+	font-size: 16px;
+	padding-top: 10px;
+}
+.head-sale-info .info-unit-6 {
+	font-size: 45px;
+}
+.head-sale-info .info-order {
+	display: inline-block;
+	right: 0;
+	bottom: 16px;
+}
+.head-sale-info .info-room {
+	position: relative;
+	width: 40%;
+	margin: 13px 0 15px 25px;
+}
+.head-sale-info .info-room-detail {
+}
+.head-sale-info .info-room-date {
+	position: absolute;
+	right: 0;
+}
+.head-sale-info .info-room .icon-rise {
+	background: url(/images/esf/rise.png) no-repeat left center;
+	width: 18px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 5px;
+    background-size: auto 14px;
+}
+.head-sale-info .info-room .icon-fall {
+	background: url(/images/esf/fall.png) no-repeat left center;
+	width: 18px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 5px;
+    background-size: auto 14px;
+}
+.head-sale-info .info-sale-detail {
+}
+.head-sale-info .info-sale-trend {
+	right: 0;
+	display: inline-block;
+	width: 100%;
+}
+.head-sale-info .info-salecount {
+	display: inline-block;
+	font-size: 36px;
+    padding-top: 4px;
+	font-family: '方正正粗黑简体';
+	font-weight: bolder;
+}
+.head-sale-none {
+	display: none;
+	position: relative;
+	font-size: 55px;
+	font-weight: bold;
+	padding: 125px 0 40px 0;
+}
+.block-rank {
+	margin-top: 0;
+	padding: 35px 35px 35px 140px;
+	font-size: 23px;
+	color: #666;
+	background: url('../images/icon-head-rank.png') 20px 35px no-repeat #FFF;
+}
+.block-rank .rank-no-data {
+	position: relative;
+	height: 43px;
+	margin-bottom: 4px;
+	background: url('../images/no-data.png') left top no-repeat;
+}
+.block-rank .rank-star {
+	position: relative;
+	width: 180px;
+	height: 32px;
+	margin-bottom: 15px;
+	background: url('../images/head-rank-star.png') left top repeat-x;
+}
+.block-rank .rank-star:after {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 32px;
+	background: url('../images/head-rank-star.png') left -32px repeat-x;
+}
+.block-rank .rank-star-0:after {
+	width: 0;
+}
+.block-rank .rank-star-1:after {
+	width: 36px;
+}
+.block-rank .rank-star-2:after {
+	width: 72px;
+}
+.block-rank .rank-star-3:after {
+	width: 108px;
+}
+.block-rank .rank-star-4:after {
+	width: 144px;
+}
+.block-rank .rank-star-5:after {
+	width: 180px;
+}
+.block-hl-price {
+	padding: 20px 0;
+}
+.hl-price-table {
+	border-collapse: collapse;
+	width: 680px;
+	margin: 0 auto;
+}
+.hl-price-table hr {
+	margin: 10px 0;
+	height: 1px;
+	background-color: #D7D7D7;
+	border: 0 none transparent;
+}
+.hl-price-table td {
+	font-size: 26px;
+	color: #666;
+	text-align: right;
+	padding: 0 0.5em;
+	white-space: nowrap;
+}
+.hl-price-table .icon {
+	vertical-align: middle;
+}
+.hl-price-table .icon div {
+	min-width: 51px;
+	height: 54px;
+	width: 54px;
+}
+.price-active {
+	color: #FD5056!important;
+	border-bottom: #FD5056 3px solid!important;
+}
+.h-price-bg {
+	background: url('../images/icon-price-h.png') 0 0 no-repeat;
+}
+.l-price-bg {
+	background: url('../images/icon-price-l.png') 0 0 no-repeat;
+}
+.m-price-bg {
+	background: url('../images/icon-price-m.png') 0 0 no-repeat;
+}
+.hl-price-table .icon-h div {
+	background-position: 0 0;
+}
+.hl-price-table .total {
+	font-size: 30px;
+	font-weight: bold;
+	color: #FD5056;
+	white-space: nowrap;
+}
+.hl-price-table .room-info {
+	width: 100%;
+	font-size: 29px;
+	font-weight: bold;
+}
+.hl-price-table .agent {
+	font-size: 29px;
+	font-weight: bold;
+	white-space: nowrap;
+}
+.hl-price-table .price {
+	white-space: nowrap;
+}
+.hl-price-table .date {
+}
+.hl-price-table .fixed {
+	white-space: nowrap;
+}
+/*old*/
+.block-court-trade {
+	padding: 20px 0;
+}
+.trade-table {
+	border-collapse: collapse;
+	width: 680px;
+	margin: 0 auto;
+}
+.trade-table td {
+	font-size: 29px;
+	color: #666;
+	text-align: center;
+	padding: 0 0.5em;
+}
+.trade-table hr {
+	margin: 10px 0;
+	height: 1px;
+	background-color: #D7D7D7;
+	border: 0 none transparent;
+}
+.trade-table .trade-hand div {
+	margin: 0 auto;
+	width: 33px;
+	height: 44px;
+	background: url('../images/icon-bargain.png') 0 0 no-repeat;
+}
+.trade-table .trade-hand-first div {
+	background-position: 0 0;
+}
+.trade-table .trade-hand-second div {
+	background-position: 0 -44px;
+}
+.trade-table .trade-price {
+	width: 100%;
+}
+.trade-table .trade-total {
+	font-size: 42px;
+	color: #FD5056;
+	white-space: nowrap;
+}
+.trade-table .trade-area span {
+	padding: 0 0.5em;
+	font-size: 26px;
+	background-color: #E5E5E5;
+	border-radius: 8px;
+}
+.trade-table .trade-date span {
+	padding: 0 0.5em;
+	font-size: 26px;
+	background-color: #E5E5E5;
+	border-radius: 8px;
+	white-space: nowrap;
+}
+/*new*/
+.block-court-trade .trade-table .row {
+	width: 100%;
+	border-left: solid 8px #fd5056;
+	padding-left: 40px;
+	box-sizing: border-box;
+}
+.block-court-trade .trade-table .row .dash {
+	border: dashed 1px #949494;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.block-court-trade .trade-table .row .top {
+	width: 100%;
+}
+.block-court-trade .trade-table .row .top .col-1 {
+	white-space: nowrap;
+	font-size: 36px;
+	color: #FD5056;
+	vertical-align: bottom;
+	padding-left: 0;
+}
+.block-court-trade .trade-table .row .top img {
+	text-align: center;
+	margin-bottom: -8px;
+}
+.block-court-trade .trade-table .row .top .info {
+	background: #eeeeee;
+	border: solid 1px #eeeeee;
+	border-radius: 15px;
+	padding: 0 15px;
+	font-size: 26px;
+}
+.block-court-trade .trade-table .row .top .col-2 {
+	width: 100%;
+	vertical-align: bottom;
+	text-align: center;
+	font-size: 28px;
+	color: #666465;
+}
+.block-court-trade .trade-table .row .top .col-2 .tag {
+	font-size: 18px;
+	padding: 1px 12px;
+	border-radius: 15px;
+	margin-left: 10px;
+}
+.block-court-trade .trade-table .row .top .col-3 {
+	white-space: nowrap;
+	vertical-align: bottom;
+	font-size: 28px;
+	color: #666465;
+	padding-right: 0;
+}
+.block-court-trade .trade-table .row .bottom {
+	color: #656565;
+	font-size: 28px;
+}
+.block-court-trade .trade-table .row .bottom .col-1 {
+	width: 60%;
+	display: inline-block;
+}
+.block-court-trade .trade-table .row .bottom .col-1 img {
+	margin-bottom: -5px;
+	margin-right: 10px;
+}
+.block-court-trade .trade-table .row .bottom .col-2 {
+	width: 40%;
+	display: inline-block;
+}
+.block-court-trade .trade-table .tc {
+	text-align: center;
+}
+.block-court-trade .trade-table .tr {
+	text-align: right;
+}
+.block-court-trade .trade-table .tl {
+	text-align: left;
+}
+.block-court-trade .trade-table .mt10 {
+	margin-top: 10px;
+}
+.block-court-trade .trade-table .pt15 {
+	padding-top: 15px;
+}
+.block-court-trade .trade-table .pt10 {
+	padding-top: 10px;
+}
+.block-court-trade .trade-table .fwb {
+	font-weight: bold;
+}
+.block-court-trade .trade-table .divide-line {
+	border: solid 1px #eeeeee;
+	margin: 25px auto 11px;
+}
+.trade-table .trade-price .price-tag {
+	font-size: 20px;
+	border-radius: 15px;
+	padding: 2px 15px;
+	margin-left: 5px
+}
+.trade-table .trade-price .price-tag-low {
+	border: solid 1px rgb(0, 172, 168);
+	color: rgb(0, 172, 168);
+}
+.trade-table .trade-price .price-tag-normal {
+	border: solid 1px rgb(253, 80, 86);
+	color: rgb(253, 80, 86);
+}
+.trade-table .trade-price .price-tag-lowest {/*border: solid 1px rgb(0, 172, 168); color: rgb(0, 172, 168);*/
+}
+.block-garage-trade {
+	padding: 20px 0;
+	display: none;
+}
+.trade-table .garage-area {
+	text-align: left;
+	font-size: 36px;
+	color: #666;
+}
+.trade-table .garage-tprice {
+	text-align: right;
+	font-size: 36px;
+	color: #FD5056;
+}
+.trade-table .garage-info {
+	text-align: left;
+	font-size: 28px;
+	color: #666;
+}
+.trade-table .garage-sprice {
+	text-align: right;
+	font-size: 28px;
+	color: #FD5056;
+}
+.block-agent-trade {
+	position: relative;
+	padding: 35px 0;
+}
+.block-agent-trade .chart-inner {
+	position: absolute;
+	width: 254px;
+	height: 254px;
+	top: 100px;
+	left: 50%;
+	margin-left: -127px;
+	font-size: 24px;
+	border-radius: 50%;
+}
+.block-agent-trade .chart-inner .chart-inner-text {
+	color: #666;
+	text-align: center;
+	vertical-align: middle;
+	padding: 1em;
+}
+.block-agent-trade .chart-inner .chart-inner-text span {
+	color: #FD5056;
+}
+.block-agent-trade .agent-trade-label {
+	position: absolute;
+	border-top: 1px solid #000;
+	width: 150px;
+}
+.block-agent-trade .agent-trade-label:after {
+	content: attr(data-label);
+	position: absolute;
+	bottom: 1px;
+	font-size: 24px;
+	color: #666;
+	max-width: 140px;
+	background-color: #FFF;
+}
+.block-agent-trade .agent-trade-label-left:after {
+	left: 0;
+}
+.block-agent-trade .agent-trade-label-right:after {
+	right: 0;
+}
+.block-agent-trade .agent-ex-info {
+	display: none;
+}
+.block-agent-trade .agent-tab-frame {
+	border-bottom: 1px solid #949494;
+	margin: 20px 35px 0;
+	text-align: center;
+}
+.block-agent-trade .agent-tab-frame .agent-tab {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	margin: 0 1em;
+	padding: 0 0.5em;
+}
+.block-agent-trade .agent-tab-frame .agent-tab .agent-rect {
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	border-radius: 6px;
+}
+.block-agent-trade .agent-tab-frame .agent-tab .agent-name {
+	font-size: 24px;
+	color: #666;
+	margin: 20px 0 30px;
+}
+.block-agent-trade .agent-tab-frame .agent-tab-active:after {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	border-bottom: 4px solid #FD5056;
+}
+.block-agent-trade .agent-list-frame {
+	margin: 0 35px;
+}
+.block-agent-trade .agent-list-frame .agent-row {
+	position: relative;
+	margin-top: 40px;
+	padding-left: 40px;
+	border-left: 8px solid #FD5056;
+	font-size: 28px;
+	color: #000;
+}
+.block-agent-trade .agent-list-frame .agent-row img {
+	vertical-align: middle;
+}
+.block-agent-trade .agent-list-frame .agent-row .agent-phone {
+	position: absolute;
+	right: 0;
+}
+.block-agent-trade .agent-list-frame .agent-row hr {
+	margin: 20px 0;
+	height: 1px;
+	border: 0 none transparent;
+	background: url("../images/agent-line.gif") left center repeat-x;
+}
+.btn-chart-share {
+	display: inline-block;
+	width: 89px;
+	height: 38px;
+	line-height: 38px;
+	border: 1px solid #FD5056;
+	font-size: 24px;
+	color: #FD5056;
+	text-align: center;
+	border-radius: 5px;
+}
+.block-trade-chart {
+	padding: 0 35px;
+}
+.block-trade-chart .trade-chart-tab {
+	border-bottom: 1px solid #999;
+}
+.block-trade-chart .trade-chart-tab .tab {
+	display: inline-block;
+	font-size: 29px;
+	color: #999;
+	height: 75px;
+	line-height: 75px;
+	min-width: 130px;
+	text-align: center;
+}
+.block-trade-chart .trade-chart-tab .tab-active {
+	position: relative;
+	color: #FD5056;
+}
+.block-trade-chart .trade-chart-tab .tab-active:after {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	border-bottom: 4px solid #FD5056
+}
+.block-trade-chart .trade-chart-legend {
+	margin: 30px 0;
+	font-size: 19px;
+	color: #666;
+	text-align: right;
+}
+.block-trade-chart .trade-chart-legend span {
+	position: relative;
+	padding-left: 1em;
+}
+.block-trade-chart .trade-chart-legend .hand-icon:before {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	margin-top: -4px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	vertical-align: middle;
+}
+/*.block-trade-chart .trade-chart-legend .hand-icon-first:before {background-color:#FD5056;}*/
+/*.block-trade-chart .trade-chart-legend .hand-icon-second:before {background-color:#00ABA7;}*/
+.hand-icon-second {
+	float: right;
+}
+.block-trade-chart .trade-chart-area {
+	position: relative;
+	height: 250px;
+}
+.block-trade-chart .trade-chart-area .v {
+	position: absolute;
+	top: 20px;
+	width: 0;
+	height: 165px;
+	border: 0 none transparent;
+	border-left: 2px solid #E2E2E2;
+}
+.block-trade-chart .trade-chart-area .v-0 {
+	right: 580px;
+}
+.block-trade-chart .trade-chart-area .v-1 {
+	right: 468px;
+}
+.block-trade-chart .trade-chart-area .v-2 {
+	right: 356px;
+}
+.block-trade-chart .trade-chart-area .v-3 {
+	right: 244px;
+}
+.block-trade-chart .trade-chart-area .v-4 {
+	right: 132px;
+}
+.block-trade-chart .trade-chart-area .v-5 {
+	right: 20px;
+}
+.block-trade-chart .trade-chart-area .h {
+	position: absolute;
+	right: 20px;
+	width: 562px;
+	height: 0;
+	border: 0 none transparent;
+	border-top: 2px solid #E2E2E2;
+}
+.block-trade-chart .trade-chart-area .h-0 {
+	top: 185px;
+}
+.block-trade-chart .trade-chart-area .x {
+	position: absolute;
+	top: 200px;
+	width: 100px;
+	margin-right: -50px;
+	text-align: center;
+	font-size: 15px;
+}
+.block-trade-chart .trade-chart-area .x-0 {
+	right: 580px;
+}
+.block-trade-chart .trade-chart-area .x-1 {
+	right: 468px;
+}
+.block-trade-chart .trade-chart-area .x-2 {
+	right: 356px;
+}
+.block-trade-chart .trade-chart-area .x-3 {
+	right: 244px;
+}
+.block-trade-chart .trade-chart-area .x-4 {
+	right: 132px;
+}
+.block-trade-chart .trade-chart-area .x-5 {
+	right: 20px;
+}
+.block-trade-chart .trade-chart-area .y {
+	position: absolute;
+	right: 600px;
+	margin-top: -13px;
+	font-size: 20px;
+	height: 30px;
+	line-height: 30px;
+	color: #FD5056;
+}
+.block-trade-chart .trade-chart-area .y-0 {
+	top: 183px;
+}
+.block-trade-chart .trade-chart-area .y-1 {
+	top: 128px;
+}
+.block-trade-chart .trade-chart-area .y-2 {
+	top: 73px;
+}
+.block-trade-chart .trade-chart-area .y-3 {
+	top: 18px;
+}
+.block-trade-chart .frame-line {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.block-trade-chart .frame-line .line {
+	position: absolute;
+	margin-top: -3px;
+	height: 3px;
+	-webkit-transform-origin : left center;
+	-moz-transform-origin : left center;
+	-o-transform-origin : left center;
+	-ms-transform-origin : left center;
+	transform-origin : left center;
+}
+.block-trade-chart .frame-line .line-first {
+	background-color: #FD5056;
+}
+.block-trade-chart .frame-line .line-second {
+	background-color: #00ABA7;
+}
+.block-trade-chart .trade-chart-area .dot {
+	position: absolute;
+	top: 0;
+	width: 8px;
+	height: 8px;
+	margin-right: -7px;
+	border-radius: 50%;
+	border: 4px solid #FFF;
+	box-sizing: content-box;
+}
+.block-trade-chart .trade-chart-area .dot-first {
+	background-color: #FD5056;
+}
+.block-trade-chart .trade-chart-area .dot-first-0 {
+	right: 580px;
+}
+.block-trade-chart .trade-chart-area .dot-first-1 {
+	right: 468px;
+}
+.block-trade-chart .trade-chart-area .dot-first-2 {
+	right: 356px;
+}
+.block-trade-chart .trade-chart-area .dot-first-3 {
+	right: 244px;
+}
+.block-trade-chart .trade-chart-area .dot-first-4 {
+	right: 132px;
+}
+.block-trade-chart .trade-chart-area .dot-first-5 {
+	right: 20px;
+}
+.block-trade-chart .trade-chart-area .dot-second {
+	background-color: #00ABA7;
+}
+.block-trade-chart .trade-chart-area .dot-second-0 {
+	right: 580px;
+}
+.block-trade-chart .trade-chart-area .dot-second-1 {
+	right: 468px;
+}
+.block-trade-chart .trade-chart-area .dot-second-2 {
+	right: 356px;
+}
+.block-trade-chart .trade-chart-area .dot-second-3 {
+	right: 244px;
+}
+.block-trade-chart .trade-chart-area .dot-second-4 {
+	right: 132px;
+}
+.block-trade-chart .trade-chart-area .dot-second-5 {
+	right: 20px;
+}
+.block-trade-chart .trade-chart-info {
+	padding: 15px 0;
+	border-top: 1px solid #D6D6D6;
+}
+.chart-info-table {
+	border-collapse: collapse;
+	width: 680px;
+	margin: 0 auto;
+}
+.chart-info-table td {
+	text-align: center;
+}
+.chart-info-table td .tip {
+	margin: 10px 0;
+	font-size: 21px;
+	color: #666;
+}
+.chart-info-table td .info {
+	position: relative;
+	display: inline-block;
+	font-size: 32px;
+	color: #FD5056;
+}
+.chart-info-table td .info-none {
+	color: #CCC;
+}
+.chart-info-table td .info-rise {
+	padding-left: 40px;
+}
+.chart-info-table td .info-rise:before {
+	content: '\200B';
+	position: absolute;
+	left: 0px;
+	width: 29px;
+	height: 23px;
+	top: 50%;
+	margin-top: -11px;
+	background: url('../images/icon-rise-fail.png') 0 0 no-repeat;
+}
+.chart-info-table td .info-fail {
+	padding-left: 40px;
+	color: #00ABA7;
+}
+.chart-info-table td .info-fail:before {
+	content: '\200B';
+	position: absolute;
+	left: 0px;
+	width: 29px;
+	height: 23px;
+	top: 50%;
+	margin-top: -11px;
+	background: url('../images/icon-rise-fail.png') 0 -23px no-repeat;
+}
+.chart-info-table td.v-line {
+	vertical-align: middle;
+}
+.chart-info-table td.v-line hr {
+	margin: 0 0.5em;
+	width: 0;
+	height: 65px;
+	border: 0 none transparent;
+	border-left: 1px solid #D6D6D6;
+}
+.block-recommend-feature {
+	padding: 35px 0;
+}
+.block-recommend-nearby {
+	padding: 35px 0;
+}
+.recommend-table {
+	border-collapse: collapse;/*width:680px;*/
+	margin: 0 auto;
+}
+.recommend-table td {
+	text-align: center;
+	width: 220px;
+}
+.recommend-table td .icon {
+	margin: 0 auto;
+	width: 55px;
+	height: 55px;
+	background: url('../images/icon-up-down.png') 0 0 no-repeat;
+}
+.recommend-table td .icon-up {
+	background-position: 0 0;
+}
+.recommend-table td .icon-down {
+	background-position: 0 -55px;
+}
+.recommend-table td .tip {
+	margin: 10px 0;
+	font-size: 26px;
+	color: #666;
+}
+.recommend-table td .name {
+	font-size: 30px;
+	color: #FD5056;
+}
+.recommend-table td.v-line {
+	vertical-align: middle;
+	width: 1px;
+}
+.recommend-table td.v-line hr {
+	margin: 0 0.5em;
+	width: 0;
+	height: 150px;
+	border: 0 none transparent;
+	border-left: 1px solid #D6D6D6;
+}
+.block-timeline {
+	padding: 35px;
+}
+.timeline-table {
+	border-collapse: collapse
+}
+.timeline-table td {
+	font-size: 26px;
+	color: #666;
+	padding: 10px 0;
+}
+.timeline-table .timeline-date {
+	vertical-align: top;
+}
+.timeline-table .timeline-dot {
+	position: relative;
+	vertical-align: top;
+	text-align: center;
+	min-width: 74px;
+	background: url('../images/timeline-v-line.png') center top repeat-y;
+}
+.timeline-table .timeline-dot div {
+	position: relative;
+	height: 37px;
+	background: url('../images/timeline-dot.png') center center no-repeat;
+}
+.timeline-table tr:first-child .timeline-dot:before {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 17px;
+	background-color: #FFF;
+}
+.timeline-table tr:last-child .timeline-dot:after {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 40px;
+	bottom: 0;
+	background-color: #FFF;
+}
+.timeline-table .timeline-text {
+}
+.block-no-data {
+	display: none;
+	font-size: 32px;
+	color: #CCC;
+	text-align: center;
+	padding: 150px 0;
+}
+.frame-block-title .view-more-neighbor {
+	float: right;
+	font-size: 26px;
+	color: #999;
+	margin-right: 12px;
+}
+.frame-block-title .view-more-neighbor img {
+	position: absolute;
+	top: 36px;
+	left: 700px;
+}
+.neighbor-estate {
+	padding: 0 36px;
+}
+.neighbor-estate .bottom {
+	text-align: center;
+	padding: 35px 0;
+}
+.neighbor-estate .bottom .button {
+	background: #fd5056;
+	color: white;
+	font-size: 30px;
+	border-radius: 45px;
+	padding: 15px;
+}
+.neighbor-estate .row {
+	padding: 30px 0;
+	border-bottom: solid 1px #D7D7D7;
+	position: relative;
+}
+.neighbor-estate .row .left {
+	display: inline-block;
+	vertical-align: top;
+}
+.neighbor-estate .row .left .img {
+	width: 200px;
+	height: 150px;
+	display: inline-block;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.neighbor-estate .row .right {
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 20px;
+	width: 66%;
+}
+.neighbor-estate .row .right span {
+	display: inline-block;
+	vertical-align: top;
+}
+.neighbor-estate .row .right span div {
+	line-height: 36px;
+	padding-bottom: 5px;
+}
+.neighbor-estate .row .right span:nth-child(1) {
+	width: 55%;
+}
+.neighbor-estate .row .right span:nth-child(2) {
+	width: 45%;
+	text-align: right;
+}
+.neighbor-estate .row .right span:nth-child(1) div:nth-child(1) {
+	font-weight: bold;
+	font-size: 28px;
+}
+.neighbor-estate .row .right span:nth-child(2) div:nth-child(1) {
+	font-size: 24px;
+}
+.neighbor-estate .row .right span:nth-child(1) div:nth-child(2) {
+	font-size: 24px;
+	color: #999;
+	vertical-align: middle;
+}
+.neighbor-estate .row .right span:nth-child(1) div:nth-child(2) img {
+	margin-left: 5px;
+	vertical-align: middle;
+}
+.neighbor-estate .row .right span:nth-child(2) div:nth-child(2) {
+	font-size: 30px;
+	color: #fd5056;
+}
+.neighbor-estate .row .right .tag {
+	border: solid 1px #fd5056;
+	color: #fd5056;
+	font-size: 24px;
+	padding: 1px 20px;
+	border-radius: 20px;
+	position: absolute;
+	right: 8px;
+	bottom: 39px;
+}
+/*.neighbor-estate .row .right span div { line-height: 36px; margin-bottom: 5px;}*/
+/*.neighbor-estate .row .right div span { display: inline-block;vertical-align: bottom;}*/
+/*.neighbor-estate .row .right div span:nth-child(1) {width: 60% }*/
+/*.neighbor-estate .row .right div span:nth-child(2) {width: 40% ;text-align: right;}*/
+/*.neighbor-estate .row .right div:nth-child(1) span:nth-child(1){ font-weight: bold; font-size: 28px;}*/
+/*.neighbor-estate .row .right div:nth-child(1) span:nth-child(2){ font-size: 24px;}*/
+/*.neighbor-estate .row .right div:nth-child(2) span:nth-child(1){ font-size: 24px; color: #999; vertical-align: middle;}*/
+/*.neighbor-estate .row .right div:nth-child(2) span:nth-child(1) img { margin-left: 5px; vertical-align: middle;}*/
+/*.neighbor-estate .row .right div:nth-child(2) span:nth-child(2){ font-size: 30px; color:#fd5056;}*/
+
+
+.neighbor-estate .row .right table {
+	width: 100%;
+	white-space: nowrap;
+}
+.neighbor-estate .row .right table tr td {
+	padding-bottom: 5px;
+}
+.neighbor-estate .row .right table tr td:nth-child(2) {
+	text-align: right;
+}
+.neighbor-estate .row .right table tr:nth-child(1) td:nth-child(1) {
+	font-weight: bold;
+	font-size: 28px;
+}
+.neighbor-estate .row .right table tr:nth-child(1) td:nth-child(2) {
+	font-size: 24px;
+}
+.neighbor-estate .row .right table tr:nth-child(2) td:nth-child(1) {
+	font-size: 24px;
+	color: #999;
+	vertical-align: middle;
+}
+.neighbor-estate .row .right table tr:nth-child(2) td:nth-child(1) img {
+	margin-left: 5px;
+	vertical-align: middle;
+}
+.neighbor-estate .row .right table tr:nth-child(2) td:nth-child(2) {
+	font-size: 30px;
+	color: #fd5056;
+}
+/*2.0新加涨幅预测样式*/
+.td-highest {
+	line-height: initial;
+}
+.td-lowest {
+	line-height: initial;
+}
+.riseForecast-up-icon {
+	/* margin-bottom: 1px; */
+	width: 22px;
+	/* background-position: 1px 0; */
+	height: 22px;
+	display: inline-block;
+}
+.riseForecast-up-text {
+	vertical-align: sub;
+	margin: 0 10px;
+	font-size: 50px;
+	font-weight: bold;
+	color: #fd5056;
+}
+.riseForecast-up-rate {
+	color: #fd5056;
+	font-size: 26px;
+}
+.riseForecast-down-icon {
+	margin-bottom: 12px;
+	width: 22px;
+	background-position: 1px 0;
+	height: 2px;
+	display: inline-block;
+}
+.riseForecast-down-text {
+	vertical-align: sub;
+	margin: 0 10px;
+	font-size: 50px;
+	color: #00aca8;
+	font-weight: bold;
+	letter-spacing: -.1rem;
+}
+.riseForecast-down-rate {
+	color: #00aca8;
+	font-size: 26px;
+}
+.riseForecast-up-result {
+	font-size: 50px;
+	color: #fd5056;
+	font-weight: bold;
+}
+.riseForecast-down-result {
+	font-size: 48px;
+	color: #00aca8;
+}
+/*2.0新加*/
+.maximum {
+	width: 100%;
+	height: 94px;
+	display: flex;
+	justify-content: space-around;
+	align-content: center;
+}
+.maximum div:nth-child(1) {
+	/*float: left;*/
+    /*border: 1px solid #fd5056;*/
+    /*height: 42px;*/
+    /*display: inline-block;*/
+    /*line-height: 42px;*/
+	font-size: 36px;
+	/*border-radius: 25px 0 0 25px;*/
+	text-align: center;
+	width: 50%;
+	color: #666;
+}
+.maximum div:nth-child(2) {
+	/*background-color: white;*/
+    /*color: #FD5056;*/
+    /*float: right;*/
+    /*border: 1px solid #fd5056;*/
+    /*height: 42px;*/
+    /*display: inline-block;*/
+    /*line-height: 42px;*/
+	font-size: 36px;
+	/*border-radius: 0px 25px 25px 0px;*/
+	text-align: center;
+	/*width: 85px;*/
+	width: 50%;
+	color: #666;
+}
+/*版本2.1*/
+#lastTimeInfo {
+	font-size:14px
+}
+.lastTimeSawUp {
+	display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 16px;
+    height: 28px;
+    background: url(/images/esf/lastTimeUp.png) no-repeat left center;
+    background-size: auto 16px;
+}
+.lastTimeSawDown {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 15px;
+	width: 28px;
+	height: 28px;
+	background-image: url(../images/lastTimeDown.png);
+}
+#lastTimeSaw {
+	color: #fd5056;
+	background-color: #f5f9fc;
+	padding: 15px 0px 15px 0px;
+	font-size: 26px;
+}
+/*版本2.1新加房型成交排名，圆环在二手房基础上统一加上_New*/
+.block-agent-trade_New .chart-inner_New {
+	position: absolute;
+	width: 254px;
+	height: 254px;
+	top: 100px;
+	left: 50%;
+	margin-left: -127px;
+	font-size: 24px;
+	border-radius: 50%;
+}
+.block-agent-trade_New .chart-inner_New .chart-inner-text_New {
+	color: #666;
+	text-align: center;
+	vertical-align: middle;
+	padding: 1em;
+}
+.block-agent-trade_New .chart-inner_New .chart-inner-text_New span {
+	color: #FD5056;
+}
+.block-agent-trade_New .agent-trade-label_New {
+	position: absolute;
+	border-top: 1px solid #000;
+	width: 150px;
+}
+.block-agent-trade_New .agent-trade-label-right_New:after {
+	right: 0;
+}
+.block-agent-trade_New .agent-trade-label-left_New:after {
+	left: 0;
+}
+.block-agent-trade_New .agent-trade-label_New:after {
+	content: attr(data-label);
+	position: absolute;
+	bottom: 1px;
+	font-size: 24px;
+	color: #666;
+	max-width: 140px;
+	background-color: #FFF;
+}
+.block-agent-trade_New .agent-trade-label_New:after {
+	content: attr(data-label);
+	position: absolute;
+	bottom: 1px;
+	font-size: 24px;
+	color: #666;
+	max-width: 140px;
+	background-color: #FFF;
+}
+.frame-block-title_New {
+	position: relative;
+	font-size: 29px;
+	height: 94px;
+	line-height: 94px;
+	padding: 0 50px;
+	border-bottom: 1px solid #D7D7D7;
+	background-color: #FFF;
+}
+.block-agent-trade_New {
+	position: relative;
+	padding: 35px 0;
+}
+/*2.1新加具体房型分析*/
+.block-trade-chart_New {
+	padding: 0 35px;
+}
+.block-trade-chart_New .trade-chart-tab {
+	border-bottom: 1px solid #999;
+}
+.block-trade-chart_New .trade-chart-tab .tab {
+	display: inline-block;
+	font-size: 29px;
+	color: #999;
+	height: 75px;
+	line-height: 75px;
+	min-width: 105px;
+	text-align: center;
+}
+.block-trade-chart_New .trade-chart-tab .tab-active {
+	position: relative;
+	color: #FD5056;
+}
+.block-trade-chart_New .trade-chart-tab .tab-active:after {
+	content: '\200B';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -1px;
+	border-bottom: 4px solid #FD5056;
+}
+/*2.1新加房型内容样式*/
+.houseStyle_context {
+	border-bottom: 2px solid #efefef;
+	padding: 20px 0px;
+	color: #FD5056;
+	font-size: 24px;
+}
+.block-trade-chart_New ul li:last-child .houseStyle_context {
+	border-bottom: 0px solid #efefef;
+}
+.houseStyle_context div p {
+	font-size: 30px;
+}
+.houseStyle_context div:nth-child(1) {
+	padding-top: 15px;
+	width: 20%;
+	text-align: left;
+	font-size: 36px;
+}
+.houseStyle_context div:nth-child(2) {
+	width: 60%;
+	text-align: center;
+}
+.houseStyle_context div:nth-child(3) {
+	width: 20%;
+	text-align: center;
+}
+.houseStyle_context_down {
+	display: inline-block;
+	width: 28px;
+	height: 21px;
+	background: url('../images/houseStyle_context_down.png');
+	vertical-align: middle;
+}
+.houseStyle_context_up {
+	display: inline-block;
+	width: 28px;
+	height: 21px;
+	background: url('../images/houseStyle_context_up.png');
+	vertical-align: middle;
+}
+.houseStyle_context_same {
+	display: inline-block;
+	width: 26px;
+	height: 17px;
+	background: url('../images/houseStyle_context_same.png');
+	vertical-align: middle;
+}
+/**
+真房价联盟推荐经纪人
+*/
+.recommend-agent {
+	background: white;
+	box-sizing: border-box;
+	padding: 0 35px;
+}
+.recommend-agent .row .left {
+	padding-top: 30px;
+	width: 22%;
+	display: inline-block;
+	vertical-align: top;
+}
+.recommend-agent .row .left .photo {
+	background-image: url("../images/default-male.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 120px;
+	height: 120px;
+	border-radius: 60px;
+}
+.recommend-agent .row .right {
+	padding-top: 30px;
+	width: 78%;
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	border-bottom: solid 1px #D7D7D7;
+}
+.recommend-agent .row .right .top {
+	margin-top: 20px;
+}
+.recommend-agent .row .right .top .tag img {
+	height: 45px;
+}
+.recommend-agent .row .right .bottom {
+	margin-bottom: 50px;
+	position: relative;
+}
+.recommend-agent .row .right .bottom .icon {
+	position: absolute;
+	bottom: -2px;
+	right: 0;
+}
+.recommend-agent .row .right .bottom .icon img {
+	width: 90px;
+}
+.recommend-agent .row .right .bottom .icon div:nth-child(1) {
+	font-size: 20px;
+	margin: 10px 0;
+	text-align: center;
+}
+.recommend-agent .row .right .bottom span {
+	padding-left: 10px;
+}
+.recommend-agent .row .right .bottom span:nth-child(1) {
+	color: black;
+	font-size: 30px;
+}
+.recommend-agent .row .right .bottom span:nth-child(2) {
+	color: #666464;
+	font-size: 28px;
+}
+/**
+新-推荐
+*/
+.recommend-row {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 50px;
+}
+.recommend-row .col {
+	width: 33.3%;
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+}
+.recommend-row .col .red-border {
+	border: solid 1px #fd5056;
+}
+.recommend-row .col .green-border {
+	border: solid 1px #00ADA9;
+}
+.recommend-row .col .frame {
+	width: 85%;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.recommend-row .col:nth-child(1) .frame {
+	float: left;
+}
+.recommend-row .col:nth-child(2) .frame {
+	margin: 0 auto;
+}
+.recommend-row .col:nth-child(3) .frame {
+	float: right;
+}
+.recommend-row .col:nth-child(1) .frame {
+	margin: 0 auto;
+}
+.recommend-row .col:nth-child(2) .frame {
+	margin: 0 auto;
+}
+.recommend-row .col:nth-child(3) .frame {
+	margin: 0 auto;
+}
+.recommend-row .col .frame .red {
+	background: #fd5056
+}
+.recommend-row .col .frame .green {
+	background: #00ADA9
+}
+.recommend-row .col .frame .head {
+	font-size: 24px;
+	color: white;
+	padding: 10px;
+	border-radius: 10px 10px 0 0;
+}
+.recommend-row .col .frame .content {
+	font-size: 26px;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 15px 35px;
+	height: 100px;
+	width: 100%;
+	color: #666
+}
+/***本小区二手房***/
+.comm-mod {
+    background-color: #fff;
+    padding-top: 1px;
+	margin-bottom: 10px;
+}
+.pro-nav {
+    font-size: 15px;
+    line-height: 40px;
+    border-bottom: 1px solid #eaeaea;
+    overflow: hidden;
+    margin-top: 5px;
+    white-space: nowrap;
+}
+.nav-info {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    min-width: 100%;
+}
+.pro-nav span {
+    display: block;
+    padding: 0 24px;
+}
+.pro-nav span.on {
+    color: #FC5055;
+    border-bottom: 2px solid #FC5055;
+}
+.mod-house {
+    padding-left: 15px;
+}
+.pro {
+    max-height: 0;
+    overflow: hidden;
+}
+.pro-show {
+    max-height: 710px;
+    overflow: hidden;
+}
+.mod-house .house-li {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    padding: 15px 15px 15px 0;
+    border-top: 1px solid #f4f4f4;
+}
+.mod-house .more-house {
+    border-top: 0;
+    font-size: 14px;
+    color: #FC5055;
+    padding: 11px 0 15px 0;
+}
+.mod-house .house-li:first-child {
+    border-top: 0;
+}
+.mod-house .house-info {
+    -webkit-box-flex: 1;
+    padding-left: 10px;
+    line-height: 20px;
+}
+.mod-house .house-info .htly {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.comm-mod .pro h3, .comm-mod .rim h3, .house-info p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.f01 {
+    font-size: 14px;
+    color: #999;
+}
+.comm-ad, .info-des, .type-info, .around-info li, .broker-info {
+    display: -webkit-box;
+}
+.info-des span {
+    display: block;
+    -webkit-box-flex: 1;
+}
+.info-des .price {
+    color: #FC5055;
+    font-size: 14px;
+    text-align: right;
+}
+.info-des .price em {
+    font-size: 17px;
+    font-weight: bold;
+}
+.info-label span {
+    font-size: 12px;
+    color: #fa8084;
+    border: 1px solid #fa8084;
+    padding: 0 1px;
+    margin-right: 5px;
+}
+.other-tl {
+	border: 0;
+    height: 18px;
+    line-height: 18px;
+    padding-top: 15px;
+    box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;	
+}
+@media screen and (max-width:320px){
+.head-sale-info .info-bargain {
+    position: relative;
+    margin: 10px 0;
+    width: 60%;
+    border-right: solid 1px white;
+}
+.head-sale-info .info-price {
+	display: inline-block;
+	font-size: 32px;
+	font-weight: bolder;
+	font-family: '方正正粗黑简体';
+}
+.head-sale-info .info-room {
+	position: relative;
+	width: 40%;
+	margin: 13px 0 15px 15px;
+}
+.head-sale-info .info-salecount {
+	display: inline-block;
+	font-size: 32px;
+    padding-top: 4px;
+	font-family: '方正正粗黑简体';
+	font-weight: bolder;
+}
+}

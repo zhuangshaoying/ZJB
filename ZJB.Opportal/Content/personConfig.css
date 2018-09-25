@@ -1,0 +1,74 @@
+@charset "utf-8";
+/*
+* @Author:      penghg
+* @Update:      2014.05.09
+* @Update by:   penghg
+* @require:     personConfig.css
+* @overview:    个人设置样式 
+*/
+.waterMark-main {
+	width:580px;
+	height:380px
+}
+.personConfig-uploadType {
+	line-height:32px;
+	padding:0 0 0 12px;
+	font-size:12px;
+}
+.personConfig-main-left {
+	color:#f00;
+	font-weight:bold;
+	width:60px;
+	text-align:left
+}
+.personConfig-bottom {
+	height:50px;
+	padding:15px 0 0 0;
+	text-align:center;
+}
+.personConfig-website {
+	color:#f00;
+	font-weight:bold;
+}
+.personConfig-website-input {
+	display:inline-block;
+	width:100px;
+	text-align:left
+}
+.personConfig-website-right {
+	margin-left:60px
+}
+/*水印图片*/
+	.personConfig-watermark-list {
+	height:100px;
+	width:250px;
+	float:left;
+	margin:8px;
+	text-align:center
+}
+.personConfig-watermark-pic {
+	display:block;
+	height:60px;
+	width:240px;
+	padding:5px;
+	border:1px solid #ccc;
+	background-color:#b9eca9;
+}
+.personConfig-font {
+	height:40px;
+	line-height:40px;
+	font-size:12px
+}
+/**底部按钮**/
+.btn-saveHouse {
+	width:100px;
+	height:32px;
+	text-align:center;
+	font-size:14px;
+	font-weight:bold;
+	color:#fff;
+	background-color:#72c962;
+	border-radius:10px;
+	border:none;
+	cursor:pointer;
+}

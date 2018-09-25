@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+<meta name="format-detection" content="telephone=no, email=no">
+<title>查房价-住家帮</title>
+<meta name="applicable-device" content="mobile" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<script src="js/jquery-1.8.3.js"></script>
+<script src="http://www.zhujia001.com/Scripts/Esf/iscroll.js"></script>
+<script type="text/javascript" src="js/echarts.min.js"></script>
+<link type="text/css" rel="stylesheet" href="css/iconfont.css">
+<link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/common.css">
+<link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/vendor.css">
+<link type="text/css" rel="stylesheet" href="css/xqdetail.css">
+<link href="http://www.zhujia001.com/Css/Esf/swipe.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="main">
+  <div class="focus-opt"><a href="javascript:;" onclick="goback()" class="back" style="z-index: 100; opacity: 1;"><i></i></a></div>
+  <!--焦点图-->
+  <div class="page-swipe">
+    <div class="swipe-box">
+      <div id="slider" class="swipe" style="visibility: visible;">
+        <div class="swipe-wrap">
+          <figure>
+            <div class="wrap2016">
+              <div class="image" style="background: url(http://loubaimg.xmhouse.com/56A74846051A1E332E4282CC8EF5C948.jpg) center no-repeat; background-size: cover"></div>
+            </div>
+          </figure>
+          <figure>
+            <div class="wrap2016">
+              <div class="image" style="background: url(http://loubaimg.xmhouse.com/28E86A37F3689DBB1FB1BE2046A0DEF6.jpg) center no-repeat; background-size: cover"></div>
+            </div>
+          </figure>
+          <figure>
+            <div class="wrap2016">
+              <div class="image" style="background: url(http://loubaimg.xmhouse.com/E9E054CC07869BEE55D6E0968B3A68AC.png) center no-repeat; background-size: cover"></div>
+            </div>
+          </figure>
+        </div>
+        <span class="pic-count" id="pic-count"><span class="count-cur">1</span>/3</span> </div>
+      <nav>
+        <ul id="position">
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <script src="http://www.zhujia001.com/Scripts/Esf/swipe2016.js"></script> 
+  <script>
+    //头图轮显
+    var slider = Swipe(document.getElementById('slider'), {
+        auto: false,
+        continuous: true,
+        callback: function (pos) {
+            $("#pic-count").find("span").html(pos + 1);
+        }
+    });
+    </script> 
+  <!--焦点图/E-->
+  
+  <section class="xqCaption mb8">
+    <h1>禹洲华侨海景城</h1>
+    <div class="comm-ad">
+      <p>地址：普陀-长征 真光路688号</p>
+      <a href="javascript:;" class="ad-ico" rel="nofollow"></a> </div>
+    <div class="price-infos-mod"> <a class="item" href="javascript:;">
+      <div class="txt-c">
+        <p class="price">68990</p>
+        <p class="desc-text">5月均价（元/m²）</p>
+      </div>
+      </a> <a class="item" href="javascript:;">
+      <div class="txt-c">
+        <p class="price"><span class="up-arrow">2.32%</span></p>
+        <p class="desc-text">30天环比变化</p>
+      </div>
+      </a> <a class="item last-item" href="javascript:;">
+      <div class="txt-c">
+        <p class="price"><span class="dn-arrow">20.21%</span></p>
+        <p class="desc-text">去年同期变化</p>
+      </div>
+      </a> </div>
+  </section>
+  
+  <!--小区简介begin-->
+  <div class="comm-mod comm-brief-mod">
+    <h2 class="mod-tit">小区简介</h2>
+    <div class="header-field"> <span class="item"><i class="label">物业类型：</i>公寓</span> <span class="item"><i class="label">物业费：</i>1.50元/m²/月</span> <span class="item"><i class="label">竣工时间：</i>2010年</span> <span class="item"><i class="label">绿化率：</i>45%</span> <span class="item"><i class="label">总&nbsp;&nbsp;户&nbsp;&nbsp;数：</i>2680户</span> <span class="item"><i class="label">容积率：</i>暂无数据</span> </div>
+    <dl class="comm-other-field gkdt" style="display:none">
+      <dt>开&nbsp;&nbsp;发&nbsp;&nbsp;商：</dt>
+      <dd>上海西上海上食科技发展有限公司</dd>
+      <dt>物业公司：</dt>
+      <dd>上海捷艾尔物业管理有限公司</dd>
+    </dl>
+    <div class="comm-survey-field gkdt" style="display:none">
+      <h1 class="survey-hd">小区概况：</h1>
+      <p>西上海君廷项目位于嘉定区安亭镇国际汽车城板块，曹安公路4908号，同济大学嘉定校区距离本案仅50米，是未来新安亭镇的核心位置。该项目是低密度全岛式新海派纯别墅社区。项目周围自然生态河流环绕，形成全岛式地形形态，全部打造联排、双拼别墅，容积率仅仅在0.4，最大限度的实现了亲地、亲近自然，是区域内无法复制的稀缺产品。。项目一期共规划134套联排别墅，面积197㎡—250㎡，全部赠送地下室及车库。。</p>
+    </div>
+    <a href="javascript:void(0);" class="more_xq"></a></div>
+  <!--小区简介end--> 
+  
+  <!--位置及周边begin-->
+  <div class="comm-mod comm-brief-mod">
+    <h2 class="mod-tit">位置及周边</h2>
+    <a href="javascript:;" class="comm-map" id="commMap"> <img class="mapimg" src="http://api.map.baidu.com/staticimage?center=121.205143,31.287223&amp;width=375&amp;height=175&amp;markerStyles=l&amp;zoom=17" data-center="121.205143,31.287223"> <span class="cover-markers"><b class="name">禹洲华侨海景城</b></span> </a> </div>
+  <!--位置及周边end--> 
+  
+  <!--均价走势begin-->
+  <div class="comm-mod comm-brief-mod">
+    <h2 class="mod-tit">均价走势</h2>
+    <a class="trend-tit" href="javascript:;">
+    <p>本月均价<span class="f02">28666</span>元/m²<span class="st up-arrow">0.39%</span></p>
+    </a>
+    <div class="fj-chart" id="chart_outer">
+    	<div class="myechart" id="priceechart"></div>
+    </div>
+    <div class="fj-nores" style="display:none;">
+      <div> <i></i>
+        <p>暂无数据</p>
+      </div>
+    </div>
+  </div>
+  <!--位置及周边end--> 
+  
+  <!--小区二手房begin-->
+  <div class="comm-mod comm-brief-mod">
+    <h2 class="mod-tit">小区二手房</h2>
+    <ul class="houseList bb">
+      <li><a href="http://www.zhujia001.com/Esf/EsfDetail?houseid=113.html" class="uuid">
+        <div class="img"><img src="images/240x180c.jpg" onerror="javascript:this.src='images/loadingpic.jpg';" alt=""></div>
+        <div class="txt">
+          <h1>稳定出售华侨海景城 读大同,电梯高层3房,户型方正华</h1>
+          <p><span class="new thin">830万</span>3室2厅 112.43㎡</p>
+          <p>禹洲华侨海景城</p>
+          <div class="stag"><span>优质教育</span></div>
+        </div>
+        </a></li>
+      <li><a href="http://www.zhujia001.com/Esf/EsfDetail?houseid=113.html" class="uuid">
+        <div class="img"><img src="images/240x180c.jpg" onerror="javascript:this.src='images/loadingpic.jpg';" alt=""></div>
+        <div class="txt">
+          <h1>稳定出售华侨海景城 读大同,电梯高层3房,户型方正华</h1>
+          <p><span class="new thin">830万</span>3室2厅 112.43㎡</p>
+          <p>禹洲华侨海景城</p>
+          <div class="stag"><span>优质教育</span></div>
+        </div>
+        </a></li>
+    </ul>
+    <a href="http://www.zhujia001.com/esf/list" class="more_text">查看更多（共58套）</a> </div>
+  <!--小区二手房end--> 
+  
+  <!--小区租房begin-->
+  <div class="comm-mod comm-brief-mod">
+    <h2 class="mod-tit">小区租房</h2>
+    <ul class="houseList bb">
+      <li><a href="http://www.zhujia001.com/Esf/EsfDetail?houseid=114" class="uuid">
+        <div class="img"><img src="images/240x180c.jpg" onerror="javascript:this.src='images/loadingpic.jpg';" alt=""></div>
+        <div class="txt">
+          <h1>华侨海景城精装修2室出租,先到先得!</h1>
+          <p><span class="new thin">7000元/月</span>2室2厅 整租</p>
+          <p>思明-思北</p>
+          <div class="stag"><span>精装修</span><span>拎包入住</span></div>
+        </div>
+        </a></li>
+      <li><a href="http://www.zhujia001.com/Esf/EsfDetail?houseid=114" class="uuid">
+        <div class="img"><img src="images/240x180c.jpg" onerror="javascript:this.src='images/loadingpic.jpg';" alt=""></div>
+        <div class="txt">
+          <h1>华侨海景城精装修2室出租,先到先得!</h1>
+          <p><span class="new thin">7000元/月</span>2室2厅 整租</p>
+          <p>思明-思北</p>
+          <div class="stag"><span>精装修</span><span>拎包入住</span></div>
+        </div>
+        </a></li>
+    </ul>
+    <a href="http://www.zhujia001.com/esf/list?tradetype=3" class="more_text">查看更多（共18套）</a> </div>
+  <!--小区租房end--> 
+  
+  <!--周边小区推荐begin-->
+  <div class="comm-mod comm-brief-mod">
+    <h2 class="mod-tit">周边小区推荐</h2>
+    <ul class="arealist bb">
+      <li class="pdY14"><a href="xiaoqudetail.html">
+        <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+        <div class="info">
+          <h1 class="round"> 新景七星公馆 </h1>
+          <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+          <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+          <p>二手房7套</p>
+        </div>
+        </a></li>
+    </ul>
+    <a href="xiaoqulist.html" class="more_text">更多周边小区</a> </div>
+  <!--周边小区推荐end--> 
+</div>
+<div style="height:49px"></div>
+<div class="floatBtns2">
+  <div class="right-btn">
+    <div class="flexbox"> 
+      <!-- 看房优惠 --> 
+      <a href="http://www.zhujia001.com/esf/Publish" class="tj-yh yykf"> <i></i> 我要卖房 </a> </div>
+  </div>
+</div>
+<script language="javascript">
+var goback = function () {
+	history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.com/';
+}
+$(function(){
+	$(".more_xq").bind("click",function(){
+		$(this).toggleClass("up");
+		$(".gkdt").toggle();
+	})	
+})
+</script>
+<script language="javascript">
+var mychart=echarts.init(document.getElementById("priceechart"));
+var option = {
+    tooltip: {
+        trigger: 'axis',
+		axisPointer: {
+			lineStyle: {
+				color: "#999",
+				width: 1,
+				type: "solid"
+			}
+		}
+	},		
+    legend: {
+		y:"bottom",
+        data:['禹洲华侨海景城房价','集美区房价']
+    },
+    grid: {
+        left: '3%',
+        right: '2%',
+        bottom: '12%',
+		top: "10%",
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            //saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+		axisLine: {
+				show: !0,
+				lineStyle: {
+					color: "#333",
+					width: .3
+				}
+			},
+			splitLine: {
+				show: !0,
+				lineStyle: {
+					color: "#e9e9e9",
+					width: .5
+				}
+			}
+    },
+   yAxis: [
+        {
+            type: 'value',
+            name: '均价（元/平米）',
+            min: 10000,
+            max: 70000,
+            interval: 10000,
+            axisLabel: {
+                formatter: '{value}'
+            },
+			boundaryGap: [0, .1],
+			/*splitArea: {
+				show: !0,
+				areaStyle: {
+					type: "dashed",
+					color: ["white", "#fcfcfc"]
+				}
+			},*/
+			axisLine: {
+				show: !0,
+				lineStyle: {
+					color: "#333",
+					width: .3
+				}
+			},
+			splitLine: {
+				show: 0,
+				lineStyle: {
+					color: "#e9e9e9",
+					width: .5
+				}
+			}
+        },
+        {
+            type: 'value',
+            name: '成交量（套）',
+			boundaryGap: [.9, .1],
+            min: 10000,
+            max: 70000,
+            interval: 10000,
+            axisLabel: {
+                formatter: '{value}',
+				show: 0
+            },
+			axisLine: {
+				show: !0,
+				lineStyle: {
+					color: "transparent",
+					width: .3
+				}
+			},
+			splitLine: {
+				show: !0,
+				lineStyle: {
+					color: "#e9e9e9",
+					width: .5
+				}
+			}
+        }
+    ],
+    series: [
+        {
+			name: "禹洲华侨海景城房价",
+			type: "line",
+			yAxisIndex: 0,
+			symbol: "circle",
+			symbolSize: 3,
+			itemStyle: {
+				normal: {
+					color: "#ff6666"
+				}
+			},
+            data:[20000, 36000, 32000, 45000, 31000, 28000, 36000, 38000, 39000, 48000, 49000, 54000]
+        },
+        {
+            name: "集美区房价",
+			type: "line",
+			yAxisIndex: 1,
+			symbolSize: 3,
+			itemStyle: {
+				normal: {
+					color: "#a6b5ee",
+				}
+			},
+            data:[24000, 32000, 30000, 50000, 21000, 28000, 12000, 18000, 48000, 65000,69000, 52000]
+        }
+    ]
+};
+mychart.setOption(option);
+</script>
+</body>
+</html>

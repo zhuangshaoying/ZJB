@@ -1,0 +1,22 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddNewUser</title>
+</head>
+<body>
+    <div>
+        生成邀请码中……
+        <script type="text/javascript">
+            var url = "http://fchezi.com/User/Register?code=@(ViewBag.Code)";
+            window.location.href = url;
+
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+﻿@model ZJB.Api.Models.PublicUserModel
+
+@{
+    Layout = null;
+    string companyName = ViewBag.CompanyName;
+    string companyStoreName = ViewBag.CompanyStoreName;
+    string otherInfo = "({0},{1})";
+    string iframeUrl = (string)ViewBag.Url;
+    string menu = (string)ViewBag.Menu;
+    int points = Model.Points;
+    int HaveTishiPoint = 0;
+    if (Request.Cookies["FCHEZI_PointTip"]!=null)
+    {
+        int userId=0;
+        int.TryParse(ZJB.Core.Utilities.CryptoUtility.TripleDESDecrypt(Request.Cookies["FCHEZI_PointTip"].Value), out userId);
+        if(userId==Model.UserID)
+        {
+            HaveTishiPoint = 1;
+        }
+    }
+    if (HaveTishiPoint == 0 && points > 0)
+    {
+    HttpCookie ex = new HttpCookie("FCHEZI_PointTip", ZJB.Core.Utilities.CryptoUtility.TripleDESEncrypt(Model.UserID.ToString()));
+    ex.Expires = DateTime.Now.Date.AddDays(1);
+    Response.Cookies.Add(ex);
+    }
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>我的住家帮--住家帮</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/totop.css" rel="stylesheet" />
+    <link href="~/css/main.css?v=1.0" rel="stylesheet" />
+    <link href="~/Css/task.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script src="~/Scripts/main.js?v=1.9121"></script>
+    <script src="~/Scripts/jquery.timers-1.2.js"></script>
+    <script src="~/Scripts/checkInput.js"></script>
+    <script src="~/Scripts/constants.js"></script>
+    <script src="~/Scripts/totop.js"></script>
+    <script src="~/Scripts/common.js"></script>
+    <script src='~/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+    <script src='~/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+
+</head>
+    <body>
+        <input id="contextPath" value='' type="hidden" />
+
+        <input id="staticPath" value='' type="hidden" />
+
+        <input id="postTypeIndex" value='1' type="hidden" />
+		
+		<input id="ceshiid" value='0' type="hidden" />
+        <div class="main">
+            <div id="header_background">
+                <div id="header_center" class="clearfix">
+					<div class="lizhi clearfix">
+						<span class="yuyan" id="mylogo_text">知世故而不世故是最善良的成熟。</span>
+						<div class="heartspace">
+                    		<img src="/images/heart2.png" alt="" class="heart J_heart" id="logo_text_like">
+                		</div>
+						<div class="zancount">
+							<span class="J_zancount" id="logo_text_count">2027</span>次赞
+						</div>
+					</div>
+                    <div id="header_logo"><a href="/Home"></a></div>
+                    <div class="loginOut"><a href="@Url.Action("LoginOut","User")">安全退出</a></div>
+                    <div id="header_note" class="header-note">
+                        <span class="col-000">@Model.Name</span>
+                        <input type="hidden" id="city" value="592" />
+                        <span class="col-000"></span>
+                        <a href="javascript:;" onclick="hrefLinkNewHouseNotice()" class="account_inbox_switch">
+                            <i class="icon_inbox"></i>
+                             <span id="newhouseCount" style="display: none"></span></a>
+                    </div>
+                </div>
+            </div>
+			
+            <div class="container_box" id="container_box">
+                <div class="col_side" id="col_side">
+                    <div id="menu_function" class="menu_box">
+                        <dl class="menu">
+                            <dt class="menu_title border-index" onclick="hrefLink('@Url.Action("Index", "Social")')"><i class="icon_menu function"></i><span class="main-font">管理主页</span> </dt>
+                        </dl>
+                        @*<dl class="menu">
+                            <dt class="menu_title border-index" onclick="hrefLink('@Url.Action("Index", "Task")')"><i class="icon_menu taskicon"></i><span class="main-font" style="color:#2f9833;font-size: 16px;font-weight: bold;">领积分</span><i class="icon_common new"></i> </dt>
+                        </dl>*@
+                        <dl class="menu menu_import menu_open">
+                            <dt class="menu_title"><i class="icon_menu manage"></i><span class="main-font">房源发布</span> </dt>
+                            <dd class="menu_item">
+                                <a id="importSell" href="javascript:hrefLink('@Url.Action("GetHouse", "House",new {postType=1})','出售录入')">出售录入</a>
+                                <a id="importRent" href="javascript:hrefLink('@Url.Action("GetHouse", "House",new {postType=3})','出租录入')">出租录入</a> 
+                                <a id="houseManagerSell" href="javascript:hrefLink('@Url.Action("GetHouseMainView", "House",new {postType=1})','出售管理')">出售管理</a> 
+                                <a id="houseManagerRent" href="javascript:hrefLink('@Url.Action("GetHouseMainView", "House",new {postType=3})','出租管理')">出租管理</a> 
+                                @*<a id="appointment" href="javascript:hrefLink('@Url.Action("AppointLogView", "Appoint")','预约管理')">预约管理</a> 
+                                <a id="houseShare" href="javascript:hrefLink('@Url.Action("ShareBuilding", "House")')">房源共享</a> 
+                                <a id="releaseLog" href="javascript:hrefLink('@Url.Action("GetPostLogView", "PostLog")','发布日志')">发布日志</a>
+                                <a id="snatch" href="javascript:hrefLink('@Url.Action("MoveHouse", "House")')">房源搬家</a>*@ 
+                            </dd>
+                        </dl>
+                        @*<dl class="menu">
+                            <dt class="menu_title"><i class="icon_menu service"></i><span class="main-font">云刷新</span> </dt>
+                            <dd class="menu_item"><a id="refresh" href="javascript:hrefLink('@Url.Action("Refresh", "House")')">刷新设置</a> <a id="refreshStat" href="javascript:hrefLink('@Url.Action("Refresh", "House", new { tabIndex = 1 })')">刷新统计</a> <a id="refreshLog" href="javascript:hrefLink('@Url.Action("Refresh", "House", new { tabIndex = 2 })')" >刷新日志</a> </dd>
+                        </dl>*@
+                        <dl class="menu" style="display:none">
+                            <dt class="menu_title"><i class="icon_menu statistics"></i><span class="main-font">云采集</span></dt>
+                            <dd class="menu_item"><a id="houseCollect1" href="javascript:hrefLink('@Url.Action("HouseCollect", "House", new { postType = 1, city=592 })')">个人出售</a> <a id="houseCollect3" href="javascript:hrefLink('@Url.Action("HouseCollect", "House", new { postType = 3, city=592 })')">个人出租</a> <a id="houseCollect2" href="javascript:hrefLink('@Url.Action("HouseCollect", "House", new { postType =2, city=592 })')">个人求购</a> <a id="houseCollect4" href="javascript:hrefLink('@Url.Action("HouseCollect", "House", new { postType = 4, city=592 })')">个人求租</a> 
+                                @*<a id="HouseRemind" href="javascript:hrefLink('@Url.Action("HouseRemind", "House")')">提醒设置</a>*@
+                                <a id="houseCollection" href="javascript:hrefLink('@Url.Action("HouseCollection", "House", new { postType = 1, city=592 })')">我的收藏</a> 
+                            </dd>
+                        </dl>
+                      
+                        @*<dl class="menu">
+                            <dt class="menu_title border-index" onclick="hrefLink('@Url.Action("AppDownLoad", "Home")')"><i class="icon_menu downloadAPP"></i><span class="main-font" >免费下载</span></dt>
+                        </dl>*@
+                        <dl class="menu">
+                            <dt id="personManagerDT" class="menu_title"><i class="icon_menu setting"></i><span class="main-font">个人管理</span> </dt>
+                            <dd class="menu_item">
+                                @*<a id="webManager" href="javascript:hrefLink('@Url.Action("SiteManageView", "PersonManage")')">站点管理</a>*@ 
+                                <a id="houseDescManager" href="javascript:hrefLink('@Url.Action("GetAllHouseDescs", "House")')">描述管理</a> 
+                   
+                                @*<a id="myImgManager" href="javascript:hrefLink('site/getMyImages.html')">图库管理</a>
+    <a id="personSet" href="javascript:hrefLink('site/getPersonConfig.html')">个性设置</a>
+    <a id="updPasswd" href="javascript:hrefLink('site/getUpdPass.html')">修改密码</a>*@ 
+                 
+                                <a id="brokerInfo" href="javascript:hrefLink('@Url.Action("BrokerInfo", "User")')">个人资料</a> 
+                                <a id="updPasswd" href="javascript:hrefLink('@Url.Action("UpdatePasswordView", "PersonManage")')">修改密码</a>
+                                 <a href="@Url.Action("LoginOut","User")">安全退出</a> 
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="col_main" id="col_main_function">
+                    <iframe id="main-iframe" width="100%" height="100%" scrolling="auto" border="0" frameborder="no" src="@Url.Action("Index","Social")" onload="loadingHide()"></iframe>
+                    <!-- 正在加载中828 -->
+                    <div class="loading-bg"></div>
+                    <div class="loading" style="display: none">
+                        <img width="100" height="100" src="/images/loading.gif"></img>
+                    </div>
+                </div>
+
+                <!-- QQ联系 -->
+                <div id="qqcode-main" style="display: none">
+                    <div class="qqcode">
+                        <div class="qqcode-header">在线客服</div>
+                        <ul class="qqcode-content">
+                            <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2605757603&site=qq&menu=yes"><span class="qqcode-content-img" title="点击咨询"></span><span class="qqcode-content-font">客服</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="qqcode-hide"><a href="javascript:qqcodeHide()">关闭</a> </div>
+                </div>
+				<!-- 返回顶部 -->
+				<div id="lrToolRb" class="lr-tool-rb"> <a class="lr-gotop" title="返回顶部"><span class="lricon"></span></a><!--<a class="lr-qrcode" title="单击展开二维码"><span class="lricon"></span><br/>
+				  微信关注</a>--> <a class="yj-qrcode" title="意见反馈" href="javascript:void(0)" onclick="art.dialog({ content: document.getElementById('mysupport'), id: 'EF893L' ,title:'意见反馈'}); "><span class="yjicon"></span><br/>
+				  意见反馈</a><a class="lr-qqcode" title="联系客服"><img class="qqicon" width="24" height="26" src="/images/qq.png"></img><br/>
+				  联系客服</a>
+				  <div class="lr-pop"> <span class="lr-close">关闭</span><div style="line-height:24px;padding:12px 18px;color:#333">房产盒子微信公众账号</div></div>
+				  <div class="del-tip"> <span class="lr-close">关闭</span> </div>
+				</div>
+                <!-- 公告通知 -->
+                <div id="noticeTip" style="display: none"></div>
+
+                <!-- 账号续费 -->
+
+                <!-- 刷新没有权限提示 -->
+                @*<div class="renewalTipForRefresh renewalTip">
+                    <ul class="renewalTip-content" style="width: 400px">
+                        <li>,您好,您的房产盒子账号暂时没有开通云刷新功能或者账号已到期。</li>
+                        <li>为了不影响您的使用,请及时联系客服,谢谢合作！<a type="button" class="renewal-close" href="javascript:renewalTipHide()">知道了</a></li>
+                    </ul>
+                </div>*@
+
+                <!-- 房源提醒 -->
+                <div class="newHouse"><a href="javascript:colseModifyTip()">
+                                          <img width="20" height="20" src="/images/houseTip.gif"></img>
+                                          <span id="newHouse-content">有新房源,请关注</span> </a></div>
+            </div>
+            <!--<div class="main-footer"></div>-->
+        </div>
+        <div id="mysupport" style="display: none">
+            <textarea name="FeedbackContent" id="FeedbackContent" class="fankui" placeholder="来说两句吧..."></textarea>
+            <div class="tjbtn"><input type="button" name="btn" id="btn" class="tijiao_btn" value="提交建议" onclick="addFeedback()" /></div>
+        </div>
+        <!--提示框-->
+        <div class="modal-backdrop fade" style="display:none;"></div>
+        <div class="modal hide task-notify-modal fade jifen_model" style="margin-top: 0px" aria-hidden="false" style="display:none;">
+            <div class="modal-content getjifen"> <a href="javascript:;" onclick="TipFadeOut()" class="modal-close-icon">×</a>
+                <div>
+                    <div class="no_jife"></div>
+                    <h3 id="firstInShow" class="jfpad">盒子提醒:您当前积分:@(Model.Points),积分扣完账号就不能使用了(每日系统消耗20积分),每日发房源、查看个人房源等操作均能轻松得到积分,赶紧去赚更多积分吧！</h3>
+                    <div class="action"><a href="javascript:hrefLink('@Url.Action("Index", "Task")','领积分');TipFadeOut()"  class="jifen-btn">如何赚更多积分</a> </div>
+                </div>
+            </div><div style="display:none">
+                      <script>
+                          var _hmt = _hmt || [];
+                          (function() {
+                              var hm = document.createElement("script");
+                              hm.src = "//hm.baidu.com/hm.js?cf86da03fe349c15675cdde921c99019";
+                              var s = document.getElementsByTagName("script")[0];
+                              s.parentNode.insertBefore(hm, s);
+                          })();
+                      </script>
+</div>
+        </div>
+      
+        <script src="/Scripts/HeadLogoScripts.js?v=1.2" language="javascript"></script>
+        <script type="text/javascript">
+				var logo_text_count=Math.ceil(Math.random(10)*1000)+parseInt(logo_text_count);
+				$("#mylogo_text").html(logo_text);
+                var _iframeUrl = "@iframeUrl";
+                var _menu = "@menu";
+                $(function () {
+					var logoTextCount = $('#logo_text_count');
+                	logoTextCount.html(logo_text_count);
+                    if (_iframeUrl != "" && _menu != "") {
+                        $("dl.menu").removeClass("menu_open");
+                        $("#" + _menu).parents("dl.menu").addClass("menu_open");
+                        $("#" + _menu).click();
+                        $("#main-iframe").attr("src",_iframeUrl);
+                    }
+					$(".heartspace").click(function() {
+					/*心跳效果*/
+					logo_text_count++;
+					var remove = function() {
+						$("#logo_text_count").html(logo_text_count);
+						$(".heart").removeClass("heartBig");
+					}
+					$("#logo_text_like").addClass("heartBig");
+					setTimeout(remove, 1000);
+				});
+                });
+                function TipFadeOut() {
+                    $(".modal-backdrop").removeClass("in").hide();
+                    $(".modal").animate({ top: "0%" }, 50).css("opacity", "0");
+                    setTimeout(function () { $(".modal").hide(); }, 1000);
+                }
+                $(function () {
+                    var isTishiPoint=@(points)<=40?false:false;//是否需要提醒
+                    var isTest=@(Model.UserID)<=1000021?true:false;//是否测试
+                    var haveTishi=@(HaveTishiPoint)==1?true:false;//今天是否提醒过
+                    //if(isTest)
+                    //if(isTest&&!haveTishi)
+                    if(isTishiPoint&&!haveTishi)
+                    {
+                        $(".modal-backdrop").addClass("in").show();
+                        $(".modal").animate({ top: "25%" }, 150).css("opacity", "1").show();
+                    }
+                });
+        </script>
+    </body>
+			
+</html>

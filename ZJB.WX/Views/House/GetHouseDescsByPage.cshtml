@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Api.Entity
+@model  List<ZJB.Api.Entity.HouseUserDescribe> 
+
+
+<div class="desc-content" style="height:350px">
+
+    @{
+    foreach (HouseUserDescribe item in Model)
+    {
+
+        <div class="desc-list">
+
+            <p class="desc-name">@item.Title</p>
+
+            <div class="desc-list-content">
+
+                @Html.Raw(item.HouseDescribe)
+
+            </div>
+
+        </div>
+
+    }
+}
+
+
+</div>
+<div class="saleManager-bottom">
+    <div class="float-l">
+        <div id="desc-fanye" class="commom-fanye">
+            <script type="text/javascript">
+
+
+        /*翻页控件*/
+        $(function () {
+            if ('@(ViewBag.PageIndex)' != '' && '@(ViewBag.PageTotal)' > 1) {
+                $("#desc-fanye").paginate({
+                    count: '@(ViewBag.PageTotal)',
+                    start: 1,
+                    display: 6,
+                    border: false,
+                    text_color: '#50b63f',
+                    text_hover_color: '#fff',
+                    background_color: '#fff',
+                    background_hover_color: '#50b63f',
+                    images: false,
+                    mouse: 'click',
+                    onChange: function () {
+                        $("#pageNow").val($(".jPag-current").html());
+                        getHouseDescsByPage();
+                    }
+                });
+            }
+
+            $(".desc-list-content").die().live("click", function () {
+
+              parent.$("#main-iframe")[0].contentWindow.setDescContent($(this).html());
+            });
+
+
+            $(".houseDesc-input").die().live("keyup", function () {
+                getHouseDescsByTitle();
+            });
+
+            function getHouseDescsByTitle() {
+                $.ajax({
+                    url: "/house/getHouseDescsByPage",
+                    type: "post",
+                    data: {
+                        "title": $(".houseDesc-input").val(),
+                        "postType": $("#postType").val()
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        $(".desc-main").html(result);
+                    }
+                });
+            }
+
+            function getHouseDescsByPage() {
+                $.ajax({
+                    url: "/house/getHouseDescsByPage",
+                    type: "post",
+                    data: {
+                        "pageNow": $("#pageNow").val(),
+                        "postType": $("#postType").val(),
+                        "title": $(".houseDesc-input").val()
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        $(".desc-main").html(result);
+                    }
+                });
+            }
+        });
+            </script>
+        </div>
+    </div>
+</div>
+

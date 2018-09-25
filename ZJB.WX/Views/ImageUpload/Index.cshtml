@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = null;
+    }
+<!DOCTYPE html>
+
+<html>
+<head>
+     <meta name="viewport" content="width=device-width" />
+	 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>我的盒子--房产盒子</title>
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+     <script type="text/javascript">
+         var CallBack;
+         function uploadSelect() {
+             if (parent && parent.beginUpload) {
+                 parent.beginUpload();
+             }
+             jQuery("#form1").submit();
+         }
+         function UploadComplete(data) {
+             if (parent.uploadFileHandler.UploadComplete) {
+                 parent.uploadFileHandler.UploadComplete(data);
+             }
+         }
+         function UploadFailed(msg) {
+             if (parent.uploadFileHandler.UploadFailed) {
+                 parent.uploadFileHandler.UploadFailed(msg);
+             }
+         }
+         
+      </script>
+    
+</head>
+<body>
+    <form id="form1" enctype="multipart/form-data" method="post" action="@Url.Action("MuAdd","ImageUpload")">
+    <div>
+     <input id="filepic" name="filepic" type="file" multiple="" onchange="uploadSelect();"  accept="image/*" />
+    </div>
+    </form>
+</body>
+</html>

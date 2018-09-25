@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+@model  ZJB.Api.Entity.VPublicUser
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户中心</title>
+    <link href='/css/common.css' rel='stylesheet' type='text/css' />
+    <link href='/css/main.css' rel='stylesheet' type='text/css' />
+    <link href='/css/user_info.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <div id="saleHouse" class="saleHouse">
+        <div class="saleHouse-main shejiao_main">
+            <div class="main_hd">
+                <span class="fanhui"><input class="btn-red-return" type="button" value="返回" onclick="javascript: history.go(-1);" /></span>
+
+                <ul class="sale-tab-sub">
+                    <li class="sale-sub-menu selected"> <a href="javascript:">个人资料</a> </li>
+                </ul>
+            </div>
+            <div class="user_xiangqing">
+                <div class="account_setting_area">
+                    <h3 class="sub_title">用户信息</h3>
+                    <ul>
+                        <li class="account_setting_item wrp_pic_item_spe2 clearfix inner_avatar_preview">
+                            <h4>头像</h4>
+                            <div id="circleHeadImg" class="preview_item circle">
+                                <span class="marked_text"></span>
+                                <img class="round_white_img" src="/images/cut-round-white22f1a8.png">
+                                <img class="circle_img" id="round_uploadFileSrc" src="@Model.Portrait?imageMogr2/strip|imageView2/1/w/140/h/140/q/85" onerror="this.src = '/images/txDefault.png'">
+                            </div>
+                            @*<div class="meta_content"><img class="meta_pic200_200" onerror="this.src='/images/txDefault.png'" src="@Model.Portrait?imageMogr2/strip|imageView2/1/w/500/h/500/q/85"></div>*@
+                            <!--@Model.Portrait-->
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>用户名</h4>
+                            <div class="meta_opr"></div>
+                            <div class="meta_content">@Model.Name</div>
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>真实姓名</h4>
+                           
+                            <div class="meta_content">@Model.EnrolnName</div>
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>手机号码</h4>
+                        
+                            <div class="meta_content">@Model.Tel</div>
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>电子邮箱</h4>
+                            
+                            <div class="meta_content">@Model.Email</div>
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>所在城市</h4>
+                            <div class="meta_opr"></div>
+                            <div class="meta_content">@Model.CityName</div>
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>所属公司</h4>
+                            <div class="meta_opr"></div>
+                            <div class="meta_content">@Model.CompanyName</div>
+                        </li>
+                        <li class="account_setting_item clearfix">
+                            <h4>所属门店</h4>
+                            <div class="meta_opr"></div>
+                            <div class="meta_content"><span>@Model.StoreName</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+</body>
+</html>

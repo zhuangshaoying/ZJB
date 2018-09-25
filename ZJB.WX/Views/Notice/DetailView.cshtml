@@ -1,0 +1,35 @@
+﻿@model ZJB.Api.Entity.Notice
+@{
+    Layout = null;
+    DateTime time = (DateTime)(Model.CreateTime==null?DateTime.Now:Model.CreateTime);
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公告信息</title>
+<link href='/css/common.css' rel='stylesheet' type='text/css' />
+<link href='/css/notice.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+<div class="saleHouse">
+  <a href="@Url.Action("NoticeList","Notice")" class="notice_more">公告列表>></a>
+  <div class="main_hd"><h2>站内公告</h2></div>
+  <div class="highlight_box icon_wrap border">
+  	<div class="noticeContent-title">@Model.Title</div>
+	<div class="noticeContent-time"><span>发布时间：</span><span>@(time.ToString("yyyy-MM-dd"))</span></div>
+  </div>
+  <div class="saleHouse-main noticeContent">
+    <div class="noticeContent-main">
+      <div class="noticeContent-content">
+        <div>@(Html.Raw(Model.NoticeContent))</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script> 
+<script src='/Scripts/common.js' type='text/javascript'></script> 
+</body>
+</html>

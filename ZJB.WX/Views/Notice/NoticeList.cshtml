@@ -1,0 +1,90 @@
+﻿@{
+    Layout = null;
+    int totalSize = ViewBag.TotalSize;
+    int pi = ViewBag.pi;
+    int ps = ViewBag.ps;
+    int type = ViewBag.type;
+}
+@using ZJB.Api.Entity;
+@model List<Notice>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公告列表</title>
+<link href='/css/common.css' rel='stylesheet' type='text/css' />
+<link href='/css/notice.css' rel='stylesheet' type='text/css' />
+<link href='/css/fanye.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+<div class="saleHouse">
+  <input type="hidden" value="SYS" id="noticeType">
+  <div class="saleHouse-main">
+    <div class="sale-tab-bg clear">
+      <ul class="sale-tab-sub">
+        <li id="notice-system" class="sale-sub-menu @(type==1?"selected":"")"> <a href="@Url.Action("NoticeList", new {pi=1,ps=10,type=1 })">系统公告</a> </li>
+        <li id="notice-website" class="sale-sub-menu @(type==2?"selected":"")"> <a href="@Url.Action("NoticeList", new {pi=1,ps=10,type=2 })">网站公告</a> </li>
+        <li id="notice-user" class="sale-sub-menu @(type==3?"selected":"")"> <a href="@Url.Action("NoticeList", new {pi=1,ps=10,type=3 })">客户公告</a> </li>
+        <li id="notice-mymsg" class="sale-sub-menu @(type==0?"selected":"")"> <a href="@Url.Action("NoticeList", new {pi=1,ps=10,type=0 })">私人消息</a></li>
+          <li id="notice-noread" class="sale-sub-menu @(type==-1?"selected":"")"><a href="@Url.Action("NoticeList", new {pi=1,ps=10,type=-1 })">未读信息</a> </li>
+      </ul>
+    </div>
+    <input type="hidden" id="basePath" value="" />
+    <div class="noticeList-main">
+        @if(totalSize>0)
+        {
+      <ul id="notice-lis-content" class="notice-list clear">
+          @foreach (Notice item in Model)
+          {
+              string noticeType="系统公告";
+              DateTime time = (DateTime)(item.CreateTime == null ? DateTime.Now : item.CreateTime);
+              switch (item.Type)
+              {
+                  case 0: noticeType = "私人消息"; break;
+                  case 1: noticeType = "系统公告"; break;
+                  case 2: noticeType = "网站公告"; break;
+                  case 3: noticeType = "用户公告"; break;
+                  default: noticeType = "系统公告"; break;
+              }
+             <li><a href="@Url.Action("DetailView", "Notice", new{ noticeId=item.NoticeId })" class="noticeTitle" id="@item.NoticeId">【@noticeType】@item.Title </a><span class="noticeTime">@time.ToString("yyyy-MM-dd")</span></li>
+          }
+      </ul>
+        }
+        else{
+         <div class="noticeTip-font">亲，暂时没有该类型的公告！</div>
+        }
+      <div class="float-r">
+        <div id="notice-fanye" class="commom-fanye notice-font"> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script> 
+<script src='/Scripts/common.js' type='text/javascript'></script> 
+<script src='/Scripts/notice.js' type='text/javascript'></script> 
+<script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script> 
+<script type="text/javascript">
+    if (@(totalSize)>0) {
+        var totalSize=@(totalSize);
+        var pagecount = parseInt(totalSize / 10) + ((totalSize % 10) == 0 ? 0 : 1);
+        /*翻页控件*/
+        $("#notice-fanye").paginate({
+            count: pagecount,
+            start: '@pi',
+            display: 6,
+            border: false,
+            text_color: '#50b63f',
+            text_hover_color: '#fff',
+            background_color: '#fff',
+            background_hover_color: '#50b63f',
+            images: false,
+            mouse: 'click',
+            onChange: function (currentPage) {
+                location.href = "/Notice/NoticeList?pi="+currentPage+"&type="+@type;
+            }
+        });
+    }
+</script> 
+</body>
+</html>

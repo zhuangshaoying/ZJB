@@ -1,0 +1,111 @@
+﻿@using System.Data
+@using ZJB.Api.Entity
+@using ZJB.Api.Models
+@model ZJB.Api.Models.HouseBasicInfoModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>@Model.Title-住家帮</title>
+
+    <link rel="stylesheet" href="~/Css/Esf/common.css">
+    <link rel="stylesheet" href="~/Css/Esf/manage.css">
+    <script src="~/Scripts/plugins/ueditor/third-party/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.8.3.js"></script>*@
+    <script src="~/Scripts/Esf/base.js"></script>
+</head>
+
+<body>
+    <div class="mod-manage" style="padding-bottom: 0.86rem;">
+        @*@if (ViewBag.EsfInfo != null)
+            {
+                foreach (HouseBasicInfoModel houseinfo in ViewBag.EsfInfo)
+                {*@
+
+        <div class="mod-prod-detail">
+            @if (Model.Status != 1)
+            {
+                <a href="javascript:">
+
+                    <div class="mod-prod-addr mod-addr-sell">
+                        <span>@Model.StatusName</span>
+                        <h2>@Model.CommunityName</h2>
+                        <p>@Model.Address</p>
+                    </div>
+                </a>
+            }
+            else
+            {
+                <a href="EsfDetail?houseid=@Model.HouseID">
+
+                    <div class="mod-prod-addr mod-addr-sell">
+                        <span>@Model.StatusName</span>
+                        <h2>@Model.CommunityName</h2>
+                        <p>@Model.Address</p>
+                    </div>
+                </a>
+            }
+
+
+
+
+
+
+            <div class="mod-prod-rel">
+                <dl>
+                    <dt>
+                        <strong class="cl-hlight"> 期望售价：<span id="j-expect-price">@Model.Price</span>@Model.PriceUnit </strong>
+                        <div class="price_item">
+                            <b id="unitprice">单价：@Model.UnitPrice /平</b>
+                        </div>
+                    </dt>
+                    <dd>
+                        <ul class="mod-attr-list clearfix">
+                            <li>户型：<b>@Model.Room 室 @Model.Hall 厅 @Model.Toilet 卫</b></li>
+                            <li>面积：<b>@Model.BuildArea ㎡</b></li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <div id="j-seek-history"></div>
+        </div>
+        @if (ViewBag.Interview != null && ((System.Data.DataSet)ViewBag.Interview).Tables.Count > 0)
+        {
+            foreach (DataRow dr in (((System.Data.DataSet)ViewBag.Interview).Tables[0]).Rows)
+            {
+
+                    <div class="mod-prod-rel">
+                        <dl style="padding-right: 10px;">
+                            <dt style="position: relative; background: url(/images/esf/icon-title-more.png) no-repeat right center; background-size: auto 16px;">
+                                @*<strong class="cl-hlight"> @dr["NickName"]：<span id="j-expect-price">@dr["tel"] </strong>*@
+                                <div class="price_item">
+                                    <b id="unitprice">@dr["NickName"]：<a href="tel:@dr["tel"]">@dr["tel"]</a> </b>
+                                    <b id="unitprice">报价：@dr["cprice"]@dr["PriceUnit"] </b>
+                                </div>
+                                <div class="price_item">
+                                    <b id="unitprice"> @Convert.ToDateTime(dr["AddDate"]).ToString("yyyy-MM-dd HH:mm:ss")</b>
+                                </div>
+                            </dt>
+
+                        </dl>
+                    </div>
+                
+            }
+        }
+
+
+        @*}
+            }*@
+
+    </div>
+    @{ Html.RenderPartial("EsfNav", new { height = "35px", curNav = "add" }); }
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

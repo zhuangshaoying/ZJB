@@ -1,0 +1,21 @@
+﻿@model ZJB.Api.Models.UserReportModel  
+@{
+    Layout = null;
+}
+<div class="wechat-share widget-bd">
+				<p>录入房源：<font class="myred">@(Model.HouseCount)</font> 条</p>
+				<p>今日新增：<font class="myred">@(Model.TodayHouseCount)</font> 条</p>
+				@*<p>今日发布：<font class="myred">@(Model.TodayPostCount)</font> 条</p>
+    <p>绑定网站：<font class="myred">@(Model.UserSiteCount)</font> 个</p>
+    <p>异常账号：<font class="myred">
+
+         @if(Model.ErrorUserSiteCount>0)
+    {
+    <a href="javascript:parent.hrefLink('@Url.Action("SiteManageView", "PersonManage")')" class="col-f60">@Model.ErrorUserSiteCount</a>
+    }
+    else
+    {
+    <span>0</span>
+    }
+            </font></p>*@
+			  </div>

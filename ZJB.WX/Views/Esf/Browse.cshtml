@@ -1,0 +1,232 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+	<title>最近浏览-住家帮</title>
+	<link rel="stylesheet" href="/Css/Esf/common.css">
+	<link href="/css/esf/iconfont.css" rel="stylesheet">
+	<link href="/css/esf/index.css" rel="stylesheet">
+	<link href="/css/esf/about.css" rel="stylesheet">
+	<link href="/css/esf/vendor.css" rel="stylesheet">
+	    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+        <script src="~/Scripts/Esf/scroll.js"></script>
+	    <script>
+    	    var goback = function() {
+    	        history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.com/';
+    	    }
+    	</script>
+
+
+        <script type="text/javascript">
+        $(function() {
+
+            load();
+        })
+        var k = true;
+        var w = $(window);
+        var curp = 1;
+        function load() {
+            var pars = new Object();
+            pars["status"] = "1";
+            pars["cell"] = "";
+            pars["sort"] = "";
+            pars["houseId"] = "";
+            pars["title"] = "";
+            pars["tags"] = "";
+            pars["pageIndex"] = curp;
+            pars["pageSize"] = 10;
+            pars["userId"] = @ViewBag.UserId;
+            pars["tradetype"] = $("#tradetype").val();
+            //pars["room"] =0;
+            //pars["minprice"] = 0;
+            //pars["maxprice"] = 0;
+            //pars["regionid"] = 0;
+            //pars["districtid"] = 0;
+
+            //pars["line"] = 0;
+            //pars["metroid"] = 0;
+            //pars["ismetro"] = 0;
+            pars["IsBrowse"] = 1;
+            pars["iscollect"] = 0;
+            pars["collectuserid"] = 0;
+
+            $.ajax({
+                type: "post",
+                url: "/Esf/GetEsfList",
+                data: pars,
+                dataType: "json",
+                success: function (data) {
+                    var reval = "";
+                    $("#totalSize").html(data.totalSize);
+                    if (data.list != undefined && data.list.length > 0) {
+                        $.each(eval(data.list), function (i, item) {
+                        
+                        
+
+
+                            reval +="<div class=\"best-esf-list\">";
+                            reval +="<div class=\"best-esf-list-item js-action-index-2-best-esf\">";
+                            reval +="<div class=\"best-esf-tmp-content\"> <a class=\"best-esf-item\" href=\"/Esf/EsfDetail?houseid=" + item.HouseID + "\">";
+                            reval +="<figure class=\"best-esf-item-figure\">";
+                            reval +="<figcaption class=\"best-esf-item-figcaption icon-fdd-logo-gray-center js-action-chk-ratio-common\"> <img class=\"best-esf-item-img-2 layzed\" " +
+                             "src=\"" + item.HouseImgPath + "\" style=\"display: inline;\"> ";
+                           
+                            if (item.Tag != "") {
+                                var itag = 0;
+                                var css1 = "";
+                                var css2 = "";
+                                $.each(item.Tag.split(','), function (i, item) {
+                                    if (item == 1) {
+                                        itag++;
+                                        if (itag == 2) {
+                                            css1 = " position-2";
+                                        }
+                                        else if (itag == 3) {
+                                            css2 = " style=\"  left: 3.4rem;\"";
+                                        }
+                                        reval += "<i " + css2 + " class=\"icon-tag-property-confirm " + css1 + "\"></i> ";
+                                    }
+                                    if (item == 2) {
+                                        itag++;
+                                        if (itag == 2) {
+                                            css1 = " position-2";
+                                        }
+                                        else if (itag == 3) {
+                                            css2 = " style=\"  left: 3.4rem;\"";
+                                        }
+                                        reval += "<i " + css2 + " class=\"icon-tag-sale-anxious " + css1 + "\"></i> ";
+                                    }
+                                    if (item == 3) {
+                                        itag++;
+                                        if (itag == 2) {
+                                            css1 = " position-2";
+                                        }
+                                        else if (itag == 3) {
+                                            css2 = " style=\"  left: 3.4rem;\"";
+                                        }
+                                        reval += "<i " + css2 + "  class=\"icon-tag-real-door " + css1 + "\"></i>";
+                                    }
+
+                                });
+                            }
+                            reval +="</figcaption>";
+                            reval +="<dl class=\"best-esf-item-dl\">";
+                            reval +="<dd class=\"best-esf-item-dd best-esf-item-dd-1\">" + item.CommunityName + "</dd>";
+                            reval += "<dd class=\"best-esf-item-dd best-esf-item-dd-2\">"+item.DistrctName+"-"+item.RegionName+"&nbsp;&nbsp;" + item.CommunityName + "</dd>";
+                            reval +="<dd class=\"best-esf-item-dd best-esf-item-dd-3\">";
+                            reval +="<p class=\"area\">" + item.Room + "室" + item.Hall + "厅" + item.Toilet + "卫 &nbsp;&nbsp;&nbsp;" + item.BuildArea + "m²</p>";
+                            reval += "<p class=\"hprice\"> "+ item.Price + item.PriceUnit + "</p>";
+                            reval += "</dd>";
+                            reval += "<dd class=\"best-esf-item-dd best-esf-item-dd-4\"> ";
+                                   if (item.HouseLabel != "" && item.HouseLabel != null) {
+                                       reval += "<dd>";
+                                       var varrHouseLabel = item.HouseLabel.split(' ');
+                                       var itag = 0;
+                                       var lblcss = "";
+                                       $.each(varrHouseLabel, function (i, item) {
+
+                                           itag++;
+                                           if (itag == 1) {
+                                               lblcss = " mln ";
+                                           } else if (itag == 2) {
+                                               lblcss = " nbtt ";
+                                           }
+                                           else {
+                                               lblcss = " ditief ";
+                                           }
+                                           reval += "<span class=\"tag-item " + lblcss + "\">" + item + "</span> ";
+
+                                       });
+                                       
+                                   }
+                              
+                          
+                            reval +=   "</dd>";
+                            reval += "</dl>";
+                            reval +="</figure>";
+                            reval += "</a> </div>";
+                            reval +="</div>";
+                            reval +="</div>";
+
+
+                       
+                       
+                     
+                        });
+                        $("#h0").append(reval);
+                        curp++;
+                    } else {
+                        if (curp == 1) {
+                            reval += "<div class=\"h5-index-best-esf-list\" id=\"h1\" style=\"display:none\">";
+                            reval += "<div class=\"nodata\" id=\"noFind\">";
+                            reval += "<div class=\"image\" style=\"width:120px;height:120px;\"> <img src=\"/images/esf/norecord.png\"> </div>";
+                            reval += "<div class=\"tishi\">";
+                            reval += "<p class=\"p01\">您还没有浏览任何房源哦</p>";
+                            reval += "<p class=\"p02\">快去找房看看</p>";
+                            reval += "</div>";
+                            reval += "<a href=\"/esf/list\" class=\"lookfang\">找房去</a> </div>";
+                            reval += "</div>";
+                            $("#divlist").append(reval); 
+                        }
+                    }
+                }
+            });
+        }
+
+
+        </script>
+	</head>
+	<body style="background:#fff">
+	<style>
+	.h5-index-best-esf .best-esf-list {
+    	padding-top: 15px;
+    	border-bottom: 1px solid #eee;
+	}
+	.h5-index-best-esf .best-esf-list:last-child {
+		border-bottom:none
+	}
+	</style>
+    <div class="h5-index-wrapper">
+      <header class="w-defaulthead"> <a class="back wk_iconfont" href="javascript:;" onclick="goback()">&#xe610;</a>
+        <div class="title"><span>最近浏览</span></div>
+        <div class="menu"></div>
+      </header>
+      <div class="h5-index-best-esf" style="margin-top:0" id="divlist">
+	  	<div class="tabcolumn"> <a href="javascript:;" class="line WKBigDataBtn active">二手房</a> <a href="javascript:;" class="line WKBigDataBtn">租房</a> </div>
+        
+		<!--二手房-->
+		<div class="h5-index-best-esf-list" id="h0">
+		  
+	
+        </div>
+		
+		<input id="tradetype" type="hidden" value="1" />
+	
+		
+      </div>
+    </div>
+	<script>
+	$(function(){
+		$(".tabcolumn a").bind("click",function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			if($(this).index()==0) {
+			    $("#tradetype").val("1");
+			    $("#h0").html("");
+			    curp = 1;
+			    load();
+			}
+			else {
+			    $("#tradetype").val("3");
+			    $("#h0").html("");
+			    curp = 1;
+			    load();
+			}
+		})
+	})
+	</script>
+</body>
+</html>

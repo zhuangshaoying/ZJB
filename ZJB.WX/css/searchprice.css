@@ -1,0 +1,410 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.h5-index-wrapper {
+	max-width: 640px;
+	margin: 0 auto;
+}
+.w-defaulthead {
+	width: 100%;
+	margin: 0 auto;
+	height: 48px;
+	line-height: 48px;
+	text-align: center;
+	position: relative;
+	background: #24c08e;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	display: box;
+}
+.w-defaulthead h1 {
+	text-align: center;
+	font-size: 16px;
+	color: #FFFFFF;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	box-flex: 1;
+	flex: 1;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0
+}
+.w-defaulthead .back, .w-defaulthead .menu {
+	display: block;
+	width: 48px;
+	height: 48px;
+	text-align: center;
+	color: #fff;
+	font-size: 12px;
+}
+.w-defaulthead .search {
+	position: relative;
+	display: block;
+	height: 30px;
+	margin: 9px 5px 0px 0;
+	padding: 5px 12px;
+	background: #FFF;
+	border-radius: 3px;
+	line-height: 20px;
+	text-align: left;
+	font-size: 14px;
+	color: #999;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	box-flex: 1;
+	flex: 1;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.w-defaulthead .search i.ico-search {
+	margin-right: 5px;
+	font-size: 14px;
+}
+.w-defaulthead .WKBigDataBtn {
+	display: block;
+	width: 48px;
+	background: url(/images/userico.png) no-repeat center center;
+	background-size: 16px auto
+}
+.bb {
+	border-bottom: 1px solid #f8f8f8;
+}
+.flexbox {
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-box;
+	-webkit-box-orient: horizontal;
+	box-orient: horizontal;
+}
+.flexbox > * {
+	display: block;
+	box-flex: 1;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-ms-box-flex: 1;
+}
+.search {
+	position: relative;
+	padding: 10px;
+	width: 100%;
+	z-index: 2;
+	margin: 0 auto;
+	background: #f8f8f8
+}
+.searbox {
+	position: relative;
+	border: 1px solid #f2f2f2;
+	border-radius: 3px;
+	height: 36px;
+	background-color: #fff;
+	font-size: 13px;
+}
+.searbox.h34 {
+	height: 34px;
+}
+.searbox .inputbox {
+	position: relative;
+	overflow: hidden;
+}
+.center {
+	text-align: center;
+}
+.searbox .ipt {
+	position: relative;
+	overflow: hidden;
+	margin-right: 42px;
+}
+.searbox .inputbox .input {
+	position: relative;
+	display: block;
+	line-height: 34px;
+	width: 100%;
+	height: 34px;
+	font-size: 14px;
+	color: #b3b6be;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.searbox.h34 .inputbox .input {
+	line-height: 32px;
+}
+.searbox .inputbox .input i {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin: 0 8px 0 14px;
+	background: url(/images/search_icons.png) 0 0 no-repeat;
+	background-size: 17px auto;
+	vertical-align: -1px;
+}
+/* 热门区县 */
+.mb8 {
+	margin-bottom: 8px !important;
+}
+section, .whitebg {
+	background-color: #fff;
+}
+.mTitle h2.no-b {
+	padding-bottom: 0;
+}
+.mTitle h2 {
+	float: left;
+	font-size: 15px;
+	color: #83868f;
+	line-height: 1;
+	padding: 20px 0;
+	margin-left: 12px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.mTitle:after {
+	clear: both;
+	content: "";
+	display: block;
+	height: 0;
+}
+.t-house-list {
+	margin: 0 12px;
+	padding-top: 2px;
+}
+.t-house-list li {
+	border-bottom: 1px solid #f4f4f4;
+	height: 45px;
+}
+.t-house-list li:last-child {
+	border-bottom: none;
+}
+.t-house-list li > a {
+	display: block;
+	height: 44px;
+}
+.t-house-list li > a > div {
+	float: left;
+	width: 52%;
+	text-align: center;
+}
+.t-house-list li h1 {
+	float: left;
+	width: 19%;
+	font-size: 14px;
+	color: #3c3f46;
+	overflow: hidden;
+	line-height: 44px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin: 0;
+	margin-right: 1%;
+}
+.t-house-list li > a > div span {
+	display: inline-block;
+	line-height: 19px;
+	height: 19px;
+	color: #333;
+	font-size: 14px;
+	padding: 0 10px;
+	min-width: 70px;
+	margin-top: 13px;
+}
+.t-house-list li > a > span {
+	float: left;
+	width: 28%;
+	text-align: right;
+	margin-top: 15px;
+}
+.t-house-list li > div {
+	float: left;
+	width: 52%;
+}
+.t-house-list li > div span {
+	display: inline-block;
+	line-height: 19px;
+	height: 19px;
+	background: #fff4f4;
+	color: #ff5350;
+	font-size: 10px;
+	padding: 0 10px;
+	min-width: 70px;
+	margin-top: 13px;
+}
+.t-house-list li > div i {
+	font-size: 12px;
+	position: absolute;
+}
+.t-house-list li > span {
+	float: left;
+	width: 28%;
+	text-align: right;
+	margin-top: 11px;
+}
+.t-house-list li .jt-dn {
+	color: #669934!important;
+	font-size: 14px;
+}
+.t-house-list li .jt-up {
+	color: #ff5350!important;
+	font-size: 14px;
+}
+.t-house-list li .jt-dn:after, .t-house-list li .jt-up:after {
+	vertical-align: 1px;
+}
+.t-house-list li .pric {
+	color: #ff5350;
+}
+.t-house-list li .pric i {
+	color: #83868f;
+}
+.more_xq {
+	display: block;
+	width: 100%;
+	height: 40px;
+	line-height: 47px;
+	background: url(/images/center_more.png) center center no-repeat;
+	background-size: 15px auto;
+}
+.more_std {
+	display: block;
+	width: 100%;
+	height: 42px;
+	line-height: 42px;
+	background: url(/images/center_more.png) center center no-repeat;
+	background-size: 15px auto;
+}
+.more_std.up {
+	-webkit-transform: rotateX(180deg);
+	-moz-transform: rotateX(180deg);
+	transform: rotateX(180deg);
+}
+.jt-dn {
+	color: #669934 !important;
+}
+.jt-dn:after {
+	content: '↓';
+	margin: 0 2px;
+	vertical-align: 1px;
+}
+.jt-up {
+	color: #ff0000 !important;
+}
+.jt-up:after {
+	content: '↑';
+	margin: 0 2px;
+	vertical-align: 1px;
+}
+/* 推荐小区 */
+.pdY14 {
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+.arealist li {
+	padding-bottom: 14px;
+	overflow: hidden;
+	margin: 0 12px;
+	border-bottom: 1px solid #f4f4f4;
+}
+.arealist li a {
+	color: #83868f;
+}
+.arealist li .img {
+	position: relative;
+	float: left;
+	margin-right: 10px;
+	width: 106px;
+	height: 80px;
+	overflow: hidden;
+}
+.arealist li .img img {
+	width: 100%;
+	height: 100%;
+}
+.arealist .info {
+	overflow: hidden;
+	font-size: 12px;
+}
+.arealist .info h1 {
+	font-size: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #0c0d0e;
+	line-height: 18px;
+	margin: 0;
+	margin-bottom: 3px;
+}
+.arealist .info p {
+	color: #83868f;
+	font-size: 12px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	line-height: 20px;
+}
+.arealist li:not(:first-child) {
+    padding-top: 14px;
+}
+.f14 {
+	font-size: 14px;
+}
+.red-df {
+	color: #df3031;
+}
+.flor {
+	float: right;
+}
+.arealist .jtd-dn, .arealist .jtd-up {
+	margin-right: 2px;
+}
+.jtd-dn {
+	color: #669934 !important;
+}
+.jtd-dn:after {
+	content: '↓';
+	margin: 0 2px;
+	vertical-align: 2px;
+}
+.jtd-up {
+	color: #df3031 !important;
+}
+.jtd-up:after {
+	content: '↑';
+	margin: 0 2px;
+	vertical-align: 1px;
+}
+.jtd-bl {
+	color: #b3b6be !important;
+}
+.moreList {
+    text-align: center;
+}
+.moreList a {
+    display: block;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    font-size: 14px;
+    color: #565c67;
+    background: #fff;
+}
+.moreList span {
+    position: relative;
+    color: #cccfd8;
+    font-size: 12px;
+    line-height: 40px;
+    padding-left: 20px;
+}
+.moreList span:before {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 50%;
+    margin-top: -7px;
+    left: 0;
+    background: url(/images/myloading.gif) no-repeat;
+    background-size: 15px auto;
+    z-index: 3;
+}
+

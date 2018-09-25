@@ -1,0 +1,465 @@
+﻿@using ZJB.Api.Models;
+@{
+    Layout = null;
+    PostLogListParames parames = (PostLogListParames)ViewBag.parames;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>发布日志</title>
+<link href='/css/common.css' rel='stylesheet' type='text/css' />
+<link href='/css/houseLog.css' rel='stylesheet' type='text/css' />
+<link href='/css/fanye.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<!--  隐藏参数   -->
+<div>
+  <input type="hidden" id="index" value="1" >
+  <input type="hidden" id="page" value="1" >
+  <input type="hidden" id="pageSize" value="20" >
+  <input type="hidden" id="basePath" value="release-web" />
+  <input type="hidden" id="cell" value="" />
+  <input type="hidden" id="webId" value="@parames.siteId" />
+  <input type="hidden" id="status" value="0" />
+  <input type="hidden" id="buildingId" value="0" />
+</div>
+<div class="saleHouse"> 
+  <!-- <div class="saleHouse-header">
+		<span>发布日志</span>
+	</div> -->
+  <div class="saleHouse-main"> 
+    <!-- TAB切换 -->
+    <div class="sale-tab-bg clear">
+      <ul class="sale-tab-sub house-log">
+        <li id="tab4" class="sale-sub-menu" style="display:none;"> <a href="javascript:ajaxSub(4)">发布统计</a> </li>
+        <li id="tab1" class="sale-sub-menu"> <a href="javascript:ajaxSub(1)">日志查看</a> </li>
+        <li id="tab0" class="sale-sub-menu"> <a href="javascript:ajaxSub(0)">成功记录</a> </li>
+        <li id="tab2" class="sale-sub-menu"> <a href="javascript:ajaxSub(2)">房源查看</a> </li>
+        <li id="tab3" class="sale-sub-menu"> <a href="javascript:ajaxSub(3)">网站查看</a> </li>
+      </ul>
+    </div>
+    <div id="selectDiv" style="margin:10px 22px">
+      <ul class="houseLog-select">
+        <li>
+          <ul class="houseLog-list houseLog-area">
+            <li class="manage-tip houseLog-area-tip" onclick="selectOption('houseLog-area-tip')"><span id="cellSpan">全部小区</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+            <li>
+              <ul id="cellUl" class="manage-list-content" style="display:none">
+               
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <ul class="houseLog-list houseLog-website">
+            <li class="manage-tip houseLog-website-tip" onclick="selectOption('houseLog-website-tip')"><span id="webSapn">全部网站</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+            <li>
+              <ul id="webUl" class="manage-list-content" style="display:none">
+                <li value="0">全部网站</li>
+                <li value="5" title="联合网">联合网</li>
+                <li value="20" title="58网邻通">58网邻通</li>
+                <li value="47" title="安居客">安居客</li>
+                <li value="57" title="联合网(真实房源)">联合网(真实房源)</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li id="statusLi">
+          <ul class="houseLog-list houseLog-state">
+            <li class="manage-tip houseLog-state-tip" onclick="selectOption('houseLog-state-tip')"><span id="statusSapn">全部状态</span><img width="17" height="26" src="/images/add_plus.jpg"></img></li>
+            <li>
+              <ul id="statusUl" class="manage-list-content" style="display:none">
+                <li value="0">全部状态</li>
+                <li value="1">发布成功</li>
+                <li value="-1">失败</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <ul class="houseLog-list houseLog-time" >
+            <li>
+              <input id="time" value="" class="Wdate houseLog-time-tip" type="text" onclick="SelectDate(this, 'yyyy-MM-dd')"	onchange="ajaxSub()" readonly="readonly" />
+           	</li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="float-r houseLog-select">
+        <li style="margin:8px 0px">
+          <input class="saleManager-search-key" type="text" id="title" value="" onkeydown="enterSumbit()" placeholder="请输入标题或房源编号" />
+        </li>
+        <li>
+          <input class="btn-search" type="button" onclick="ajaxSub()" />
+        </li>
+      </ul>
+    </div>
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script> 
+    <script src='/Scripts/placeholder.js' type='text/javascript'></script> 
+    <script src='/Scripts/common.js' type='text/javascript'></script> 
+    <script src='/Scripts/jquery.timers-1.2.js' type='text/javascript'></script> 
+    <script src='/Scripts/plugins/Highcharts-3.0/js/highcharts.js' type='text/javascript'></script> 
+    <script src='/Scripts/plugins/Highcharts-3.0/js/modules/exporting.js' type='text/javascript'></script> 
+    <script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script> 
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script> 
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script> 
+    <script src='/Scripts/releaseLog.js?v=1.2' type='text/javascript'></script> 
+    <script src="~/Scripts/WebCalendar.js"></script>
+    <!-- 显示区域 -->
+    <div id="logDiv" class="release-main"> 
+      
+      <!-- 推送统计 -->
+     @* <div class="houseLog lookAsCount con4" style="display:none;">
+        <div class="lookAsCount-tip">
+          <h5>统计摘要</h5>
+          <ul>
+            <li><span>发布成功:233次</span><span>发布失败:66次</span></li>
+            <li><span>发布成功率:77.93%</span><span>最大发布:69次 (2014-12-25)</span></li>
+          </ul>
+        </div>
+        <table class="stat_account" width="100%" cellspacing="0" cellpadding="0s" id="zy_Pushcount">
+          <caption>
+          今日推送统计
+          </caption>
+          <thead>
+            <tr>
+              <td>网站</td>
+              <td>进行中</td>
+              <td>成功数</td>
+              <td>失败数</td>
+              <td>发布总数</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>联合网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>搜房帮</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>安居客</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>58同城</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>赶集网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>917房产网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>小鱼网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>58网邻通</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>VIP赶集</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>猎房网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>淘房网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>蓝房网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>福房网</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>88同城</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>517购房</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr class="statAccount-total">
+              <td>总数</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="lookAsCount-time" > </div>
+        <div id="lookAsCount-website"> </div>
+        <script src='/Scripts/stat.js' type='text/javascript'></script> 
+        <script type="text/javascript">
+            var time_period_ary = [];
+            var success_ary = [];
+            var fail_ary = [];
+
+            time_period_ary.push('12/13');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/14');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/15');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/16');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/17');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/18');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/19');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/20');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/21');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/22');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/23');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/24');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/25');
+            if ('49' != null && '49' != "") {
+                success_ary.push(parseInt('49'));
+            } else {
+                success_ary.push(0);
+            }
+            if ('20' != null && '20' != "") {
+                fail_ary.push(parseInt('20'));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/26');
+            if ('50' != null && '50' != "") {
+                success_ary.push(parseInt('50'));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+            time_period_ary.push('12/27');
+            if ('' != null && '' != "") {
+                success_ary.push(parseInt(''));
+            } else {
+                success_ary.push(0);
+            }
+            if ('' != null && '' != "") {
+                fail_ary.push(parseInt(''));
+            } else {
+                fail_ary.push(0);
+            }
+
+
+            init_trend_chart(time_period_ary, success_ary, fail_ary);
+
+            var web_ary = [];
+
+
+            var num_ary = [];
+            num_ary.push("联合网");
+            num_ary.push(parseInt("143"));
+            web_ary.push(num_ary);
+
+            var num_ary = [];
+            num_ary.push("安居客");
+            num_ary.push(parseInt("89"));
+            web_ary.push(num_ary);
+
+            var num_ary = [];
+            num_ary.push("58网邻通");
+            num_ary.push(parseInt("1"));
+            web_ary.push(num_ary);
+
+            init_pie_chart(web_ary);
+	</script> 
+      </div>*@
+    </div>
+  </div>
+</div>
+</body>
+</html>

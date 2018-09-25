@@ -1,0 +1,108 @@
+/*站点管理*/
+	
+/*右侧Tab页内容样式*/
+/*右侧结束*/
+.sites_list_panel {
+	margin:12px 8px 8px;
+	border-bottom: 1px solid #029a14;
+	font-size:12px
+}
+.sites_list {
+	width:100%;
+	height:60px;
+}
+.sites_list dd {
+	border-top: 1px solid #029a14;
+	border-right: 1px solid #029a14;
+	float: left;
+	display: inline-block;
+	height: 60px;
+	line-height:60px;
+}
+.sites_pay_type, .sites_logo, .sites_add {
+	text-align: center;
+}
+.sites_pay_type {
+	width: 80px;
+	border-left: 1px solid #029a14;
+}
+.sites_pay_type span {
+	border-radius:3px;
+	border: 1px solid #dedede;
+	background: #f3f3f3;
+	padding: 2px 5px;
+	color: #000;
+}
+.sites_logo {
+	width: 110px;
+}
+.sites_logo img {
+	margin-top: 10px;
+	cursor: pointer;
+}
+.sites_add {
+	width:150px;
+}
+.sites_account {
+	width: 228px;
+	height:60px;
+}
+.account_ul {
+	display: table-cell;
+	vertical-align: middle;
+}
+.account_ul li {
+	height:20px;
+	line-height:20px
+}
+.manage_ul {
+	height:30px;
+	line-height:30px
+}
+.sites_account ul {
+	padding: 0 10px;
+}
+.sites_account ul li .siteManage-account-font {
+	display:inline-block;
+	width:160px;
+	float:left;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.sites_account ul li .siteManage-account-error {
+	display:inline-block;
+	width:100px;
+	float:left;
+	padding-right:10px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.sites_account ul li .siteManage-account-disable {
+	padding-right:10px;
+	color:#ff6600;
+	font-weight:bold
+}
+/* .site_check_function{border-radius:3px;padding:2px 5px;font-size:12px;background:#85c878;border:1px solid #85c878;color:#fff;cursor: pointer;} */
+.sites_manage {
+	width: 220px;
+}
+.sites_manage li {
+	float: left;
+	display: inline;
+	margin-left: 8px;
+}
+.site-pay-ul li {
+	height:20px;
+	line-height:20px
+}
+/*修改密码*/
+.add_account_input li {
+	height:28px;
+	line-height:28px;
+}
+.siteManage-font {
+	font-size:20px;
+	color:#f00
+}

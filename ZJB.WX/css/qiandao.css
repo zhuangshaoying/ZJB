@@ -1,0 +1,216 @@
+﻿@charset "utf-8";
+/* CSS Document */
+/*******签到******/
+em, h1, h2, h3,i {
+	font-style: normal;
+}
+.qiandao_main {
+	color: #595959;
+	position: relative;
+	padding-bottom: 10px;
+	padding: 15px 30px 10px;
+}
+.fx_725 {
+	float: left;
+	width: 683px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}
+.fx_table {
+	max-width: 100%;
+	background-color: transparent;
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 5px;
+	font-family:'微软雅黑'
+}
+.fx_table th, .fx_table td {
+	padding: 8px;
+	text-align: center;
+	vertical-align: top;
+	border-top: 1px solid #dddddd;
+}
+.fx_table th {
+	line-height: 20px;
+	border-top: 0px solid #dddddd;
+}
+.fx_table .header {
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	font-size: 14px;
+	font-weight:normal
+}
+.h_list {
+	margin: 5px 0;
+}
+.h_list tbody td {
+	line-height: 20px;
+	padding: 4px 10px 4px 15px;
+	height: 51px;
+}
+.h_list td {
+	padding-left:15px;
+	text-align:left
+}
+.h_list i {
+	background: url("/images/qd_icons.png") no-repeat -205px -165px;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	color: #000;
+	line-height: 15px;
+	margin: 0px 0 0 0;
+}
+.h_list i.l1 {
+	background-position: -157px -160px;
+	color: #FFFF00;
+	text-align:center
+}
+.h_list i.l2 {
+	background-position: -173px -160px;
+	color: #FFFF00;
+	text-align:center
+}
+.h_list i.l3 {
+	background-position: -189px -160px;
+	color: #FFFF00;
+	text-align:center
+}
+.h_list .tl {
+	text-align: left;
+	padding-left:15px
+}
+.fx_face {
+	position: relative;
+	height:51px
+}
+.fx_face img {
+	border-radius: 2px;
+	height: 40px;
+    width:40px;
+	position: absolute;
+	top:6px;
+}
+.fx_face em {
+	position: absolute;
+	top: 15px;
+	left: 40px;
+	margin-left: 15px;
+	color:#3A94C7;
+	width:80%
+}
+.h_list span {
+	color: #3A94C7;
+}
+.fx_225 {
+	float: left;
+	width: 225px;
+}
+.fx_site-stats {
+	margin: 5px 0 0 0;
+	padding: 0;
+	list-style: none;
+	font-family:'微软雅黑'
+}
+.fx_site-stats li {
+	background-color: #F5F5F5;
+	border: 1px solid #DDDDDD;
+	cursor: default;
+	margin: 0 0 10px;
+	padding: 13px 20px 10px;
+	position: relative;
+	line-height: 20px;
+}
+.fx_site-stats li i, .fx_widget-box i {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	line-height: 14px;
+	vertical-align: text-top;
+	background: url("/images/qd_icons.png") no-repeat;
+}
+.fx_site-stats li i.icon-today {
+	background-position: -182px -183px;
+}
+.fx_site-stats li strong {
+	font-weight: bold;
+	font-size: 20px;
+	margin-left: 5px;
+}
+.fx_site-stats li small {
+	margin-left: 5px;
+	font-size: 12px;
+	color: #888888;
+}
+.fx_site-stats li i.icon-today {
+	background-position: -182px -183px;
+}
+.fx_widget-box {
+	background: none repeat scroll 0 0 #F9F9F9;
+	border-top: 1px solid #CDCDCD;
+	border-left: 1px solid #CDCDCD;
+	border-right: 1px solid #CDCDCD;
+	clear: both;
+	margin-top: 10px;
+	margin-bottom: 16px;
+	position: relative;
+}
+.fx_widget-box .widget-title {
+	background-color: #efefef;
+	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#fdfdfd), to(#eaeaea));
+	border-bottom: 1px solid #CDCDCD;
+	height: 36px;
+}
+.fx_widget-box .widget-title span.fx_icon {
+	border-right: 1px solid #cdcdcd;
+	padding: 9px 10px 13px 11px;
+	float: left;
+	opacity: .7;
+}
+.fx_widget-box i.icon-my {
+	background-position: -205px -180px;
+}
+.fx_widget-box .widget-title h5 {
+	color: #666666;
+	text-shadow: 0 1px 0 #ffffff;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px;
+	line-height: 12px;
+	margin: 0;
+}
+.fx_widget-box .widget-content {
+	padding: 12px 15px;
+	border-bottom: 1px solid #cdcdcd;
+}
+.cl {
+	zoom: 1;
+}
+.user-thumb {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #B6BCBF;
+	float: left;
+	height: 40px;
+	margin-right: 10px;
+	margin-top: 5px;
+	padding: 2px;
+	width: 40px;
+}
+.user-thumb img {
+	width: 40px;
+	height: 40px;
+}
+ul.fx_user-info {
+	float: left;
+	padding-top:5px;
+	font-family:'微软雅黑'
+}
+ul.fx_user-info li {
+	line-height: 22px;
+	height: 22px;
+	color: #646363;
+}
+ul.fx_user-info li span {
+	color: #FF7F3E;
+}

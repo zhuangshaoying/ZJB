@@ -1,0 +1,335 @@
+﻿@{
+    Layout = null;
+}
+@using ServiceStack.Common.Utils
+@using ZJB.Core.Utilities
+@using ZJB.Api.Models
+@model  ZJB.WX.Models.HouseModels
+@{
+    var itemHouseBasicInfo = Model.HouseBasicInfo;
+    var itemUserInfo = Model.UserInfo;
+    HDictionary hd = HDictionary.Instance;
+
+}
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>填写手机</title>
+    <script src="/Scripts/jquery-1.9.0.min.js" language="javascript"></script>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .fr {
+            float: right;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .tophone-wx {
+            text-align: center;
+            padding: 13px 10px 10px;
+            width: 520px;
+            height: 230px;
+        }
+
+            .tophone-wx h2 {
+                font-size: 20px;
+                color: #d66215;
+                font-weight: normal;
+            }
+
+                .tophone-wx h2 span {
+                    font-size: 14px;
+                    color: #585858;
+                    display: block;
+                    padding-top: 5px;
+                }
+
+            .tophone-wx img {
+                margin: 20px 0;
+                height: 115px;
+            }
+
+            .tophone-wx p {
+                text-align: right;
+            }
+
+                .tophone-wx p a {
+                    text-decoration: none;
+                }
+
+        .duanxinleft, .btn_ok, .btn_cancel {
+            background: url("/images/web/tophone.gif") no-repeat;
+        }
+
+        .duanxinleft {
+            float: left;
+            height: 197px;
+            padding-right: 20px;
+            width: 191px;
+        }
+
+        .duanxinright {
+            float: left;
+            width: 309px;
+        }
+
+        .btn_ok, .btn_cancel {
+            border: none;
+            margin: 11px 0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn_ok {
+            background-position: -8px -200px;
+            font-weight: 700;
+            color: #fff;
+            width: 92px;
+            height: 29px;
+        }
+
+        .btn_cancel {
+            background-position: -105px -200px;
+            width: 63px;
+            height: 29px;
+        }
+
+        .duanxinleft p {
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+
+            .clearfix:before, .clearfix:after {
+                content: '';
+                overflow: hidden;
+                display: block;
+                height: 0;
+                clear: both;
+            }
+
+        .txt {
+            height: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+            margin-top: 0px;
+            font-size: 12px;
+        }
+
+        #submitForm {
+            display: none;
+        }
+        /* 下发短信 */
+        .duanxin {
+            width: 520px;
+            height: 230px;
+            padding: 20px 15px 10px;
+        }
+
+        .duanxinleft {
+            width: 175px;
+            height: 225px;
+            background: url(/images/web/duanxin_bg.gif) no-repeat;
+            padding-right: 20px;
+            float: left;
+        }
+
+            .duanxinleft h2 {
+                font-size: 12px;
+                font-weight: normal;
+                color: #666;
+                padding: 9px 10px;
+            }
+
+            .duanxinleft p {
+                font-size: 13px;
+                line-height: 22px;
+                color: #fff;
+                padding: 0 15px;
+            }
+
+        .duanxinright {
+            width: 320px;
+            float: left;
+        }
+
+            .duanxinright p {
+                text-align: center;
+                letter-spacing: 1px;
+                line-height: 26px;
+            }
+
+                .duanxinright p.ga {
+                    font-size: 12px;
+                    color: #666;
+                    line-height: 18px;
+                }
+
+        .ga cite {
+            font-style: normal;
+        }
+
+        .ziduan {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+            .ziduan th {
+                font-weight: normal;
+                text-align: right;
+                padding-right: 10px;
+                padding-bottom: 12px;
+            }
+
+            .ziduan td {
+                padding-bottom: 12px;
+            }
+
+        .ziduantext1 {
+            width: 170px;
+        }
+
+        .ziduantext2 {
+            width: 50px;
+        }
+
+        .duanxinright a {
+            text-decoration: underline;
+        }
+
+        .ziduanbtn {
+            height: 28px;
+            margin-top: 5px;
+        }
+
+        .duanxinright h3 {
+            font-size: 16px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 40px 0;
+        }
+
+            .duanxinright h3 img {
+                vertical-align: middle;
+            }
+
+        .green {
+            color: #169B00;
+        }
+
+        .chufa {
+            display: block;
+            padding: 20px 0;
+            height: 26px;
+            position: relative;
+        }
+
+        .tis {
+            position: absolute;
+            bottom: -5px;
+            left: 80px;
+            color: #f00;
+            font-size: 12px;
+        }
+
+        .dingweiyong {
+            width: 320px;
+            height: 40px;
+        }
+
+        .ads {
+            border-top: 1px solid #ccc;
+            padding: 30px 0 0;
+        }
+
+        .adsleft {
+            float: left;
+            width: 731px;
+            padding-right: 25px;
+        }
+
+        .ads .road {
+            padding-bottom: 35px;
+        }
+
+            .ads .road li {
+                *padding-top: 17px;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="tophone-wx pbox" id="pbox">
+        <div style="background: url('/images/web/wx-qq_tongbu.png') no-repeat; margin: 0px auto; width: 556px; height: 251px; position: relative;"> <img width="116" height="116" src="/images/web/wx.jpg" style="position: absolute; left: 89px; top: 63px;"> <img width="116" height="116" src="/images/web/qq.jpg" style="position: absolute; top: 63px; left: 346px;"> </div>
+        <p><a href="javascript:;" class="awx" onclick="clickLog(1);" style="font-size: 12px;">通过短信发送到手机&gt;&gt;</a></p>
+    </div>
+    <form name="submitForm" method="post" target="formSubmit" action='' id="submitForm">
+        <div class="duanxin">
+            <div class="duanxinleft">
+                <h2>将以下信息<span class="red">免费</span>发送到手机</h2>
+                <p>@(itemHouseBasicInfo.CommunityName) @(itemHouseBasicInfo.Price.ToString("F0")) @(itemHouseBasicInfo.BuildArea)平米 @(itemHouseBasicInfo.Room)室@(itemHouseBasicInfo.Hall)厅@(itemHouseBasicInfo.Toilet)卫 @(itemUserInfo.EnrolnName) @(itemUserInfo.Tel)@(hd.BuildingType(Convert.ToString(itemHouseBasicInfo.BuildType))) </p>
+            </div>
+            <div class="duanxinright">
+                <div class="dingweiyong">
+                    <div id="errtip"></div>
+                </div>
+                <table class="ziduan" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td align="right" style="width: 60px;">手机号码：</td>
+                        <td>
+                            <input type="text" maxlength="11" id="txtMobile" name="txtMobile" style="height: 24px; width:200px;border:1px solid #ddd;" />
+                            <span class="red" id="mobiletip"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">验证码：</td>
+                        <td>
+                            <input type="text" size="24" maxlength="11" id="txtMobile" name="txtMobile" style="height: 24px; width:90px;border:1px solid #ddd;" />
+                            <img src="http://my.58.com/validatecode/" style="cursor:pointer;vertical-align:top" id="vcodeImg" name='vcodeImg' width="60px;" height="25px;" onclick="document.getElementById('vcodeImg').src='/validatecode/?temp=123'+ (new Date().getTime().toString(36)); return false" align="absmiddle" /> <a class="f12" href="javascript:void(0)" onclick="document.getElementById('vcodeImg').src='/validatecode/?temp=123'+ (new Date().getTime().toString(36)); return false">看不清？</a> <span class="red" id="mobiletip"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input class="btn_ok" type="submit" id="btnSubmit" value="免费发送" />
+                            <input type="button" value="取 消" class="btn_cancel" onclick="closeopendiv();" id="cancel" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+            <div class="txt"><a href="javascript:;" class="fr awx" onclick="clickLog(2);">手机扫一扫，发送到微信或QQ&gt;&gt;</a>用手机上房产盒子随时查看信息，免费更快捷，<a target="_blank" href="http://fchezi.com/Home/AppDownLoad?tv=1">赶紧尝鲜吧>></a></div>
+            <script>
+                function clickLog(n) {
+                    if (n == 1) {
+                        $('.pbox').hide();
+                        $('#submitForm').show();
+                    }
+                    else {
+                        $('.pbox').show();
+                        $('#submitForm').hide();
+                    }
+                }
+                function closeopendiv() {
+                    parent.window.document.getElementById("colorbox").style.display = "none";
+                    parent.window.document.getElementById("cboxOverlay").style.display = "none";
+                    $('.pbox').show();
+                    $('#submitForm').hide();
+                }
+            </script>
+        </div>
+    </form>
+</body>
+</html>

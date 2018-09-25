@@ -1,0 +1,138 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Api.Entity
+@model  List<ZJB.Api.Entity.HouseUserDescribe> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <title>房源描述</title>
+    <link href="~/Css/common.css" rel="stylesheet" />
+    <link href="~/Css/saleImport.css" rel="stylesheet" />
+    <link href="~/Css/fanye.css" rel="stylesheet" />
+</head>
+
+<body>
+    <input type="hidden" id="pageNow" value="1"></input>
+    <input type="hidden" id="postType" value="0"></input>
+    <div class="desc" id="houseDesc">
+
+
+        <div class="houseDesc-select"><input type="text" class="houseDesc-input" placeholder="请输入房源描述标题" value=""></input></div>
+
+        <div class="desc-main">
+
+            <div class="desc-content" style="height:350px">
+
+@{
+    foreach (HouseUserDescribe item in Model)
+    {
+
+        <div class="desc-list">
+
+            <p class="desc-name">@item.Title</p>
+
+            <div class="desc-list-content">
+
+            @Html.Raw(item.HouseDescribe)
+
+            </div>
+
+        </div>
+
+    }
+}
+
+
+    </div>
+
+            <div class="saleManager-bottom">
+
+                <div class="float-l">
+
+                    <div id="desc-fanye" class="commom-fanye"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+    <script type="text/javascript">
+       
+
+        /*翻页控件*/
+        $(function () {
+            if ('@(ViewBag.PageIndex)' != '' && '@(ViewBag.PageTotal)' > 1) {
+                $("#desc-fanye").paginate({
+                    count: '@(ViewBag.PageTotal)',
+                    start: 1,
+                    display: 6,
+                    border: false,
+                    text_color: '#50b63f',
+                    text_hover_color: '#fff',
+                    background_color: '#fff',
+                    background_hover_color: '#50b63f',
+                    images: false,
+                    mouse: 'click',
+                    onChange: function () {
+                        $("#pageNow").val($(".jPag-current").html());
+                        getHouseDescsByPage();
+                    }
+                });
+            }
+
+            $(".desc-list-content").die().live("click", function () {
+              
+              parent.$("#main-iframe")[0].contentWindow.setDescContent($(this).html());
+            });
+
+
+            $(".houseDesc-input").die().live("keyup", function () {
+                getHouseDescsByTitle();
+            });
+
+            function getHouseDescsByTitle() {
+                $.ajax({
+                    url: "/house/getHouseDescsByPage",
+                    type: "post",
+                    data: {
+                        "title": $(".houseDesc-input").val(),
+                        "postType": $("#postType").val()
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        $(".desc-main").html(result);
+                    }
+                });
+            }
+
+            function getHouseDescsByPage() {
+                $.ajax({
+                    url: "/house/getHouseDescsByPage",
+                    type: "post",
+                    data: {
+                        "pageNow": $("#pageNow").val(),
+                        "postType": $("#postType").val(),
+                        "title": $(".houseDesc-input").val()
+                    },
+                    dataType: "text",
+                    success: function (result) {
+                        $(".desc-main").html(result);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

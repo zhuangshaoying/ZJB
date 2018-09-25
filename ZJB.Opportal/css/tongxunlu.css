@@ -1,0 +1,192 @@
+@charset "utf-8";
+/* CSS Document */
+.bd-content {
+	padding-bottom: 20px;
+	position: relative;
+	background-color: #fff;
+	font-family:'微软雅黑';
+}
+.mb-notice-top {
+	padding-top: 20px;
+}
+.mb-notice-top h2 {
+	font-size: 22px;
+	color: #404040;
+	font-weight:normal;
+	padding-left:30px
+}
+.ab-main-header {
+	font-size: 14px;
+	padding: 15px 30px 0px;
+	color: #666;
+}
+.ab-search {
+	color: #a0a0a0;
+}
+.ab-tips {
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	color: #666;
+	font-size: 14px;
+	padding: 2px 0 6px;
+}
+.ab-search-container {
+	position: relative;
+}
+.ab-search-input {
+	width:500px;
+	height: 26px;
+	line-height: 26px;
+	border: 1px solid #64ac58;
+	margin: 0px 8px 0 0;
+	border-radius: 3px;
+	font-size: 12px;
+	vertical-align: top;
+	padding: 0px 10px;
+}
+.mg0 {
+	margin:0px
+}
+.ab-letter-navigator {
+	overflow: hidden;
+	padding: 30px 0px 10px 0px;
+	margin:0px 30px 15px 30px;
+	border-bottom: 1px solid #e3e3e3;
+}
+.ab-letter-navigator .ab-filter-letters li {
+	display: inline-block;
+	vertical-align: top;
+	letter-spacing: normal;
+	word-spacing: normal;
+}
+.ab-letter-navigator .ab-filter-letters a {
+	display: inline-block;
+	padding: 0 10px 0px 7px;
+	border-right: 1px solid #bfbfbf;
+	line-height: 1.2em;
+	height: 1em;
+	font-size: 14px;
+	color:#1879bd
+}
+.ab-letter-navigator .ab-filter-letters a:hover {
+	text-decoration:underline
+}
+.ab-letter-navigator .ab-filter-letters a.curr {
+	font-weight: bold;
+	color: #333;
+}
+.ab-letter-navigator .ab-filter-letters li.last a {
+	border-right:none
+}
+.ab-letter-navigator .ab-filter-letters li.first a {
+	padding-left:0px
+}
+.ab-info-list {
+	padding:0px 30px
+}
+.ab-info-list th {
+	color: #999;
+	font-weight: bold;
+	line-height: 30px;
+	font-size: 14px;
+	padding-bottom: 10px;
+	text-align:left
+}
+.ab-info-list td {
+	position: relative;
+	vertical-align: top;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px dashed #ccdae6;
+}
+.namecard {
+	margin-right: 5px;
+}
+.ab-info-list .avatar {
+	width: 35px;
+	height: 35px;
+}
+.ellipsis {
+	height: auto;
+	cursor: pointer;
+}
+.ab-info-list .ab-userinfo {
+	margin-left: 45px;
+	margin-top: -35px;
+	width: 90px;
+	height: 35px;
+}
+.ab-name-alias, .ab-name-alias a {
+	font-weight: normal;
+	font-size: 12px;
+	color: #333;
+}
+.ab-info-list p {
+	line-height: 18px;
+}
+.ab-info-list .ab-position {
+	width: 150px;
+}
+.ab-info-list .ab-mobile {
+	width: 110px;
+}
+.ab-info-list .ab-email {
+	width: 130px;
+}
+.jjrname {
+	display:inline-block;
+	vertical-align:top
+}
+.managers-list {
+	padding:0px 30px
+}
+.tab-sub {
+	height: 34px;
+	line-height: 32px;
+	padding-left: 5px;
+	border-bottom: 1px solid #dbe5ed;
+	color: #cecfce;
+	margin-top: 10px;
+}
+.tab-sub span {
+	padding: 0 6px;
+	color: #333;
+}
+.tab-sub span.title-manager {
+	margin-left: 20px;
+}
+.tab-sub span..title-contact {
+ margin-left: 250px;
+}
+.managers-list table td {
+	border-bottom: 1px dashed #ccdae7;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.managers-list .manager-detail {
+	width: 265px;
+	padding-left: 15px;
+}
+.manager-rights {
+	color: #666;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding:0px 30px
+}
+.manager-rights h3 {
+	font-size: 14px;
+}
+.manager-rights ul {
+	margin-left: 13px;
+	margin-top: 14px;
+}
+.manager-rights li {
+	height: 22px;
+	line-height: 22px;
+	_line-height: 20px;
+	padding-left:7px
+}
+.manager-apply-btn {
+	margin-left: 15px;
+}

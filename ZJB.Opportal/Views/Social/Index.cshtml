@@ -1,0 +1,554 @@
+﻿@using ZJB.Api.Models;
+@model PublicUserModel
+@{
+    Layout = null;
+    string companyName = ViewBag.CompanyName;
+    string TouXiang = Model.Portrait ?? "/images/txDefault.png";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>我的盒子--房产盒子</title>
+	<link href='/Content/common.css?v=1.0' rel='stylesheet' type='text/css' />
+	<link href='/Content/main.css' rel='stylesheet' type='text/css' />
+	<link href='/Content/big_pic.css' rel='stylesheet' type='text/css' />
+	<link href='/Content/comment_s.css?v=1.0' rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <input type="hidden" id="hdUserId"  value="@Model.UserID"/>
+    <input type="hidden" id="hdImageUrl" />
+    <input type="hidden" value="1" id="hdState" />
+       <div style="display: none; background: none;">
+        <iframe id="imgupload" src="@Url.Action("Index","ImageUpload")" frameborder="0" scrolling="no" height="0" width="0"></iframe>
+    </div>
+    
+<div id="saleHouse" class="saleHouse">
+   
+	<div class="saleHouse-main shejiao_main" style="margin:20px 20px 0px 30px;">
+        <div class="comment_box_l">
+		<div class="home-editor-tab">
+			<ul>
+				<li><a href="javascript:" class="home-editor-tab-group current" id="ShareDynamic" refTabId="mb-msgeditor-main">说两句</a></li>
+				<li><a href="javascript:" class="home-editor-tab-group" id="ShareVote" refTabId="W_layer">发投票</a></li>
+			</ul>
+			<div class="home-editor-tab-arrow_1" id="xzup"></div>
+			<div class="home-editor-tab-arrow_w" id="xzdown"></div>
+		</div> 	
+		<div class="richeditor">
+			<div id="mb-msgeditor-main" class="cmpdisabled">
+				<!--发分享开始-->
+				<div class="msgeditor-bd">
+					<textarea placeholder="来说两句吧..." id="shareTextArea"></textarea>
+				</div>
+				<!--发分享结束-->
+				<div class="msgeditor-ft">
+					<div class="msgeditor-addons">
+						<a href="javascript:" class="msgeditor-addons-smiley" data-value="0"><i class="icon icon-smiley"></i>
+							表情</a> <a href="javascript:" class="attachbtn attachbtndoc msgeditor-addons-doc kcmp">
+								<i class="icon icon-attach"></i>附件</a> 
+					</div>
+					<div class="msgeditor-ctrl">
+						<!--公告特有-->
+						<!--公告特有结束-->
+						<span class="msgeditor-hdr"><q style="display: none;"><strong></strong></q><span style="color:#999">还可输入<em>10000</em>个字</span></span>
+						<a href="javascript:" class="msgeditor-ctrl-post"><em>发布</em></a>
+					</div>
+				</div>
+				<div class="cattachqueue-wrap br5" id="fileListDiv">
+					<ul class="cattachqueue">
+						
+					</ul>
+					<ul class="cattach-img-preview clearfix">
+						
+					</ul>
+				</div>
+			</div>
+			<!--投票start-->
+			<div class="W_layer" id="W_layer" style="display:none">
+			  <div class="bg">
+				<table cellspacing="0" cellpadding="0" border="0">
+				  <tbody>
+					<tr>
+						<td>
+							<div class="xzhtcontent">
+								<div class="feed_vote">
+								  <div class="layer_vote">
+									<dl>
+									  <dt>
+										<p id="titleZsCount" style="display: none"> <span class="xzhticon_succ"></span><em class="S_txt2">标题最多40字</em> </p>
+										<p node-type="titleTips" id="titleErrorTips" style="display: none"> <span class="xzhticon_del"></span><em class="S_spetxt">标题不能为空</em> </p>
+									  </dt>
+									  <dd class="vote_text">
+									  	<input type="text" class="W_input" id="inputtitle" name="vt" placeholder="问题">
+									  </dd>
+									  <dt>
+										<p id="optionZsCount" style="display: none"> <em class="S_txt2">至少2项,每项最多40字</em> </p>
+										<p id="optionstip" style="display: none"> <span class="xzhticon_del"></span><em class="S_spetxt">至少两项内容必填哦。</em> </p>
+										<p id="optionstipPic" style="display: none"> <span class="xzhticon_del"></span><em class="S_spetxt">必须加图片和描述哦。</em> </p>
+									  </dt>
+									</dl>
+									<dl id="tpdiv">
+									  <dd>
+										<input class="W_input" type="text"  placeholder="选项1"  onfocus="optionFoucs(this,1)" onblur="optionBlur(this,1)">
+									  </dd>
+									  <dd><input class="W_input" type="text"  placeholder="选项1" onfocus="optionFoucs(this,2)" onblur="optionBlur(this,2)"></dd>
+									</dl>
+									<dl>
+									  <dt>
+										<div class="mtrow-left">
+										  <input type="text" id="txtEndTime" value="@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")" class="ontxtboxsml Wdate" onclick="SelectDate(this, 'yyyy-MM-dd')">
+										</div>
+										<div class="mtrow-right" id="select"> <span class="i8ctrl-select"><span style="width: 401px" class="i8ctrl-select-text" value="0" id="Itemtype">单选模式</span> <span class="i8ctrl-select-ico" id="selectItemtype"> <b></b></span><span id="selItemtypevalue" style="display: none; width: 455px; left: -1px; top: 28px;" class="i8ctrl-select-itemList"><em value="1" itemname="单选模式">单选模式</em> <em value="2" itemname="多选模式">多选模式</em> </span></span> </div>
+									  </dt>
+									</dl>
+                                      
+                                      <dl style="display:none;">
+                                                                                <dt>
+                                                                                    <div class="mtrow" id="selectViewdata">
+                                                                                        <span class="mtrow-m-left">投票结果：</span> <span style="font-weight: normal" class="mtrow-m-left">
+                                                                                            <label class="i8ctrl-radio">
+                                                                                                <span class="btn-radio rdchecked" vtype="0"></span><span class="btn-radio-txt">仅投票人可以查看
+                                                                                                </span>
+                                                                                            </label>
+                                                                                            <label class="i8ctrl-radio">
+                                                                                                <span class="btn-radio" vtype="1"></span><span class="btn-radio-txt">发布范围内的都可以查看
+                                                                                                </span>
+                                                                                            </label>
+                                                                                            <label class="i8ctrl-radio">
+                                                                                                <span class="btn-radio" vtype="2"></span><span class="btn-radio-txt">仅我可以查看 </span>
+                                                                                            </label>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </dt>
+                                                                            </dl>
+								  </div>
+								  <div class="toupian_button">
+										<a class="disable" id="submit" onclick="return false;" href="#">发起</a>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				  </tbody>
+				</table>
+			  </div>
+			</div>
+			<!--投票end-->
+		</div>	
+		<div class="tabhome">
+			<div class="tablist_m">
+				<ul id="tabHome" class="ul_tl_m clearfix">
+					<li code="20" class="btn_type current btn-refresh-list"><a href="javascript:void(0)" type="aboutme">最新动态</a></li>
+					<!--<li code="10" class="btn_type"><a href="javascript:void(0)" type="all">话题类</a></li>-->
+				</ul>
+			</div>   
+		</div>
+			 <!--置顶功能弹出层开始-->
+    <div class="setTop" id="setTopDiv_lyb" style="display: none;">
+                                    <input type="hidden" id="settoplybid" value="0">
+                                    <input type="hidden" id="setreplybid" value="0">
+                                    <!--<h1 class="setTopTitle">
+                                        提示</h1>-->
+                                    <div class="setTopCt">
+                                        <div class="popup_message">
+                                            置顶： <span>
+                                                <input name="settopdays" type="radio" value="1" checked="checked">1天</span>
+                                            <span>
+                                                <input name="settopdays" type="radio" value="2">2天</span> <span>
+                                                    <input name="settopdays" type="radio" value="3">3天</span> <span>
+                                                        <input name="settopdays" type="radio" value="4">4天</span> <span>
+                                                            <input name="settopdays" type="radio" value="5">5天</span>
+                                        </div>
+                                        <div class="popup_panel">
+                                            <input class="popup_ok" type="button" id="btnSetTopOk" value=" 确定 ">
+                                            <input class="popup_cancel" type="button" value=" 取消 " onclick="jQuery('#setTopDiv_lyb').hide();">
+                                        </div>
+                                    </div>
+                                </div>
+    <!--置顶功能弹出层结束-->
+		<div class="twtpanel dynamicListBox">
+            <div>
+            @*
+			<div class="msg">
+				<a href="javascript:;" class="namecard avatarbig"><img alt="头像" src="/images/avator.png" class="avatar"></a>
+				<div class="msg-bd">
+					<div class="msg-main"><a href="javascript:;" class="mb-twt-username namecard">陈文惠</a><br>
+						<span class="msg-content">编辑部的妹子在排练中，春利说她很喜欢看陈兰凤跳舞，我不知道她是什么眼神，"人家明明没在场啊"！</span>
+					</div>
+					<div class="msg-attach">
+						<div class="msg-attach-pics ">
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="0" alt="" src="/images/research-case-advertisement.jpg?imageView2/2/w/100/h/100" class="att-file-pic"><img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="1" alt="" src="/images/research-case-education.jpg?imageView2/2/w/100/h/100" class="att-file-pic">
+								<img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="2" alt="" src="/images/research-case-internet.jpg?imageView2/2/w/100/h/100" class="att-file-pic">
+								<img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="msg-ft">
+				  <div class="msg-ctrl mb10 tsq_lyb_dbcd"><a href="javascript:" data-zan="true" class="msg-ctrl-orlike">赞</a> <a class="msg-ctrl-cmt">回复</a><a href="javascript:" class="msg-ctrl-ext">15小时前</a></div>
+				  <div class="mb-cmtbox none">
+					<div class="mb-cmteditor cmpdisabled">
+					<div class="msgeditor-hd">
+						<div class="msgeditor-hdl" style="display:none"><span style="display: inline;" data-id="0"></span><em style="display: inline-block;"></em></div>
+					</div>
+					  <div class="msgeditor-bd-container">
+						<div class="msgeditor-bd h5uploadercontainer kcmp">
+						  <textarea placeholder="" id="xzht_1"></textarea>
+						</div>
+					  </div>
+					  <div class="msgeditor-ft clearfix">
+						<div class="msgeditor-addons"><a href="javascript:" class="msgeditor-addons-smiley" data-value="0"><i class="icon icon-smiley"></i></a></div>
+						<div class="msgeditor-ctrl"><a href="javascript:" class="tybtn em msgeditor-ctrl-post"><em>回复</em></a></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+			
+			<!--投票帖start-->
+			<div class="msg">
+				<a href="javascript:;" class="namecard avatarbig"><img alt="头像" src="/images/avator.png" class="avatar"></a>
+				<div class="msg-bd">
+					<div class="msg-main"><a href="javascript:;" class="mb-twt-username namecard">卢捷</a><br>
+						<p class="xt_ctp"><font class="content_mmfed" id="contentmmfed_808117"><b class="vote_icon">投票:</b><a target="_blank" href="/Index.aspx?SID=4272&amp;type=vote">您觉得厦门房子会继续增值吗？</a>快来参与吧！</font></p>
+					</div>
+					<div detailid="808117" id="showVoteResult4272" class="Vote_Box WB_media_expand SW_fun2 S_line1 S_bg1 showVoteResult">
+					  <div class="mmvote">
+						<div class="S_txt2 infos"><s></s><span node-type="timeLeft">还有<span node-type="time">6天结束</span></span><span class="vline">|</span> <span class="spanvotenum">0</span>人参与<em class="W_vline">|</em><span class="spanitemtype">单选</span></div>
+						<div id="voteNormal4272" class="alltpList">
+						  <div class="vote_text_list normalClass">
+							<div tval="" bin="32864">
+							  <label><span class="icon_none">
+								<input optionname="会，厦门房子还是挺值钱的" type="radio" name="SingleItemType_8930" value="8930_32864" class="inputSel  optionid_32864" onclick="DcoptionClick(this)">
+								</span><span class="voteOptionName">会，厦门房子还是挺值钱的</span></label>
+							</div>
+							<div tval="" bin="32865">
+							  <label><span class="icon_none">
+								<input optionname="不会，最多也就保值" type="radio" name="SingleItemType_8930" value="8930_32865" class="inputSel  optionid_32865" onclick="DcoptionClick(this)">
+								</span><span class="voteOptionName">不会，最多也就保值</span></label>
+							</div>
+							<div tval="" bin="32866">
+							  <label><span class="icon_none">
+								<input optionname="不知道，没买过" type="radio" name="SingleItemType_8930" value="8930_32866" class="inputSel  optionid_32866" onclick="DcoptionClick(this)">
+								</span><span class="voteOptionName">不知道，没买过</span></label>
+							</div>
+						  </div>
+						  <div class="btn"> <a href="javascript:void(0);" class="W_btn_a_disable" votetitle="您觉得厦门房子会继续增值吗？" voteuid="35" voteuname="许振添"><span class="btnVote" bin="4272" nid="808117" nkind="76" nflybtype="4" onclick="NormalSubmit(this)">投票</span></a></div>
+						  <ul class="result_list">
+						  </ul>
+						</div>
+					  </div>
+					</div>
+				</div>
+				<div class="msg-ft">
+				  <div class="msg-ctrl mb10 tsq_lyb_dbcd"><a href="javascript:" data-zan="true" class="msg-ctrl-orlike">赞</a> <a class="msg-ctrl-cmt">回复</a><a href="javascript:" class="msg-ctrl-ext">15小时前</a></div>
+				  <div class="mb-cmtbox none">
+					<div class="mb-cmteditor cmpdisabled">
+						<div class="msgeditor-hd">
+							<div class="msgeditor-hdl" style="display:none"><span style="display: inline;" data-id="0"></span><em style="display: inline-block;"></em></div>
+						</div>
+					  <div class="msgeditor-bd-container">
+						<div class="msgeditor-bd h5uploadercontainer kcmp">
+						  <textarea placeholder="" id="xzht_2"></textarea>
+						</div>
+					  </div>
+					  <div class="msgeditor-ft clearfix">
+						<div class="msgeditor-addons"><a href="javascript:" class="msgeditor-addons-smiley" data-value="0"><i class="icon icon-smiley"></i></a></div>
+						<div class="msgeditor-ctrl"><a href="javascript:" class="tybtn em msgeditor-ctrl-post"><em>回复</em></a></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+			<!--投票帖end-->
+			
+			<!--投票帖start-->
+			<div class="msg">
+				<a href="javascript:;" class="namecard avatarbig"><img alt="头像" src="/images/avator.png" class="avatar"></a>
+				<div class="msg-bd">
+					<div class="msg-main"><a href="javascript:;" class="mb-twt-username namecard">卢捷</a><br>
+						<p class="xt_ctp"><font class="content_mmfed" id="contentmmfed_808117"><b class="vote_icon">投票:</b><a target="_blank" href="/Index.aspx?SID=4272&amp;type=vote">您觉得厦门房子会继续增值吗？</a>快来参与吧！</font></p>
+					</div>
+					<div detailid="808117" id="showVoteResult4273" class="Vote_Box WB_media_expand SW_fun2 S_line1 S_bg1 showVoteResult">
+					  <div class="mmvote">
+						<div class="S_txt2 infos"><s></s><span node-type="timeLeft">还有<span node-type="time">6天结束</span></span><span class="vline">|</span> <span class="spanvotenum">0</span>人参与<em class="W_vline">|</em><span class="spanitemtype">单选</span></div>
+						<div id="voteNormal4273" class="alltpList">
+						  <div class="vote_text_list normalClass">
+							<div tval="" bin="32864">
+							  <label><span class="icon_succS"></span><span class="voteOptionName">会，厦门房子还是挺值钱的</span> <span class="line"><i style="width: 100px;" class="linecolor lc1" maxpercent="100"></i><em class="S_txt2">1(100%)</em></span></label>
+							</div>
+							<div tval="" bin="32865">
+							  <label><span class="icon_none"></span><span class="voteOptionName">不会，最多也就保值</span> <span class="line"><i style="width: 1px;" class="linecolor lc2" maxpercent="1"></i><em class="S_txt2">0(0%)</em></span></label>
+							</div>
+							<div tval="" bin="32866">
+							  <label><span class="icon_none"></span><span class="voteOptionName">不知道，没买过</span> <span class="line"><i style="width: 1px;" class="linecolor lc3" maxpercent="1"></i><em class="S_txt2">0(0%)</em></span></label>
+							</div>
+						  </div>
+						  <div class="btn"><a class="W_btn_a_disable" href="javascript:void(0)"><span>已投票</span></a><a class="VoteChangeToggle" onclick="WangToChange(4273)" href="javascript:void(0)"><span>更改投票</span></a></div>
+						</div>
+						<div id="voteChange4273" class="alltpList" style="display:none;">
+						  <div class="vote_text_list changeClass">
+							<div tval="" bin="32864">
+							  <label><span class="icon_none">
+								<input optionname="会，厦门房子还是挺值钱的" type="radio" name="SingleItemType_8930" value="8930_32864" class="inputSel  optionid_32864" onclick="DcoptionClick(this)">
+								</span><span class="voteOptionName">会，厦门房子还是挺值钱的</span></label>
+							</div>
+							<div tval="" bin="32865">
+							  <label><span class="icon_none">
+								<input optionname="不会，最多也就保值" type="radio" name="SingleItemType_8930" value="8930_32865" class="inputSel  optionid_32865" onclick="DcoptionClick(this)">
+								</span><span class="voteOptionName">不会，最多也就保值</span></label>
+							</div>
+							<div tval="" bin="32866">
+							  <label><span class="icon_none">
+								<input optionname="不知道，没买过" type="radio" name="SingleItemType_8930" value="8930_32866" class="inputSel  optionid_32866" onclick="DcoptionClick(this)">
+								</span><span class="voteOptionName">不知道，没买过</span></label>
+							</div>
+						  </div>
+						  <div class="btn"> <a href="javascript:void(0);" class="W_btn_a_disable" votetitle="您觉得厦门房子会继续增值吗？" voteuid="35" voteuname="许振添"><span class="btnVote" bin="4272" nid="808117" nkind="76" nflybtype="4" onclick="ChangeVoteSubmit(this)">投票</span></a><a class="VoteChangeToggle" onclick="WangToChange(4273)" href="javascript:void(0)"><span>取消</span></a></div>
+						</div>
+					  </div>
+					</div>
+				</div>
+				<div class="msg-ft">
+				  <div class="msg-ctrl mb10 tsq_lyb_dbcd"><a href="javascript:" data-zan="true" class="msg-ctrl-orlike">赞</a> <a class="msg-ctrl-cmt">回复</a><a href="javascript:" class="msg-ctrl-ext">15小时前</a></div>
+				  <div class="mb-cmtbox">
+					<div class="mb-cmteditor cmpdisabled">
+					  <div class="mb-cmtpanel msgpanel ">
+					  <div class="mb-cmt msg kcmp" data-id="3293" data-username="吴春利" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+						<div class="msg-bd">
+						  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">吴春利：</a><span>我投了:会，厦门房子还是挺值钱的;你呢? </span></div>
+						</div>
+						<div class="msg-ft">
+						  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3293">回复</a><span class="msg-meta">15小时前</span></div>
+						</div>
+					  </div>
+					</div>
+						<div class="msgeditor-hd">
+							<div class="msgeditor-hdl" style="display:none"><span style="display: inline;" data-id="0"></span><em style="display: inline-block;"></em></div>
+						</div>
+					  <div class="msgeditor-bd-container">
+						<div class="msgeditor-bd h5uploadercontainer kcmp">
+						  <textarea placeholder="" id="xzht_3"></textarea>
+						</div>
+					  </div>
+					  <div class="msgeditor-ft clearfix">
+						<div class="msgeditor-addons"><a href="javascript:" class="msgeditor-addons-smiley" data-value="0"><i class="icon icon-smiley"></i></a></div>
+						<div class="msgeditor-ctrl"><a href="javascript:" class="tybtn em msgeditor-ctrl-post"><em>回复</em></a></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+			<!--投票帖end-->
+			
+			<div class="msg">
+				<a href="javascript:;" class="namecard avatarbig"><img alt="头像" src="/images/avator.png" class="avatar"></a>
+				<div class="msg-bd">
+					<div class="msg-main"><a href="javascript:;" class="mb-twt-username namecard">陈文惠</a><br>
+						<span class="msg-content">编辑部的妹子在排练中，春利说她很喜欢看陈兰凤跳舞，我不知道她是什么眼神，"人家明明没在场啊"！</span>
+					</div>
+					<div class="msg-attach">
+						<div class="msg-attach-pics ">
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="0" alt="" src="/images/info-press-jumbotron-bg.jpg?imageView2/2/w/100/h/100" class="att-file-pic"><img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="1" alt="" src="/images/a3.jpg?imageView2/2/w/100/h/100" class="att-file-pic">
+								<img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="msg-ft">
+				  <div class="msg-ctrl mb10 tsq_lyb_dbcd"><a href="javascript:" data-zan="true" class="msg-ctrl-orlike">取消赞</a> <a class="msg-ctrl-cmt">回复</a><a href="javascript:" class="msg-ctrl-ext">15小时前</a></div>
+				  <div class="msg-likeinf ellipsis"><i class="icon icon-like"></i><span class="iand"><a href="javascript:;" class="like-number-flag">我、</a></span><a href="javascript:;" class="like-number-flag">章卫国 </a>、<a href="javascript:;" class="like-number-flag">陈振强 </a>等 3 人觉得这很赞</span></div>
+				  <div class="mb-cmtbox none">
+					<div class="mb-cmteditor cmpdisabled">
+						<div class="msgeditor-hd">
+							<div class="msgeditor-hdl" style="display:none"><span style="display: inline;" data-id="0"></span><em style="display: inline-block;"></em></div>
+						</div>
+					  <div class="msgeditor-bd-container">
+						<div class="msgeditor-bd h5uploadercontainer kcmp">
+						  <textarea placeholder="" id="xzht_4"></textarea>
+						</div>
+					  </div>
+					  <div class="msgeditor-ft clearfix">
+						<div class="msgeditor-addons"><a href="javascript:" class="msgeditor-addons-smiley" data-value="0"><i class="icon icon-smiley"></i></a></div>
+						<div class="msgeditor-ctrl"><a href="javascript:" class="tybtn em msgeditor-ctrl-post"><em>回复</em></a></div>
+					  </div>
+					</div>
+				  </div>
+				  
+				</div>
+			</div>
+			
+			<div class="msg">
+				<a href="javascript:;" class="namecard avatarbig"><img alt="头像" src="/images/avator.png" class="avatar"></a>
+				<div class="msg-bd">
+					<div class="msg-main"><a href="javascript:;" class="mb-twt-username namecard">陈文惠</a><br>
+						<span class="msg-content">编辑部的妹子在排练中，春利说她很喜欢看陈兰凤跳舞，我不知道她是什么眼神，"人家明明没在场啊"！</span>
+					</div>
+					<div class="msg-attach">
+						<div class="msg-attach-pics ">
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="0" alt="" src="/images/info-jobs-enjoywork.jpg?imageView2/2/w/100/h/100" class="att-file-pic"><img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+							<a href="javascript:void(0);" class="zoom-min " style="display: inline-block;">
+								<img img-index="1" alt="" src="/images/info-jobs-create.jpg?imageView2/2/w/100/h/100" class="att-file-pic">
+								<img src="/images/s-left-bg-png8.png" class="block">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="msg-ft">
+				  <div class="msg-ctrl mb10 tsq_lyb_dbcd"><a href="javascript:" data-zan="true" class="msg-ctrl-orlike">赞</a> <a class="msg-ctrl-cmt">回复</a><a href="javascript:" class="msg-ctrl-ext">15小时前</a></div>
+				  <div class="msg-likeinf ellipsis"><i class="icon icon-like"></i><a href="javascript:;" class="like-number-flag">章卫国 </a>、<a href="javascript:;" class="like-number-flag">陈振强 </a>等 3 人觉得这很赞</span></div>
+				  <div class="mb-cmtbox">
+					<div class="mb-cmtbox-more"><a data-id="4836" href="javascript:"><i class="icon icon-comment"></i>还有<b>2</b>条较早之前的回复 »</a></div>
+					<div class="mb-cmtpanel msgpanel ">
+					  <div class="mb-cmt msg kcmp" data-id="3292" data-username="吴春利" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+						<div class="msg-bd">
+						  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">吴春利：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+						</div>
+						<div class="msg-ft">
+						  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3292">回复</a><span class="msg-meta">15小时前</span></div>
+						</div>
+					  </div>
+					</div>
+					<div class="mb-cmtpanel msgpanel ">
+					  <div class="mb-cmt msg kcmp" data-id="3293" data-username="吴春利" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+						<div class="msg-bd">
+						  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">吴春利：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+						</div>
+						<div class="msg-ft">
+						  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3293">回复</a><span class="msg-meta">15小时前</span></div>
+						</div>
+					  </div>
+					</div>
+					<div class="mb-cmtpanel msgpanel ">
+					  <div class="mb-cmt msg kcmp" data-id="3294" data-username="李智勇" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+						<div class="msg-bd">
+						  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">李智勇：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+						</div>
+						<div class="msg-ft">
+						  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3294">回复</a><span class="msg-meta">15小时前</span></div>
+						</div>
+					  </div>
+					</div>
+					<div class="mb-cmtpanel msgpanel ">
+					  <div class="mb-cmt msg kcmp" data-id="3295" data-username="章卫国" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+						<div class="msg-bd">
+						  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">章卫国：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+						</div>
+						<div class="msg-ft">
+						  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3295">回复</a><span class="msg-meta">15小时前</span></div>
+						</div>
+					  </div>
+					</div>
+					<div class="mb-cmtpanel msgpanel ">
+					  <div class="mb-cmt msg kcmp" data-id="3296" data-username="庄绍英" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+						<div class="msg-bd">
+						  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">庄绍英：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+						</div>
+						<div class="msg-ft">
+						  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3296">回复</a><span class="msg-meta">15小时前</span></div>
+						</div>
+					  </div>
+					</div>
+					<div class="tsq_plgd_bs" style="display:none">
+						<div class="mb-cmtpanel msgpanel ">
+						  <div class="mb-cmt msg kcmp" data-id="3297" data-username="吴春利" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a1.jpg" class="avatar"></a>
+							<div class="msg-bd">
+							  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">吴春利：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+							</div>
+							<div class="msg-ft">
+							  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3297">回复</a><span class="msg-meta">15小时前</span></div>
+							</div>
+						  </div>
+						</div>
+						<div class="mb-cmtpanel msgpanel ">
+						  <div class="mb-cmt msg kcmp" data-id="3298" data-username="杨启东" data-userid="1000183"><a href="javascript:;" class="namecard"><img alt="" src="/images/a2.jpg" class="avatar"></a>
+							<div class="msg-bd">
+							  <div class="msg-main"><a href="javascript:;" class="mb-cmt-username namecard">杨启东：</a><span>哈哈<span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span><span class="face_Img"><img src="/images/120.png"></span></span></div>
+							</div>
+							<div class="msg-ft">
+							  <div class="msg-ctrl"><a class="msg-ctrl-cmt" data-id="3298">回复</a><span class="msg-meta">15小时前</span></div>
+							</div>
+						  </div>
+						</div>
+					</div>
+					<div class="mb-cmteditor cmpdisabled">
+						<div class="msgeditor-hd">
+							<div class="msgeditor-hdl" style="display:none"><span style="display: inline;" data-id="0"></span><em style="display: inline-block;"></em></div>
+						</div>
+					  <div class="msgeditor-bd-container">
+						<div class="msgeditor-bd h5uploadercontainer kcmp">
+						  <textarea placeholder="" id="xzht_5"></textarea>
+						</div>
+					  </div>
+					  <div class="msgeditor-ft clearfix">
+						<div class="msgeditor-addons"><a href="javascript:" class="msgeditor-addons-smiley" data-value="0"><i class="icon icon-smiley"></i></a></div>
+						<div class="msgeditor-ctrl"><a href="javascript:" class="tybtn em msgeditor-ctrl-post"><em>回复</em></a></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>*@
+                </div>
+		</div>	
+                <div class="paginator-more mt20 kcmp" style="display: none;">
+                                暂无更多数据</div>
+		</div>
+		<div class="comment_box_r">
+			<div class="widget">
+			  <div class="float-l">
+				<a href="@Url.Action("BrokerHeadImg","User")">
+                    <img onerror="this.src='/images/txDefault.png'" src="@(TouXiang)?imageView2/1/w/75/h/75/q/85" id="ContentRight_ImgUserPic" width="75" height="75" class="user_avator" />
+				</a>
+			  </div>
+			  <div class="gerenxinxi">
+				<p> <a href="@Url.Action("BrokerInfo","User")">@Model.Name</a></p>
+				<p style="margin-top:5px"> 手机：@Model.Tel</p>
+				<p style="margin-top:5px">中介：@companyName</p>
+			  </div>
+			</div>
+			<!--公告-->
+			<div class="widget">
+			  <h2 class="widget-hd">公告<a class="widget-hd-more "href="@Url.Action("NoticeList","Notice")">更多</a></h2>
+			  <ul id="bulletin-main" class="widget-bd">
+				 @{Html.RenderAction("HomeNoticeListView", "Social");}
+			  </ul>
+			</div>
+			<!--公告-->
+		
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+    <div id="UserPointBox" style="display:none;width:600px"></div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+<script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+<script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+<script src="~/Scripts/jquery.caretposition.js"></script>
+<script src="~/Scripts/StringBulider.js"></script>
+<script src="/Scripts/FuncTool.js"></script>
+<script src="/Scripts/Dropdown.js"></script>
+<script src="/Scripts/SocialIndex.js"></script>
+<script src="/Scripts/Dynamic.js?v=1.2"></script>
+<script src="/Scripts/ShareHandler.js"></script>
+<script src="~/Scripts/WebCalendar.js"></script>
+    <script src="~/Scripts/VoteHander.js"></script>
+    <script src="~/Scripts/UserPoint.js?v=1.0"></script>
+</body>
+</html>

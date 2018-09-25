@@ -1,0 +1,78 @@
+﻿@using Qiniu.Conf
+@using ZJB.Core.Utilities
+@{
+    Layout = null;
+    string tags = @ViewBag.Tags;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>标签设置</title>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/saleManager.css" rel="stylesheet" />
+</head>
+<body>
+<input id="updatesTagHidden" type="hidden" value="@tags" />
+<div id="updateTags">
+	<ul class="updateTags">
+		
+			<li>
+				<input class="tag" type="checkbox" name="tag" id="1" value="1"></input>
+				<label for="secure"><img width="30"  height="18" src="/images/secure.gif" /></label>
+			</li>
+		
+			<li>
+				<input class="tag" type="checkbox" name="tag" id="2" value="2"></input>
+				<label for="hot"><img width="30"  height="18" src="/images/hot.gif" /></label>
+			</li>
+		
+			<li>
+				<input class="tag" type="checkbox" name="tag" id="3" value="3"></input>
+				<label for="new"><img width="30"  height="18" src="/images/new.gif" /></label>
+			</li>
+		
+			<li>
+				<input class="tag" type="checkbox" name="tag" id="4" value="4"></input>
+				<label for="focus"><img width="30"  height="18" src="/images/focus.gif" /></label>
+			</li>
+		
+	</ul>
+</div>
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+<script>
+    $(function () {
+        var tags = $("#updatesTagHidden").val();
+        parent.$("#updateTags").val(tags);
+        if (tags != null && tags.length > 0) {
+            var arr = tags.split(",");
+
+            $.each(arr, function (i, tag) {
+                $("#" + tag).attr("checked", true);
+            });
+        }
+
+        $("input[name=tag]").change(function () {
+            var value = "";
+            var tagNum = 0;
+            $.each($("input[name=tag]:checked"), function (i, obj) {
+                value += "," + $(this).val();
+                tagNum++;
+                if (i > 2) {
+                    alert("最多选择3个标签");
+                    $(this).attr("checked", false);
+                }
+            });
+            if (tagNum <= 3) {
+                if (value.length > 0) {
+                    value = value.substring(1);
+                }
+                parent.$("#updateTags").val(value);
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

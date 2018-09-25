@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+    int status = (int)ViewBag.status;//1 正常 -100用户不存在 -99不是有效的邮箱验证
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DoChangeEmail</title>
+</head>
+<body>
+    <div>
+        @{
+            if(@status==1)
+        {
+        <span>邮箱修改成功</span>
+        }
+        else
+        {
+        <span>不是有效的邮箱验证</span>
+        }
+        }
+       <a href="@Url.Action("Index","Home")">返回首页</a>
+    </div>
+</body>
+</html>

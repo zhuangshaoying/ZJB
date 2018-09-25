@@ -1,0 +1,157 @@
+@charset "utf-8";
+/* 公共样式 */
+/* CSS Document */
+.house-log li a {
+	font-size:14px
+}
+.lookAsWebsite-link {
+	display:inline-block;
+	height:24px;
+	line-height:24px
+}
+.lookAsCount-tip {
+	margin:20px 8px
+}
+.lookAsCount-tip h5 {
+	font-size:14px;
+}
+.lookAsCount-tip ul {
+	margin:8px 0;
+	font-size:12px
+}
+.lookAsCount-tip ul li {
+	height:32px;
+	line-height:32px
+}
+.lookAsCount-tip ul li span {
+	display:inline-block;
+	width:200px;
+	text-align:left
+}
+#lookAsCount-website, #lookAsCount-time {
+	width:788px;
+	height:400px;
+	margin: 30px auto;
+}
+.houseLog-select .saleManager-search-key {
+	width:160px;
+	height:26px;
+	padding:0px 5px;
+	line-height:26px;
+	border:1px solid #64ac58;
+	margin:0px;
+	border-radius:3px;
+	font-size:12px
+}
+/*成功记录*/
+.houseLog-list {
+	position:relative
+}
+.houseLog-select>li {
+	float:left;
+	margin:8px 8px
+}
+.houseLog-select .houseLog-area, .houseLog-area-tip {
+	width:100px
+}
+.houseLog-select .houseLog-website, .houseLog-website-tip {
+	width:100px
+}
+.houseLog-select .houseLog-state, .houseLog-state-tip {
+	width:100px
+}
+.houseLog-select .houseLog-time {
+	width:108px
+}
+.houseLog-select .houseLog-time-tip {
+	width:120px;
+	height:26px;
+	line-height:26px;
+	border:1px solid #64ac58;
+	border-radius:3px;
+	margin:0px
+}
+.houseLog-select .manage-list-content {
+	width:108px;
+	margin-left:0px;
+	left:0px
+}
+.building-title a {
+	display:inline-block;
+	width:350px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.task-title li {
+	width:280px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.webSpan, .loginName {
+	width:65px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	display: block;
+}
+.website-img {
+	display:block;
+	float:left;
+	height:24px;
+	line-height:24px
+}
+.website-list {
+	display:block;
+	float:left;
+	font-size:14px;
+	height:24px;
+	width:100px;
+	line-height:24px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+/*今日统计*/
+.stat_account {
+	margin-bottom:20px;
+	border-left:1px solid #e8e8e8;
+	border-top:1px solid #e8e8e8
+}
+.stat_account caption {
+	height:30px;
+	line-height:30px;
+	color:#000;
+	font-size:14px;
+	font-weight:bold
+}
+.stat_account td {
+	border-bottom:1px solid #e8e8e8;
+	border-right:1px solid #e8e8e8;
+	text-align:center
+}
+.stat_account thead td {
+	font-family:"Microsoft YaHei", "微软雅黑", Helvetica, "黑体", Arial, Tahoma;
+	background-color:#eaeaea;
+	padding:4px;
+	color:#444;
+	font-size:12px;
+	font-weight:bold
+}
+.stat_account tbody td {
+	line-height:20px;
+	padding:4px
+}
+.stat_account tbody tr:nth-child(odd) {
+	background-color:#f7f7f7
+}
+.stat_account tbody tr:hover {
+	background-color:#ededed
+}
+.stat_account a:hover {
+	text-decoration:underline
+}
+.statAccount-total {
+	font-weight:bold
+}

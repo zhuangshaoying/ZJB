@@ -1,0 +1,248 @@
+﻿@using ZJB.Api.Models;
+@using ZJB.Core.Utilities
+@using ZJB.Api.Entity;
+@model  List<ControllerActionMapModel> 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>@ViewBag.Title</title>
+    <link href='~/Content/common.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/saleManager.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/fanye.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+
+    <div>
+      
+    </div>
+    <div id="saleHouse" class="saleHouse">
+        <div class="saleHouse-main">
+            <div class="selectHouse">
+                <!-- 数据内容区 -->
+                <div class="saleManager-state-content con1 mm30">
+					<div class="search_bar dn" id="searchDiv" style="display: block;">
+            			<span class="srfrm_input_box search with_del append ">
+                			<a id="searchBt" href="javascript:" class="frm_input_append"  onclick="searchbtn();"><i class="icon16_common search_gray">搜索</i>&nbsp;</a>
+                			<input id="keyInput" type="text" placeholder="Controller/Action/功能名称" value="@ViewBag.KeyWord" class="srfrm_input">
+            			</span>
+                     @if ((int)ViewBag.UserId > 0)
+                        {
+                        <span style="color:#F0406A">
+                          @(ViewBag.UserName )的访问统计<a href="@Url.Action("Index","ControllerActionMap")">清除</a>
+                        </span>
+                        }
+    				</div>
+		        <div id="EditBox" style="display:none;">
+                    <input  type="text" id="txtController" placeholder="Controller"/>
+                    <input type="text" id="txtAction" placeholder="Action" />
+                    <input type="text" placeholder="功能名称" id="txtFunctionName" />
+                    <input type="button" id="btnEditMap" value="确定" onclick="AddControlerActionName()"/>
+                    <input type="button"id="btnCancle" value="取消"  onclick="CancleEdit()"/>
+		        </div>
+                    <div class="table_wrp files list">
+						<table class="h_list" width="100%" cellspacing="0" cellpadding="0">
+							<thead>
+								<tr>
+									<td>Controller</td>
+									<td>Action</td>
+								    <td>功能名称</td>
+                                    <td>访问次数</td>
+								    <td>重点功能</td>
+									<td>操作</td>
+								</tr>
+							</thead>
+							<tbody id="filelist">
+								@{
+                                    foreach (ControllerActionMapModel item in Model)
+                                    {
+                                        <tr >
+                                            
+                                            <td>
+                                                @item.Controller  
+                                            </td>
+                                            <td >
+                                                @item.Action
+                                            </td>
+                                            <td id="FunctionName_@(item.Controller)_@(item.Action)">
+                                                @item.FunctionName
+                                            </td>
+                                            <td>
+                                                @item.AccessCount  
+                                            </td>
+                                            <td>
+                                                @if (item.Status == 0)
+                                                {
+                                                    <a href="javascript:void(0)" onclick="MapStatus('@item.Controller','@item.Action',@item.Status,this)">否</a> 
+                                                }
+                                                else
+                                                {
+                                                    <a href="javascript:void(0)" onclick="MapStatus('@item.Controller','@item.Action',@item.Status,this)">是</a> 
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" onclick="EditMap('@item.Controller','@item.Action','@item.FunctionName')">修改</a>
+                                                <a href="@Url.Action("ActionLogStatEveryDayByFunction", "ControllerActionMap", new  {_controller=@item.Controller,_action=@item.Action ,UserId=@ViewBag.UserId})">查看每日统计</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+							</tbody>
+						</table>
+                        <div class="tool_area clearfix">
+                            <span class="totalSize"></span>
+                                <div class="pagination">
+                                    <span class="page_nav_area">
+                                        <a href="@WrightPageUrl(1)" class="btn page_first"><i class="arrow"></i>首页</a>
+                                        @if (ViewBag.PageIndex == 1)
+                                        {
+                                            <a href="javascript:void(0);" class="btn page_prev"><i class="arrow"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@WrightPageUrl(ViewBag.PageIndex - 1)" class="btn page_prev"><i class="arrow"></i></a>
+                                        }
+                                        <span class="page_num">
+                                            <label>@ViewBag.PageIndex</label><span class="num_gap">/</span><label>@ViewBag.PageTotal</label>
+                                        </span>
+                                        @if (ViewBag.PageIndex == ViewBag.PageTotal)
+                                        {
+                                            <a href="javascript:void(0);" class="btn page_next"><i class="arrow"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@WrightPageUrl(ViewBag.PageIndex + 1)" class="btn page_next"><i class="arrow"></i></a>
+                                        }
+                                        <a href="@WrightPageUrl(ViewBag.PageTotal)" class="btn page_last">尾页</a>
+                                    </span>
+                                    <span class="goto_area">
+                                        <input type="text"><a href="javascript:void(0);" class="btn page_go">跳转</a>
+                                    </span>
+                                    <input type="hidden" value="@ViewBag.PageIndex" id="pageIndex" />
+                                    <input type="hidden" value="@ViewBag.PageSize" id="pageSize" />
+                                    <input type="hidden" value="@ViewBag.PageTotal" id="pageTotal" />
+                                   <input type="hidden" value="@ViewBag.UserId" id="hideUserId" />
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+        </div>
+    </div>
+ 
+    <script src='~/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='~/Scripts/placeholder.js' type='text/javascript'></script>
+    <script src='~/Scripts/common.js?v=115' type='text/javascript'></script>
+    <script src='~/Scripts/map.js' type='text/javascript'></script>
+
+    <script src='~/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+
+    <script src='~/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+
+    <script src='~/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+
+  
+    <script src="~/Scripts/JSON.js"></script>
+
+
+    <script src='~/Scripts/plugins/lazyload/jquery.lazyload.js?v=115' type='text/javascript'></script>
+
+    <script src='~/Scripts/plugins/lazyload/lazyload.js?v=115' type='text/javascript'></script>
+    @helper WrightPageUrl(int pageIndex)
+{
+    var index = pageIndex;
+    @:/ControllerActionMap/index?pageindex=@index&pagesize=@ViewBag.PageSize&keyword=@ViewBag.KeyWord&userId=@ViewBag.UserId
+}
+    <script type="text/javascript">
+        $(function () {
+            //翻页
+            $(".goto_area a.page_go").click(function () {
+                var pageindex = $(this).parent().find("input").val();
+                var reg = /^\+?[1-9][0-9]*$/;
+                if (typeof pageindex == "undefined" || pageindex == "" || !reg.test(pageindex)) {
+                    ShowMessage("请输入要跳转的页面", "error");
+                    return;
+                }
+                var pagesize = $("#pageSize").val();
+                var pagetotal = $("#pageTotal").val();
+                var keyword = $("#keyInput").val();
+                var userId = $("#hideUserId").val();
+                if (parseInt(pageindex) > parseInt(pagetotal)) {
+                    ShowMessage("超过最大页面", "error");
+                    return;
+                }
+                var url = "/ControllerActionMap/index?pageindex=" + pageindex + "&pagesize=" + pagesize + "&keyword=" + keyword + "&userId=" + userId;
+                window.location.href = url;
+            });
+        });
+
+        function searchbtn() {
+            var pagesize = $("#pageSize").val();
+            var pageindex =1;
+            var keyword = $("#keyInput").val();
+            var userId = $("#hideUserId").val();
+            var url = "/ControllerActionMap/index?pageindex=" + pageindex + "&pagesize=" + pagesize + "&keyword=" + keyword + "&userId=" + userId;;
+            window.location.href = url;
+        }
+        function AddControlerActionName()
+        {
+            var  controller= $("#txtController").val();
+            var  action=$("#txtAction").val();
+            var functionName = $("#txtFunctionName").val();
+            if (controller != "" && action != "" && functionName != "") {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    data: { Controller: controller, Action: action, FunctionName: functionName },
+                    url:'/ControllerActionMap/EditControlActionMap',
+                    success: function () {
+                        $("#FunctionName_" + controller + "_" + action).html(functionName);
+                        CancleEdit();
+                    }
+                });
+            }
+            else {
+                alert("不能为空");
+            }
+        }
+        function MapStatus(controller, action, status, obj)
+        {
+            var newStatus = status == 0 ? 1 : 0;
+            var newStatusText = status == 0 ? "是" : "否";
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: { Controller: controller, Action: action, Status: newStatus },
+                url: '/ControllerActionMap/EditControlActionMapStatus',
+                success: function (result) {
+                    if (result.status == 1) {
+                        $(obj).attr("onclick", 'MapStatus("' + controller + '","' + action + '",' + newStatus + ',this)');
+                        $(obj).html(newStatusText);
+                    }
+                }
+            });
+        }
+        function EditMap(controller, action, functionName)
+        {
+            $("#EditBox").show();
+            $("#txtController").val(controller);
+            $("#txtAction").val(action);
+            $("#txtFunctionName").val(functionName);
+        }
+        function CancleEdit() {
+            $("#EditBox").hide();
+            $("#txtController").val("");
+            $("#txtAction").val("");
+            $("#txtFunctionName").val("");
+        }
+        </script>
+            </body>
+            </html>

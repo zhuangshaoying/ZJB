@@ -1,0 +1,209 @@
+﻿@using ZJB.Api.Models;
+@model List<CompanyModel>
+@{
+    Layout = null;
+    System.Web.Script.Serialization.JavaScriptSerializer jss=new System.Web.Script.Serialization.JavaScriptSerializer();
+    int shareCompanyId =(int)ViewBag.ShareCompanyId;
+    int shareCompanyStoreId = (int)ViewBag.ShareCompanyStoreId;
+    int userCompanyId = (int)ViewBag.UserCompanyId;
+    string shareOrgStrId = shareCompanyStoreId > 0 ? userCompanyId + "_" + shareCompanyStoreId : "0_" + shareCompanyId;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>房源共享设置</title>
+    <link href="~/Css/common.css" rel="stylesheet" />
+    <link href="~/Css/saleManager.css" rel="stylesheet" />
+    <link href="~/Css/zTreeStyle.css" rel="stylesheet" />
+</head>
+<body style="background:#ffffff">
+    <div class="sharHouseOrg">
+	<input type="hidden" id="userOrgId" value="@ViewBag.UserCompanyId" />
+	<input type="hidden" id="userOrgName" value="" />
+     <input type="hidden" id="from"  value="@ViewBag.IsFrom"/> 
+	<div class="shareHouseOrg-tip">
+		提示：共享的房源将会在7天内自动失效
+	</div>
+	<ul class="shareStoreNo">
+	 			<li><input type='radio' id='shareOrgId0' name='shareOrgId' value='0' checked="checked" /><label for="shareOrgId0">不共享</label></li>
+	 			<li><input type='radio' id='shareOrgId1' name='shareOrgId' value='1'/><label for="shareOrgId1">共享到</label><span class="shareOrgId-text" buildingIds="@ViewBag.HouseId" orgId="@shareOrgStrId" stroeName="0"></span></li>
+	</ul>
+	<div class="shareHouseOrgZtree">
+		<ul id="treeDemo" class="ztree" style="margin:0 0 8px"></ul> 
+	</div>
+	<div class="shareHouseOrg-btn">
+		<input class="btn_g" type="button" value="确认" id="submit"></input>
+		<input class="btn_g" type="button" value="取消" id="cancel" ></input>
+	 </div>    
+</div>
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script src="~/Scripts/plugins/ztree/jquery.ztree.core-3.5.min.js"></script>
+    <script src="~/Scripts/plugins/ztree/jquery.ztree.excheck-3.5.min.js"></script>
+    <script src="~/Scripts/plugins/ztree/jquery.ztree.exedit-3.5.min.js"></script>
+<script>
+    var zTree;
+    var nowSelectName;
+    var companyList =(@Html.Raw(jss.Serialize(Model)));
+    $(function(){
+        getAllStores(companyList);
+    });
+    function getAllStores(data) {
+        var setting = {
+            view: {
+                showLine: true,
+                selectedMulti: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+        var zNodes = [];
+        $.each(data, function (i, n) {
+            zNodes.push({ id: n.ParentId+"_"+n.CompanyId, pId:"0_"+ n.ParentId, name: n.Name });
+        });
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.expandAll(true);
+
+        var shareOrgId = $(".shareOrgId-text").attr("orgId");
+        var nodes = zTree.getNodesByParam("id", shareOrgId, null);
+        if (nodes.length > 0) {
+            var node = nodes[0];
+            $(".shareOrgId-text").html(node.name);
+            $(".shareOrgId-text").attr("stroeName", node.name);
+            nowSelectName=node.name;
+            $("#shareOrgId1").attr("checked", "checked");
+            zTree.selectNode(node);
+        }
+    }
+  
+
+    /*点击树事件*/
+    function onClick() {
+        var node = zTree.getSelectedNodes()[0];
+        $("#shareOrgId1").attr("checked", "checked");
+        $(".shareOrgId-text").html(node.name);
+        $(".shareOrgId-text").attr("stroeName", node.name);
+        $(".shareOrgId-text").attr("orgId", node.id);
+        nowSelectName=node.name;
+    }
+    var isStore=-100;
+    /*提交事件*/
+    $("#submit").click(function () {
+        var buildingIds = $(".shareOrgId-text").attr("buildingIds");
+        var shareOrgId = 0;
+        
+        if ($("#shareOrgId1").attr("checked")) {
+            shareOrgId = $(".shareOrgId-text").attr("orgId");
+            if(shareOrgId!=""&&shareOrgId.split("_")[0]!=0)
+            {
+                isStore=1;
+            }
+            else{
+                isStore=0;
+            }
+        }
+        $.ajax({
+            type: "post",
+            dataType:'json',
+            cache: false,
+            url: "/House/EditHouseShareCompany",
+            data: {
+                "houseId": buildingIds,
+                "isStore": isStore
+            },
+           
+            beforeSend: function (XMLHttpRequest) {
+                    //if(window.parent)
+                    //{
+                    //    window.parent.loadingShow();
+                    //}
+                    //if(window.parent.frames[0])
+                    //{
+                    //    //self.top.document.location.href=''
+                        
+                    //   // alert($(window.parent.frames[0]).attr("id"));
+                    //    window.parent.frames[0].loadingShow();
+                //}
+             
+                self.top.loadingShow();
+
+                },
+            success: function (data) {
+                if (data.code==1) {
+                    var from = $("#from").val();
+                    if (from == 0) {
+                        var stDescribe = ((isStore == "-100") ? "未共享" : "已共享");
+                        var tishiShare = ((isStore == "-100") ? "已成功取消共享" : "共享成功");
+                        alert(tishiShare);
+                        var ids = buildingIds.split(",");
+                        $.each(ids, function (i, n) {
+                            var shareLink = self.top.document.getElementById("main-iframe").contentWindow.$("a[name=link_share_type][buildingId = " + n + " ]");
+                            shareLink.attr("shareOrgId", shareOrgId);
+                            shareLink.html(stDescribe);
+                        });
+                    } else {
+                        //if(window.parent.frames[0])
+                        //{
+                        //    window.parent.frames[0].getShareBuildings();
+                        //}
+                        var stDescribe = ((isStore == "-100") ? "已成功取消共享" : "共享成功");
+                        alert(stDescribe);
+                        self.top.document.getElementById("main-iframe").contentWindow.getShareBuildings();
+                    }
+                }
+                else
+                {
+                    alert(data.msg);
+                }
+            } ,
+            complete: function (XMLHttpRequest, textStatus) {
+                //if(window.parent)
+                //{
+                //    window.parent.loadingHide();
+                //    window.parent.sharHouseOrg.close();
+                //}
+                //if(window.parent.frames[0])
+                //{
+                //      window.parent.frames[0].loadingHide();
+                //      window.parent.frames[0].sharHouseOrg.close();
+                //}
+                self.top.loadingHide();
+                self.top.document.getElementById("main-iframe").contentWindow.sharHouseOrg.close();
+
+            }
+        });
+
+    });
+
+    $("#shareOrgId1").click(function () {
+        var orgId = $("#userOrgId").val();
+        var orgName = nowSelectName;
+        $(".shareOrgId-text").attr("orgId", orgId);
+        $(".shareOrgId-text").attr("stroeName", orgName);
+        $(".shareOrgId-text").html(orgName);
+        var nodes = zTree.getNodesByParam("id", orgId, null);
+        if (nodes.length > 0) {
+            zTree.selectNode(nodes[0]);
+        }
+
+    });
+    $("#shareOrgId0").click(function () {
+        isStore=-100;
+    });
+    $("#cancel").live('click', function () {
+        self.top.document.getElementById("main-iframe").contentWindow.sharHouseOrg.close();
+    });
+
+</script>
+
+</body>
+</html>

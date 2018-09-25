@@ -1,0 +1,165 @@
+﻿@using ZJB.Opportal;
+@using ZJB.Api.Entity;
+@using ZJB.Core.Utilities;
+@using ZJB.Api.Models;
+
+@model FeedbackListView
+@{
+    Layout = null;
+    int totalSize = Model.TotalSize;
+    int pi = (int)ViewBag.pi;
+    int ps = (int)ViewBag.ps;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Index</title>
+	<link href='~/Content/common.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/main.css' rel='stylesheet' type='text/css' />
+    <link href="~/Content/fanye.css" rel="stylesheet" />
+	<script src="~/Scripts/jquery-1.8.3.js"></script>
+     <script src='~/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+	<script src='~/Scripts/common.js' type='text/javascript'></script>
+<script type="text/javascript">
+    @*
+    function hideReplayBox()
+    {
+        $("#ReplayBox").hide();
+        $("#hideFeedbackId").val(0);
+        $("#hideUserId").val(0);
+        $("#ReplayText").val("");
+    }
+    $("#ulFeedBack li").live("click", function () {
+        $("#hideUserId").val($(this).attr("userid"));
+        $("#hideFeedbackId").val($(this).attr("feedbackId"));
+        $("#ReplayBox").insertAfter($(this));
+        $("#ReplayBox").show();
+        $.ajax({
+            type: 'post',
+            url:'/Notice/GetNoticeByFeedbackId',
+            data: { feedbackId: $("#hideFeedbackId").val() },
+            success: function (result) {
+                var html = "";
+                if (result.data.length > 0)
+                {
+                    html += '<li>已有的回复：</li>';
+                    $.each(result.data, function (i, item) {
+                        html += '<li>' + item.NoticeContent + '</li>';
+                    });
+                }
+                $("#ulReplayList").html(html);
+            }
+        });
+
+    });
+    *@
+    function submitReplay(userId, feedbackId)
+    {
+        var textAreaObj = $("#feedbackContent_" + feedbackId);
+        var content = textAreaObj.val();
+        if(content=="")
+        {
+            textAreaObj.focus();
+            return false;
+        }
+        if (userId > 0) {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/Notice/ReplayFeedback',
+                data: { feedbackId: feedbackId, content: content, userId: userId },
+                success: function (result) {
+                    if (result.status == 0) {
+                        alert("回复成功");
+                        location.href = location.href;
+                    }
+                    else {
+                        alert("出错");
+                    }
+                    hideReplayBox();
+                }
+            });
+        }
+        else {
+            alert("用户编号不能为0")
+        }
+    }
+</script>
+</head>
+<body>
+<div class="saleHouse" id="saleHouse">
+	<div class="saleHouse-main">
+		<div class="mt10">
+        @foreach (FeedbackModel item in (Model.FeedbackList == null ? new List<FeedbackModel>() : Model.FeedbackList))
+        { 
+             <div class="msg">
+		  <div class="msg-bd">
+			<div class="msg-main"><span class="msg-ctrl-ext">@DateTimeUtility.GetDisplayTime(item.CreateTime)</span><a href="javascript:void(0)" class="mb-twt-username namecard">提问人：@item.UserName</a><br>
+			  <span class="msg-content">@item.FeedbackContent<br>
+			  </span>
+			</div>
+			<div class="msg-attach"></div>
+		  </div>
+		  <div class="msg-ft">
+			<div class="mb-cmtbox">
+              @{
+            List<Notice> replayList = (Model.ReplayList == null ? null : (Model.ReplayList.Where(n => n.FeedbackId == item.FeedbackId).ToList()));
+            if (replayList != null && replayList.Count > 0)
+            {
+                foreach (Notice itemreplay in replayList)
+                {
+                <div class="mb-cmtpanel">
+				<div class="mb-cmt msg">
+				  <div class="msg-bd">
+					<div class="msg-main"><a href="javascript:;" class="namecard">@(string.IsNullOrEmpty(itemreplay.Publisher)?"盒子助手":itemreplay.Publisher)回复：</a><span>@itemreplay.NoticeContent</span></div>
+                      <div><span>@DateTimeUtility.GetDisplayTime((DateTime)itemreplay.CreateTime)</span></div>
+				  </div>
+				</div>
+			  </div>
+                }
+            }
+              }
+			  <div class="mb-cmteditor">
+				<div class="msgeditor-bd-container">
+				  <div class="msgeditor-bd">
+					<textarea placeholder="" id="feedbackContent_@item.FeedbackId"></textarea>
+				  </div>
+				</div>
+				<div class="msgeditor-ft">
+				  <div class="msgeditor-ctrl"><a href="javascript:void(0)" onclick="submitReplay(@item.UserId,@item.FeedbackId)" class="ggbtn em msgeditor-ctrl-post"><em>回复</em></a></div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+        }
+	</div><div id="notice-fanye" class="commom-fanye notice-font" style="margin-left:30px;margin-top:20px"> </div></div>
+</div>
+    <script type="text/javascript">
+        if (@(totalSize)>0) {
+            var totalSize=@(totalSize);
+            var pageSize=@ps;
+            var pagecount = parseInt(totalSize / pageSize) + ((totalSize % pageSize) == 0 ? 0 : 1);
+        /*翻页控件*/
+        $("#notice-fanye").paginate({
+            count: pagecount,
+            start: '@pi',
+            display: 6,
+            border: false,
+            text_color: '#50b63f',
+            text_hover_color: '#fff',
+            background_color: '#fff',
+            background_hover_color: '#50b63f',
+            images: false,
+            mouse: 'click',
+            onChange: function (currentPage) {
+                location.href = "/Feedback/Index?pi="+currentPage;
+            }
+        });
+        }
+</script> 
+</body>
+</html>

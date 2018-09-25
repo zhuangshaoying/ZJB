@@ -1,0 +1,426 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Api.Entity
+@model  List<ZJB.Api.Entity.HouseUserDescribe> 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>我的描述管理</title>
+
+    <link href='/css/common.css' rel='stylesheet' type='text/css' />
+
+    <link href='/css/saleImport.css' rel='stylesheet' type='text/css' />
+
+    <script>
+
+        var postTypeArray = ['通用', '出售', '求购','出租','求租'];
+
+    </script>
+
+</head>
+
+
+<body>
+
+    <div id="myDescs" class="saleHouse">
+
+        <ul class="sale-tab-sub">
+
+            <li class="sale-sub-menu selected"> <a href="javascript:">我的描述管理</a> </li>
+
+        </ul>
+
+        <div class="saleHouse-main mrty">
+
+            <div style="margin-top: 5px;">
+
+                <input type="button" onclick="addDesc()" class="btn_g" value="新增" id="shuo_add" />
+
+            </div>
+
+            <table class="h_list" width="100%" cellspacing="0" cellpadding="0">
+
+                <thead>
+
+                    <tr>
+
+                        <td width="80">编号</td>
+
+                        <td>房源描述模板名称</td>
+
+                        <td width="80">类型</td>
+
+                        <td width="120">操作</td>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="houseTable">
+                    
+@{
+    foreach (HouseUserDescribe item in Model)
+    {
+        <tr>
+
+            <td class="td_id">@item.Id</td>
+
+            <td>@item.Title</td>
+
+            <td>
+                <script> document.write(postTypeArray[parseInt('@item.TradeType')]) </script></td>
+
+            <td><a name="upd_houseDesc" hid="@item.Id">修改</a>&nbsp;<a name="del_houseDesc" hid="@item.Id">删除</a></td>
+
+        </tr>
+
+    }
+}
+
+    </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div id="updDesc" class="saleHouse" style="display: none;">
+
+        <ul class="sale-tab-sub">
+
+            <li class="sale-sub-menu selected"> <a id="modifyTitle" href="javascript:">修改我的描述</a> </li>
+
+        </ul>
+
+        <input type="hidden" id="updId" />
+
+        <div class="saleHouse-main ml8 mr8">
+
+            <div class="houseDescManage-input-content housemiaoshu">
+                标题：<input id="descName" class="houseDescManage-input wth" />
+                &nbsp;&nbsp;&nbsp;&nbsp;类型：<select id="postType" style="height: 26px;width: 80px;font-size: 14px;">
+                    <option value="0">通用</option>
+                    <option value="1">出售</option>
+                    <option value="2">求购</option>
+                    <option value="3">出租</option>
+                    <option value="4">求租</option>
+                </select>
+
+            </div>
+
+            <div class="saleHouse-textarea">
+
+           
+                <script id="descContent" name="descContent" type="text/plain">
+                  
+                </script>
+            </div>
+
+            <div class="saleManager-bottom center">
+
+                <button id="btn_update" class="btn_g">修改</button>
+
+                <button id="btn_cancel" class="btn_g">取消</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+
+    <script type="text/javascript" src="/Scripts/plugins/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/Scripts/plugins/ueditor/ueditor.all.js"></script>
+
+    <script src='/Scripts/checkInput.js' type='text/javascript'></script>
+
+    <script>
+
+        $(function () {
+            
+
+            var ue = UE.getEditor('descContent');
+
+            $("a[name=del_houseDesc]").die().live("click", function () {
+
+                var link = $(this);
+
+                $.ajax({
+
+                    url: "/house/RemoveHouseDesc",
+
+                    type: "post",
+
+                    data: {
+
+                        hid: link.attr("hid")
+
+                    },
+
+                    success: function (data) {
+
+                        var result = unescape(data.replace(/\\u/g, '%u'));
+
+                        art.dialog.alert(result);
+                     
+                        if (result == "删除成功") {
+                            
+                            link.parent().parent().remove();
+
+                          
+
+                        }
+                    }
+
+                });
+
+            });
+
+
+
+            $("#btn_cancel").click(function () {
+
+                $("#myDescs").show();
+
+                $("#updDesc").hide();
+
+            });
+
+
+
+            var link = null;
+
+            $("#btn_update").click(function () {
+
+                var descName = $("#descName").val();
+
+                var bValid = true;
+
+                bValid = bValid && checkRangeWithHint(descName.length, 1, 35, "模板名称");
+
+              
+                var desc = trim(UE.getEditor('descContent').getContent().replace(/<[^>]+>/g, ""));
+                desc = desc.replace(/&nbsp;/ig, "");
+                desc = trimAll(desc, "g");
+                var contentLen = desc.length;
+
+
+                bValid = bValid && checkRangeWithHint(contentLen, 30, 3000, "房源描述内容");
+
+
+
+                if (!bValid) return;
+
+
+
+                var url = "/house/addHouseDesc";
+
+
+                $.ajax({
+
+                    url: url,
+
+                    type: "post",
+
+                    data: {
+
+                        id: $("#updId").val(),
+
+                        descName: descName,
+
+                        postType: $("#postType").val(),
+
+                        descContent: UE.getEditor('descContent').getContent()
+
+                    },
+
+                    dataType: "json",
+
+                    success: function (data) {
+
+                        if (data.hid<1) {
+                            art.dialog.alert(data.msg);
+                            return;
+                        }
+
+                        var index = parseInt($("#postType").val());
+
+                        var postTypeStr = postTypeArray[index];
+
+                        if ($("#updId").val() != null && $("#updId").val() != '') {
+
+                            link.parent().prev().html(postTypeStr);
+
+                            link.parent().prev().prev().html(descName);
+
+                        } else {
+
+                            //$.each($(".td_id"), function (i, td) {
+
+                            //    $(this).html(parseInt($(this).html()) + 1);
+
+                            //});
+
+                            var html = '<tr>';
+
+                            html += '<td>'+data.hid+'</td>';
+
+                            html += '<td>' + descName + '</td>';
+
+                            html += '<td>' + postTypeStr + '</td>';
+
+                            html += '<td>';
+
+                            html += '<a name="upd_houseDesc" hid="' + data.hid + '">修改</a>&nbsp;';
+
+                            html += '<a name="del_houseDesc" hid="' + data.hid + '">删除</a>';
+
+                            html += '</td>';
+
+                            html += '</tr>';
+
+
+
+                            $("#houseTable").prepend(html);
+
+                        }
+
+
+
+                        $("#myDescs").show();
+
+                        $("#updDesc").hide();
+
+                    },
+
+                    error: function (jqXHR) {
+
+                        art.dialog.alert($.parseJSON(jqXHR.responseText).msg);
+
+                    }
+
+                });
+
+            });
+
+
+
+            $("a[name=upd_houseDesc]").die().live("click", function () {
+
+                link = $(this);
+
+                var hid = link.attr("hid");
+
+                if (hid > 0) {
+
+                    $.ajax({
+
+                        url: "/house/getHouseDesc",
+
+                        type: "get",
+
+                        data: {
+
+                            id: hid
+
+                        },
+
+                        dataType: "json",
+
+                        success: function (data) {
+
+                            if (data != null) {
+
+                                $("#updId").val(data.Id);
+
+                                $("#descName").val(data.Title);
+
+                                $("#postType").val(data.TradeType);
+
+                                $("#modifyTitle").html("修改我的描述");
+
+                                $("#btn_update").html("修改");
+
+                 
+                                UE.getEditor('descContent').setContent(data.HouseDescribe);
+                                $("#myDescs").hide();
+
+                                $("#updDesc").show();
+
+                            } else {
+
+                                art.dialog.alert("获取数据失败！");
+
+                            }
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        });
+
+
+
+        function addDesc() {
+
+            $("#updId").val('');
+
+            $("#descName").val('');
+
+            $("#postType").val(0);
+
+            $("#modifyTitle").html("新增我的描述");
+
+            $("#btn_update").html("新增");
+
+           
+            UE.getEditor('descContent').setContent('');
+            $("#myDescs").hide();
+
+            $("#updDesc").show();
+
+        }
+        function trim(str) {
+            str = str.replace(/^(\s|\u00A0)+/, '');
+            for (var i = str.length - 1; i >= 0; i--) {
+                if (/\S/.test(str.charAt(i))) {
+                    str = str.substring(0, i + 1);
+                    break;
+                }
+            }
+            return str;
+        }
+        function trimAll(str, is_global) {
+            var result;
+            result = str.replace(/(^\s*)|(\s*$)/g, "");
+            if (is_global.toLowerCase() == "g") {
+                result = result.replace(/\s/g, "");
+            }
+            return result;
+        }
+    </script>
+
+</body>
+
+</html>

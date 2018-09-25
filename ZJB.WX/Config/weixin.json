@@ -1,0 +1,18 @@
+﻿{
+  "ZJB": {
+    "AppId": "wx0b19f05d17d956e6",
+    "AppDesc": "住家帮服务号",
+    "AppSecret": "f4d52f541fbacd5967ab9f63d32f76fd",
+    "AppToken": "weixin",
+    "AppEncodingAESKey": "jigWRduSVP6wUVFDWGBMjkCNrFRLxc6xQTvAIeNnCWV",
+    "AuthState": "zhujia001"
+  },
+  "ZJBDY": {
+    "AppId": "wxc5fad1f88b88ec34",
+    "AppDesc": "住家帮订阅号",
+    "AppSecret": "bd993faf9162097068a862a2a6abfd4c",
+    "AppToken": "weixindy",
+    "AppEncodingAESKey": "555xdBqJ74CvF2OGYfoG9qjWtDjbOlQ6sSIGDgpvdos",
+    "AuthState": "zhujia001"
+  }
+}

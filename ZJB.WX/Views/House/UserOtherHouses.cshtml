@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Core.Utilities
+@model List<ZJB.Api.Entity.HouseBasicInfo>
+
+@{
+    foreach (var item in Model)
+    {
+      <li onmouseover="$(this).css('background-color','#f9f9f9');" onmouseout="$(this).css('background-color','');">
+                                        <div class="more_lilogos"> <i class="tj_gximage tj_gxkt"></i></div>
+          <div href="@Url.RouteUrl("HouseView",new{id=item.HouseID})" target="_blank" class="relevance_ershou">
+              <a class="agrey" target="_blank" href="@Url.RouteUrl("HouseView",new{id=item.HouseID})"><img src="@(item.HouseImgPath.IsNull() ? "/images/web/default_block.png" : item.HouseImgPath + "?imageMogr2/strip|imageView2/1/w/80/h/60/q/85")" alt="@item.Title" title="@item.Title"></a>
+              <h3><a class="agrey" href="@Url.RouteUrl("HouseView",new{id=item.HouseID})" target="_blank">@item.CommunityName</a> </h3>
+              <p>
+                  <span class="agrey">@(item.Room)室@(item.Hall)厅@(item.Toilet)卫 </span> <br>
+                  <b class="yc_reds">@item.Price.ToString("F0")</b>@item.PriceUnit
+              </p>
+          </div>
+                                    </li>
+    }
+}

@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>房贷计算器_房贷计算器最新2014_2014房贷计算器下载_厦门房地产联合网（XMHOUSE.COM）</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+
+    <script language="javascript" type="text/javascript" charset="gb2312" src="/weixin/js/calculate1.js"></script>
+
+</head>
+<body>
+    <div data-role="page" id="p_1">
+        <header>
+            <div class="headBox">
+                <div class="mainNav">
+                    <a href="javascript:history.go(-1);" class="back"></a>
+                    <p class="title">房贷计算</p>
+                </div>
+            </div>
+        </header>
+        <div data-role="content">
+            <!--计算器 start -->
+            <div class="jsqname">
+                <a href="javascript:" onclick="exc_zuhe(1)">
+                    <div class="td01" id="sd_1">商业贷款</div>
+                </a>
+                <a href="javascript:" onclick="exc_zuhe(2)">
+                    <div class="td02" id="sd_2">公积金贷款</div>
+                </a>
+                <a href="javascript:" onclick="exc_zuhe(3)">
+                    <div class="td02" id="sd_3">组合贷款</div>
+                </a>
+            </div>
+            <div class="tool_box">
+                <form name="calc1">
+                    <div id="t-1">
+                        <div class="jsqConB">
+                            <div id="calc1_zuhe" style="display: none">
+                                <div class="jsqtr">
+                                    <dl class="clearfix">
+                                        <dt>商业贷款：<!--<span class="myline"></span>--></dt>
+                                        <dd>
+                                            <div class="zdk">
+                                                <input name="total_sy" maxlength="8" size="8" type="text" class="jsqinput01" />
+                                            </div>
+                                            <span class="wy">万元</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="jsqtr">
+                                    <dl class="clearfix">
+                                        <dt>公积金贷款：</dt>
+                                        <dd>
+                                            <div class="zdk">
+                                                <input name="total_gjj" maxlength="8" size="8" type="text" class="jsqinput01" />
+                                            </div>
+                                            <span class="wy">万元</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="jsqtr" id="calc1_ctype">
+                                <dl class="clearfix">
+                                    <dt>贷款金额：</dt>
+                                    <dd>
+                                        <div class="zdk" id="calc1_js_div2">
+                                            <input maxlength="8" size="10" name="daikuan_total000" class="jsqinput01" />
+                                        </div>
+                                        <span class="wy">万元</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="jsqtr">
+                                <dl class="clearfix">
+                                    <dt>按揭年限：</dt>
+                                    <dd>
+                                        <div class="zdk mylast">
+                                            <span class="rightarrow" onclick="showMenu(2)" id="years" data="20">20年（240期）</span>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="jsqtr" id="divlilv">
+                                <dl class="clearfix">
+                                    <dt>贷款利率：</dt>
+                                    <dd>
+                                        <div class="zdk mylast">
+                                            <span class="rightarrow" onclick="showMenu(3)" id="lilv" data="36">2015年10月24日基准利率</span>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="jsqtr">
+                                <dl class="clearfix">
+                                    <dt>还款方式：</dt>
+                                    <dd>
+                                        <div class="zdk mylast">
+                                            <div class="mymenu">
+                                                <span class="myon" id="bj_1" onclick="chanage_type_mm(1)">等额本息</span>
+                                                <span id="bj_2" onclick="chanage_type_mm(2)">等额本金</span>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="jsqbotton"><a title="计算" onclick="javascript:ext_total(document.calc1)" class="begin_btn">计算</a></div>
+                    </div>
+                    <div id="calc1_benjin" style="display: none;">
+                        <input type="hidden" name="diakuan_type" value="1">
+                        <input type="hidden" name="fangkuan_total2">
+                        <input type="hidden" name="daikuan_total2">
+                        <input type="hidden" name="all_total2">
+                        <input type="hidden" name="accrual2">
+                        <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="gjlv" id="gjlv" value="3.25">
+                        <input type="hidden" name="sdlv" id="sdlv" value="4.9">
+                        <input type="hidden" name="money_first2">
+                        <input type="hidden" name="month2">
+                        <input type="hidden" name="month_money2">
+                        <input type="hidden" name="dengeben" id="dengeben" value="1">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="p_2" style="display: none">
+        <header>
+            <div class="headBox">
+                <div class="mainNav">
+                    <a href="javascript:" class="back" onclick="hideMenu()"></a>
+                    <p class="title">按揭年限</p>
+                </div>
+            </div>
+        </header>
+        <div class="nianxian">
+            <div class="bd4">
+                <span class="bditem" onclick="ShowLilv(this,1,$('#lilv').attr('data'),1)">1年（12期）</span>
+                <span class="bditem" onclick="ShowLilv(this,2,$('#lilv').attr('data'),1)">2年（24期）</span>
+                <span class="bditem" onclick="ShowLilv(this,3,$('#lilv').attr('data'),1)">3年（36期）</span>
+                <span class="bditem" onclick="ShowLilv(this,4,$('#lilv').attr('data'),1)">4年（48期）</span>
+                <span class="bditem" onclick="ShowLilv(this,5,$('#lilv').attr('data'),1)">5年（60期）</span>
+                <span class="bditem" onclick="ShowLilv(this,6,$('#lilv').attr('data'),1)">6年（72期）</span>
+                <span class="bditem" onclick="ShowLilv(this,7,$('#lilv').attr('data'),1)">7年（84期）</span>
+                <span class="bditem" onclick="ShowLilv(this,8,$('#lilv').attr('data'),1)">8年（96期）</span>
+                <span class="bditem" onclick="ShowLilv(this,9,$('#lilv').attr('data'),1)">9年（108期）</span>
+                <span class="bditem" onclick="ShowLilv(this,10,$('#lilv').attr('data'),1)">10年（120期）</span>
+                <span class="bditem" onclick="ShowLilv(this,11,$('#lilv').attr('data'),1)">11年（132期）</span>
+                <span class="bditem" onclick="ShowLilv(this,12,$('#lilv').attr('data'),1)">12年（144期）</span>
+                <span class="bditem" onclick="ShowLilv(this,13,$('#lilv').attr('data'),1)">13年（156期）</span>
+                <span class="bditem" onclick="ShowLilv(this,14,$('#lilv').attr('data'),1)">14年（168期）</span>
+                <span class="bditem" onclick="ShowLilv(this,15,$('#lilv').attr('data'),1)">15年（180期）</span>
+                <span class="bditem" onclick="ShowLilv(this,16,$('#lilv').attr('data'),1)">16年（192期）</span>
+                <span class="bditem" onclick="ShowLilv(this,17,$('#lilv').attr('data'),1)">17年（204期）</span>
+                <span class="bditem" onclick="ShowLilv(this,18,$('#lilv').attr('data'),1)">18年（216期）</span>
+                <span class="bditem" onclick="ShowLilv(this,19,$('#lilv').attr('data'),1)">19年（228期）</span>
+                <span class="bditem" onclick="ShowLilv(this,20,$('#lilv').attr('data'),1)">20年（240期）</span>
+                <span class="bditem" onclick="ShowLilv(this,21,$('#lilv').attr('data'),1)">21年（252期）</span>
+                <span class="bditem" onclick="ShowLilv(this,22,$('#lilv').attr('data'),1)">22年（264期）</span>
+                <span class="bditem" onclick="ShowLilv(this,23,$('#lilv').attr('data'),1)">23年（276期）</span>
+                <span class="bditem" onclick="ShowLilv(this,24,$('#lilv').attr('data'),1)">24年（288期）</span>
+                <span class="bditem" onclick="ShowLilv(this,25,$('#lilv').attr('data'),1)">25年（300期）</span>
+                <span class="bditem" onclick="ShowLilv(this,26,$('#lilv').attr('data'),1)">26年（312期）</span>
+                <span class="bditem" onclick="ShowLilv(this,27,$('#lilv').attr('data'),1)">27年（324期）</span>
+                <span class="bditem" onclick="ShowLilv(this,28,$('#lilv').attr('data'),1)">28年（336期）</span>
+                <span class="bditem" onclick="ShowLilv(this,29,$('#lilv').attr('data'),1)">29年（348期）</span>
+                <span class="bditem" onclick="ShowLilv(this,30,$('#lilv').attr('data'),1)">30年（360期）</span>
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="p_3" style="display: none">
+        <header>
+            <div class="headBox">
+                <div class="mainNav">
+                    <a href="javascript:" class="back" onclick="hideMenu()"></a>
+                    <p class="title">贷款利率</p>
+                </div>
+            </div>
+        </header>
+        <div class="nianxian">
+            <div class="bd4">
+            	<span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),39,2)">15年10月24日利率上限（1.1倍）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),38,2)">15年10月24日利率下限（85折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),37,2)">15年10月24日利率下限（7折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),36,2)">2015年10月24日基准利率</span>
+                
+                
+            	<span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),28,2)">15年8月26日利率上限（1.1倍）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),27,2)">15年8月26日利率下限（85折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),26,2)">15年8月26日利率下限（7折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),25,2)">2015年8月26日基准利率</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),24,2)">15年6月28日利率上限（1.1倍）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),23,2)">15年6月28日利率下限（85折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),22,2)">15年6月28日利率下限（7折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),21,2)">15年6月28日基准利率</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),20,2)">15年5月11日利率上限（1.1倍）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),19,2)">15年5月11日利率下限（85折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),18,2)">15年5月11日利率下限（7折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),17,2)">15年5月11日基准利率</span>
+            
+            
+            	<span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),16,2)">15年3月1日利率上限（1.1倍）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),15,2)">15年3月1日利率下限（85折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),14,2)">15年3月1日利率下限（7折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),13,2)">15年3月1日基准利率</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),32,2)">14年11月22日基准利率</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),33,2)">14年11月22日利率下限（85折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),34,2)">14年11月22日利率下限（9折）</span>
+                <span class="bditem" onclick="ShowLilv(this,$('#years').attr('data'),35,2)">14年11月22日利率上限（1.1倍）</span>
+                <!--          <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),31,2)">12年7月6日利率上限（1.1倍）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),30,2)">12年7月6日利率下限（85折）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),29,2)">12年7月6日利率下限（7折）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),28,2)">12年7月6日基准利率</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),27,2)">12年6月8日利率上限（1.1倍）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),26,2)">12年6月8日利率下限（85折）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),25,2)">12年6月8日利率下限（7折）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),24,2)">12年6月8日基准利率</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),23,2)">11年7月6日利率上限（1.1倍）</span>              
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),22,2)">11年7月6日利率下限（85折）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),21,2)">11年7月6日利率下限（7折）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),20,2)">11年7月6日基准利率</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),19,2)">11年4月5日利率上限（1.1倍）</span>
+                    <span class="bditem" onClick="ShowLilv(this,$('#years').attr('data'),18,2)">11年4月5日利率下限（85折）</span>  -->
+            </div>
+        </div>
+    </div>
+    <div data-role="page" id="myresult" style="display: none">
+        <header>
+            <div class="headBox">
+                <div class="mainNav">
+                    <a href="javascript:;" class="back" onclick="hideMenu()"></a>
+                    <p class="title">计算结果</p>
+                </div>
+            </div>
+        </header>
+        <div data-role="content">
+            <div class="tool_box">
+                <div class="result">
+                    <div class="lanmu">
+                        <ul class="clearfix" id="canshu_1">
+                            <li class="w60">贷款金额：<span id="daikuan_total1"></span>元</li>
+                            <li class="w40">贷款月数：<span id="month1"></span></li>
+                            <li class="w60">还款方式：<span id="benxi_txt"></span></li>
+                            <li class="w40">贷款利率：<span id="rz_sdlv"></span></li>
+                        </ul>
+                        <ul class="clearfix" id="canshu_2" style="display: none">
+                            <li class="w60">商业贷款：<span id="zh_daikuan_total"></span>元</li>
+                            <li class="w40">公积金贷款：<span id="zh_gjj_total"></span></li>
+                            <li class="w60">贷款月数：<span id="zh_month1"></span></li>
+                            <li class="w40">还款方式：<span id="zh_benxi_txt"></span></li>
+                            <li class="w60">公积金贷款利率：<span id="zh_rz_gjlv"></span></li>
+                            <li class="w40">商业贷款利率：<span id="zh_rz_sdlv"></span></li>
+                        </ul>
+                    </div>
+                    <p class="cknotes">*以下结果仅供参考</p>
+                    <div class="rzl_box">
+                        <dl class="results clearfix" id="zonge" style="display: none">
+                            <dt>贷款总额：</dt>
+                            <dd><span id="zh_all_total1"></span><span class="wy rz_r">元</span></dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>还款总额：</dt>
+                            <dd><span id="all_total1"></span><span class="wy rz_r">元</span></dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>利息总额：</dt>
+                            <dd><span id="accrual1"></span><span class="wy rz_r">元</span></dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>月均还款：</dt>
+                            <dd><span id="month_money1"></span><span class="wy rz_r">元</span></dd>
+                        </dl>
+                    </div>
+                    <div class="jsqbotton"><a title="重新计算" onclick="mytotal_hide()" class="begin_btn">重新计算</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

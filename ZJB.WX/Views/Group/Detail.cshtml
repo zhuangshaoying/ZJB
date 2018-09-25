@@ -1,0 +1,261 @@
+﻿@using ZJB.Api.Entity;
+@model UserGroup
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>群组管理</title>
+    <link href="/Css/_p2.css" rel="stylesheet" type="text/css" />
+    <link href="/Css/big_pic.css" rel="stylesheet" type="text/css" />
+    <link href="/Css/group.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.8.3.js"></script> 
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+     <script src="~/Scripts/GroupManage.js"></script>
+</head>
+<body>
+    
+    <div class="bd c2">
+        <div class="bd-bg">
+            <div class="bd-main clearfix kcmp">
+           
+                <div class="bd-content">
+                    <div class="bd-content-top">
+                    </div>
+                    <div class="page-top group-top">
+                        <div class="page-title-wrapper clearfix">
+                            <h2 class="page-title">
+                                <span>
+                                    @Model.GroupName</span>
+                            </h2>
+                            <a href="@Url.Action("Index","Group")" class="to-group-home">
+                                返回群组首页</a>
+                        </div>
+                        <div class="group-tab clearfix">
+                            <ul>
+                                <li class="curr" type="base"><a href="javascript:"><span>基本信息</span></a></li>
+                                <li type="approval"><a href="javascript:"><span>审批中心</span></a></li>
+                                <li type="management"><a href="javascript:"><span>成员管理</span></a></li>
+                                <li type="invite"><a href="javascript:"><span>邀请成员</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--基础信息开始-->
+                    <div class="main tsq_base_page">
+                        <div data-showfield="true" data-rs="" class="grp-crt">
+                            <form onsubmit="return false;" method="post" id="gcform" novalidate="novalidate">
+                            <div class="row group-name-row">
+                                <label>
+                                    <em>*</em>群组名称：</label>
+                                <span class="ginput">
+                                    <input type="text" value="@Model.GroupName" name="name" id="name">
+                                </span><span class="numCtips">最多只能输入20个汉字或40个字母</span></div>
+                            <div class="row">
+                                <label>
+                                    <em>*</em>群组简介：</label>
+                                <textarea name="description" id="description" >@Model.Description</textarea>
+                            </div>
+                            <div class="none" id="bulletin-content">
+                            </div>
+                            <div class="row">
+                                <label>
+                                    群组属性：</label>
+                                <div class="grp-jtype">
+                                    <div>
+                                        @Html.RadioButton("groupType", 0, Model.ShowType == 0)
+                                        <span>公开</span></div>
+                                    <div>
+                                        @Html.RadioButton("groupType",1,Model.ShowType==1)
+                                        <span>私密</span></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label>
+                                    加入方式：</label>
+                                <div class="grp-jtype">
+                                    <div>
+                                         @Html.RadioButton("joinType", 0, Model.InviteType == 0)
+                                    
+                                        <span>所有人可邀请</span></div>
+                                    <div>
+                                       @Html.RadioButton("joinType", 1, Model.InviteType == 1)
+                                        <span>仅管理员邀请</span></div>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="row grp-avatar" style="display:none;">
+                                <label>
+                                    群组头像：</label>
+                                <img class="tsq_group_icon" src="/images/qz_pic.jpg">
+                                <div>
+                                    <span class="file-mock"><a class="uploadbtn btn em kcmp" href="javascript:"><em>浏览</em></a>
+                                        <span class="ginput no-border">
+                                            <input type="text" readonly="readonly">
+                                        </span></span>
+                                    <p>
+                                        请选择 jpg、gif、png 格式，且文件大小不超过 2M 的图片</p>
+                                </div>
+                            </div>
+                            <img src="/images/loading.gif" class="none" id="loading-img">
+                        </div>
+                        <div class="grp-save">
+                            <a href="javascript:" class="btn-big btn-blue wide tsq_base_save" id="btnEditGroup"><em>保存</em></a></div>
+                    </div>
+                    <!--基础信息结束-->
+                    <!--审批中心开始-->
+                    <div class="main tsq_approval_page" style="display: none;">
+                        <style>
+                            .pending .position
+                            {
+                                height: 18px;
+                            }
+                        </style>
+                        <div class="group-pending">
+                            <table width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="name">
+                                            姓名
+                                        </th>
+                                        <th class="remark">
+                                            附言
+                                        </th>
+                                        <th class="ctrl">
+                                            审批
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--审批中心结束-->
+                    <!--成员管理开始-->
+                    <div class="main tsq_management_page" style="display: none;">
+                        <div class="group-member-list msgpanel">
+                        </div>
+                    </div>
+                    <!--成员管理结束-->
+                    <!--邀请成员开始-->
+                    <div class="main tsq_inivte_page" style="display: none;">
+                        <div class="group-followed-list">
+                            <div class="tip">
+                                从关注人列表中选择</div>
+                            <div class="list" style="display: block;">
+                                <div class="invite-user" data-type="follow">
+                                    <em></em>
+                                    <div class="avatar">
+                                        <img class="avatar" src="/"></div>
+                                    <div class="name">
+                                        陈小龙</div>
+                                </div>
+                                <div class="invite-user ">
+                                    <em></em>
+                                    <div class="avatar">
+                                        <img class="avatar" src="/"></div>
+                                    <div class="name">
+                                        杜卫星</div>
+                                </div>
+                                <div class="invite-user ">
+                                    <em></em>
+                                    <div class="avatar">
+                                        <img class="avatar" src="/"></div>
+                                    <div class="name">
+                                        李智勇</div>
+                                </div>
+                            </div>
+                            <div class="list-tip">
+                                <p class="result-empty-tip" style="display: none;">
+                                    你关注的人都已加入该小组或已收到邀请</p>
+                                <p class="result-empty-tip ext" style="display: none;">
+                                    你可以在下方输入框中查找其他人</p>
+                                <p class="loading-tip" style="display: none;">
+                                    列表加载中，请稍候...</p>
+                                <p class="load-fail-tip" style="display: none;">
+                                    列表加载失败，<a class="try-again-load" href="#">重试</a> 或在下方输入框中查找其他人</p>
+                            </div>
+                        </div>
+                        <div class="group-invite-paginator" style="display: block;">
+                            <a href="#" class="select-all">全选本页</a></div>
+                        <div class="group-add-member filter-somebody">
+                            <input type="text" class="filter-somebody-input ac_input" name="name" p_autocomplete="off"
+                                autocomplete="off" placeholder="输入用户名或邮箱查找" id="filter-somebody-input">
+                            <a class="btn light em adduser-btn"><em>添加</em></a>
+                        </div>
+                        <div class="group-invite-num hidden">
+                            已选<span>0</span></div>
+                        <div class="group-invite-list hidden">
+                        </div>
+                        <div class="group-invite-ctrl group-invite-noselect">
+                            <a class="btn-big btn-blue group-invite-btn" href="#"><em>发送邀请</em></a>
+                        </div>
+                    </div>
+                    <!--邀请成员结束-->
+                    <div class="bd-content-bottom">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnEditGroup").click(function(){
+                $.EditGroup({
+                    Id:@Model.Id,
+                    GroupName: $("#name"),
+                    Description: $("#description"),
+                    ShowType: $("input[name='groupType']:checked"),
+                    InviteType:$("input[name='joinType']:checked")
+                });
+            });
+            $(".group-tab li").click(function(){
+                var obj=$(this);
+                var type=obj.attr("type");
+                $(".group-tab li").removeClass("curr");
+                $(".main").hide();
+                $(this).addClass("curr");
+                if(type=="base")
+                {
+                    $(".tsq_base_page").show();
+                }
+                else if(type=="approval")
+                {
+                    $(".tsq_approval_page").show();
+                    $.GetApproval({
+                        groupId:@Model.Id,
+                        status:2
+                        });
+                }
+                else if(type=="management")
+                {
+                    $(".tsq_management_page").show();
+                    $.GetMemberList({
+                        groupId:@Model.Id,
+                        lastId:0,
+                        pageSize:20,
+                        memberListDiv:$(".tsq_management_page .group-member-list")
+                        });
+                }
+                
+            });
+            jQuery(window).bind("scroll", function () {
+                var totalheight = parseFloat(jQuery(window).height()) + parseFloat(jQuery(window).scrollTop()) + 80;
+                if (jQuery(document).height() <= totalheight) {
+                    var ynLoad = lybHandler.GetScrollState();
+                    //加载数据
+                    if (ynLoad == "") {
+                        lybHandler.SetScrollState("1");
+                        lybHandler.GetList();
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

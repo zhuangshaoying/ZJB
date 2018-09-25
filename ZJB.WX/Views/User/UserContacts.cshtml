@@ -1,0 +1,190 @@
+﻿@{
+    Layout = null;
+    
+}
+
+@model ZJB.Api.Models.PublicUserModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>通讯录</title>
+	<link href='/css/common.css?v=1.0' rel='stylesheet' type='text/css' />
+	<link href='/css/main.css' rel='stylesheet' type='text/css' />
+	<link href="~/Css/tongxunlu.css" rel="stylesheet" />
+	<link href="~/Css/fanye.css" rel="stylesheet" />
+	<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+    <script src='/Scripts/User/UserContacts.js?v=1.5' type='text/javascript'></script>
+    <script src="~/Scripts/plugins/jPaginate/jquery.paginate.js"></script>
+    <script src="~/Scripts/StringBulider.js"></script>
+    <script src="~/Scripts/FuncTool.js"></script>
+</head>
+<body>
+    <div id="saleHouse" class="saleHouse">
+        <input type="hidden" value="1" id="hdState" />
+
+        <div class="bd-content tsq_txl_ptcy">
+            <div class=" tab mb-home-tab mt-5 ab-main-tab mb-notice-top" >
+                <h2>@(Model.CompanyName)通讯录</h2>
+                <ul class="sale-tab-sub house-log">
+
+                    <li data-type="gl" class="sale-sub-menu"><a href="javascript:"><span>管理员</span></a></li>
+
+                    <li data-type="pt" class="curr first sale-sub-menu selected"> <a href="javascript:" class="tsq_ptcy_nums"><span>成员(0)</span></a> </li>
+
+                </ul>
+
+
+            </div>
+            <!--普通成员-->
+            <div id="uc_1">
+                <div class="ab-main-header"> 
+                    <div class="ab-search"><span class="ab-tips">通讯录所有成员都在这边显示</span>
+                        <div class="ab-search-container"><span>
+                                                             <input type="text" class="ab-search-input mg0" name="criteria" placeholder="输入姓名拼音，姓名汉字，电话号码，邮箱查找。" autocomplete="off">
+                                                             <a class="btn-search" href="javascript:"></a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ab-letter-navigator">
+                    <ul class="ab-filter-letters">
+                        <li class="first"><a class="curr" href="javascript:" zm="all">全部</a></li>
+                        <li> <a class="" href="javascript:" zm="A">A</a> </li>
+                        <li> <a class="" href="javascript:" zm="B">B</a> </li>
+                        <li> <a class="" href="javascript:" zm="C">C</a> </li>
+                        <li> <a class="" href="javascript:" zm="D">D</a> </li>
+                        <li> <a class="" href="javascript:" zm="E">E</a> </li>
+                        <li> <a class="" href="javascript:" zm="F">F</a> </li>
+                        <li> <a class="" href="javascript:" zm="G">G</a> </li>
+                        <li> <a class="" href="javascript:" zm="H">H</a> </li>
+                        <li> <a class="" href="javascript:" zm="I">I</a> </li>
+                        <li> <a class="" href="javascript:" zm="J">J</a> </li>
+                        <li> <a class="" href="javascript:" zm="K">K</a> </li>
+                        <li> <a class="" href="javascript:" zm="L">L</a> </li>
+                        <li> <a class="" href="javascript:" zm="M">M</a> </li>
+                        <li> <a class="" href="javascript:" zm="N">N</a> </li>
+                        <li> <a class="" href="javascript:" zm="O">O</a> </li>
+                        <li> <a class="" href="javascript:" zm="P">P</a> </li>
+                        <li> <a class="" href="javascript:" zm="Q">Q</a> </li>
+                        <li> <a class="" href="javascript:" zm="R">R</a> </li>
+                        <li> <a class="" href="javascript:" zm="S">S</a> </li>
+                        <li> <a class="" href="javascript:" zm="T">T</a> </li>
+                        <li> <a class="" href="javascript:" zm="U">U</a> </li>
+                        <li> <a class="" href="javascript:" zm="V">V</a> </li>
+                        <li> <a class="" href="javascript:" zm="W">W</a> </li>
+                        <li> <a class="" href="javascript:" zm="X">X</a> </li>
+                        <li> <a class="" href="javascript:" zm="Y">Y</a> </li>
+                        <li> <a class="" href="javascript:" zm="Z">Z</a> </li>
+                        @*<li class="last"> <a class="" href="javascript:" zm="">其他</a> </li>*@
+                    </ul>
+                </div>
+                <div class="ab-info-list">
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th width="200">姓名</th>
+                                <th width="268">门店</th>
+                                <th width="160">手机</th>
+                                <th width="200">邮箱</th>
+                                <th width="100">积分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+					<td><a class="ab-info-avatar namecard" href="javascript:Global.LinkUserMain(1001115)"> <img src="http://img.fchezi.com/1FF85DD22525039F6D883F2968994B29.jpg?imageMogr2/strip|imageView2/1/w/50/h/50/q/85" class="avatar"> </a>
+						<a class="jjrname" href="javascript:Global.LinkUserMain(1001115)">林灯云</a>
+					  </td>
+					<td>丹厦房产前埔店</td>
+					<td>15659817168</td>
+					<td><a class="" href="javascript:">274101576@qq.com</a></td>
+					<td>1230</td>
+				  </tr>*@
+				  
+				 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+		
+           
+        </div>
+        
+        
+        <div class="bd-content tsq_txl_gly" style="display: none">
+            <div class=" tab mb-home-tab mt-5 ab-main-tab mb-notice-top">
+                <h2>@(Model.CompanyName)通讯录</h2>
+                <ul class="sale-tab-sub house-log">
+
+                    <li data-type="gl" class="sale-sub-menu selected"><a href="javascript:"><span>管理员</span></a></li>
+
+                    <li data-type="pt" class="curr first sale-sub-menu "> <a href="javascript:" class="tsq_ptcy_nums"><span>成员(0)</span></a> </li>
+
+                </ul>
+
+
+            </div>
+
+            <!--管理员-->
+            <div id="uc_2"  style="margin-top:20px;">
+                <div class="ab-info-list">
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th width="200">姓名</th>
+                                <th width="268">门店</th>
+                                <th width="160">手机</th>
+                                <th width="200">邮箱</th>
+                                <th width="100">积分</th>
+                            </tr>
+                        </thead>
+                        <tbody class="manager-items">
+                            @*<tr>
+                                <td>
+                                    <a class="ab-info-avatar namecard" href="javascript:Global.LinkUserMain(1001115)"> <img src="http://img.ZJB.com/MyUpload/InfoImage/20130427/H_201304273474726.jpg?imageMogr2/strip|imageView2/1/w/50/h/50/q/85" class="avatar"> </a>
+                                    <a class="jjrname" href="javascript:Global.LinkUserMain(1001115)">林灯云</a>
+                                </td>
+                                <td>丹厦房产前埔店</td>
+                                <td>15659817168</td>
+                                <td><a class="" href="javascript:">274101576@qq.com</a></td>
+                                <td>1230</td>
+                            </tr>*@
+                            <tr><td colspan="6">暂无管理员</td></tr>
+                         
+                        </tbody>
+                    </table>
+                </div>
+                <div class="manager-rights">
+                    <h3>管理员权限：</h3>
+                    <ul>
+                        <li>公司基本信息设置</li>
+                        <li>用户管理（对本公司内的用户添加、删除等）</li>
+                        <li>导入成员信息</li>
+                    </ul>
+                </div>
+                <div class="manager-rights">
+                    <h3>如何成为管理员：</h3>
+                    <ul>
+                        <li><em></em>由现在的管理员添加成为管理员</li>
+                        <li><em></em>还可以向房产盒子申请，成为管理员<a href="javascript:void(0)" class="manager-apply-btn kcmp">申请管理员</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+<script type='text/javascript'>
+function switchTab(thisObj, i) {
+	$(thisObj).parent().addClass("selected");
+	$(thisObj).parent().siblings().removeClass("selected");
+	if(i != 0) {
+		$("#uc_2").show();
+		$("#uc_1").hide();
+	} else {
+		$("#uc_1").show();
+		$("#uc_2").hide();
+	}
+}
+</script>
+</body>
+</html>

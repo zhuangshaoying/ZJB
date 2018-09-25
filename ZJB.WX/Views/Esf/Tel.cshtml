@@ -1,0 +1,214 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <style>
+        /*.h5-house-body {
+            background-color: #f5f5f5;
+            max-width: 40rem;
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+            color: #333;
+            line-height: 1;
+        }*/
+
+        body {
+            margin: 0;
+        }
+
+        *, :after, :before {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: inherit;
+        }
+
+        input, textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            outline: none;
+        }
+
+        input {
+            line-height: normal;
+        }
+
+        button, input, optgroup, select, textarea {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+        }
+
+
+
+        .mod-smallnote.scale .smallnote-text {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .mod-smallnote.smallnote-mobile .smallnote-text {
+            padding: 0 20px;
+            font-size: 14px;
+            line-height: 35px;
+            border-radius: .3rem;
+        }
+
+        .mod-smallnote .smallnote-text {
+            color: #fff;
+            background: #3f454e;
+            display: inline-block;
+            opacity: 0;
+            padding: 5px 14px 4px;
+            border-radius: 3px;
+            -webkit-transform: scale(1.2);
+            -webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+            transform: scale(1.2);
+            transition: transform .4s ease, opacity .4s ease;
+        }
+
+
+        .mod-smallnote.smallnote-mobile {
+            margin: auto;
+            top: 0;
+            padding: 0 20px;
+            height: .36rem;
+        }
+
+        .mod-smallnote {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            bottom: 0;
+            right: 0;
+            text-align: center;
+            height: 18px;
+            padding: 5px 14px 4px;
+            margin: 0 auto;
+            z-index: 100000;
+        }
+
+
+    </style>
+    <link href="~/Css/Esf/fangduod.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/Css/Esf/submit.css">*@
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <script>
+        var countdown = 60;
+        function settime(val) {
+            if ($("#tel").val() != "") {
+                if (countdown == 60) {
+                    code();
+                }
+                if (countdown == 0) {
+                    //val.removeAttribute("disabled");
+                    $("#" + val.id).html("免费获取验证码");
+                    val.setAttribute("class", "smscodeBtn");
+                    val.setAttribute("onclick", "settime(this)");
+                    clearTimeout(time);
+                    countdown = 60;
+                    return;
+                } else {
+                    //val.setAttribute("disabled", true);
+                    $("#" + val.id).html("重新发送(" + countdown + ")");
+                    val.setAttribute("class", "smscodeBtn cr9b bdcr9b");
+                    val.removeAttribute("onclick");
+                    countdown--;
+                }
+                var time = setTimeout(function () {
+                    settime(val);
+                }, 1000);
+            } else {
+                alert("手机号码不能为空！");
+            }
+        }
+        function createDiv(txt) {
+            var html = "";
+            html += "<div class=\"mod-smallnote smallnote-mobile scale\"><div class=\"smallnote-text\">" + txt + "</div></div>";
+            return html;
+        }
+        function code() {
+            $.ajax({
+                type: "post",
+                url: "/Esf/IdentifyingCode",
+                data: "tel=" + $("#tel").val(),
+                dataType: "json",
+                success: function (data) {
+
+                }
+            });
+        }
+        function addtel() {
+            $.ajax({
+                type: "post",
+                url: "/Esf/AddTel",
+                data: "tel=" + $("#tel").val() + "&code=" + $("#phoneVerify").val(),
+                dataType: "json",
+                success: function (data) {
+                    if (data.Success == 1) {
+                        window.location = "/Esf/Publish";
+                    }
+                    $(".h5-house-body").prepend(createDiv(data.Message));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        clearInterval(k);
+                    }, 1000);
+                }
+            });
+        }
+
+        $(function () {
+            $("#phoneVerify").keyup(function () {
+                if ($("#phoneVerify").val().length == 4 && $("#tel").val().length == 11) {
+                    $("#submitBtn").attr("class", "btnLong btnRed");
+                    $("#submitBtn").attr("onclick", "addtel(this)");
+                } else {
+                    $("#submitBtn").attr("class", "btnLong btnDisabled");
+                    $("#submitBtn").removeAttr("onclick", "");
+                }
+                //code
+            });
+        });
+    </script>
+</head>
+<body class="h5-house-body" data-body="sale-house" data-page="卖房页">
+    <div>
+        <!-- login -->
+        <div class="loginModal" id="loginModal" style="display: block;">
+            <section class="loginForm" id="loginForm">
+                <article class="loginInput">
+                    <div class="inputLine bor-bottom">
+                        <i class="icon-mobile"></i>
+                        <input name="mobile" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" id="tel" type="tel" placeholder="请输入手机号" maxlength="11">
+                        <a id="getSmsCode" onclick="settime(this)" class="smscodeBtn">获取验证码</a>
+                        @*<a id="getSmsCode" class="smscodeBtn cr9b bdcr9b">48秒后再试</a>*@
+                    </div>
+                    <div class="inputLine">
+                        <i class="icon-smscode"></i>
+                        <input id="phoneVerify" name="smsCode" type="tel" placeholder="请输入验证码" maxlength="4">
+                    </div>
+                </article>
+                <article class="loginSubmit">
+                    <button id="submitBtn" onclick="addtel()" class="btnLong btnDisabled" data-analytics-track-event="{&quot;type&quot;:&quot;lg001&quot;}">绑定手机</button>
+                </article>
+            </section>
+        </div>  <div>
+
+        </div>
+    </div>
+</body>
+</html>

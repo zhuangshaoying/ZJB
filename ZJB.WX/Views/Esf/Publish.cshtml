@@ -1,0 +1,787 @@
+﻿@{
+    Layout = null;
+
+    int posttype = ViewBag.Posttype;
+    int buildType = ViewBag.BuildingType;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>发布房源-住家帮</title>
+    <link rel="stylesheet" href="~/Css/Esf/common.css">
+    <link rel="stylesheet" href="~/Css/Esf/submit.css?v=10">
+    <script src="~/Scripts/plugins/ueditor/third-party/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.8.3.js"></script>*@
+    <script src="~/Scripts/Esf/base.js"></script>
+    <style>
+        .dt-login-layer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            width: 100%;
+            background-color: rgba(0,0,0,.6);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mod-delegate-submit-panel" style="height: 513px;">
+        <form id="bForm" action="/esf/OperateHouse" enctype="multipart/form-data" method="post">
+            <input id="TradeType" type="hidden" name="TradeType" value="@ViewBag.BuildingType" />
+            <input id="postTypeIndex" name="postTypeIndex" value="1" type="hidden">
+            <input type="hidden" name="city" value="592" id="city">
+            <input type="hidden" name="postType" id="postType" value="@ViewBag.Posttype">
+            <input type="hidden" name="buildingType" id="buildingType" value="1">
+            <input type="hidden" name="editType" id="editType" value="0">
+            <input type="hidden" name="chouseId" id="chouseId" value="0">
+            <input type="hidden" name="isChange" id="isChange" value="1">
+            <input type="hidden" name="closeTip" id="closeTip" value="0">
+            <input type="hidden" name="currentTimeMillis" id="currentTimeMillis" value="">
+            <input type="hidden" name="draftType" id="draftType" value="">
+            <input type="hidden" id="cellCode" name="cellCode" value="" />
+            <input type="hidden" id="distrct" name="distrct" value="" />
+            <input type="hidden" id="room" name="room" value="" />
+            <input type="hidden" id="hall" name="hall" value="" />
+            <input type="hidden" id="toilet" name="toilet" value="" />
+            <input type="hidden" id="fiveYears" name="fiveYears" value="0" />
+            <input type="hidden" id="onlyHouse" name="onlyHouse" value="0" />
+            <input type="hidden" id="addr" name="addr" value="" />
+
+            <input type="hidden" id="pointTo" name="pointTo" value="" />
+            <input type="hidden" id="fitmentStatus" name="fitmentStatus" value="" />
+
+            <ul class="elements step-one">
+                <li class="element">
+                    <p class="element-title">所在城市</p>
+                    <dl class="element-panel select-panel-dl">
+                        <dt>城市</dt>
+                        <dd>
+                            <select name="type" disabled="disabled" class="fabu_select">
+                                <option value="1">厦门</option>
+                                <!--<option value="2">北京</option>-->
+                            </select>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="element owner-info">
+                    <p class="element-title">业主信息</p>
+                    <dl class="element-panel">
+                        <dt>姓名</dt>
+                        <dd>
+                            <input type="text" id="contacts" placeholder="输入业主姓名" class="estate-info-name" name="contacts" style="width: 2rem">
+
+                        </dd>
+                    </dl>
+                    <dl class="element-panel">
+                        <dt>电话</dt>
+                        <dd class="element-gray">
+                            <input type="text" placeholder="电话" id="tel" name="tel" value="@ViewBag.Tel" readonly="true" class="estate-info-name" style="width: 2rem">
+                            <input type="hidden" class="estate-value" value="@ViewBag.Tel">
+                            @*<span class="owner-info-telshow">186****6926</span>
+                                <input type="hidden" class="owner-info-tel" value="18650006926">*@
+                        </dd>
+                    </dl>
+                </li>
+                <li class="element estate-info">
+                    <p class="element-title">小区信息</p>
+                    <dl class="element-panel estate-info-name-dl">
+                        <dt>名称</dt>
+                        <dd>
+                            <input type="text" placeholder="输入小区名称" id="cell" name="cell" class="estate-info-name" autocomplete="off" style="width: 2rem">
+                            <input type="hidden" class="estate-value" value="">
+
+
+                        </dd>
+                    </dl>
+                    <dl class="element-panel select-panel-dl needsclick">
+                        <dt>地址</dt>
+                        <span class="select-panel estate-info-addr" id="txt_address" disabled="" style="width: 2.2rem;" data-list="" data-selval=""><i class="place-holder">选择小区地址</i></span>
+                    </dl>
+
+
+                </li>
+            </ul>
+            <ul class="elements step-two" style="display: ">
+                <li class="element house-info">
+                    <p class="element-title">房源信息</p>
+
+                    <dl id="unit_number" class="element-panel select-panel-dl">
+                        <dt>楼层</dt>
+                        <dd>
+                            <div class="unitbox house-info-dyh" data-use-input="true" data-paclass="pa-dyh" data-maxlen="6" data-inputname="buildingDyh" data-unitname="层" data-placeholder="输入所在楼层">
+                                <input id="curFloor" type="number" name="curFloor" class="input-box" maxlength="6" placeholder="输入所在楼层" autocomplete="off" value="" rule="" reg="" minvalue="" maxvalue="" msg="">
+                                <span class="input-box-span"></span><span class="place-holder">输入所在楼层</span><span class="unit"></span>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl id="unit_number" class="element-panel select-panel-dl">
+                        <dt>总层</dt>
+                        <dd>
+                            <div class="unitbox house-info-dyh" data-use-input="true" data-paclass="pa-dyh" data-maxlen="6" data-inputname="buildingDyh" data-unitname="层" data-placeholder="输入总楼层">
+                                <input id="maxFloor" type="number" name="maxFloor" class="input-box" maxlength="6" placeholder="输入总楼层" autocomplete="off" value="" rule="" reg="" minvalue="" maxvalue="" msg="">
+                                <span class="input-box-span"></span><span class="place-holder">输入总楼层</span><span class="unit">层</span>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="element-panel select-panel-dl" id="huxing-select">
+                        <dt>户型</dt>
+                        <dd><span class="select-panel house-info-hx"><i class="place-holder pleft">选择户型</i></span> </dd>
+                    </dl>
+                    <dl class="element-panel">
+                        <dt>面积</dt>
+                        <dd>
+                            <div class="unitbox house-info-mj" data-use-input="true" data-inputtype="number" data-maxlen="7" data-inputname="houseArea" data-unitname="平" data-placeholder="输入面积">
+                                <input type="number" id="houseArea" name="houseArea" class="input-box" min="" max="" placeholder="输入面积" autocomplete="off" value="" rule="" reg="" minvalue="" maxvalue="" msg="">
+                                <span class="input-box-span"></span><span class="place-holder">输入面积</span><span class="unit">平</span>
+                            </div>
+                        </dd>
+                    </dl>
+
+                    <dl class="element-panel select-panel-dl" id="zx-select">
+                        <dt>装修</dt>
+                        <dd> <span class="select-panel house-info-hx"><i class="place-holder pleft">选择装修</i></span> </dd>
+                    </dl>
+                    <dl class="element-panel select-panel-dl" id="cx-select">
+                        <dt>朝向</dt>
+                        <dd> <span class="select-panel house-info-hx"><i class="place-holder pleft">选择朝向</i></span> </dd>
+                    </dl>
+                    <dl class="element-panel">
+                        <dt>卖点</dt>
+                        <dd>
+                            <div class="unitbox house-price" data-use-input="true" data-inputtype="number" data-placeholder="房源卖点">
+                                <input type="text" id="title" name="title" class="input-box" placeholder="房源卖点" style="width: 2rem">
+                                @*<span class="input-box-span"></span><span class="place-holder"></span><span class="unit"></span>*@
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="element-panel">
+                        <dt>描述</dt>
+                        <dd>
+                            <textarea id="houseDescribe" name="houseDescribe" class="input-box" style="border: 0px;width: 2rem"
+                                      placeholder="详细描述" rows="6"></textarea>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="element house-ts">
+                    <p class="element-title">房源特色</p>
+                    <dl class="element-panel" id="triggerproperty">
+                        <dt class="element-long">产证满二<span class="radios fiveYears-info" data-value="0"><i data-value="1">是</i><i data-value="0">否</i><b class="radios-mask"></b></span></dt>
+                    </dl>
+                    <dl class="element-panel" id="triggeronly">
+                        <dt class="element-long">唯一住房<span class="radios onlyHouse-info" data-value="0"><i data-value="1">是</i><i data-value="0">否</i><b class="radios-mask"></b></span></dt>
+                    </dl>
+                </li>
+
+                @if (posttype == 1)
+                {
+                    <li class="element">
+                        <p class="element-title">期望售价</p>
+                        <dl class="element-panel">
+                            <dt>售价</dt>
+                            <dd>
+                                <div class="unitbox house-price" data-use-input="true" data-inputtype="number" min="1" max="999999" data-inputname="price" data-unitname="万" data-placeholder="输入售价">
+                                    <input type="number" id="price" name="price" class="input-box" min="" max="" placeholder="输入售价" autocomplete="off" value="" rule="" reg="" minvalue="" maxvalue="" msg="">
+                                    <span class="input-box-span"></span><span class="place-holder">输入售价</span><span class="unit">万</span>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                }
+                else
+                {
+                    <li class="element">
+                        <p class="element-title">期望租金</p>
+                        <dl class="element-panel">
+                            <dt>租金</dt>
+                            <dd>
+                                <div class="unitbox house-price" data-use-input="true" data-inputtype="number" min="1" max="999999" data-inputname="price" data-unitname="元/月" data-placeholder="输入租金">
+                                    <input type="number" name="price" class="input-box" min="" max="" placeholder="输入租金" autocomplete="off" value="" rule="" reg="" minvalue="" maxvalue="" msg="">
+                                    <span class="input-box-span"></span><span class="place-holder">输入租金</span><span class="unit">元/月</span>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                }
+                <li class="element-agree">
+                    <label class="mod-check-box sub-agree checked">
+                        <em class="mycheckicon"></em>
+                        <input type="radio" class="house-ts-agree">
+                    </label>
+                    <b>同意<a class="protol-link" onclick="showProtocol()">《在线委托协议》</a></b>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="elements-buttons">
+        @*<p class="button button-next">下一步</p>*@
+        <p class="button button-sub " @*style="display: none;"*@>提交房源</p>
+        <i id="hidewt" style="width: 137px;float: left;padding-left: 28%;padding-top: 14px;display: none"><h1>出售/出租委托协议</h1></i>  <p onclick="closeProtocol()" id="closep" style="WIDTH: 25PX;HEIGHT: 25PX;float: right;padding-top: 15px; padding-right: 15px;display: none">X</p>
+    </div>
+
+    <!--小区搜索 begin-->
+    <div class="search-panel mod-search search-mobile" id="xiaoqu-sr">
+        <div class="search-panel-title">
+            <input type="text" name="estateSearch" placeholder="请输入小区名称">
+            <i class="iconfont search-close" title="清除内容" style="display: none;">홈</i> <em class="iconfont search-icon">혳</em> <i class="search-panel-cancel">取消</i>
+        </div>
+        <div class="search-panel-list">
+            <p class="hint-wrap" style="display: none;">
+                <!--<a class="hint-item" data-id="82Zck7KNJy4" data-key="海琪园" data-kw="海琪园">
+                    <em class="iconfont"> 혐 </em> <span class="txt-wrap">
+                        <span class="key-txt">海琪园</span>
+                        <span class="kw-txt">海琪园</span>
+                    </span>
+                </a>
+                <a class="hint-item" data-id="tKIw5CRBYqs" data-key="上海滩花园" data-kw="上海滩花园">
+                    <em class="iconfont"> 혐 </em> <span class="txt-wrap">
+                        <span class="key-txt">上海滩花园</span>
+                        <span class="kw-txt">上海滩花园</span>
+                    </span>
+                </a>-->
+
+            </p>
+        </div>
+    </div>
+    <!--小区搜索 end-->
+    <!--在线委托协议 begin-->
+    <div class="search-panel mod-search search-mobile" id="Protocol">
+        <div class="search-panel-list">
+            <div class="protol-panel active">
+
+            
+                <h1>出售/出租委托协议</h1>
+                <p> 住家帮中介服务（以下简称本服务）是由和庭房地产咨询有限公司（以下简称本公司）向住家帮用户提供的住家帮软件系统（以下简称本系统）及(或)附随的目标物业相关报告居间及媒介居间服务。 住家帮出售/出租委托协议（以下简称本协议）由用户和本公司签订。</p>
+                <p class="phead">一、  声明与承诺</p>
+                <p>(一) 本协议已对与用户的权益有或可能具有重大关系的条款，及对本公司具有或可能具有免责或限制责任的条款用粗体字予以标注，请用户注意。用户确认，在用户注册成为住家帮用户以接受本服务，或用户以其他本公司允许的方式实际使用本服务前，用户已充分阅读、理解并接受本协议的全部内容，一旦用户使用本服务，即表示用户同意遵循本协议之所有约定。</p>
+                <p>(二) 用户同意，本公司有权随时对本协议内容进行单方面的变更，并以在www.zhujia001.com网站公告的方式予以公布，无需另行单独通知用户；若用户在本协议内容公告变更后继续使用本服务的，表示用户已充分 阅读、理解并接受修改后的协议内容，也将遵循修改后的协议内容使用本服务；若用户不同意修改后的协议内容，用户应停止使用本服务。</p>
+                <p>(三) 用户保证，在用户同意接受本协议并注册成为住家帮用户时，用户已经年满16周岁；本协议内容不受用户所属国家或地区法律的排斥。不具备前述条件的，用户应立即终止注册或停止使用本服务。</p>
+                <p class="phead">二、  定义及解释</p>
+                <p>(一) 住家帮用户的中介服务由和庭房地产咨询有限公司提供，旗下包括和庭房地产咨询有限公司。</p>
+                <p class="phead">三、  委托内容</p>
+                <p>(一) 房屋信息服务。用户通过住家帮网站委托住家帮中介出售或出租。</p>
+                <p>(二) 用户应保证： </p>
+                <p>（1）对委托房屋拥有合法的处分权/出租权/转租权；</p>
+                <p>（2）上述陈述的委托房屋信息真实、准确、完整；</p>
+                <p>（3）向本公司提供必要的产权文件，包括但不限于房屋所有权证、产权人身份证件、产权人同意转租的法律文件等。如因用户无权出售/出租或虚假陈述导致的损失，应由用户承担；在委托期限内，用户应积极配合本公司开展正常的经纪活动。</p>
+                <p>(三) 本公司应依法从事居间活动，如因本公司的居间行为给用户造成损失的，本公司应承担责任。</p>
+                <p class="phead">四、  服务使用规则</p>
+                <p>(一) 住家帮网站与手机APP内所涉及的房源外观、房屋图片可能与实物有所区别，效果演示图和示意图仅供参考，有关房源外观及房源图片须以实物为准。</p>
+                <p>(二) 用户有权随时向本公司随时询问委托事项的处理情况。</p>
+                <p>(三) 本公司将如实提供与订立合同相关的真实情况，不得故意向用户提供虚假信息、隐瞒重要事实与他人恶意串通、损害用户利益。</p>
+                <p>(四) 如促成双方签定房屋买卖合同，则视为完成居间服务，用户应向本公司支付服务费用，具体数额以双方所签订的居间服务协议约定为准。用户通过本公司服务获取的目标物业信息，用户应通过本公司与业主方签订书面协议，不得与业主方自行进行交易。</p>
+                <p class="phead">五、  服务使用限制</p>
+                <p>(一) 本公司原则上应自行办理委托事项，不得将委托事项转交第三方办理。</p>
+                <p>(二) 用户对本公司提供的目标物业相关信息及相关资料负有保密义务，未经本公司事先书面同意，不得擅自向无关联的第三方泄露该等资料，亦不得将该等资料进行复制、出售、或用于任何营利目的。</p>
+                <p class="phead">六、  隐私权保护</p>
+                <p>重视用户个人隐私是本公司的一贯的政策，本公司不会在未经合法用户授权时，公开、编辑或透露其个人信息及保存在本公司相关网站中的非公开内容，除非有下列情况：</p>
+                <p>(一) 有关法律规定和程序，本公司合法服务程序所定；</p>
+                <p>(二) 为保持维护本公司的商标所有权和其他合法权益；</p>
+                <p>(三) 在紧急情况下竭力维护用户个人和社会大众的隐私安全；</p>
+                <p>(四)  与本公司的关联公司和战略合作伙伴分享客户资料，以及其他重大事件需要公开、编辑或透露用户个人信息的情况；</p>
+                <p>(五) 另外，在包括但不限于几种以下情况下，本公司有权使用用户的个人信息；</p>
+                <p>(六) 在进行促销、抽奖、捐助等社会或商业活动时，本公司可能会与赞助商共享用户的个人信息，在这些情况下本公司会在发送用户信息之前进行提示，并且用户可以通过不参与来终止传送过程；</p>
+                <p>(七) 本公司会通过透露合计用户统计数据，向未来的合作伙伴、广告商及其他第三方以及为了其他合法目的而描述本公司的服务；</p>
+                <p>(八) 本公司可以将用户信息与第三方数据匹配；</p>
+                <p>(九) 本公司会向用户发送客户订制的信息或者其它本公司认为用户会感兴趣的其他信息。如果用户不希望收到这样的信息，只需在提供个人信息时或其他任何时候告知即可；</p>
+                <p>(十) 另外，本公司会采取行业惯用措施保护用户信息的安全，但本公司不能确信或保证任何个人信息的安全性，用户须自己承担风险。比如用户联机公布可被公众访问的个人信息时，用户有可能会收到未经用户同意的信息；本公司的合作伙伴和可通过本公司访问的第三方因特网站点和服务；通过抽奖、促销等活动得知用户个人信息的第三方会进行独立的数据收集工作等活动。本公司对用户及其他任何第三方的上述行为，不承担任何责任。</p>
+                <p class="phead">七、  法律适用与管辖</p>
+                <p>本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律，没有相关法律规定的，参照通用国际商业惯例和（或）行业惯例。因本协议产生之争议，均应依照中华人民共和国 法律予以处理，并以被告住所地人民法院为第一审管辖法院。</p>
+            </div>
+        </div>
+    </div>
+    <!--在线委托协议 end-->
+    <!--遮罩层-->
+    <div class="mask" id="mask"></div>
+    <!--购房日期 begin-->
+    <div class="select_room" id="select_timer"> <a title="4">满五</a> <a title="1">满二</a> <a title="2">两年以内</a> <a title="0">取消</a></div>
+    <!--购房日期 end-->
+    <!--是否唯一房产 begin-->
+    <div class="select_room" id="select_number"> <a title="1">是</a> <a title="2">否</a> <a title="0">取消</a></div>
+    <!--是否唯一房产 end-->
+    <!--户型选择 begin-->
+    <div id="huxingShiDrap" class="sf-maskFixed" style="display: none;">
+        <div class="sf-bdmenu">
+            <div class="tt">
+                <div class="cancel">取消</div>
+                <div id="huxingShiText" class="info">请选择户型</div>
+
+
+            </div>
+            <div id="huxingShiDrapCon" class="con" style="display: block;">
+                <ul>
+                    <li class="getHuXingShi" data-id="0" id="Room0">0室</li>
+                    <li class="getHuXingShi" data-id="1" id="Room1">1室</li>
+                    <li class="getHuXingShi" data-id="2" id="Room2">2室</li>
+                    <li class="getHuXingShi" data-id="3" id="Room3">3室</li>
+                    <li class="getHuXingShi" data-id="4" id="Room4">4室</li>
+                    <li class="getHuXingShi" data-id="5" id="Room5">5室</li>
+                    <li class="getHuXingShi" data-id="6" id="Room6">6室</li>
+                    <li class="getHuXingShi" data-id="7" id="Room7">7室</li>
+                    <li class="getHuXingShi" data-id="8" id="Room8">8室</li>
+                    <li class="getHuXingShi" data-id="9" id="Room9">9室</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="huxingTingDrap" class="sf-maskFixed" style="display: none;">
+        <div class="sf-bdmenu">
+            <div class="tt">
+                <div class="cancel">取消</div>
+                <div class="info" id="huxingTingText">0室</div>
+            </div>
+            <div id="huxingTingDrapCon" class="con" style="display: block;">
+                <ul>
+                    <li class="getHuXingTing" data-id="0" id="Hall0">0厅</li>
+                    <li class="getHuXingTing" data-id="1" id="Hall1">1厅</li>
+                    <li class="getHuXingTing" data-id="2" id="Hall2">2厅</li>
+                    <li class="getHuXingTing" data-id="3" id="Hall3">3厅</li>
+                    <li class="getHuXingTing" data-id="4" id="Hall4">4厅</li>
+                    <li class="getHuXingTing" data-id="5" id="Hall5">5厅</li>
+                    <li class="getHuXingTing" data-id="6" id="Hall6">6厅</li>
+                    <li class="getHuXingTing" data-id="7" id="Hall7">7厅</li>
+                    <li class="getHuXingTing" data-id="8" id="Hall8">8厅</li>
+                    <li class="getHuXingTing" data-id="9" id="Hall9">9厅</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="huxingWeiDrap" class="sf-maskFixed" style="display:none;">
+        <div class="sf-bdmenu">
+            <div class="tt">
+                <div class="cancel">取消</div>
+                <div class="info" id="huxingWeiText">选择户型</div>
+            </div>
+            <div id="huxingWeiDrapCon" class="con" style="display: block;">
+                <ul>
+                    <li class="getHuXingWei" data-id="0" id="toilet0">0卫</li>
+                    <li class="getHuXingWei" data-id="1" id="toilet1">1卫</li>
+                    <li class="getHuXingWei" data-id="2" id="toilet2">2卫</li>
+                    <li class="getHuXingWei" data-id="3" id="toilet3">3卫</li>
+                    <li class="getHuXingWei" data-id="4" id="toilet4">4卫</li>
+                    <li class="getHuXingWei" data-id="5" id="toilet5">5卫</li>
+                    <li class="getHuXingWei" data-id="6" id="toilet6">6卫</li>
+                    <li class="getHuXingWei" data-id="7" id="toilet7">7卫</li>
+                    <li class="getHuXingWei" data-id="8" id="toilet8">8卫</li>
+                    <li class="getHuXingWei" data-id="9" id="toilet9">9卫</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--户型选择 end-->
+
+    <div id="cxShiDrap" class="sf-maskFixed" style="display:none;">
+        <div class="sf-bdmenu">
+            <div class="tt">
+                <div class="cancel">取消</div>
+                <div class="info" id="cxShiText">选择装修</div>
+            </div>
+            <div id="cxShiDrapCon" class="con" style="display: block;">
+                <ul>
+                    <li class="getHuXingWei" data-id="0" id="licx0">东</li>
+                    <li class="getHuXingWei" data-id="1" id="licx1">南</li>
+                    <li class="getHuXingWei" data-id="2" id="licx2">西</li>
+                    <li class="getHuXingWei" data-id="3" id="licx3">北</li>
+                    <li class="getHuXingWei" data-id="4" id="licx4">东南</li>
+                    <li class="getHuXingWei" data-id="5" id="licx5">东西</li>
+                    <li class="getHuXingWei" data-id="6" id="licx6">西南</li>
+                    <li class="getHuXingWei" data-id="7" id="licx7">西北</li>
+                    <li class="getHuXingWei" data-id="8" id="licx8">东北</li>
+                    <li class="getHuXingWei" data-id="9" id="licx9">南北</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--装修选择 end-->
+    <div id="zxShiDrap" class="sf-maskFixed" style="display:none;">
+        <div class="sf-bdmenu">
+            <div class="tt">
+                <div class="cancel">取消</div>
+                <div class="info" id="zxShiText">选择装修</div>
+            </div>
+            <div id="zxShiDrapCon" class="con" style="display: block;">
+                <ul>
+                    <li class="getHuXingShi" data-id="豪华装修" id="lizx0">豪华装修</li>
+                    <li class="getHuXingShi" data-id="精装修" id="lizx1">精装修</li>
+                    <li class="getHuXingShi" data-id="中等装修" id="lizx2">中等装修</li>
+                    <li class="getHuXingShi" data-id="简装修" id="lizx3">简装修</li>
+                    <li class="getHuXingShi" data-id="毛坯" id="lizx4">毛坯</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="dt-login-cs" class="dt-login-layer js-action-dt-login-layer js-action-nomove" style="display: none;"></div>
+    <script language="javascript">
+        var huxing = ""; //记录选择的户型
+        var cx = ""; //记录选择的朝向
+        var zx = ""; //记录选择的装修类型
+        function showProtocol() {
+            $("#closep").show();
+            $("#Protocol").show();
+            $(".mod-delegate-submit-panel").hide();
+            $(".button-sub").hide();
+            $("#hidewt").show();
+        }
+
+        function closeProtocol() {
+            $("#Protocol").hide();
+            $(".mod-delegate-submit-panel").show();
+            $(".button-sub").show();
+            $("#closep").hide();
+            $("#hidewt").hide();
+
+        }
+
+        $(function () {
+            var s = $(".elements-buttons .button"), l = $("body").height(), o = s.height();
+            $(".mod-delegate-submit-panel").css("height", l - o);
+
+            //是否满五
+            $(".fiveYears-info").bind("click", function () {
+                if ($(this).attr("data-value") == 0) {
+                    $(this).addClass("right");
+                    $(this).attr("data-value", "1");
+                } else {
+                    $(this).removeClass("right");
+                    $(this).attr("data-value", "0");
+                }
+                $("#fiveYears").val($(this).attr("data-value"));
+            });
+
+            //是否唯一住房
+            $(".onlyHouse-info").bind("click", function () {
+                if ($(this).attr("data-value") == 0) {
+                    $(this).addClass("right");
+                    $(this).attr("data-value", "1");
+                } else {
+                    $(this).removeClass("right");
+                    $(this).attr("data-value", "0");
+                }
+                $("#onlyHouse").val($(this).attr("data-value"));
+            });
+
+
+            //小区名称弹出层
+            $(".estate-info-name-dl").bind("click", function () {
+                $("#xiaoqu-sr").addClass("active");
+                $("input[name=estateSearch]").focus();
+            });
+            $(".search-panel-cancel").bind("click", function () {
+                $("#xiaoqu-sr").removeClass("active");
+                $("input[name=estateSearch]").val("");
+                $(".search-close").hide();
+                $(".hint-wrap").hide()
+            });
+            $("input[name=estateSearch]").bind("keyup", function () {
+                if ($(this).val() == "") {
+                    $(".search-close").hide();
+                } else {
+                    $.ajax({
+                        type: "post",
+                        url: "/House/GetCellsByInput",
+                        data: "buildingType=1&inputStr=" + $("input[name=estateSearch]").val(),
+                        dataType: "json",
+                        success: function (data) {
+                            var cells = data.cells;
+                            $(".search-close").show();
+                            $(".hint-wrap").show();
+                            var xq = "";
+                            $.each(cells, function (i, n) {
+                                //$(".keyList").append("<dd><a index='" + i + "'>" + n.cellName + "</a></dd>");
+                                xq += "<a onclick=\"xqinfo(this,'" + n.address + "'," + n.cellCode + "," + n.district + ")\" class=\"hint-item\" data-id=\"YuNJt8eiNyo\" data-key=\"" + n.cellName + "\" data-kw=\"" + n.cellName + "\">";
+                                xq += "  <em class=\"iconfont\">혐</em> <span class=\"txt-wrap\">";
+                                xq += "     <span class=\"key-txt\">" + n.cellName + "</span>";
+                                xq += "   <span class=\"kw-txt\">" + n.address + "</span>";
+                                xq += "  </span>";
+                                xq += "</a>";
+
+                            });
+                            $(".hint-wrap").html(xq);
+
+                            //$(".keyList").find("dd").eq(0).children("a").addClass("upordownSelect");
+                            //$(".keyList").animate({ scrollTop: 0 }, 100);
+                            //j = 0;
+                            //top = 0;
+                            //scrollNum = 0;
+                        }
+                    });
+
+                }
+            });
+            $(".search-close").bind("click", function () {
+                $(this).hide();
+                $(".hint-wrap").hide();
+                $("input[name=estateSearch]").val("");
+            });
+            //$(".hint-wrap a").bind("click", function () {
+            //    $("input[name=cell]").val($(this).attr("data-key"));
+            //    $(".place-holder").html($(this).attr("data-kw"));
+            //    $(".search-close").hide();
+            //    $("#xiaoqu-sr").removeClass("active");
+            //    $(".hint-wrap").hide();
+            //    $("input[name=estateSearch]").val("");
+            //});
+
+            //点击下一步
+            $(".button-next").bind("click", function () {
+                if ($("input[name=contacts]").val() == "") {
+                    $("body").prepend(createDiv("请输入您的真实姓名"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        clearInterval(k);
+                    }, 1000);
+                } else if ($("input[name=cell]").val() == "") {
+                    $("body").prepend(createDiv("请选择小区"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        clearInterval(k);
+                    }, 1000);
+                } else {
+                    $(".step-one").hide();
+                    $(".step-two").show();
+                    $(this).hide();
+                    $(".button-sub").show()
+
+
+                }
+            });
+
+            //提交房源
+            $(".button-sub").bind("click", function () {
+
+
+
+                $("#dt-login-cs").show();
+                var priceTip = '@(posttype == 1 ? "售价" : "租金")';
+                if ($("input[name=contacts]").val() == "") {
+                    $("body").prepend(createDiv("请输入您的真实姓名"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                } else if ($("input[name=cell]").val() == "") {
+                    $("body").prepend(createDiv("请选择小区"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }  else if ($("input[name=houseArea]").val() == "") {
+                    $("body").prepend(createDiv("请输入面积"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                } else if ($("input[name=price]").val() == "") {
+                    $("body").prepend(createDiv("请输入" + priceTip));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }
+
+                else if ($("#fitmentStatus").val() == "") {
+                    $("body").prepend(createDiv("请选择装修！"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }
+                else if ($("#pointTo").val() == "") {
+                    $("body").prepend(createDiv("请选择朝向！"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }
+
+
+                else if ($("input[name=title]").val() == "") {
+                    $("body").prepend(createDiv("房源卖点不能为空！"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }
+                else if ($("input[name=houseDescribe]").val() == "") {
+                    $("body").prepend(createDiv("详细描述不能为空！"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }
+
+
+
+                else {
+                    $("body").prepend(createDiv("正在发布中"));
+                    var k = setInterval(function () {
+                        $(".mod-smallnote").remove();
+                        $("#dt-login-cs").hide();
+                        clearInterval(k);
+                    }, 3000);
+                    $("#bForm").submit();
+
+                }
+            });
+
+            //选择楼号、室号等
+            $(".element-panel i").bind("click", function () {
+                $(this).parent().find("p").toggle()
+            });
+            $("i.tip-no-info-btn").bind("click", function () {
+                $(this).parent().hide();
+                $(this).parent().parent().parent().find("input").val($(this).html());
+            });
+            $(".input-box").bind("keyup", function () {
+                if ($(this).val() != "") {
+                    $(this).parent().find(".unit").show()
+                }
+            });
+
+            //选择购房日期、是否唯一房产
+            //$("#triggerproperty").bind("click", function () {
+            //    $("#mask").show();
+            //    $("#select_timer").addClass("tab");
+            //});
+            //$("#triggeronly").bind("click", function () {
+            //    $("#mask").show();
+            //    $("#select_number").addClass("tab");
+            //});
+            $("#select_timer a").bind("click", function () {
+                if ($(this).attr("title") == "0") {
+                    $("#select_timer").removeClass("tab");
+                    $("#mask").hide();
+                } else {
+                    $("#triggerproperty").find("span").html($(this).html());
+                    $("#select_timer").removeClass("tab");
+                    $("#mask").hide();
+                }
+            });
+            $("#select_number a").bind("click", function () {
+                if ($(this).attr("title") == "0") {
+                    $("#select_number").removeClass("tab");
+                    $("#mask").hide();
+                } else {
+                    $("#triggeronly").find("span").html($(this).html());
+                    $("#select_number").removeClass("tab");
+                    $("#mask").hide();
+                }
+            });
+
+            //户型选择
+            $("#huxing-select").bind("click", function () {
+                $("#huxingShiDrap").show();
+                huxing = "";
+            });
+
+
+            $("#zx-select").bind("click", function () {
+                $("#zxShiDrap").show();
+
+            });
+            $("#cx-select").bind("click", function () {
+                $("#cxShiDrap").show();
+
+            });
+
+
+
+            $("#huxingShiDrapCon li").bind("click", function () {
+                huxing += $(this).html();
+                $("#room").val($(this).attr("data-id"));
+                $("#huxing-select i").html(huxing);
+                $("#huxingTingText").html(huxing);
+                $("#huxingShiDrap").hide();
+                $("#huxingTingDrap").show();
+
+
+            });
+            $("#huxingTingDrapCon li").bind("click", function () {
+                huxing += $(this).html();
+                $("#hall").val($(this).attr("data-id"));
+                $("#huxing-select i").html(huxing);
+                $("#huxingWeiText").html(huxing);
+                $("#huxingShiDrap").hide();
+                $("#huxingTingDrap").hide();
+                $("#huxingWeiDrap").show()
+            });
+            $("#huxingWeiDrapCon li").bind("click", function () {
+                huxing += $(this).html();
+                $("#toilet").val($(this).attr("data-id"));
+                $("#huxing-select i").html(huxing);
+                $("#huxingShiDrap").hide();
+                $("#huxingTingDrap").hide();
+                $("#huxingWeiDrap").hide()
+            });
+            $(".cancel").bind("click", function () {
+                $("#huxingShiDrap").hide();
+                $("#huxingTingDrap").hide();
+                $("#huxingWeiDrap").hide()
+
+                $("#zxShiDrap").hide()
+                $("#cxShiDrap").hide()
+            })
+
+            $("#zxShiDrapCon li").bind("click", function () {
+                $("#fitmentStatus").val($(this).html());
+                $("#zx-select i").html($(this).html());
+                $("#zxShiDrap").hide()
+            });
+            $("#cxShiDrapCon li").bind("click", function () {
+                $("#pointTo").val($(this).html());
+                $("#cx-select i").html($(this).html());
+                $("#cxShiDrap").hide()
+            });
+
+            //协议
+            $(".element-agree em").bind("click", function () {
+                if ($(this).parent().hasClass("checked")) {
+                    $(this).parent().removeClass("checked");
+                    $(".button-sub").addClass("disabled");
+                } else {
+                    $(this).parent().addClass("checked");
+                    $(".button-sub").removeClass("disabled");
+                }
+            });
+        })
+
+        function xqinfo(obj, address, communityid, district) {
+            $("input[name=cell]").val($(obj).attr("data-key"));
+            $("#txt_address").html(address);
+
+            $("#addr").val(address);
+            $(".search-close").hide();
+            $("#xiaoqu-sr").removeClass("active");
+
+            $("#cellCode").val(communityid);
+            $("#distrct").val(district);
+
+            $(".hint-wrap").hide();
+            $("input[name=estateSearch]").val("");
+        }
+
+
+        $(window).resize(function () {
+            var s = $(".elements-buttons .button"), l = $("body").height(), o = s.height();
+            $(".mod-delegate-submit-panel").css("height", l - o);
+        })
+    </script>
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

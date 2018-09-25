@@ -1,0 +1,179 @@
+﻿
+@{
+    int totalSize = ViewBag.TotalSize;
+    ImportedHouseListReq parame=(ImportedHouseListReq)ViewBag.Parame;
+    Layout = null;
+    int userId = (int)ViewBag.UserId;
+}
+
+@using ZJB.Core.Utilities;
+@using ZJB.WX.Common.xms;
+@model IEnumerable<ZJB.WX.Common.xms.ImportedHouse>
+
+@if (string.IsNullOrEmpty(ViewBag.SiteUserName))
+{
+    <script>
+        $(document).ready(function () {
+            pageAllowed();
+            //pageForbidden();
+            //setTimeout("search()", 3000);
+
+            $("#adduserSite").show();
+            $("#deluserSite").hide();
+            $(".moveHouse-account-username").html("");
+            $("#moveHouse-selected").html("0");
+        });
+    </script>
+    <div class="tishik"></div>
+}
+else
+{
+
+    <script>
+        $(document).ready(function() {
+            $(".moveHouse-website span").html($(".moveHouse-website-content li[val=" +
+                $("#moveHouse-website-content").val() + "]").html());
+
+            var trs = $("#moveHouseTable tr");
+            var saleCount = 0, rentCount = 0, doneCount = 0, notDoneCount = 0, doingCount = 0;
+            $.each(trs, function(i, n) {
+                var tr = trs.eq(i);
+                var tds = tr.find("td");
+                var postTypeTd = tds.eq(1);
+                if (postTypeTd.html() == "1") {
+                    saleCount++;
+                } else {
+                    rentCount++;
+                }
+                postTypeTd.html($(".moveHouse-saleType-content li[val=" + postTypeTd.html() + "]").html());
+
+                tds.eq(2).html($(".moveHouse-houseType-content li[val=" + tds.eq(2).html() + "]").html());
+
+                var statusTd = tds.eq(5);
+                var statusHtml = $(".moveHouse-status-content li[val=" + statusTd.html() + "]").html();
+                if (statusTd.html() == "0") {
+                    notDoneCount++;
+                } else if (statusTd.html() == "1") {
+                    doingCount++;
+                } else if (statusTd.html() == "2") {
+                    doneCount++;
+                } else if (statusTd.html() == "3") {
+                    statusHtml = "<a name='change_link' id='change_link" + i + "'>" + statusHtml + "</a>";
+                }
+                statusTd.html(statusHtml);
+            });
+
+            $("#moveHouse-all").html(trs.length);
+            $("#moveHouse-sale").html(saleCount);
+            $("#moveHouse-rent").html(rentCount);
+            $("#moveHouse-notDone").html(notDoneCount);
+            $("#moveHouse-done").html(doneCount);
+            $("#moveHouse-doing").html(doingCount);
+
+            $(".moveHouse-area-content").html("<li val=''>-全部小区-</li>");
+
+            //$(".moveHouse-area-content").append("<li val='特房五缘尚座'>特房五缘尚座</li>");
+
+            //$(".moveHouse-area-content").append("<li val='建发中央湾区'>建发中央湾区</li>");
+
+            //$(".moveHouse-area-content").append("<li val='源昌鑫海湾'>源昌鑫海湾</li>");
+
+            //$(".moveHouse-area-content").append("<li val='紫金家园'>紫金家园</li>");
+
+            $("#adduserSite").hide();
+            $("#deluserSite").show();
+           // $(".moveHouse-account").html('<span class="moveHouse-account-content" title="@ViewBag.SiteUserName">账号:@ViewBag.SiteUserName</span>');
+            $(".moveHouse-account-username").html("@ViewBag.SiteUserName");
+
+            pageAllowed();
+            //pageForbidden();
+            //setTimeout("search()", 3000);
+
+
+            $("#moveHouse-selected").html("0");
+        });
+    </script>
+    if (Model.IsNoNull() && Model.Count() > 0)
+ {
+     <table class="h_list" width="100%" cellspacing="0" cellpadding="0s">
+         <thead><tr><td style="text-align: left; padding-left: 8px"><input id="movehouse-chekboxAll" type="checkbox" /><label for="movehouse-chekboxAll">全选</label></td><td>租售</td><td>房屋类型</td><td>房源信息</td><td>发布时间</td><td>状态</td></tr></thead>
+         <tbody id="moveHouseTable">
+            
+             @{
+     foreach (var item in Model)
+                 {
+                    string showId = item.HouseID;
+                     string[] strList = showId.Split('_');
+                     if (strList.Length > 1)
+                     {
+                         showId = strList[1];
+                     }
+         ImportedHouseRefUser refUser=item.RefUser.Where(u => u.UserID == userId).FirstOrDefault();
+         int moveStatus = 0;
+         if(refUser!=null)
+         {
+             moveStatus=refUser.MoveStatus;
+         }
+                     
+                     <tr>
+                         <td style="text-align: left; padding-left: 8px">
+                             <input type="checkbox" name="webBuildingId" class="yes" value="@item.HouseID" onclick=" changeTr() " id="@item.HouseID" />
+                             
+                             <label for="@item.HouseID">@showId</label>
+                         </td>
+                         <td class="moveHouse-Type">@item.TradeType</td>
+                         <td>@item.BuildType</td>
+                         <td><span style="color:#4375c6"><span>@item.CommunityName</span>，<span>@item.Price@item.PriceUnit</span>，<span>@(item.Room)室@(item.Hall)厅@(item.Toilet)卫</span>，<span>@(item.BuildArea)平</span></span></td>
+                         <td>@item.PostTime</td>
+                         <td class="moveHouse-status">@moveStatus</td>
+                     </tr>
+                 }
+             }
+         
+
+         </tbody>
+     </table>
+      <div style="height:60px" class="clearfix">
+	  <!-- 提示信息 -->
+
+                <div class="moveHouse-tip">
+
+                    本页共<span class="font-bold col-f60" id="moveHouse-all">10</span>条记录,出售<span class="font-bold col-f60" id="moveHouse-sale">5</span>条,出租<span class="font-bold col-f60" id="moveHouse-rent">5</span>条;已导入的<span class="font-bold col-f60" id="moveHouse-done">3</span>条,未导入<span class="font-bold col-f60" id="moveHouse-notDone">7</span>条,正在导入<span id="moveHouse-doing" class="font-bold col-f60">0</span>条,您已选择<span class="font-bold col-f60" id="moveHouse-selected">0</span>条记录
+
+                </div>
+
+	  <div class="float-r">
+        <div id="notice-fanye" class="commom-fanye notice-font"> </div>
+      </div></div>
+    <script type="text/javascript">
+        if (@(totalSize)>0) {
+            var totalSize=@(totalSize);
+            var pageSize=@(parame.PageSize);
+            var pagecount = parseInt(totalSize / pageSize) + ((totalSize % pageSize) == 0 ? 0 : 1);
+        /*翻页控件*/
+        $("#notice-fanye").paginate({
+            count: pagecount,
+            start: '@parame.PageIndex',
+            display: 6,
+            border: false,
+            text_color: '#50b63f',
+            text_hover_color: '#fff',
+            background_color: '#fff',
+            background_hover_color: '#50b63f',
+            images: false,
+            mouse: 'click',
+            onChange: function (currentPage) {
+             //   location.href = "/House/SnatchWeb?PageIndex="+currentPage+"&CommunityId="+@parame.CommunityId+"&status="+@parame.status+"&TradeType="+@parame.TradeType+"&BuildingType="+@parame.BuildingType;
+                search(currentPage);
+            }
+        });
+        }
+</script> 
+ }
+else
+{
+
+<div class="houseTitle-font">亲，暂时没有房源可以需要搬家哟，点击同步列表，获取最新房源^_^</div>
+
+ }
+}

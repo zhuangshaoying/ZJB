@@ -1,0 +1,25 @@
+<div id="add_account_win">
+  <ul class="form_body add_account_input">
+    <li><span>用户名：</span>
+      <input id="loginName" type="text"/>
+    </li>
+    <li><span>密&nbsp;&nbsp;码：</span>
+      <input id="loginPwd" type="password" />
+    </li>
+  </ul>
+</div>
+<script type="text/javascript">
+function initCheckBox(userWebId) {
+	if (userWebId <= 0) {
+	    document.getElementById("isDefaultCbx").checked = "checked";
+        document.getElementById('isDefaultCbx').value = "true";
+	}
+}
+function toggleDefault() {
+	if (document.getElementById("isDefaultCbx").checked) {
+        document.getElementById('isDefaultCbx').value = "true";
+	} else {
+        document.getElementById('isDefaultCbx').value = "false";
+	}
+}
+</script>

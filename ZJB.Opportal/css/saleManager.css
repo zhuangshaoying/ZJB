@@ -1,0 +1,447 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.saleManager-main .sale-tab-sub {
+	font-size:12px
+}
+.selectWebsite {
+	margin:10px 0 0
+}
+/*导航*/
+.saleprocess {
+	height:23px;
+	line-height:23px;
+	margin:30px 30px 15px
+}
+.saleprocess li {
+	float:left;
+	width:309px;
+	height:23px;
+	line-height:23px;
+	font-size:12px;
+	color:#333;
+	font-weight:bold;
+	text-indent:96px
+}
+.saleprocess .defluat {
+	background:#e4e4e4 url(../images/process.png) no-repeat right 0;
+}
+.saleprocess .selected {
+	background:#e4e4e4 url(../images/process_left.jpg) no-repeat right 0;
+}
+.saleprocess li span {
+	display:block
+}
+.process li.done {
+	background-position:100% -23px
+}
+.saleprocess li span.first {
+	background:url(../images/process.png) no-repeat -12px -69px
+}
+.saleprocess li span.selected {
+	display:inline-block;
+	width:12px;
+	height:23px;
+	background:url(../images/process_left.jpg) no-repeat
+}
+.saleprocess li.last {
+	background-position:100% -138px
+}
+.saleprocess li.active {
+	background-color:#419d31;
+	color:#fff
+}
+.saleprocess li.active span.first {
+	background:url(../images/process.png) no-repeat -12px -92px
+}
+.saleprocess li span.middle {
+	background:url(../images/process.png) no-repeat -0px -23px
+}
+.saleprocess li.active span.last {
+	background:url(../images/process.png) no-repeat 100% -161px
+}
+/*今日统计*/
+.send_account {
+	margin:8px 0px
+}
+.send_account caption {
+	height:30px;
+	line-height:30px;
+	background:#eaeaea;
+	color:#000;
+	font-size:14px;
+	font-weight:bold
+}
+.send_account tr {
+	background-color:#f3f3f3
+}
+.send_account td {
+	width:160px;
+	height:30px;
+	line-height:30px;
+	border-top:1px solid #fff;
+	border-right:1px solid #fff;
+	padding-left:20px;
+	overflow:auto;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.send_account td a.more_details {
+	margin-left:20px;
+	text-decoration:underline;
+	color:#5e96c7
+}
+/*查询区*/
+.saleManager-state li {
+	float:left;
+	width:307px;
+	background-color:#e3a85e;
+	border-left:2px solid #fff;
+	text-align:center;
+	font-family:'微软雅黑'
+}
+.saleManager-state li.active {
+	background-color:#6eacf6;
+}
+.saleManager-state li a {
+	display:inline-block;
+	font-size:14px;
+	color:#fff;
+	width:307px;
+	height:30px;
+}
+.saleManager-select {
+	margin:15px 30px 0;
+	height:75px;
+}
+.saleManager-select > li {
+	height:30px;
+	line-height:30px;
+	margin-bottom:16px
+}
+.saleManager-select .saleManager-search-key {
+	width:180px;
+	height:26px;
+	line-height:26px;
+	border:1px solid #70aef9;
+	margin:0px 8px 0 0;
+	border-radius:3px;
+	font-size:12px;
+	vertical-align:top;
+	padding:0px 10px
+}
+.selectWebsite-select {
+	height:20px;
+	line-height:20px;
+	margin:20px 30px 10px 30px
+}
+.manage-date1 {
+	width:143px;
+	height:28px;
+	float:left
+}
+.manage-date2 {
+	width:94px;
+	height:28px;
+	float:left
+}
+.manage-time1 {
+	width:114px;
+	height:28px;
+	float:left
+}
+.manage-time2 {
+	width:56px;
+	height:28px;
+	float:left
+}
+.minnuteUl-time {
+	width:138px;
+	height:28px;
+	float:left
+}
+.saleManager-key>li {
+	float:left;
+	margin:0 8px 0 0;
+	width:108px
+}
+.saleManager-key li select {
+	display:inline-block;
+	width:128px;
+	height:30px;
+	line-height:30px;
+	font-size:14px;
+	border:2px solid #64ac58;
+	border-radius:2px;
+}
+.saleManager-key li select option {
+	height:32px;
+	line-height:32px;
+	margin:4px 0
+}
+.span_title {
+	width:160px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	display: block;
+	float: left;
+}
+.houseTitle-font{display:block;height:48px;line-height:48px;text-align:center;color:#ff6600;font-size:14px}
+/*旧版本房源导入*/
+.manager-import {
+	background-color:#70b763;
+	padding:5px;
+	font-size:14px;
+	color:#fff;
+	cursor:pointer
+}
+/*已推未推*/
+	.recommend_pic {
+	float:left;
+	width:38px;
+	height:20px;
+	margin:0 4px;
+}
+.recommending {
+
+}
+.unrecommend {
+}
+.torecommend {
+	float:left;
+	width:40px;
+	height:22px;
+	margin:0 4px;
+}
+.more_pics {
+	float:left;
+	width:30px;
+	height:18px;
+	background:url(../images/duotu.jpg) no-repeat;
+}
+.appointment_pics {
+	float:left;
+	width:30px;
+	height:18px;
+	background:url(../images/yuyue.jpg) no-repeat;
+}
+.tags_pics {
+	float:left;
+	display:block;
+	width:63px;
+	height:18px;
+}
+/*弹出提示框*/
+.release-manager-btn {
+	left:84px;
+	top:18px;
+	position:absolute;
+}
+.release-manager-yuyue {
+	left:168px;
+	top:18px;
+	position:absolute
+}
+.push_buttom_quick {
+	display:block;
+	width:272px;
+	height:68px;
+	background:url(../images/tip.png) no-repeat;
+	position:absolute;
+}
+.push_buttom_quick .tip_inner {
+	margin:0 20px;
+	text-align:left;
+	height:60px;
+	line-height:60px;
+	font-size:12px
+}
+.push_buttom_quick .close {
+	display:block;
+	width:18px;
+	height:18px;
+	background:url(../images/close.png) no-repeat;
+	position:absolute;
+	top:-6px;
+	right:-2px;
+}
+/*发布进行中提示*/
+	.sale-push-content {
+	text-align:center;
+	margin:20px 0;
+	font-size:12px
+}
+.sale-push-content .select-font {
+	font-size:14px;
+	color:#f60;
+	font-weight:bold;
+	margin:0 4px
+}
+/*数据为空时*/	
+.null-tip {
+	width:200px;
+	height:100px;
+	line-height:100px;
+	margin:20px auto;
+	text-align:center
+}
+.null-tip img {
+	display:inline-block;
+	float:left
+}
+.null-tip p {
+	height:35px;
+	line-height:35px
+}
+/*网站选择*/
+	.website-accout .website-accountList {
+	margin-left:8px;
+	display:block;
+	float:left;
+	width:80px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.positionSelect-manager {
+	width:90px;
+	height:22px;
+	display:block
+}
+/*房源共享*/
+.sharebuilding-select {
+	height:32px;
+	line-height:32px;
+	margin:20px 8px 10px;
+	font-size:14px
+}
+.sharebuilding-select select {
+	width:80px;
+	height:24px;
+	line-height:24px;
+	float:left;
+	margin:0px 8px 0 0
+}
+.keywordArea {
+	width:160px;
+	height:20px;
+	line-height:20px;
+	float:left;
+	margin:0px 8px 0 0;
+}
+.content-main {
+	margin: 0 8px
+}
+.shareBuilding-tip {
+	font-size:14px;
+	color:#f60;
+	text-align:center;
+	margin:20px 0
+}
+.shareWidth {
+	display:block;
+	float:left;
+	width:48px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.manager-top {
+	border-top:1px solid #d3d3d3
+}
+/*网站发布记录*/
+.successTip {
+	width:580px;
+	/*height:380px*/
+}
+.successTip-table {
+	width:580px;
+	/*height:350px;
+	overflow-y:auto;*/
+}
+.successTip-btn {
+	margin:0 4px
+}
+/*共享房源*/
+.sharHouseOrg {
+	margin:10px;
+}
+.shareHouseOrg-tip {
+	color:#f60;
+	margin:4px;
+}
+.shareStoreNo {
+	padding-left:8px;
+	font-size:12px
+}
+.shareStoreNo li {
+	height:28px;
+	line-height:28px;
+}
+.shareHouseOrg-btn {
+	text-align:center;
+}
+.shareStore-text {
+	margin:0 4px;
+	border-bottom:1px solid #e3e3e3;
+	padding:0 0 2px 0
+}
+.shareHouseOrg-btn input {
+	margin:10px 0px
+}
+.shareHouseOrgZtree {
+	width:255px;
+	height:170px;
+	overflow:auto;
+	margin-bottom:8px
+}
+/**房源管理我的标签**/
+#updateTags {
+	width:60px;
+	margin:20px auto;
+	font-size:12px
+}
+.updateTags {
+	margin:0px;
+	padding:0px
+}
+.updateTags li {
+	margin:12px 0
+}
+.updateTags input.tag {
+	margin:-12px 0 0 0
+}
+.mm30 {
+	margin:0px 30px
+}
+
+@media (max-width:1024px) {
+.saleprocess li {
+	float: left;
+	width: 250px;
+	height: 23px;
+	line-height: 23px;
+	font-size: 12px;
+	color: #333;
+	font-weight: bold;
+	text-indent: 70px;
+}
+.saleManager-state li {
+	float: left;
+	width: 248px;
+	background-color: #e3a85e;
+	border-left: 2px solid #fff;
+	text-align: center;
+	font-family: '微软雅黑';
+}
+.saleManager-state li a {
+	display: inline-block;
+	font-size: 14px;
+	color: #fff;
+	width: 248px;
+	height: 30px;
+}
+}
+.fbyy {
+	margin:10px 30px 20px
+}

@@ -1,0 +1,13 @@
+﻿@using ZJB.Api.Entity;
+@model List<Notice>
+@{
+    Layout = null;
+}
+
+@foreach(Notice item in Model)
+{
+  
+<li class="bulletin-title"><a href="javascript:;"><a href="@Url.Action("DetailView", "Notice", new { noticeId=item.NoticeId})" id="@item.NoticeId">@item.Title</a></a></li>
+}
+
+

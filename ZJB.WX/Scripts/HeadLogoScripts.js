@@ -1,0 +1,1 @@
+﻿var logo_text = '既然选择了远方 便只顾风雨兼程。';var logo_text_count='1258';

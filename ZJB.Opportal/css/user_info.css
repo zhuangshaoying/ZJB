@@ -1,0 +1,276 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.user_xiangqing {
+	padding:20px 30px 30px
+}
+.account_setting_area {
+	border: 1px solid #e7e7eb;
+	margin-top: 10px;
+	font-family:'微软雅黑';
+	font-size:14px
+}
+.account_setting_area .sub_title {
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #e7e7eb;
+	padding: 0 20px;
+	font-size: 14px;
+	font-weight: 400;
+	font-style: normal;
+	background-color: #f4f5f9;
+}
+.account_setting_item {
+	border-top: 1px solid #e7e7eb;
+	padding: 18px 20px;
+}
+.account_setting_item:first-child {
+	border-top-width: 0;
+}
+.account_setting_item.wrp_pic_item_spe2 {
+	padding-bottom: 5px;
+	padding-top: 10px;
+}
+.account_setting_item h4 {
+	float: left;
+	width: 100px;
+	margin-right: 20px;
+	font-weight: 400;
+	font-style: normal;
+	color: #8d8d8d;
+}
+.account_setting_item .meta_opr {
+	float: right;
+	margin-left: 16px;
+	word-wrap: break-word;
+	word-break: break-all;
+	text-align: right;
+	color: #8d8d8d;
+}
+.account_setting_item .meta_opr a {
+	margin-left: 14px;
+	color: #459ae9;
+}
+.account_setting_item .meta_content {
+	display: table-cell;
+	vertical-align: top;
+	float: none;
+	width: auto;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+.account_setting_item .meta_content .meta_pic {
+	width: 80px;
+	height: 80px;
+}
+.account_setting_item .meta_content .meta_pic200_200 {
+	width: 200px;
+	height: 200px;
+}
+.fanhui {
+	position:absolute;
+	right:30px;
+	top:28px
+}
+.userxq_item {
+	height:40px;
+	line-height:40px;
+	font-size:15px;
+	font-family:'微软雅黑';
+	width:600px
+}
+.modify_user {
+	float:right
+}
+.userxq_item label {
+	float: left;
+	width: 100px;
+	padding: 5px;
+	line-height: 26px;
+	text-align: left;
+}
+.userxq_item .inputStyle {
+	float: left;
+	width: 298px;
+	height: 24px;
+	line-height: 24px;
+	padding: 5px;
+	border: 1px solid #cccccc;
+	font-size: 15px;
+	font-family:'微软雅黑';
+}
+.userxq_item .inputStyle.width2 {
+	width: 138px;
+}
+.userxq_item .yzmBtn {
+	float: left;
+	width: 150px;
+	height: 36px;
+	line-height:36px;
+	border: 1px solid #cccccc;
+	background: #f4f4f4;
+	margin-left: 10px;
+	font-family: MicroSoft YaHei;
+	cursor: pointer;
+	font-size: 14px;
+}
+.btnStyle {
+	float:left;
+	width: 120px;
+	height: 36px;
+	line-height:36px;
+	background: #44b549;
+	border: none;
+	color: #fff;
+	font-size: 15px;
+	cursor: pointer;
+	font-family: MicroSoft YaHei;
+	border-radius:3px
+}
+.js_btn {
+	width: 118px;
+	float:left;
+	margin-left: 10px;
+	color:#222;
+	height: 34px;
+	line-height:34px;
+	text-align:center;
+	background:#fff;
+	border:1px solid #e7e7eb;
+	font-family: MicroSoft YaHei;
+	border-radius:3px
+}
+.mytels {
+	float:left
+}
+.mb15 {
+	margin-bottom:15px
+}
+.modify_content_hd {
+	margin-bottom:5px
+}
+.frm_tips {
+	color: #8d8d8d;
+	padding-top:4px;
+	font-family:'微软雅黑';
+	line-height:20px
+}
+.filebtn {
+	display: inline-block;
+	overflow: visible;
+	padding: 0 22px;
+	height: 30px;
+	line-height: 30px;
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	font-size: 14px;
+	border-width: 1px;
+	border-style: solid;
+	cursor: pointer;
+}
+.filebtn {
+	min-width: 60px;
+}
+.filebtn.btn_upload {
+	background-color: #fff;
+	background-image: -moz-linear-gradient(top, #fff 0, #fff 100%);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#fff));
+	background-image: -webkit-linear-gradient(top, #fff 0, #fff 100%);
+	background-image: -o-linear-gradient(top, #fff 0, #fff 100%);
+	background-image: linear-gradient(to bottom, #fff 0, #fff 100%);
+	border-color: #e7e7eb;
+	color: #222;
+	height: 30px;
+	line-height: 30px;
+	width: auto;
+	padding-left: 22px;
+	padding-right: 22px;
+	font-family:'微软雅黑'
+}
+#upload {
+	position: absolute;
+	z-index: 10;
+	left:0px;
+	width:106px;
+	overflow:hidden;
+	height:32px;
+	filter: alpha(opacity = 0);
+	-moz-opacity: .0;
+	-khtml-opacity: .0;
+	opacity: .0;
+	cursor:pointer
+}
+.img_yulan {
+	margin-top:30px;
+	font-family:'微软雅黑'
+}
+.crop_placeholder {
+	float:left;
+	border: 1px solid #e7e7eb;
+	background-color: #f4f5f9;
+	overflow: hidden;
+	width: 200px;
+	height: 200px;
+}
+.avatar_preview_area {
+	overflow: hidden;
+	padding-left: 100px;
+	text-align: left;
+	float:left
+}
+.avatar_preview_area .preview_tips {
+	line-height: 16px;
+	color: #8d8d8d;
+	margin-bottom: 15px;
+	font-size:14px
+}
+.avatar_preview_area .inner_avatar_preview .preview_item {
+	display: inline-block;
+	margin-right: 55px;
+	width: 140px;
+	height: 140px;
+	background-color: #f4f5f9;
+	overflow: hidden;
+	position: relative;
+	font-size:14px
+}
+.avatar_preview_area .inner_avatar_preview .preview_item.circle {
+	margin-right: 0;
+}
+.avatar_preview_area .inner_avatar_preview .preview_item .marked_text {
+	position: absolute;
+	width: 140px;
+	height: 140px;
+	display: block;
+	left: 0;
+	top: 0;
+	text-align: center;
+	line-height: 140px;
+	color: #bbb;
+	z-index: 1;
+}
+.avatar_preview_area .inner_avatar_preview .preview_item .square_img, .avatar_preview_are .inner_avatar_preview .preview_item .circle_img {
+	position: relative;
+	z-index: 2;
+}
+.avatar_preview_are .inner_avatar_preview .preview_item .round_white_img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 140px;
+	height: 140px;
+	z-index: 3;
+}
+.file_sc {
+	margin-top:30px;
+	border-top:1px solid #e7e7eb;
+	padding-top:20px;
+	text-align:center
+}
+.mydsf {
+	float:none;
+	display:inline-block
+}

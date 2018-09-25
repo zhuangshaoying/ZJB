@@ -1,0 +1,195 @@
+﻿@using ZJB.Api.Models;
+@using ZJB.Core.Utilities
+@model HouseCrawler
+@{
+    Layout = null;
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    int isCollect = ViewBag.IsCollect??0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@(Model.IsNoNull()&&Model.Title.IsNoNull()?Model.Title:"房产盒子")</title>
+	<link href='~/css/common.css' rel='stylesheet' type='text/css' />
+	<link href='~/css/main.css' rel='stylesheet' type='text/css' />
+    <style>
+.favheader_background {
+	width: 100%;
+	height: 48px;
+	line-height: 48px;
+	font-size: 14px;
+	background-color: #424042;
+	position: fixed;
+	top: 0px;
+	border-top:none;
+	border-bottom:none
+}
+        #header_center
+        {
+            width: 84%;
+            height: 48px;
+            margin: 0 auto;
+        }
+#header_logo a {
+	float: left;
+	width: 230px;
+	height: 48px;
+	cursor: pointer;
+	margin:0px;
+	background: url(/images/white_logo.png) 0px center no-repeat;
+}
+.loginOut {
+	float: right;
+	font-size: 14px;
+	font-family: '微软雅黑';
+	padding-left: 14px;
+	border-left: 0px solid #e7e7eb;
+	margin-left: 5px;
+	height: 16px;
+	line-height: 16px;
+	margin-top: 7px;
+}
+.loginOut a {
+	color: #fff;
+}
+.a-block {
+	border: 1px solid #d8d8d8;
+	border-radius: 4px;
+	background-color: #f6f6f6;
+	height: 32px;
+	line-height: 31px;
+	padding-right: 16px;
+	padding-left: 16px;
+	display: inline-block;
+	font-size: 14px;
+	margin-right: 3px;
+	color: #333;
+    vertical-align:middle;
+}
+.url_box {
+	margin-top: 48px;
+}
+.forStyle{
+	width:100%px;
+	height:48px;
+	background:#fbfbfb;
+	position:absolute;
+	left:0;
+	top:0
+}
+</style>
+</head>
+
+<body style="overflow:hidden;background:#fff">
+<div class="favheader_background">
+	<div id="header_center" class="clearfix">
+		<div id="header_logo"><a href="/Home"></a></div>
+		<div class="loginOut">
+       @if (Model.IsNoNull())
+{
+               if (isCollect == 1)
+            {
+             <a target="_blank" href="/home?Menu=houseCollection&Url=@Html.Raw(@Url.Action("HouseCollection", "House", new  { postType=1,city=592}))" class="a-block collect-comm">
+            <i class="comm_fav1 comm_visited"></i>
+            <em>已收藏，查看我收藏的房源</em>
+            </a>
+            }
+            else{
+                <a href="javascript:;" onclick="addHouseCollection(this)" class="a-block collect-comm">
+            <i class="comm_fav1"></i>
+            <em id="CollectMsg">收藏该房源到您的房产盒子</em>
+            </a>
+            }
+
+    <a  href="javascript:CheckTel('@Model.Tel');" class="a-block collect-comm">
+        <i class="zjtel"></i>
+        <em>识别电话是否中介</em>
+    </a>
+}
+           </div>
+	</div>
+</div>
+    <div class="url_box">
+        <iframe sandbox="allow-scripts allow-forms" src="@ViewBag.Url" width="100%" height="700" frameborder="0"  scrolling="auto" id="weburl"></iframe>
+    </div>
+    <div style="display:none">
+        <script>
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?cf86da03fe349c15675cdde921c99019";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+    </div>
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+<script type="text/javascript">  
+    var houseData = @(Model.IsNoNull()?Html.Raw(@jss.Serialize(Model)):Html.Raw(""));
+$(window.parent.document).find("#weburl").load(function(){  
+	var main = $(window.parent.document).find("#weburl");//找到iframe对象  
+	var thisheight = $(document).height()-48;//获取页面高度  
+	main.height(thisheight < 500 ? 500 : thisheight);   
+	
+});
+Date.prototype.formatDate = function () {
+    var s = this.getFullYear() + '-',
+    d = this.getMonth() + 1;
+    s += (d < 10 ? '0' + d : d) + '-';
+    d = this.getDate();
+    s += (d < 10 ? '0' + d : d);
+    return s;
+};
+
+Date.prototype.formatDateTime = function () {
+    var s = this.formatDate(), d = this.getHours();
+    s += ' ' + (d < 10 ? '0' + d : d) + ':';
+    d = this.getMinutes();
+    s += (d < 10 ? '0' + d : d) + ':';
+    d = this.getSeconds();
+    s += (d < 10 ? '0' + d : d);
+    return s;
+};
+function addHouseCollection(obj)
+{  
+    houseData.ReleaseTime = new Date(parseInt(houseData.ReleaseTime.substr(6))).formatDateTime();
+    houseData.UpdateTime = new Date(parseInt(houseData.UpdateTime.substr(6))).formatDateTime();
+    $.ajax({
+        type: 'post',
+        url: '/House/AddHouseCollection',
+        data: houseData,
+        success: function (result) {
+            if (result.status > 0) {
+                $("#CollectMsg").html("已收藏，查看我收藏的房源");
+                $(".comm_fav1").addClass("comm_visited");
+                $(obj).attr("onclick","");
+                var url="@Html.Raw("/home?Menu=houseCollection&Url="+ @Url.Action("HouseCollection", "House", new  { postType=1,city=592}))";
+                $(obj).attr("href",url);
+            }
+        }
+    });
+}
+
+    function  CheckTel(tel) {
+        var url = 'http://m.haosou.com/s?q=' + tel + '&src=home_input&srcg=home&pq=15710671776&rg=0&_ms=0&log_id=1572667';
+        art.dialog.open(encodeURI(url), {
+            id: "dlg_Tel", 
+            title: '识别电话是否中介',
+            width: 340,
+            height: 500,
+            ok: function () {
+              
+            },
+            cancel: true
+        });
+    
+}
+</script>
+</body>
+</html>

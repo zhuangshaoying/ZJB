@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@model List<ZJB.Api.Entity.InvitationCode>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddInvitationCode</title>
+	<link href="~/Content/common.css" rel="stylesheet" />
+    <link href="~/Content/totop.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="saleHouse" id="saleHouse">
+        <div class="saleHouse-main clear">
+        <div class="remain_mar"><form id="bForm" action="@Url.Action("AddInvitationCode", "User")" enctype="multipart/form-data" method="post">
+            <div class="appmsg_edit_item">
+				<label class="frm_label">电话</label>
+				<span class="frm_input_box"><textarea id="tel" class="frm_input" name="tel"></textarea></span>
+				<div class="frm_msg">多个号码用逗号隔开</div>
+			</div>
+			<div class="appmsg_edit_item">
+				<label class="frm_label">姓名</label>
+				<span class="frm_input_box"><textarea id="name" class="frm_input" name="name"></textarea></span>
+				<div class="frm_msg">多个号码用逗号隔开，顺序和电话对应</div>
+			</div>
+            <input class="btn_primary" type="submit" value="保存" />
+        </form>
+        <table class="h_list mt20" width="100%" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<td>邀请码</td>
+					<td>绑定电话</td>
+					<td>被邀请人</td>
+					<td>生成时间</td>
+					<td>发送状态</td>
+					<td>操作</td>
+				</tr>
+			</thead>
+			<tbody id="houseTable">
+            @{
+                foreach (var item in Model)
+                {
+                <tr>
+					<td>@item.Code</td>
+					<td>@item.BindTel</td>
+					<td>@item.Invitee</td>
+					<td>@item.CreateTime</td>
+					<td><span id="span@(item.CodeId)">@(item.IsSend==true?"已发":"未发")</span></td>
+					<td><input id="btnSend@(item.CodeId)" type="button" value="发短信" onclick="send(@item.CodeId)" class="fasong" /></td>
+				</tr>
+                }
+
+            }
+			</tbody>
+		</table>
+        </div></div>
+    </div>
+
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+	<script src='~/Scripts/common.js' type='text/javascript'></script>
+    <script type='text/javascript'>
+        function send(codeid) {
+            $.ajax({
+                type: "post",
+                url: "/user/SendInvitationCode",
+                data: "codeid=" + codeid,
+                dataType: "text",
+                success: function (result) {
+                    if (result == "1") {
+                        $("#span" + codeid).html("已发");
+                        alert("发送成功");
+                    }
+
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

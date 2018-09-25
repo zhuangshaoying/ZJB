@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>房贷计算器_房贷计算器最新2014_2014房贷计算器下载_厦门房地产联合网（XMHOUSE.COM）</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="http://m.xmhouse.com/JS/calculate.js" charset="gb2312"></script>
+</head>
+<script language="javascript" type="text/javascript">
+    function checkformt3() {
+        if (document.formt3.dj3.value == "" || document.formt3.mj3.value == "") {
+            alert("请填写单价和面积");
+            return;
+        } else {
+            runjs3(document.formt3);
+        }
+    }
+</script>
+<body>
+    <div data-role="page">
+        <header>
+            <div class="headBox" style="display: none">
+                <div class="mainNav">
+                    <a href="javascript:history.go(-1);" class="back"></a>
+                    <span class="navLine"></span>
+                    <p class="title">购房计算器</p>
+                    <a href="#" class="navBtn">网站导航</a>
+                </div>
+            </div>
+        </header>
+        <div data-role="content">
+            <!--计算器 start -->
+            <div class="jsqname">
+                <a href="tool.html">
+                    <div class="td02 tdon">购房贷款计算器</div>
+                </a>
+                <a href="tool2.html">
+                    <div class="td01">税费计算器</div>
+                </a>
+            </div>
+            <div class="tool_box">
+                <form name="formt3">
+                    <div id="t-1">
+                        <div class="jsqConB">
+                            <div class="jsqtr">
+                                <dl class="clearfix">
+                                    <dt class="font">单<em style="margin-left: 2em"></em>价：</dt>
+                                    <dd>
+                                        <div class="mr5">
+                                            <input name="dj3" type="text" class="jsqinput01" />
+                                        </div>
+                                        <div>元/平米</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="jsqtr">
+                                <dl class="clearfix">
+                                    <dt style="width: 30%" class="font">面<em style="margin-left: 2em"></em>积：</dt>
+                                    <dd style="width: 70%">
+                                        <div class="mr5">
+                                            <input name="mj3" type="text" class="jsqinput01" />
+                                        </div>
+                                        <div>平米</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="jsqbotton"><a title="开始计算" onclick="checkformt3()" class="begin_btn">开始计算</a></div>
+                        </div>
+                    </div>
+                    <div class="result" id="t-2" style="display: none">
+                        <dl class="results clearfix">
+                            <dt>房款总价</dt>
+                            <dd><span id="fkz3"></span>元</dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>印<em style="margin-left: 0.5em"></em>花<em style="margin-left: 0.5em"></em>税</dt>
+                            <dd><span id="yh"></span>元</dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>公<em style="margin-left: 0.5em"></em>证<em style="margin-left: 0.5em"></em>费</dt>
+                            <dd><span id="gzh"></span>元</dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>契<em style="margin-left: 2em"></em>税</dt>
+                            <dd><span id="q"></span>元</dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>委托办理产权手续费</dt>
+                            <dd><span id="wt"></span>元</dd>
+                        </dl>
+                        <dl class="results clearfix">
+                            <dt>房屋买卖手续费</dt>
+                            <dd><span id="fw"></span>元</dd>
+                        </dl>
+                        <p class="cknotes">*以上结果仅供参考</p>
+                        <div class="jsqbotton"><a title="重新计算" onclick="mytotal_hide()" class="begin_btn">重新计算</a></div>
+                    </div>
+                </form>
+            </div>
+            <!-- /content -->
+        </div>
+        <!-- /page -->
+    </div>
+</body>
+</html>

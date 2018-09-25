@@ -1,0 +1,372 @@
+﻿@{
+    Layout = null;
+}
+@using ZJB.Api.Entity
+@using ZJB.Api.Models
+@using ZJB.Core.Utilities
+@using ZJB.WX.Models
+@using ZJB.Pager
+@model PagedList<HouseCollectInfo>
+@{
+    ZJB.WX.Models.HouseParameter houseParameter = (HouseParameter)ViewBag.Parameter;
+    var tradeType = Convert.ToInt32(ViewData["TradeType"]);
+    var tradeName = tradeType == 1 ? "二手房" : "租房";
+    HDictionary hd = HDictionary.Instance;
+
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>@(ViewBag.CityName)@(tradeName)，@(ViewBag.CityName)@(tradeName)交易信息，@(ViewBag.CityName)@(tradeName)出售 - 房产盒子</title>
+    <meta name="keywords" content="@(ViewBag.CityName)@(tradeName)，@(ViewBag.CityName)房产网，@(ViewBag.CityName)@(tradeName)交易信息，厦门@(tradeName)- 房产盒子" />
+    <meta name="description" content="房产盒子@(ViewBag.CityName)@(tradeName)房产网，涵盖@(ViewBag.CityName)各区域房源信息。房产盒子帮您定位，选择，收藏，搜索各类出售、出租房源，带来最佳@(tradeName)买卖体验。" />
+    <script src="/Scripts/jquery-1.9.0.min.js" language="javascript"></script>
+    <link rel="stylesheet" href="/css/Web/common.css" />
+    <link rel="stylesheet" href="/css/Web/home.css" />
+
+    <script>
+        var url = decodeURI(location.href);
+
+        function GoHref() {
+
+            if ($("#txtKeyWord").val() != "") {
+
+                if (url.indexOf("&keyword") > 0 || url.indexOf("?keyword") > 0) {
+                    replaceParamVal("keyword", $("#txtKeyWord").val());
+                } else {
+                    if (url.indexOf("?") > 0) {
+                        window.location.href = url + "&keyword=" + $("#txtKeyWord").val();
+                    } else {
+                        window.location.href = url + "?keyword=" + $("#txtKeyWord").val();
+                    }
+                }
+            }
+        }
+        function replaceParamVal(paramName, replaceWith) {
+
+            var re = eval('/(' + paramName + '=)([^&]*)/gi');
+            var nUrl = url.replace(re, paramName + '=' + replaceWith);
+            this.window.location = nUrl;
+        }
+    </script>
+</head>
+
+<body class="bg_1">
+    <input type="hidden" id="hdCityId" />
+    <div class="new_header">
+        <div class="new_header_cont">
+            <ul class="new_navs lay_fl">
+                <li><a href="/">首页</a></li>
+                <li><a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = "esf", BuildType = null })" class="@(tradeType == 1 ? "current" : "")">二手房</a></li>
+                <li><a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = "zf", BuildType = null })" class="@(tradeType == 3 ? "current" : "")">租房</a></li>
+                <li><a href="/down.html">免费下载</a></li>
+                <li><a href="/contact.html">关于我们</a></li>
+            </ul>
+            <div class="new_panel lay_fr"> <span class="new_welcome">您好，欢迎来到房产盒子！请</span> <a href="/User/Login"><span class="new_reg">立即登录</span></a>&nbsp;&nbsp;或&nbsp;&nbsp; <a href="/m/u/reg"><span class="new_log">注册</span></a> </div>
+        </div>
+    </div>
+    <div class="nav-box">
+        <div class="nav-container clear">
+            <a href="/" title="房产盒子">
+                <div class="banner"></div>
+            </a>
+            <div class="search">
+                <input class="txt left ui-autocomplete-input" name="keyword" autocomplete="off"
+                       placeholder="请输入房源特征、地点和小区名..." id="txtKeyWord" />
+                <input class="btn home-ico ico-search left" id="" type="submit" value="搜索" onclick="GoHref()" />
+            </div>
+        </div>
+    </div>
+    <div class="intro clear">
+        <div class="container">
+            <div class="lay_fl l-txt"><i class="icon"></i>&nbsp;<a href="/">房产盒子</a><span class="stp">&nbsp;&gt;&nbsp;</span><a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = hd.ETradeType(tradeType.ToString()), BuildType = null })">@(ViewBag.CityName)@tradeName</a>&nbsp;</div>
+        </div>
+    </div>
+    <div class="wrapper">
+      
+        <div class="main-box clear">
+            <div class="con-box">
+                <div class="list-head clear">
+                    <h2>共有<span>&nbsp;@(ViewData["rowsCount"])&nbsp;</span>套@(ViewBag.CityName)@(tradeName)房源</h2>
+                    <div class="view-type">
+                        <div class="modeshows modeshow"><span class="l-show view-mod" id="lshow"><i></i>实景图模式</span></div>
+                    </div>
+                </div>
+                <div class="list-wrap">
+                    <ul id="house-lst" class="house-lst">
+                        @helper   showTc(int cityId,int postType)
+                        {
+                                string dbCollection = "Chushou_" + cityId;
+                                switch (postType)
+                                {
+                                    case 1:
+                                        dbCollection = "Chushou_" + cityId;
+                                        break;
+                                    case 2:
+                                        dbCollection = "Qiugou_" + cityId;
+                                        break;
+                                    case 3:
+                                        dbCollection = "Chuzu_" + cityId;
+                                        break;
+                                    case 4:
+                                        dbCollection = "Qiuzu_" + cityId;
+                                        break;
+                                    default:
+                                        dbCollection = "Chushou_" + cityId;
+                                        break;
+                                }
+
+                             @dbCollection
+                        }
+
+                        @foreach (HouseCollectInfo item in Model)
+                        {
+                            <li class="">
+                                <div class="pic-panel">
+                                    <a target="_blank" > <img src="/images/web/default_block.png" /></a>
+                                    <div class="pic-num">
+                                        <div class="pic-num-bg"></div>
+                                        <span><i class="ico-pic"></i><em class="num">@(item.PicNum)</em></span>
+                                    </div>
+                                </div>
+                                <div class="info-panel">
+                                    <h2><a target="_blank" href="@Url.Action("Browser", new { hid = item.Id, tc = showTc(item.CityID,item.TradeType) })" title="@item.Title">@item.Title</a>@*<i class="new-label"></i>*@</h2>
+                                    <div class="col-1">
+                                        <div class="where"><a class="laisuzhou" href="@Url.Action("Browser", new { hid = item.Id, tc = showTc(item.CityID,item.TradeType) })"><span class="region">@(item.CommunityName)</span></a><span class="zone">@(item.Room)室@(item.Hall)厅</span><span class="meters">@(item.BuildArea)平米</span><span></span></div>
+                                        <div class="other">
+                                            <div class="con"> <a href="@Url.Action("Browser", new { hid = item.Id, tc = showTc(item.CityID,item.TradeType) })">@(item.Address)</a><span>/ </span>@(item.CurFloor)层(共@(item.MaxFloor)层)<span>/</span></div>
+                                        </div>
+                         
+                                        <div class="jingjiren">业主：@(string.IsNullOrEmpty(item.Publisher) ? "" : item.Publisher)</div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="price"><span class="num">@(item.Price.ToString("F0"))</span>@(item.PriceUnit)@*<img src="/images/Web/animatedec.gif">*@</div>
+                                   
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="square">
+                                            <div><span class="num">@(item.viewCount.IsNull() ? 0 : item.viewCount)</span>人</div>
+                                            <div class="col-look">看过此房</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+
+                    @Html.Pager(Model, new PagerOptions
+                   {
+                       PageIndexParameterName = "page",
+                       CssClass = "multi-page",
+                       ContainerTagName = "div",
+                       LastPageText = "尾页",
+                       ShowMorePagerItems = true,
+                       NumericPagerItemCount = 7,
+                       ShowFirstLast = false,
+                   }, null, null)
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lianjia-footer">
+        <div class="wrapper">
+            <div class="foot-content left">
+                <div class="copy">Copyright &copy; 2014-2015 fchezi.com 闽ICP备15002624号</div>
+            </div>
+        </div>
+    </div>
+    <div class="go_top" id="gotop"></div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            b();
+            $("#gotop").click(function () { $("html , body").animate({ scrollTop: 0 }, 500) });
+            $(window).scroll(function () { b() })
+        });
+        $(function () {
+            $('#house-lst li').hover(function () {
+                $(this).addClass("hover");
+            }, function () {
+                $(this).parent().find("li").removeClass("hover");
+            });
+            $('.dropdown').hover(function () {
+                $(this).find("ul").show();
+            }, function () {
+                $(this).parent().find("ul").hide();
+            });
+            $('.sort-parent').hover(function () {
+                $(this).find("ul").show();
+            }, function () {
+                $(this).parent().find("ul").hide();
+            });
+            $('.circle-look-house').hover(function () {
+                $(".look-house-tab").show();
+            }, function () {
+                $(".look-house-tab").hide();
+            });
+
+            if ($('#cminPrice')) {
+                $('#cminPrice').bind("blur", FixNumber);
+                $('#cminPrice').bind("focus", function () { $("#price_btn").show(); });
+            }
+            if ($('#cmaxPrice')) {
+                $('#cmaxPrice').bind("blur", FixNumber);
+                $('#cmaxPrice').bind("focus", function () { $("#price_btn").show(); });
+            }
+            if ($('#cminArea')) {
+                $('#cminArea').bind("blur", FixNumber);
+                $('#cminArea').bind("focus", function () { $("#area_btn").show(); });
+            }
+            if ($('#cmaxArea')) {
+                $('#cmaxArea').bind("blur", FixNumber);
+                $('#cmaxArea').bind("focus", function () { $("#area_btn").show(); });
+            }
+        });
+        function FixNumber() {
+            var nums = this.value;
+            if (/[０１２３４５６７８９]+/i.test(nums)) {
+                var uns = ['０', '１', '２', '３', '４', '５', '６', '７', '８', '９'];
+                var lns = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                for (var i = 0; i < uns.length; i++) {
+                    while (nums.indexOf(uns[i]) > -1) {
+                        nums = nums.replace(uns[i], lns[i]);
+                    }
+                }
+            }
+
+            if (!/^\d+$/.test(nums)) {
+                var t = '', s;
+                for (var i = 0; i < nums.length; i++) {
+                    s = nums.substr(i, 1);
+                    if (/\d/.test(s)) {
+                        t += s;
+                    }
+                }
+                nums = t;
+            }
+
+            this.value = nums;
+            if (nums == "") {
+                if (this.id == "cminPrice" || this.id == "cmaxPrice") {
+                    $("#price_btn").hide();
+                }
+                if (this.id == "cminArea" || this.id == "cmaxArea") {
+                    $("#area_btn").hide();
+                }
+            }
+            else {
+                if (this.id == "cminPrice" || this.id == "cmaxPrice") {
+                    $("#price_btn").show();
+                }
+                if (this.id == "cminArea" || this.id == "cmaxArea") {
+                    $("#area_btn").show();
+                }
+            }
+        }
+        function b() {
+            h = $(window).height();
+            t = $(document).scrollTop();
+            t > h ? $("#gotop").show() : $("#gotop").hide();
+        }
+
+        $("#price_btn").click(function () {
+            var a = $("#cminPrice").val();
+            var b = $("#cmaxPrice").val();
+            var min = 0, max = 0;
+            if (parseInt(a) > parseInt(b)) {
+
+                min = b;
+                max = a;
+
+            } else {
+                min = a;
+                max = b;
+            }
+            $("#cminPrice").val(min);
+            $("#cmaxPrice").val(max);
+            if (url.indexOf("&MinPrice") > 0 || url.indexOf("?MinPrice") > 0) {
+                var re = eval('/(MinPrice=)([^&]*)/gi');
+                url = url.replace(re, 'MinPrice=' + min);
+            } else {
+
+                if (url.indexOf("?") > 0) {
+                    url = url + "&MinPrice=" + min;
+                } else {
+                    url = url + "?MinPrice=" + min;
+                }
+            }
+            if (url.indexOf("&MaxPrice") > 0 || url.indexOf("?MaxPrice") > 0) {
+                var res = eval('/(MaxPrice=)([^&]*)/gi');
+                url = url.replace(res, 'MaxPrice=' + max);
+
+            } else {
+
+                if (url.indexOf("?") > 0) {
+                    url = url + "&MaxPrice=" + max;
+                } else {
+                    url = url + "?MaxPrice=" + max;
+                }
+            }
+
+            window.location = url;
+        });
+        $("#area_btn").click(function () {
+            var a = $("#cminArea").val();
+            var b = $("#cmaxArea").val();
+            var min = 0, max = 0;
+            if (parseInt(a) > parseInt(b)) {
+
+                min = b;
+                max = a;
+
+            } else {
+                min = a;
+                max = b;
+            }
+            $("#cminArea").val(min);
+            $("#cmaxArea").val(max);
+            if (url.indexOf("&MinArea") > 0 || url.indexOf("?MinArea") > 0) {
+                var re = eval('/(MinArea=)([^&]*)/gi');
+                url = url.replace(re, 'MinArea=' + min);
+            } else {
+
+                if (url.indexOf("?") > 0) {
+                    url = url + "&MinArea=" + min;
+                } else {
+                    url = url + "?MinArea=" + min;
+                }
+            }
+            if (url.indexOf("&MaxArea") > 0 || url.indexOf("?MaxArea") > 0) {
+                var res = eval('/(MaxArea=)([^&]*)/gi');
+                url = url.replace(res, 'MaxArea=' + max);
+
+            } else {
+
+                if (url.indexOf("?") > 0) {
+                    url = url + "&MaxArea=" + max;
+                } else {
+                    url = url + "?MaxArea=" + max;
+                }
+            }
+
+            window.location = url;
+        });
+    </script>
+    <div style="display:none">
+        <script>
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?cf86da03fe349c15675cdde921c99019";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+    </div>
+
+</body>
+</html>

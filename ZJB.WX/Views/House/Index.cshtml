@@ -1,0 +1,354 @@
+﻿@using ZJB.Api.Models
+@using ZJB.Core.Utilities
+@using ZJB.WX.Models
+@{
+    Layout = null;
+}
+@{
+    ZJB.WX.Models.HouseParameter houseParameter = (HouseParameter)ViewBag.Parameter;
+    var tradeType = Convert.ToInt32(ViewData["TradeType"]);
+    var tradeName = tradeType == 1 ? "二手房" : "租房";
+    HDictionary hd = HDictionary.Instance;
+    var loginUser = (PublicUserModel)ViewData["LoginUser"];
+
+}
+@model List<ZJB.Api.Entity.HouseBasicInfo>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>厦门二手房，厦门二手房交易信息，厦门二手房出售 - 臻房</title>
+    <meta name="keywords" content="厦门二手房，厦门房产网，厦门二手房交易信息，厦门二手房- 臻房" />
+    <meta name="description" content="臻房厦门二手房房产网，涵盖厦门各区域房源信息。臻房帮您定位，选择，收藏，搜索各类出售、出租房源，带来最佳二手房买卖体验。" />
+    <link href="/css/Web/common.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <script src="/Scripts/jquery-1.9.0.min.js" language="javascript"></script>
+</head>
+
+<body>
+    <!--头部 start-->
+    <div class="header" style="background-position-y: 0px;">
+        <div class="wrapper">
+            <div class="fl"> <a href="#" title="臻房网" class="logo"> </a> <span class="exchange">厦门</span> </div>
+            <div class="city-change animated">
+                <div class="title"> 请选择城市 <span class="close"></span> </div>
+                <ul>
+                    <li><a href="#" class="check"><i></i>厦门</a></li>
+
+                </ul>
+            </div>
+            <div class="fr">
+                <div class="nav typeUserInfo">
+                    <div class="ti-hover">
+                        <div class="typeShowUser">
+                            <i></i>
+                            <span class="welcome">
+
+                                @{
+                                    if (loginUser.IsNoNull() && loginUser.UserID > 0)
+                                    {
+                                        <a class="btn-login bounceIn actLoginBtn" href="/home">
+                                            <span class="reg">@loginUser.Name</span>
+                                        </a>
+                                        <a href="/User/LoginOut"><span class="log">安全退出</span></a>
+
+                                    }
+                                    else
+                                    {
+                                        <a class="btn-login bounceIn actLoginBtn" href="http://passport.ZJB.com?tourl=http://zf.ZJB.com@(Request.RawUrl)">
+                                            <span class="reg">登录</span>
+                                        </a><a href="http://my.ZJB.com/RegisterPersonal.aspx?tourl=http://WX.ZJB.com@(Request.RawUrl)"><span class="log">立即注册</span></a>
+
+                                    }
+                                }
+
+                            </span>
+                        </div>
+                    </div>
+                    <ul>
+                        @*<li class="hover">*@
+                        <li>
+                            <a class="" href="/xm-esf"> 二手房 </a>
+                            @*<div class="nav-list">
+                                    <dd>
+                                        <i></i>
+                                        <dl>
+                                            <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = "xm", Trade = "esf", BuildType = null })">全部</a>
+                                        </dl>
+
+                                    </dd>
+                                </div>*@
+                        </li>
+                        <li> <a href="/xm-zf"> 租房 </a> </li>
+                        <li class="real"> <i></i> <a href="/home"> 卖房 </a> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="header-wrap">
+                <div class="wrap-ico"></div>
+                <div class="search-box-wrap" log-mod="search">
+                    <div class="search-box-bg"></div>
+                    <div class="search-box-con">
+                        <div class="menu">
+                            <ul>
+                                <li class="check tab" data-type="输入组合条件找房，如上地 学区房" data-url="/xm-esf"><span>找二手房<i></i></span></li>
+                                <li class="tab" data-type="请输入区域、商圈或小区名开始找房" data-url="/xm-zf"><span>出租房<i></i></span></li>
+                            </ul>
+                        </div>
+                        <div class="msg">
+                            厦门真实在售二手房
+                            <div class="map-search"><a href="/xm-esf" target="_blank">购房安心·真实保障</a></div>
+                        </div>
+                        <div class="search clear">
+                            <div class="box01">
+                                <form class="clear" action="/xm-esf">
+                                    <input class="text left txt autoSuggest" name="keyword" autocomplete="off" placeholder="输入组合条件找房，如上地 学区房" id="keyword-box">
+                                    <input class="btn home-ico ico-search left" id="" type="submit" value="" daty-id="110000">
+                                </form>
+                            </div>
+                            <div class="ditu"><a href="#" target="_blank"><img src="/images/ditu.png"></a></div>
+                            <div class="sug-tips01 sug-tips">
+                                <ul id="ershoufang">
+                                    <li class="hot-name">热门搜索</li>
+                                    <div class="list">
+                                        <li><a href="/xm-esf?KeyWord=瑞景公园" data-log_value="瑞景公园">瑞景公园</a></li>
+                                        <li><a href="/xm-esf?KeyWord=翡丽湾" data-log_value="翡丽湾">翡丽湾</a></li>
+                                        <li><a href="/xm-esf?KeyWord=温莎公馆" data-log_value="温莎公馆">温莎公馆</a></li>
+                                    </div>
+                                    <li class="del">清除历史记录</li>
+                                </ul>
+                                <ul id="zufang">
+                                    <li class="hot-name">热门搜索</li>
+                                    <div class="list">
+                                        <li><a href="/xm-zf?KeyWord=瑞景公园" data-log_value="瑞景公园">瑞景公园</a></li>
+                                        <li><a href="/xm-zf?KeyWord=翡丽湾" data-log_value="翡丽湾">翡丽湾</a></li>
+                                        <li><a href="/xm-zf?KeyWord=温莎公馆" data-log_value="温莎公馆">温莎公馆</a></li>
+                                    </div>
+                                    <li class="del">清除历史记录</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlayBg"></div>
+    <!--头部 end-->
+    <!--第一版快 start-->
+    @*<div class="home-nav">
+            <ul>
+                <li>
+                    <div class="title">臻房问答</div>
+                    <a target="_blank" href="#" title="问答">
+                        <div class="nav-ico ico01"><i></i></div>
+                    </a>
+                    <div class="cunn">房产有疑问？专家来解答<a href="javascript:;" title="问答">去提问</a></div>
+                </li>
+                <li>
+                    <div class="title">找学区房</div>
+                    <a target="_blank" href="#" title="学区房">
+                        <div class="nav-ico ico02"><i></i></div>
+                    </a>
+                    <div class="cunn">带孩子跨入希望的起跑线，直通重点<a href="javascript:;" title="学区房">去找房</a></div>
+                </li>
+                <li class="last">
+                    <div class="title">快速卖房</div>
+                    <a href="#" target='_blank' title="卖房">
+                        <div class="nav-ico ico03"><i></i></div>
+                    </a>
+                    <div class="cunn">10万买房客户翘首以待<a href="javascript:;" title="卖房">去委托</a></div>
+                </li>
+                <div class="clear"></div>
+            </ul>
+        </div>*@
+    <!--第一版快 end-->
+    <!--第二版快 start-->
+    @*<div class="data" style="background-position-y: -15.61px;">
+            <div class="main">
+                <div class="title">厦门市1月二手房市场行情</div>
+                <div class="data-price">
+                    <div class="deal-price">
+                        <span>
+                            <a href="javascript:;">
+                                <label class="dataAuto" style="visibility: visible;">34328</label>
+                            </a> <i class="up"></i>
+                        </span>
+                        <p>二手房源成交均价(元/㎡)</p>
+                    </div>
+                    <div class="listing-price">
+                        <span>
+                            <a href="javascript:;">
+                                <label class="dataAuto" style="visibility: visible;">39627</label>
+                            </a> <i class="up"></i>
+                        </span>
+                        <p>二手房源挂牌均价(元/㎡)</p>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <a href="javascript:;">
+                            <div class="bg"></div>
+                            <span>
+                                <label>0.0</label>
+                                <i class="down"></i>
+                            </span>
+                            <p>昨日新增客房比</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <div class="bg"></div>
+                            <span>
+                                <label>0</label>
+                                <i class="down"></i>
+                            </span>
+                            <p>上月成交量(套)</p>
+                        </a>
+                    </li>
+                    <li class="last">
+                        <a href="javascript:;">
+                            <div class="bg"></div>
+                            <span>
+                                <label>3328</label>
+                                <i class="down"></i>
+                            </span>
+                            <p>昨日房源带看量(次)</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>*@
+    <!--第二版快 end-->
+    <!--第三版快 start-->
+    <div class="ershoufang" id="ershoufanglist">
+        <div class="wrapper">
+            <div class="fl">
+                <div class="name"></div>
+                <p>好房源那么多，我们为你精选，臻房网会越来越懂你<a href="/xm-esf">更多厦门二手房</a></p>
+            </div>
+            <div class="fr"> <span></span> </div>
+            <div class="clear"></div>
+            <ul>
+
+                @{
+                    foreach (var item in Model)
+                    {
+                        <li>
+                            <a href="@Url.RouteUrl("HouseView",new{id=item.HouseID})" target="_blank">
+                                <img src="@(item.HouseImgPath.IsNull() ? "/images/web/default_block.png" : item.HouseImgPath )"> <span class="price">@item.Price.ToString("F0")@item.PriceUnit</span>
+                                <div class="bottom">
+                                    <p class="p01">@(item.Title)</p>
+                                    <div class="tips">
+                                        <span class="ico"></span>
+                                        <p> <span>@(item.CommunityName)</span> <span>@(item.Room)室@(item.Hall)厅</span> <span>@(item.BuildArea)平米</span> </p>
+                                        <label></label>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+                <div class="clear"></div>
+            </ul>
+        </div>
+    </div>
+    <!--第三版快 end-->
+    <!--第四版快 start-->
+    <div class="s-truth">
+        <div class="wrapper">
+            <div class="fl">
+                <div class="truth-txt"></div>
+            </div>
+            <div class="truth-search">
+                <p>
+                    真实房源、真实委托、真实价格！<br>
+                    臻房郑重向用户承诺：上厦门臻房网全渠道真实房源，假一赔百！
+                </p>
+                <div class="search-box" style="display: none">
+                    <div class="serach-inp">
+                        <input type="text" class="tex" id="truth" placeholder="请输入房源编号查询真伪...">
+                        <span class="sub" id="searchHouse"></span>
+                    </div>
+                    <div class="result-box" daty-id="310000" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--第四版快 end-->
+    <!--第五版快 start-->
+    <div class="trust wrapper">
+        <ul>
+            <li>
+                <span class="sp01"></span>
+                <p>真实价格 真实房源</p>
+                <label>臻房承诺，假一赔百</label>
+                <a href="javascript:;">了解更多</a>
+            </li>
+            <li>
+                <span class="sp02"></span>
+                <p>独家房源 覆盖全城</p>
+                <label>房源信息最权威覆盖最广</label>
+                <a href="javascript:;">了解更多</a>
+            </li>
+            <li>
+                <span class="sp03"></span>
+                <p>置业顾问 专业服务</p>
+                <label>百万家庭的信赖之选</label>
+                <a href="javascript:;">了解更多</a>
+            </li>
+        </ul>
+    </div>
+    <!--第五版快 end-->
+    <!--footer start-->
+    <div class="footer">
+        <div class="wrapper">
+            <div class="bottom">
+                <div class="copyright">Copyright © 2014-2015 zf.ZJB.com 闽ICP备15002624号</div>
+            </div>
+        </div>
+    </div>
+    <!--footer end-->
+
+    <script language="javascript">
+        $(function () {
+            //$(".exchange").bind("click", function () {
+            //    $(".city-change").addClass("bounceIn");
+            //    $(".city-change").show();
+            //    $(".overlayBg").show();
+            //});
+            $(".close").bind("click", function () {
+                $(".city-change").removeClass("bounceIn");
+                $(".city-change").hide();
+                $(".overlayBg").hide();
+            });
+            $(".menu li").bind("click", function () {
+                $(this).addClass("check");
+                $(this).siblings().removeClass("check");
+                $("form").attr("action", $(this).attr("data-url"));
+                $("#keyword-box").attr("placeholder", $(this).attr("data-type"));
+            });
+            $("#keyword-box").bind("click", function (e) {
+                if ($(this).attr("placeholder") == "输入组合条件找房，如上地 学区房") {
+                    $("#ershoufang").show();
+                    $("#zufang").hide()
+                }
+                else {
+                    $("#zufang").show();
+                    $("#ershoufang").hide()
+                }
+                e.stopPropagation();
+            });
+            $(".sug-tips").bind("click", function (e) {
+                e.stopPropagation();
+            })
+            $(document).bind("click", function (e) {
+                $("#zufang").hide();
+                $("#ershoufang").hide()
+            })
+        })
+    </script>
+</body>
+</html>

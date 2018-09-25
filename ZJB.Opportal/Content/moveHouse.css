@@ -1,0 +1,122 @@
+/*查询区*/
+.moveHouse-main {
+	margin:0 8px
+}
+.moveHouse-select {
+	margin:12px 0;
+	height:28px
+}
+.moveHouse-account {
+	float:left;
+	height:28px;
+	line-height:28px;
+	padding:0 8px 0 0;
+	font-size:12px
+}
+.moveHouse-account-content {
+	display:inline-block;
+	width:100px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.moveHouseSelect-left>li {
+	float:left;
+	margin:0 4px 0 0;
+	width:100px
+}
+.manage-list {
+	position:relative
+}
+.manage-list img {
+	border-radius:3px
+}
+.manage-tip {
+	display:inline-block;
+	height:26px;
+	line-height:26px;
+	padding-left:8px;
+	font-size:12px;
+	border:1px solid #64ac58;
+	cursor:pointer;
+	border-radius:3px;
+	position:relative
+}
+.manage-tip span {
+	display:inline;
+	float:left;
+	width:72px;
+	text-align:center;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.manage-list-content {
+	width:98px;
+	max-height:170px;
+	overflow:auto;
+	border:1px solid #64ac58;
+	background-color:#fff;
+	position:absolute;
+	right:0px;
+	top:27px;
+	border-radius:3px
+}
+.manage-list-content li {
+	font-size:12px;
+	padding-left:8px;
+	height:24px;
+	line-height:24px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.manage-list-content li:hover {
+	background-color:#64ac58;
+	cursor:pointer;
+	color:#fff;
+}
+.moveHouseSelect-left li select {
+	display:inline-block;
+	width:128px;
+	height:30px;
+	line-height:30px;
+	font-size:14px;
+	border:2px solid #64ac58;
+	border-radius:2px;
+}
+.moveHouseSelect-left li select option {
+	height:32px;
+	line-height:32px;
+	margin:4px 0
+}
+.houseTitle-font {
+	display:block;
+	height:48px;
+	line-height:48px;
+	text-align:center;
+	color:#ff6600;
+	font-size:14px
+}
+.moveHouse-content {
+	height:392px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	border-top:1px solid #e8e8e8;
+	border-bottom:1px solid #e8e8e8;
+}
+.moveHouse-content input[type=checkbox] {
+	margin:-4px 4px 0 0
+}
+/*提示信息*/
+	.moveHouse-tip {
+	border:1px solid #e8e8e8;
+	padding:5px;
+	border-radius:5px;
+	margin:10px 0 0;
+	font-size:12px
+}
+.moveHouse-tip li {
+	height:24px;
+	line-height:24px
+}

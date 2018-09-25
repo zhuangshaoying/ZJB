@@ -1,0 +1,1170 @@
+﻿@{
+    Layout = null;
+}
+@using ZJB.Core.Utilities
+@using ZJB.Api.Models
+@using ZJB.WX.Models
+@model  ZJB.WX.Models.HouseModels
+@{
+    var loginUser = (PublicUserModel)ViewData["LoginUser"];
+    var itemHouseBasicInfo = Model.HouseBasicInfo;
+    var itemHouseInfo = Model.HouseInfo;
+    var itemVillaInfo = Model.VillaInfo;
+    var itemShopInfo = Model.ShopInfo;
+    var itemOfficeInfo = Model.OfficeInfo;
+    var itemFactoryInfo = Model.FactoryInfo;
+    var itemHouseImages = Model.HouseImages;
+    var itemUserInfo = Model.UserInfo;
+    var itemCommunity = Model.Community;
+    HDictionary hd = HDictionary.Instance;
+    List<string> eQuipArr = new List<string>();
+    var city = ViewData["City"] == null ? "xm" : (string)ViewData["City"];
+    var url = Url.RouteUrl("Map_HouseList", new HouseParameter { City = city, Trade = hd.ETradeType(itemHouseBasicInfo.IsNoNull() ? itemHouseBasicInfo.TradeType.ToString() : "1") });
+    var tradeType = itemHouseBasicInfo.IsNoNull() ? Convert.ToInt32(itemHouseBasicInfo.TradeType) : 1;
+
+}
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>@(itemHouseBasicInfo.IsNoNull() && itemHouseBasicInfo.HouseID > 0 ? itemHouseBasicInfo.Title + ", " + itemHouseBasicInfo.CommunityName + "," + itemHouseBasicInfo.Room + "房" + itemHouseBasicInfo.Hall + "厅" + itemHouseBasicInfo.Toilet + "卫, " + itemHouseBasicInfo.Price.ToString("F0") + itemHouseBasicInfo.PriceUnit + "-" : "")臻房(fchezi.com)</title>
+    <meta name="keywords" content="@(itemHouseBasicInfo.IsNoNull() && itemHouseBasicInfo.HouseID > 0 ? itemHouseBasicInfo.CommunityName + "二手房," + itemHouseBasicInfo.Room + "房" + itemHouseBasicInfo.Toilet + "厅二手房" : "臻房")" />
+    <meta name="description" content="臻房是运用云端技术专门为房产经纪人量身设计、开发的一款专业房产辅助软件，其软件功能全面且强大，实现了个人房源采集、房源群发、房源刷新等理想功能的操作。" />
+    <link rel="stylesheet" href="/css/Web/common.css" />
+    <link rel="stylesheet" href="/css/Web/home.css" />
+    <link rel="stylesheet" href="/css/Web/detail.css" />
+    <script src="http://siteapp.baidu.com/static/webappservice/uaredirect.js" type="text/javascript"></script>
+    <script type="text/javascript">uaredirect("/m/v/@(itemHouseBasicInfo.IsNoNull() && itemHouseBasicInfo.HouseID>0?itemHouseBasicInfo.HouseID:0)");</script>
+    <script src="/Scripts/jquery-1.9.0.min.js" language="javascript"></script>
+    <script>
+        function RESIZEIMG(b, k, l, m) { var c = b.parentNode; var d = parseInt(c.offsetWidth) || k; var e = parseInt(c.offsetHeight) || l; var f = d / e; var g = b.naturalWidth || b.width; var h = b.naturalHeight || b.height; var i = g / h; var j = "width"; if (f < i) { j = "height"; try { b.style["left"] = "-" + parseInt(Math.abs((d - (g * e / h)) / 2)) + "px" } catch (e) { } } else if (m) { try { b.style["top"] = "-" + parseInt(Math.abs((e - (h * d / g)) / 2)) + "px" } catch (e) { } }; b.style[j] = "100%"; };
+
+
+
+        function GoHref() {
+
+            if ($("#txtKeyWord").val() != "") {
+                var url = '@url';
+                window.location.href = url + "?keyword=" + $("#txtKeyWord").val();
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+    <div class="new_header">
+        <div class="new_header_cont">
+            <ul class="new_navs lay_fl">
+                <li><a href="/">首页</a></li>
+                <li><a href="/@(city)-esf" class="@(tradeType == 1 ? "current" : "")">二手房</a></li>
+                <li><a href="/@(city)-zf" class="@(tradeType == 3 ? "current" : "")">租房</a></li>
+                @*<li><a href="/down.html">免费下载</a></li>
+                    <li><a href="/weixin/tool.html">房贷计算器</a></li>
+                    <li><a href="/contact.html">关于我们</a></li>*@
+            </ul><div class="new_panel lay_fr">
+                @{
+                    if (loginUser.IsNoNull() && loginUser.UserID > 0)
+                    {
+                        <span class="new_welcome">您好，@loginUser.Name 欢迎来到臻房！</span> <a href="/home"><span class="new_reg">管理中心</span></a> <span>&nbsp; 或 &nbsp;</span><a href="/User/LoginOut"><span class="new_log">安全退出</span></a>
+                    }
+                    else
+                    {
+                        <span class="new_welcome">您好，欢迎来到臻房！请</span> <a href="http://passport.ZJB.com?tourl=http://zf.ZJB.com@(Request.RawUrl)"><span class="new_reg">立即登录</span></a><span>&nbsp; 或 &nbsp;</span><a href="http://my.ZJB.com/RegisterPersonal.aspx?tourl=http://WX.ZJB.com@(Request.RawUrl)"><span class="new_log">注册</span></a>
+
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+    <div class="nav-box">
+        <div class="nav-container clear">
+            <a href="/" title="臻房">
+                <div class="banner"></div>
+            </a>
+            <div class="search">
+                <input class="txt left ui-autocomplete-input" name="keyword" autocomplete="off"
+                       placeholder="请输入房源特征、地点和小区名..." id="txtKeyWord" />
+                <input class="btn home-ico ico-search left" id="" type="submit" value="搜索" onclick="GoHref()" />
+            </div>
+        </div>
+    </div>
+    <div class="nav-a"> <a href="/">臻房</a><cite></cite> <a href="@Url.RouteUrl("Map_HouseList", new { City = city, Trade = hd.ETradeType(itemHouseBasicInfo.IsNoNull() ? itemHouseBasicInfo.TradeType.ToString() : "1") })"> @(itemHouseBasicInfo.IsNoNull() ? itemUserInfo.CityName : "臻房")@(tradeType == 1 ? "二手房" : "租房")</a> </div>
+    <div class="wrapper">
+
+        @{
+            if (itemHouseBasicInfo.IsNoNull() && itemHouseBasicInfo.HouseID > 0)
+            {
+        <!-- 房屋信息区域，相册、详情、经纪人模块 -->
+                <div class="panel-box panel-box-info clear">
+                    <!-- 相册相关信息 -->
+                    <div class="left mybox">
+                        <div class="per-cert clearfix pos-re">
+                            <div class="per-certL"><i class="perCert-line"></i><span class="ico-perCert3"></span></div>
+                            <div class="per-certR">
+                                <ul class="perCert-item borker23 clearfix">
+                                    <li class="ico-cert15">
+                                        <div class="cert-words"></div>
+                                    </li>
+                                    <li class="ico-cert16">
+                                        <div class="cert-words"></div>
+                                    </li>
+                                    <li class="ico-cert9">
+                                        <div class="cert-words"></div>
+                                    </li>
+                                    <li class="ico-cert10">
+                                        <div class="cert-words"></div>
+                                    </li>
+                                </ul>
+                                <i class="false-icon"></i>
+                            </div>
+                        </div>
+                        <!-- 标题行内容 -->
+                        <div class="title-line clear">
+                            <div class="line01">
+                                <h2 class="title-box left">@(string.IsNullOrEmpty(itemHouseBasicInfo.Title) ? "" : StringUtility.CutText(itemHouseBasicInfo.Title, 51))</h2>
+                            </div>
+                            <div class="view-label clear">
+                                <span class="fang-subway"></span><span class="fang-subway-ex"><span>@(itemHouseBasicInfo.Address)</span></span>
+
+
+                                @if (!string.IsNullOrEmpty(itemHouseBasicInfo.HouseLabel))
+                                {
+                                    var varrHouseLabel = itemHouseBasicInfo.HouseLabel.Split(' ');
+                                    for (int i = 0; i < varrHouseLabel.Length; i++)
+                                    {
+                                        if (i == 0 && !string.IsNullOrEmpty(varrHouseLabel[0]))
+                                        {
+                                            <span class="fang05"></span>
+                                            <span class="fang05-ex"><span>@varrHouseLabel[0]</span></span>
+                                        }
+                                        if (i == 1 && !string.IsNullOrEmpty(varrHouseLabel[1]))
+                                        {
+                                            <span class="fang-subway"></span> <span class="fang-subway-ex"><span>@varrHouseLabel[1]</span></span>
+                                        }
+                                        if (i == 2 && !string.IsNullOrEmpty(varrHouseLabel[2]))
+                                        {
+                                            <span class="taxfree"></span> <span class="taxfree-ex"><span>@varrHouseLabel[2]</span></span>
+                                        }
+                                    }
+
+                                }
+
+                            </div>
+                            <div class="mtit_con c_999 f12 clear">
+                                <ul class="mtit_con_left left">
+                                    <li class="bianhao" style="background:none;padding-left:5px;"> 房源编号：@(itemHouseBasicInfo.HouseID) </li>
+                                    <li class="time">
+                                        <script>
+                                            var date = new Date(); var now = ""; now = date.getFullYear() + "-";
+                                            now = now + (date.getMonth() + 1) + "-"; now = now + date.getDate() + ""; document.write(now)
+                                        </script>
+                                    </li>
+                                    <li class="count"><em id="totalcount">@(itemHouseBasicInfo.Hits ?? itemHouseBasicInfo.Hits)</em>人</li>
+                                </ul>
+                                <ul class="mtit_con_right right">
+                                    <!-- hover 为鼠标划入是的状态，该状态需要脚本做处理 -->
+                                    <li id="freemsg" class="freemsg" style="display:none"><span class="ml_1"><i class="mtit1"></i><a title="把该信息发送到手机" href="javascript:;" id="gaq_phone"><i></i>免费发送到手机</a></span></li>
+                                    <li class="collect" id="collect"><span class="ml_2"><i class="mtit2"></i>收藏</span></li>
+                                    <li id="bdshare" style="margin-right: 6px; margin-left: 10px;"><a id="bds_more" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis bds_more">分享</a></li>
+                                    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2012806" charset="utf-8"></script>
+                                </ul>
+                                <!-- =E 功能区 -->
+                                <!--=S 收藏 -->
+                                <div id="collectBar" class="collectBox" style="left: 391px; display: none; top: 20px;">
+                                    <ul class="mtit_con_ul">
+                                        <li><a title="收藏信息" href="javascript:;" id="gaq_favorite" onclick="clickLog('from=FC_detail_store_1');">收藏到个人中心(需登录)</a></li>
+                                        <li><a href="http://zf.ZJB.com" id="gaq_savedesk" onclick="clickLog('from=FC_detail_store_2');">保存到桌面</a></li>
+                                        <li><a href="javascript:;" id="addFavBtn" onclick="clickLog('from=FC_detail_store_3');">添加到浏览器收藏夹</a></li>
+                                    </ul>
+                                    <i class="shadow_"></i>
+                                </div>
+                                <!--=E 收藏 -->
+                            </div>
+                        </div>
+                        <div class="album-box left" id="album-box">
+                            <!--pic start-->
+                            <div id="esfbjxq_100">
+                                <div class="jdt floatl">
+                                    @{
+                var firstImg = itemHouseImages.Count > 0 ? itemHouseImages[0].ImagePath : "/images/web/default_block.png";
+                                    }
+                                    <div class="jdt-pic"> <img id="BoxMainPic2014" onerror="javascript: this.src = '/images/web/default_block.png';" src="@(firstImg)" srcn="@(firstImg)" alt="@itemHouseBasicInfo.Title" /> </div>
+                                    <div class="sliderbox">
+                                        <div id="btn-left" class="arrow-btn leftBtn"> </div>
+                                        <div class="slider" id="thumbnail">
+                                            <ul>
+                                                @{
+                var picIndex = 0;
+                foreach (var item in itemHouseImages)
+                {
+
+                    <li class='@(picIndex==0?"current":"")'>
+                        <img src='@(item.ImagePath+"?imageMogr2/strip|imageView2/1/w/334/h/253/q/85")'
+                             width="72" height="57" onerror="javascript: this.src = '@item.ImagePath'; " alt="@itemHouseBasicInfo.Title" alt="@itemHouseBasicInfo.Title" />
+                    </li>
+                    picIndex++;
+                }
+
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div id="btn-right" class="arrow-btn rightBtn"> </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    function DrawImage(ImgD, iwidth, iheight) {
+                                        //参数(图片,允许的宽度,允许的高度)
+                                        var image = new Image();
+                                        image = ImgD;
+                                        if (image.width > 0 && image.height > 0) {
+
+                                            if (image.width > iwidth) {
+                                                ImgD.width = iwidth;
+                                                ImgD.height = (image.height * iwidth) / image.width;
+                                            } else {
+                                                ImgD.width = image.width;
+                                                ImgD.height = image.height;
+                                            }
+
+                                            if (ImgD.height > iheight) {
+                                                ImgD.height = iheight;
+                                                ImgD.width = (image.width * iheight) / image.height;
+                                            }
+                                        }
+                                    }
+
+                                    jQuery(document).ready(function () {
+                                        //点击小图切换大图
+                                        jQuery("#thumbnail li img").click(function () {
+                                            var img = new Image();
+                                            img.src = jQuery(this).attr("src");
+                                            img.onload = function () {
+                                                if (img.width > 334 || img.height > 253) {
+                                                    DrawImage(img, 334, 253)
+                                                    jQuery(".zoompic img").css({ width: img.width, height: img.height });
+                                                }
+                                            };
+                                            jQuery("#BoxMainPic2014").attr({ "src": jQuery(this).attr("src").replace("/72x57", "/600x600") });
+                                            jQuery("#BoxMainPic2014").attr({ "alt": jQuery(this).attr("alt") });
+                                            jQuery("#thumbnail li.current").removeClass("current");
+                                            jQuery(this).parents("li").addClass("current");
+                                            return false;
+                                        });
+                                        //小图片左右滚动
+                                        var $slider = jQuery("#thumbnail ul");
+                                        var $slider_child_l = jQuery("#thumbnail ul li").length;
+                                        var $slider_width = jQuery("#thumbnail ul li").outerWidth();
+                                        $slider.width($slider_child_l * $slider_width);
+                                        var slider_count = 0;
+                                        if ($slider_child_l < 4) {
+                                            jQuery('#btn-right').css({ cursor: 'auto' });
+                                            jQuery('#btn-right').removeClass("dasabled");
+                                        }
+                                        jQuery('#btn-right').click(function () {
+                                            jQuery("#thumbnail li.current").next().children().click();
+                                            if ($slider_child_l < 4 || slider_count >= $slider_child_l - 4) {
+                                                return false;
+                                            }
+                                            slider_count++;
+                                            $slider.animate({ left: '-=' + $slider_width + 'px' }, 'fast');
+                                        });
+                                        jQuery('#btn-left').click(function () {
+                                            jQuery("#thumbnail li.current").prev().children().click();
+                                            if (slider_count <= 0) {
+                                                return false;
+                                            }
+                                            slider_count--;
+                                            $slider.animate({ left: '+=' + $slider_width + 'px' }, 'fast');
+                                        });
+                                        jQuery("#BoxMainPic2014").bind("mousemove", function (e) {
+                                            if (e.pageX <= jQuery(this).offset().left + jQuery(this).width() / 2) {
+
+                                                jQuery(this).css("cursor", "url('/images/web/arr_left.cur'),auto");
+                                            } else {
+                                                jQuery(this).css("cursor", "url('/images/web/arr_right.cur'),auto");
+                                            }
+                                        }).bind("click", function (e) {
+                                            if (e.pageX <= jQuery(this).offset().left + jQuery(this).width() / 2) {
+                                                jQuery("#thumbnail li.current").prev().children().click();
+                                                if (slider_count <= 0) {
+                                                    return false;
+                                                }
+                                                slider_count--;
+                                                $slider.animate({ left: '+=' + $slider_width + 'px' }, 'fast');
+                                            } else {
+                                                jQuery("#thumbnail li.current").next().children().click();
+
+                                                if ($slider_child_l < 4 || slider_count >= $slider_child_l - 4) {
+                                                    return false;
+                                                }
+                                                slider_count++;
+                                                $slider.animate({ left: '-=' + $slider_width + 'px' }, 'fast');
+                                            }
+                                        });
+                                    });
+                                    var _src = jQuery("#BoxMainPic2014").attr("srcN");
+                                    var img_First = new Image();
+                                    img_First.onload = function () {
+                                        if (img_First.width > 334 || img_First.height > 253) {
+                                            DrawImage(img_First, 334, 253)
+                                            jQuery("#BoxMainPic2014").css({ width: img_First.width, height: img_First.height });
+                                        }
+                                        jQuery("#BoxMainPic2014").attr({ "src": _src });
+                                    };
+                                    img_First.src = _src;
+
+                                </script>
+                            </div>
+                            <!--pic end-->
+                        </div>
+                        <!-- 房屋相关信息 -->
+                        <div class="info-box left">
+                            <div class="desc-text clear">
+                                <dl>
+                                    @if (itemHouseBasicInfo.TradeType == 3 || itemHouseBasicInfo.TradeType == 4)
+                                    {
+                                        <dt>租金：</dt>
+                                        <dd><span class="em-text"><strong class="ft-num">@(itemHouseBasicInfo.Price.ToString("F0"))</strong><span class="sub-text">@(itemHouseBasicInfo.PriceUnit)</span><i> (@(itemHouseBasicInfo.PayType))</i></span></dd>
+
+                                    }
+                                    else
+                                    {
+                                        <dt>售价：</dt>
+                                        <dd><span class="em-text"><strong class="ft-num">@(itemHouseBasicInfo.Price.ToString("F0"))</strong><span class="sub-text">@(itemHouseBasicInfo.PriceUnit)</span><i> (@(Convert.ToInt32(itemHouseBasicInfo.UnitPrice)) 元/㎡)</i></span></dd>
+                                    }
+                                </dl>
+                                <dl>
+                                    <dt>户型：</dt>
+                                    <dd>@(itemHouseBasicInfo.Room)室@(itemHouseBasicInfo.Hall)厅@(itemHouseBasicInfo.Toilet)卫&nbsp;&nbsp;&nbsp;&nbsp;@(itemHouseBasicInfo.BuildArea.ToString("F0"))㎡</dd>
+                                </dl>
+                                <dl>
+                                    <dt>产权：</dt>
+                                    <dd>商品房@*&nbsp;&nbsp;&nbsp;&nbsp;70年产权&nbsp;&nbsp;&nbsp;&nbsp;*@@(itemHouseBasicInfo.UsedYear)年建</dd>
+                                </dl>
+                                <dl>
+                                    <dt>类型：</dt>
+                                    <dd>@(hd.BuildingType(Convert.ToString(itemHouseBasicInfo.BuildType)))</dd>
+                                </dl>
+                                <dl>
+                                    <dt>装修：</dt>
+                                    <dd>@(string.IsNullOrEmpty(itemHouseBasicInfo.FitmentStatus) ? "-" : itemHouseBasicInfo.FitmentStatus)&nbsp;&nbsp;&nbsp;&nbsp;朝@(itemHouseBasicInfo.PointTo)</dd>
+                                </dl>
+                                <dl>
+                                    <dt>楼层：</dt>
+                                    <dd>第@(itemHouseBasicInfo.CurFloor)层/共@(itemHouseBasicInfo.MaxFloor)层</dd>
+                                </dl>
+                                <dl class="clear">
+                                    <dt>小区：</dt>
+                                    <dd><a class="zone-name laisuzhou" href="javascript:void(0);">@(itemHouseBasicInfo.CommunityName)</a>@*<span class="region">（<a href="/ershoufang/chaoyang/">@(itemHouseBasicInfo.FitmentStatus)区</a>&nbsp;<a href="/ershoufang/tianshuiyuan/">甜水园</a>）</span>*@</dd>
+                                </dl>
+                                <dl>
+                                    <dt>地址：</dt>
+                                    <dd>@(itemHouseBasicInfo.Address)</dd>
+                                </dl>
+                            </div>
+                            <div class="contact-panel"><span class="ft-num" title="tel:@itemUserInfo.Tel">@(itemUserInfo.Tel)</span></div>
+                        </div>
+                    </div>
+                    <!-- Agent Info -->
+                    <div class=" agent right">
+                        <div class="mpt">
+                            <div class="agent-info clear">
+                                <div class="agent-del"><a href="/jingjiren/chenqf2/" class="laisuzhou" target="_blank"><img class="iframe-img" data-url="@(itemUserInfo.Portrait.IsNull() ? "/images/txDefault.png" : itemUserInfo.Portrait)" src="@(itemUserInfo.Portrait.IsNull() ? "/images/txDefault.png" : itemUserInfo.Portrait)" /></a></div>
+                                <div class="p-del">
+                                    <p class="p-01"><a href="/jingjiren/chenqf2/" class="laisuzhou" target="_blank">@(itemUserInfo.EnrolnName)</a></p>
+                                    @*<p class="p-02"><span class="bold">公司：</span><span>@(itemUserInfo.CompanyName)</span></p>*@
+                                    @*@if (!string.IsNullOrEmpty(itemUserInfo.StoreName))
+                                    {
+                                        <p class="p-03"><span class="bold">门店：</span><span>@(itemUserInfo.StoreName)</span></p>
+                                    }*@
+                                </div>
+                            </div>
+                            <div class="more_tjright">
+                                <div class="title_relevance title_relevance2 mt10">
+                                    <h3>Ta其他房源</h3>
+                                </div>
+                                <ul class="relevance_ul relevance_ul2">
+                                    @{Html.RenderAction("UserOtherHouses", "House", new { uid = itemHouseBasicInfo.UserID, id = itemHouseBasicInfo.HouseID, num = 3 });}
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        <!-- Main Content Area -->
+                <div id="menu-pos"></div>
+                <section class="panel-box panel-box-content clear">
+                    <article class="content-main left">
+                        <ul class="panel-tab clear" id="panel-tab">
+                            <li id="hsPro"><a href="#hsPro-pos" class="on">房源描述</a></li>
+                            <li id="hsPic"><a href="#hsPic-pos" class="">房源图片</a></li>
+                            <li id="hszoon"><a href="#hszoon-pos" class="">参考月供</a></li>
+                            <li id="hsmap"><a href="#hsmap-pos" class="">街景地图</a></li>
+                            <li id="hsxqjj"><a href="#hsxqjj-pos" class="">小区简介</a></li>
+                            <li id="hspeople"><a href="#hspeople-pos" class="">附近房源推荐</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="hsPro-pos" class="detail-content clear">
+                                <div class="peizhi">
+                                    <strong>配套设施：</strong>
+                                    @if (itemHouseBasicInfo.BuildType == 1 && itemHouseInfo.IsNoNull())
+                                    {
+                                        string basicEquip = itemHouseInfo.BasicEquip;
+                                        string advEquip = itemHouseInfo.AdvEquip;
+                                        if (!string.IsNullOrEmpty(basicEquip))
+                                        {
+                                            eQuipArr.AddRange(basicEquip.Split(',').ToList());
+                                        }
+                                        if (!string.IsNullOrEmpty(advEquip))
+                                        {
+                                            eQuipArr.AddRange(advEquip.Split(',').ToList());
+                                        }
+                                    }
+                                    else if (itemHouseBasicInfo.BuildType == 2 && itemVillaInfo.IsNoNull())
+                                    {
+                                        string basicEquip = itemVillaInfo.BasicEquip;
+                                        string advEquip = itemVillaInfo.AdvEquip;
+                                        if (!string.IsNullOrEmpty(basicEquip))
+                                        {
+                                            eQuipArr.AddRange(basicEquip.Split(',').ToList());
+                                        }
+                                        if (!string.IsNullOrEmpty(advEquip))
+                                        {
+                                            eQuipArr.AddRange(advEquip.Split(',').ToList());
+                                        }
+                                    }
+                                    else if (itemHouseBasicInfo.BuildType == 3 && itemShopInfo.IsNoNull())
+                                    {
+                                        string basicEquip = itemShopInfo.BasicEquip;
+
+                                        if (!string.IsNullOrEmpty(basicEquip))
+                                        {
+                                            eQuipArr.AddRange(basicEquip.Split(',').ToList());
+                                        }
+
+                                    }
+                                    else if (itemHouseBasicInfo.BuildType == 4 && itemOfficeInfo.IsNoNull())
+                                    {
+                                        string basicEquip = itemOfficeInfo.BasicEquip;
+
+                                        if (!string.IsNullOrEmpty(basicEquip))
+                                        {
+                                            eQuipArr.AddRange(basicEquip.Split(',').ToList());
+                                        }
+
+                                    }
+                                    else if (itemHouseBasicInfo.BuildType == 5 && itemFactoryInfo.IsNoNull())
+                                    {
+                                        string basicEquip = itemFactoryInfo.BasicEquip;
+
+                                        if (!string.IsNullOrEmpty(basicEquip))
+                                        {
+                                            eQuipArr.AddRange(basicEquip.Split(',').ToList());
+                                        }
+
+                                    }
+                                    @if (eQuipArr.IsNoNull() && eQuipArr.Count > 0)
+                                    {
+                                        eQuipArr = eQuipArr.Distinct().ToList();
+                                    }
+                                    @foreach (string itemEq in eQuipArr)
+                                    {
+
+                                        if (!string.IsNullOrEmpty(itemEq))
+                                        {
+                                    <span>@itemEq</span>
+                                        }
+                                    }
+                                </div>
+                                <div class="pro_main cf" id="propContent">
+                                    <div class="pro_con wb">
+                                        @(Html.Raw(itemHouseBasicInfo.Note))
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="hsPic-pos" class="detail-album">
+                                <div class="detail-title">
+                                    <h3>房源图片</h3>
+                                    <span class="line"></span>
+                                </div>
+                                <div class="baguetteBoxOne">
+                                    <ul class="clear">
+                                        @{
+                for (int i = 0; i < itemHouseImages.Count; i++)
+                {
+                                        <li data="@(i==0?itemHouseImages[i].ImagePath:"")" class="actShowImg@(i%2>0?" row-last":"")" actdata="@i">
+                                            <a href="@itemHouseImages[i].ImagePath" target="_blank">
+                                                <img class="iframe-img" title="第@(i+1)张图片  共@(itemHouseImages.Count)张图片" data-original="@itemHouseImages[i].ImagePath" src="@(itemHouseImages[i].ImagePath + "?imageMogr2/strip|imageView2/1/w/490/h/370/q/95")" />
+                                            </a>
+                                        </li>
+
+                }
+                                        }
+                                    </ul>
+                                </div>
+
+                            </div>
+                            @{
+                if (!string.IsNullOrEmpty(itemHouseBasicInfo.Video))
+                {
+
+                    <div id="video-pos" class="detail-album">
+                        <div class="detail-title">
+                            <h3>房源视频</h3>
+                            <span class="line"></span>
+                        </div>
+                        <div class="baguetteBoxOne">
+                            <script type="text/javascript" src="/Scripts/swfobject.js"></script>
+
+                            <div style="width: 1000px; height:573px;">
+
+                                <div id="CuPlayer" style="width: 860px; height: 573px; margin: 0px auto; overflow: hidden; ">
+
+                                    <script type="text/javascript">
+
+                                        var CuPlayerList = "@(itemHouseBasicInfo.Video)";
+                                        var imglist = "@(itemHouseImages.Count>0?itemHouseImages.FirstOrDefault().ImagePath:"/images/video.png")";
+                                        var sp = CuPlayerList.split("|");
+                                        var img = imglist.split("|");
+                                        var num = sp.length;
+                                        var video_index = 0;
+
+                                        function getNext(pars) {
+
+                                            if (video_index < num - 1) {
+
+                                                video_index++;
+
+                                                so.addVariable("CuPlayerFile", sp[video_index]);
+
+                                                so.addVariable("CuPlayerAutoPlay", "yes");
+
+                                                so.write("CuPlayer");
+                                            }
+
+                                            else {
+
+                                                video_index = 0;
+
+                                                so.addVariable("CuPlayerFile", sp[video_index]);
+
+                                                so.addVariable("CuPlayerImage", img[video_index]);
+
+                                                so.write("CuPlayer");
+
+                                            }
+
+                                        }
+
+                                        CuPlayerFile = sp[video_index];
+
+                                        CuPlayerImage = img[0];
+
+                                        var sUserAgent = navigator.userAgent.toLowerCase();
+
+                                        var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+
+                                        var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+
+                                        var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+
+                                        var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+
+                                        var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+
+                                        var bIsAndroid = sUserAgent.match(/android/i) == "android";
+
+                                        var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+
+                                        var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+
+                                        if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+
+                                            var vID = "";
+                                            var vWidth = 860;
+                                            var vHeight = 573;
+                                            var vFile = "/Scripts/cuplayer/CuSunV2set.xml";
+                                            var vPlayer = "/Scripts/cuplayer/player.swf?v=2.5";
+                                            var vMp4url = CuPlayerFile;
+                                            var vPic = CuPlayerImage;
+
+                                            //<!--//-->
+
+                                        } else {
+
+                                            var so = new SWFObject("/Scripts/cuplayer/JZminiPlayer.swf", "ply", "860", "573", "9", "#000000");
+                                            so.addParam("allowfullscreen", "true");
+                                            so.addParam("allowscriptaccess", "always");
+                                            so.addParam("wmode", "opaque");
+                                            so.addParam("quality", "high");
+                                            so.addParam("salign", "lt");
+                                            so.addVariable("file", CuPlayerList);
+                                            so.addVariable("img", CuPlayerImage);
+                                            so.addVariable("autoplay", "false");
+                                            so.write("CuPlayer");
+                                        }
+
+                                    </script>
+                                    <script class="CuPlayerVideo" data-mce-role="CuPlayerVideo" type="text/javascript" src="/Scripts/CuPlayer/AsComV3.js"></script>
+
+                                </div>
+                                @*<script src="/Scripts/cuplayer/action.js"></script>*@
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                }
+                            }
+                            @if (tradeType == 1)
+                            {
+                                <div id="hszoon-pos" class="zone-price calculator-mod">
+                                    <div class="detail-title" style="margin-bottom: 0px">
+                                        <h3>参考月供</h3>
+                                        <span class="line"></span>
+                                    </div>
+                                    <div class="clearfix yuegong mod">
+                                        <div class="tools-mod">
+                                            <h4> 计算条件</h4>
+                                            <div class="tools-item tools-item1">
+                                                <label class="fl"> 填写面积</label>
+                                                <div class="select-item fl">
+                                                    <div class="xf-select xf-select-max" style="width: 140px">
+                                                        <span class="pm">平米</span>
+                                                        <div class="text" style="width: 90px; padding-right: 0px">
+                                                            <input type="text" name="val_housetype" id="val_housetype_apf_id_18" value="@itemHouseBasicInfo.BuildArea" style="border: none; width: 80px; height: 40px; line-height: 40px; font-size: 16px;" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" value="元/㎡" id="hdpriceunit" />
+                                            <div class="tools-item tools-item2">
+                                                <label class="fl"> 估算总价</label>
+                                                <div class="select-item fl" id="label_price_apf_id_18">
+                                                    <p><strong>@itemHouseBasicInfo.Price</strong>万元<span>（均价<em>@itemHouseBasicInfo.UnitPrice</em>元/㎡）</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="tools-item tools-item3">
+                                                <label class="fl" id="label_loanratio"> 按揭成数</label>
+                                                <div class="select-item fl">
+                                                    <div class="xf-select xf-select-max">
+                                                        <div class="text">
+                                                            <span>7成</span>
+                                                            <input type="hidden" name="val_loanratio" id="val_loanratio_apf_id_18" value="70" />
+                                                            <i class="lp-icons icon-tip"></i>
+                                                        </div>
+                                                        <ul>
+                                                            <li data-code="10">1成</li>
+                                                            <li data-code="20">2成</li>
+                                                            <li data-code="30">3成</li>
+                                                            <li data-code="40">4成</li>
+                                                            <li data-code="50">5成</li>
+                                                            <li data-code="60">6成</li>
+                                                            <li data-code="70">7成</li>
+                                                            <li data-code="80">8成</li>
+                                                            <li data-code="90">9成</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tools-item tools-item4">
+                                                <label class="fl"> 贷款类别</label>
+                                                <div class="select-item fl">
+                                                    <div class="xf-select xf-select-max">
+                                                        <div class="text">
+                                                            <span>商业贷款</span>
+                                                            <input type="hidden" name="val_loantype" id="val_loantype_apf_id_18" value="1" />
+                                                            <i class="lp-icons icon-tip"></i>
+                                                        </div>
+                                                        <ul>
+                                                            <li data-code="1">商业贷款</li>
+                                                            <li data-code="2">公积金贷款</li>
+                                                            <li data-code="3">组合贷款</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tools-item tools-item5 hidden_div" id="content_scale_apf_id_18" style="display: none">
+                                                <label class="fl"> 贷款金额</label>
+                                                <div class="select-item fl loan-item">
+                                                    <p class="gray" id="label_totalprice_apf_id_18">（贷款总额98万）</p>
+                                                    <div class="loan-style">
+                                                        <span class="lab gray">公积金</span>
+                                                        <input type="text" class="int-text int-text-mid" id="val_loanfund_apf_id_18" />
+                                                        <em>万元</em> <span class="com-msg"><i class="lp-icons error-icon"></i><span>不能为空！</span> </span>
+                                                    </div>
+                                                    <div class="loan-style">
+                                                        <span class="lab gray">商业性</span>
+                                                        <input type="text" class="int-text int-text-mid" id="val_loanbussiness_apf_id_18" />
+                                                        <em>万元</em> <span class="com-msg"><i class="lp-icons error-icon"></i><span>不能为空！</span> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tools-item tools-item6">
+                                                <label class="fl"> 贷款时间</label>
+                                                <div class="select-item fl">
+                                                    <div class="xf-select xf-select-max">
+                                                        <div class="text">
+                                                            <span>20年（240个月）</span>
+                                                            <input type="hidden" name="val_loanmonth" id="val_loanmonth_apf_id_18" value="240" />
+                                                            <i class="lp-icons icon-tip"></i>
+                                                        </div>
+                                                        <ul>
+                                                            <li data-code="12">1年（12期）</li>
+                                                            <li data-code="24">2年（24期）</li>
+                                                            <li data-code="36">3年（36期）</li>
+                                                            <li data-code="48">4年（48期）</li>
+                                                            <li data-code="60">5年（60期）</li>
+                                                            <li data-code="72">6年（72期）</li>
+                                                            <li data-code="84">7年（84期）</li>
+                                                            <li data-code="96">8年（96期）</li>
+                                                            <li data-code="108">9年（108期）</li>
+                                                            <li data-code="120">10年（120期）</li>
+                                                            <li data-code="132">11年（132期）</li>
+                                                            <li data-code="144">12年（144期）</li>
+                                                            <li data-code="156">13年（156期）</li>
+                                                            <li data-code="168">14年（168期）</li>
+                                                            <li data-code="180">15年（180期）</li>
+                                                            <li data-code="192">16年（192期）</li>
+                                                            <li data-code="204">17年（204期）</li>
+                                                            <li data-code="216">18年（216期）</li>
+                                                            <li data-code="228">19年（228期）</li>
+                                                            <li data-code="240">20年（240期）</li>
+                                                            <li data-code="252">21年（252期）</li>
+                                                            <li data-code="264">22年（264期）</li>
+                                                            <li data-code="276">23年（276期）</li>
+                                                            <li data-code="288">24年（288期）</li>
+                                                            <li data-code="300">25年（300期）</li>
+                                                            <li data-code="312">26年（312期）</li>
+                                                            <li data-code="324">27年（324期）</li>
+                                                            <li data-code="336">28年（336期）</li>
+                                                            <li data-code="348">29年（348期）</li>
+                                                            <li data-code="360">30年（360期）</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tools-btn"> <i class="lp-icons btn-bg"></i><a href="javascript:;" class="mybtn btn-b" id="btn_startup_apf_id_18"> 开始计算</a> </div>
+                                        </div>
+                                        <!--tools-mod end-->
+                                        <div class="result-mod">
+                                            <h4> 计算结果</h4>
+                                            <!-- charts-mod Starts -->
+                                            <div class="charts-mod">
+                                                <div class="charts-box" id="result-charts_apf_id_18"></div>
+                                                <div class="text-box">
+                                                    <h3> 月均还款 <span class="price">-</span> <em>元</em> </h3>
+                                                    <ul class="legend">
+                                                        <li class="legend-pay"><i class="lp-icons dot-1"></i><span>-</span> </li>
+                                                        <li class="legend-price"><i class="lp-icons dot-2"></i><span>-</span> </li>
+                                                        <li class="legend-rate"><i class="lp-icons dot-3"></i><span>-</span> </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <p class="result-tips"> 备注：以等额本息计算结果，数据仅供参考</p>
+                                            <!-- charts-mod End -->
+                                        </div>
+                                        <!--result-mod end-->
+                                        <script type="text/javascript" src="/Scripts/Web/lunxian.js"></script>
+                                        <script src="/Scripts/Web/highcharts2013.js" type="text/javascript"></script>
+                                        <script type="text/javascript" src="/Scripts/Web/APF.js?v=511"></script>
+                                        <script type="text/javascript">
+                                            (function ($) {
+                                                var Calculator = null;
+                                                scrollDrawCalcu();
+                                                $(window).on('scroll.charts.calcu', function () {
+                                                    var timer = null;
+                                                    timer && clearTimeout(timer);
+                                                    timer = setTimeout(function () {
+                                                        scrollDrawCalcu();
+                                                    }, 260);
+                                                });
+
+                                                function scrollDrawCalcu() {
+                                                    var $calcuCharts = $('.calculator-mod');
+                                                    //var posTop = $(window).scrollTop() + $(window).height() - $calcuCharts.offset().top;
+                                                    //alert($calcuCharts.offset().top);
+                                                    if (!Calculator) {
+                                                        Calculator = new XF.View.Calculator({
+                                                            valHouseType: '#val_housetype_apf_id_18',
+                                                            lblTotalPrice: '#label_price_apf_id_18',
+                                                            valLoanRatio: '#val_loanratio_apf_id_18',
+                                                            valLoanType: '#val_loantype_apf_id_18',
+                                                            valLoanMonth: '#val_loanmonth_apf_id_18',
+                                                            valLoanFund: '#val_loanfund_apf_id_18',
+                                                            valLoanBussness: '#val_loanbussiness_apf_id_18',
+                                                            lblScaleTotalPrice: '#label_totalprice_apf_id_18',
+                                                            subContentSclae: '#content_scale_apf_id_18',
+                                                            subContentChart: '#result-charts_apf_id_18',
+                                                            intUnitPrice: '@(itemHouseBasicInfo.UnitPrice)',  //默认价格
+                                                            intUnitPrice1: 6800, //公寓价格
+                                                            intUnitPrice2: 5500, //开间价格
+                                                            intUnitPrice3: 0, //别墅价格
+                                                            btnStartup: '#btn_startup_apf_id_18',
+                                                            dw: ''
+                                                        });
+                                                        $(window).off('scroll.charts.calcu');
+                                                    }
+                                                }
+                                            })(jQuery);
+
+                                            (function ($) {
+                                                XF.Soj.Calculator.param = { Page: 'Aifang_Web_Loupan_View_IndexPage', PageName: 'Aifang_Web_Loupan_View_Index_CalculatorsComponent' };
+                                            })(jQuery);
+                                        </script>
+                                    </div>
+                                </div>
+                            }
+
+
+                            @if (itemCommunity.IsNoNull() && itemCommunity.CommunityID > 0)
+                            {
+                                <div id="hsmap-pos" class="view-top-people">
+                                    <div class="detail-title">
+                                        <h3>街景地图</h3>
+                                        <span class="line"></span>
+                                    </div>
+                                    <div class="house_box">
+                                        <div>地址：@itemCommunity.Address</div>
+                                        <div style="margin-top:10px;margin-bottom:20px">交通：@itemCommunity.Traffic</div>
+                                        <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&key=d84d6d83e0e51e481e50454ccbe8986b"></script>
+                                        <div style="width: 1000px; height: 380px" id="pano_holder"></div>
+
+                                        <script type="text/javascript">
+
+                                            function init() {
+
+                                                var pano = '';
+
+                                                if (pano != null && pano != "" && pano != undefined) {
+
+                                                    getjjByPano();
+
+                                                } else {
+
+                                                    getjjByLatlng();
+
+                                                }
+
+                                            }
+
+                                            var getjjByLatlng = function () {
+
+                                                var panoLatLng = new soso.maps.LatLng(@itemCommunity.Lat, @itemCommunity.Lng);
+
+                                                var pano = new soso.maps.Panorama(document.getElementById('pano_holder'));
+
+                                                var pano_service = new soso.maps.PanoramaService();
+
+                                                pano_service.getPano(panoLatLng, 200, function (result) {
+
+                                                    if (result != null) {
+
+                                                        pano.setPano(result.svid);
+
+
+
+                                                        var x1 = result.latlng.lng;
+
+                                                        var y1 = result.latlng.lat;
+
+                                                        var x2 = 116.326088;
+
+                                                        var y2 = 39.882326;
+
+
+
+                                                        var alpha = Math.acos((y2 - y1) / Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
+
+                                                        if (x2 - x1 < 0) {
+
+                                                            alpha = Math.PI * 2 - alpha;
+
+                                                        }
+
+                                                        pano.setPov({ heading: alpha / Math.PI * 180, pitch: 0 });
+
+                                                    }
+
+                                                });
+
+                                            };
+
+
+
+                                            var getjjByPano = function () {
+
+                                                pano = new qq.maps.Panorama(document.getElementById('pano_holder'), {
+                                                    "pano": '',
+
+                                                    pov: {
+
+                                                        heading: '0',
+
+                                                        pitch: '0',
+
+                                                        zoom: '0',
+
+                                                    }
+
+                                                });
+
+                                            };
+
+                                            var isIE6 = !!window.ActiveXObject && !window.XMLHttpRequest;
+
+                                            if (isIE6) {
+
+                                                var oDiv = document.getElementById("taof");
+
+                                                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+                                                oDiv.style.top = scrollTop + (document.documentElement.clientHeight - oDiv.offsetHeight - 10) + 'px';
+
+                                                window.onscroll = function () {
+
+                                                    scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+                                                    var t = parseInt(scrollTop + document.documentElement.clientHeight - oDiv.offsetHeight);
+
+                                                    oDiv.style.top = t + 'px';
+
+                                                };
+
+                                            }
+
+                                            $(function () {
+
+                                                init();
+
+                                            });
+
+                                        </script>
+                                        <!-- Baidu Button END -->
+
+                                    </div>
+                                </div>
+                            }
+                            <div id="hsxqjj-pos" class="view-top-people">
+                                <div class="detail-title">
+                                    <h3>小区简介</h3>
+                                    <span class="line"></span>
+                                </div>
+                                <div class="house_box">
+                                    <dl class="clearfix">
+                                        <dt>
+                                            <span class="gray6">楼盘名称：</span><a target="_blank" href="javascript:void(0)">
+                                                @itemCommunity.Name
+                                            </a>
+                                            ( <a target="_blank" href="javascript:void(0)">@itemCommunity.DistrctName</a> <a target="_blank" href="javascript:void(0)">@itemCommunity.RegionName</a> )@*<a id="dsesfxq_B03_08" target="_blank" href="javascript:void(0)" class="ml20">查看楼盘详情&gt;&gt;</a>*@
+                                        </dt>
+                                        <dd><span class="gray6">物业类型：</span>住宅</dd>
+                                        <dd><span class="gray6">绿 化 率：</span>@(itemCommunity.LvHua)%</dd>
+                                        <dd><span class="gray6">物 业 费：</span>@(itemCommunity.WuyePrice)元/平米·月</dd>
+                                        <dt><span class="gray6">物业公司：</span>@(itemCommunity.WuyeCompany)</dt>
+                                        <dt><span class="gray6">开 发 商：</span>@(itemCommunity.KaiFaShang)</dt>
+                                        <dt><span class="gray6">周边配套：</span>@(itemCommunity.PeiTao)</dt>
+                                        <div class="clear"></div>
+                                    </dl>
+                                    <dl class="clearfix">
+                                        <dt><span class="font14b">@(itemCommunity.Name)均价：</span><span class="num22">@(itemCommunity.SellPrice)</span>元/平方米</dt>
+                                        @*<dd class="gray6">环比上月：<span class="green mr10"><span class="green"><span class="green">↓0.02%</span></span></span></dd>
+                                            <dd class="gray6">同比去年：<span class="orange"><span class="orange"><span class="green">↓24.12%</span></span></span></dd>*@
+                                    </dl>
+                                </div>
+                            </div>
+
+                            <div id="hspeople-pos" class="view-top-people">
+                                <div class="detail-title">
+                                    <h3>附近房源推荐</h3>
+                                    <span class="line"></span>
+                                </div>
+                                <div class="house_box">
+                                    <ul class="cf clear">
+                                        @{Html.RenderAction("NearHouses", "House", new { id = itemHouseBasicInfo.HouseID, communityId = itemHouseBasicInfo.CommunityID, trade = itemHouseBasicInfo.TradeType });}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            }}
+    </div>
+
+    <div class="lianjia-footer">
+
+        <div class="wrapper">
+            <div class="foot-content left">
+                <div class="copy">Copyright &copy; 2014-2015 fchezi.com 闽ICP备15002624号</div>
+            </div>
+        </div>
+    </div>
+    <div class="go_top" id="gotop" style="display:none"></div>
+    <!--把该信息发送到手机-->
+    <div id="cboxOverlay"></div>
+    <div id="colorbox">
+        <div id="cboxWrapper">
+            <div style="clear: left;">
+                <div id="cboxContent" style="float: left; width: 570px; height: 330px;">
+                    <div id="cboxLoadedContent" style="width: 570px; overflow: auto; height: 296px;">
+                        @*<iframe frameborder="0" name="cbox" src="@(Url.Action("Mobile",new{id=Model.HouseBasicInfo.HouseID}))" class="cboxIframe"></iframe>*@
+                        />
+                    </div>
+                    <div id="cboxTitle" style="float: left; display: block;">把该信息发送到手机</div>
+                    <div id="cboxClose" style="float: left;">close</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            b();
+            $("#gotop").click(function () { $("html , body").animate({ scrollTop: 0 }, 500) });
+            $(window).scroll(function () { b() })
+        });
+        $(function () {
+            $('#house-lst li').hover(function () {
+                $(this).addClass("hover");
+            }, function () {
+                $(this).parent().find("li").removeClass("hover");
+            });
+            $('.dropdown').hover(function () {
+                $(this).find("ul").show();
+            }, function () {
+                $(this).parent().find("ul").hide();
+            });
+            $('.sort-parent').hover(function () {
+                $(this).find("ul").show();
+            }, function () {
+                $(this).parent().find("ul").hide();
+            });
+            $('.circle-look-house').hover(function () {
+                $(".look-house-tab").show();
+            }, function () {
+                $(".look-house-tab").hide();
+            });
+            $("#cboxClose").click(function () {
+                $("#cboxOverlay").hide();
+                $("#colorbox").hide();
+                self.window.cbox.document.getElementById("submitForm").style.display = "none";
+                self.window.cbox.document.getElementById("pbox").style.display = "block";
+            });
+            $("#freemsg").click(function () {
+                var top = ($(window).height() - $("#colorbox").height()) / 2;
+                var left = ($(window).width() - $("#colorbox").width()) / 2;
+                $("#colorbox").css("top", top + "px");
+                $("#colorbox").css("left", left + "px");
+                $("#cboxOverlay").show();
+                $("#colorbox").show();
+            })
+        });
+        function b() {
+            h = $(window).height();
+            t = $(document).scrollTop();
+            t > h ? $("#gotop").show() : $("#gotop").hide();
+        }
+    </script>
+    <script type="text/javascript">
+        jQuery(window).bind("scroll", function () {
+            var fold = jQuery(window).height() + jQuery(window).scrollTop();
+            if (fold > jQuery("#panel-tab").offset().top + 780) {
+                jQuery("#gotop").css("display", "block");
+            }
+            else {
+                jQuery("#gotop").css("display", "none");
+            }
+            var objPos = document.getElementById("menu-pos");
+            var objFloat = document.getElementById("panel-tab");
+            if (objPos.getBoundingClientRect().top <= 0)
+            { objFloat.className = 'panel-tab clear menu-floating'; }
+            else
+            { objFloat.className = 'panel-tab clear'; }
+            var obj_hsPro = document.getElementById("hsPro");
+            var obj_hsPro_pos = document.getElementById("hsPro-pos");
+            var obj_hsPic = document.getElementById("hsPic");
+            var obj_hsPic_pos = document.getElementById("hsPic-pos");
+            var obj_hsMap = document.getElementById("hspeople");
+            var obj_hsMap_pos = document.getElementById("hspeople-pos");
+            var obj_hsmPro = document.getElementById("hszoon");
+            var obj_hsmPro_pos = document.getElementById("hszoon-pos");
+            var obj_hsmapjj = document.getElementById("hsxqjj");
+            var obj_hsxqjj_pos = document.getElementById("hsxqjj-pos");
+            var obj_hsxqjj = document.getElementById("hsmap");
+            var obj_hsmapjj_pos = document.getElementById("hsmap-pos");
+            if (obj_hsPro_pos && obj_hsPro_pos.getBoundingClientRect().top <= 0 && obj_hsPic_pos.getBoundingClientRect().top > 0) {
+                $("#hsPro").find("a").attr("class", "on");
+                $("#hsPic").find("a").attr("class", "");
+                $("#hspeople").find("a").attr("class", "");
+                $("#hszoon").find("a").attr("class", "");
+                $("#hsxqjj").find("a").attr("class", "");
+                $("#hsmap").find("a").attr("class", "");
+            }
+            if (obj_hsPic_pos && obj_hsPic_pos.getBoundingClientRect().top <= 48 && obj_hsmPro_pos.getBoundingClientRect().top > 0) {
+                $("#hsPro").find("a").attr("class", "");
+                $("#hsPic").find("a").attr("class", "on");
+                $("#hspeople").find("a").attr("class", "");
+                $("#hszoon").find("a").attr("class", "");
+                $("#hsxqjj").find("a").attr("class", "");
+                $("#hsmap").find("a").attr("class", "");
+
+            }
+            if (obj_hsmPro_pos && obj_hsmPro_pos.getBoundingClientRect().top <= 48 && obj_hsmapjj_pos.getBoundingClientRect().top > 0) {
+                $("#hsPro").find("a").attr("class", "");
+                $("#hsPic").find("a").attr("class", "");
+                $("#hszoon").find("a").attr("class", "on");
+                $("#hspeople").find("a").attr("class", "");
+                $("#hsxqjj").find("a").attr("class", "");
+                $("#hsmap").find("a").attr("class", "");
+            }
+            if (obj_hsmapjj_pos && obj_hsmapjj_pos.getBoundingClientRect().top <= 48 && obj_hsxqjj_pos.getBoundingClientRect().top > 0) {
+                $("#hsPro").find("a").attr("class", "");
+                $("#hsPic").find("a").attr("class", "");
+                $("#hszoon").find("a").attr("class", "");
+                $("#hspeople").find("a").attr("class", "");
+                $("#hsxqjj").find("a").attr("class", "");
+                $("#hsmap").find("a").attr("class", "on");
+            }
+            /*if (obj_hsmapjj_pos && obj_hsmapjj_pos.getBoundingClientRect().top <= 48 && obj_hsMap_pos.getBoundingClientRect().top > 0) {*/
+            if (obj_hsxqjj_pos && obj_hsxqjj_pos.getBoundingClientRect().top <= 48) {
+                $("#hsPro").find("a").attr("class", "");
+                $("#hsPic").find("a").attr("class", "");
+                $("#hspeople").find("a").attr("class", "");
+                $("#hszoon").find("a").attr("class", "");
+                $("#hsxqjj").find("a").attr("class", "on");
+                $("#hsmap").find("a").attr("class", "");
+            }
+            if (obj_hsMap_pos && obj_hsMap_pos.getBoundingClientRect().top <= 48) {
+                $("#hsPro").find("a").attr("class", "");
+                $("#hsPic").find("a").attr("class", "");
+                $("#hspeople").find("a").attr("class", "on");
+                $("#hszoon").find("a").attr("class", "");
+                $("#hsxqjj").find("a").attr("class", "");
+                $("#hsmap").find("a").attr("class", "");
+            }
+        });
+    </script>
+    <div style="display:none">
+        <script>
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?cf86da03fe349c15675cdde921c99019";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+    </div>
+
+</body>
+</html>

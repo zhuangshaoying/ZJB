@@ -1,0 +1,38 @@
+/*
+ Authur:Ryan
+
+ Version:1.0
+ */
+/*第三方登录*/
+.otherlogin {
+	width: 100%;
+	background-color: white;
+	text-align: center;
+	padding: 30px 20px 20px 20px;
+}
+.otherlogin img {
+	margin: 20px 10px 8px 10px;
+	width: 47px;
+	height: 47px;
+}
+.ownborder:before {
+	width: 25%;
+	content: '';
+	background-color: #c8c7cc;
+	height: 1px;
+	position: absolute;
+	left: 15px;
+	top: 40px;
+}
+.ownborder:after {
+	width: 25%;
+	content: '';
+	background-color: #c8c7cc;
+	height: 1px;
+	position: absolute;
+	right: 15px;
+	top: 40px;
+}
+li {
+	list-style: none;
+}

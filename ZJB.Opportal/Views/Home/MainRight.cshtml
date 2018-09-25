@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+    
+}
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>首页右侧</title>
+    <link href='~/Content/common.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/main.css' rel='stylesheet' type='text/css' />
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script src='~/Scripts/mainRight.js' type='text/javascript'></script>
+    <script src='~/Scripts/common.js' type='text/javascript'></script>
+    <script src='~/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+    <script src='~/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+</head>
+
+<body>
+
+    <div class="saleHouse" id="saleHouse">
+        <div class="saleHouse-main clear">
+            <div class="indexRight-main">
+                <ul class="indexRight-common">
+                    <li class="c_1"><span class="tap_inner"><a href="javascript:redirect('houseManagerSell')" class="a1">出售管理</a></span></li>
+                    <li class="c_2"><span class="tap_inner"><a href="javascript:redirect('houseManagerRent')" class="a2">出租管理</a></span></li>
+                    <li class="c_3"><span class="tap_inner"><a href="javascript:redirect('everyDayStat')" class="a3">每日分析</a></span></li>
+                    <li class="c_4"><span class="tap_inner"><a href="javascript:redirect('userlist')" class="a4">用户管理</a></span></li>
+                    <li class="c_5"><span class="tap_inner nmr"><a href="javascript:redirect('feedback')" class="a5">用户反馈</a></span></li>
+                </ul>
+                <div class="indexRight-list clearfix">
+                    <div class="indexRight-list-header clearfix">
+                        <div class="list-header-left float-l"><span class="float-l">站内公告</span></div>
+                        <div class="list-header-right float-r"><a href="@Url.Action("NoticeList", "Notice")">查看更多</a> | <a href="@Url.Action("NoticeAdd", "Notice")">发布新公告</a> </div>
+                    </div>
+                    <ul class="indexRight-list-content clearfix">
+                        @{Html.RenderAction("HomeNoticeListView", "Notice");}
+                    </ul>
+                </div>
+             
+                    <div class="indexRight-list">
+                        <div class="indexRight-list-header">
+                            <div class="list-header-left">住家帮在成长</div>
+                        </div>
+                        <div id="job" class="clearfix">
+                            @*<h2>房产盒子1.3升级<span>2015.1.27</span></h2>
+                            <p>
+                                <img src="/images/dot.jpg" class="dot" />
+                                <b>云发布升级</b><br />
+                                <b>个人房源采集</b><br />
+
+                            </p>
+                            <div class="clear"></div>*@
+                         
+                        </div>
+                    </div>
+               
+                @*<div class="indexRight-list clearfix">
+                    <div class="indexRight-list-header clearfix">
+                        <div class="list-header-left"><span class="float-l">使用简报</span></div>
+                    </div>
+                    @{Html.RenderAction("UseReport", "Home");}
+                </div>*@
+                @*<div class="indexRight-list clear">
+                        <div class="indexRight-list-header clear">
+                            <div class="list-header-left"><em class="indexRight-gongneng-img"></em><span class="float-l">功能预告</span></div>
+                        </div>
+                        <div id="job" class="clearfix">
+                            <h2>房产盒子1.1升级<span>2015.1.23</span></h2>
+                            <p>
+                                <img src="/images/dot.jpg" class="dot">
+                                <b>云发布升级</b><br>
+                                支持赶集、蓝房网站房源发布<br>
+                                <b>个人房源采集</b><br />
+
+                            </p>
+                            <div class="clear"></div>
+                            <h2>房产盒子1.0发布<span>2015.1.16</span></h2>
+                            <p>
+                                <img src="/images/dot.jpg" class="dot">
+                                <b>云发布</b><br>
+                                出售录入<br>
+                                出租录入<br>
+                                支持联合网、58、搜房网网站房源发布<br />
+                                <b>邀请码注册免费使用</b><br />
+                            </p>
+                        </div>
+                    </div>*@
+            </div>
+         
+        </div>
+    </div>
+</body>
+</html>

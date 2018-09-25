@@ -1,0 +1,66 @@
+﻿@using ZJB.Api.Entity;
+@using ZJB.Core.Utilities;
+@model Notice
+@{
+    Layout = null;
+    Notice itemNotice = Model.IsNull()?new Notice():Model;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>NoticeAdd</title>
+    <link href='/Content/common.css' rel='stylesheet' type='text/css' />
+	<link href='/Content/main.css' rel='stylesheet' type='text/css' />
+    <link href="~/Content/saleImport.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.8.3.js"></script>
+	<script src='/Scripts/common.js' type='text/javascript'></script> 
+     <script type="text/javascript" src="/Scripts/plugins/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="/Scripts/plugins/ueditor/ueditor.all.js"></script>
+    <script src="~/Scripts/AdminNotice.js"></script>
+</head>
+<body>
+<div class="saleHouse">
+  <div class="saleHouse-main">
+    <input type="hidden" id="hideNoticeId" value="@itemNotice.NoticeId"/>
+
+        <div class="saleHouse-basic-content mt20">
+            <div class="clear">
+				<ul class="sale-tab-sub" style="padding-top:0px" id="ulStatus">
+					<li id="tab1" class="sale-sub-menu selected" status="0"><a id="table_1" href="javascript:">公告信息</a> </li>
+				</ul>
+            </div>
+            <div class="gg-basic clear">
+             <ul>
+                 <li>
+                 <span class="gg-basic-left">标题</span> 
+                     <span>
+                     <input id="NoticeTitle" name="NoticeTitle" type="text" class="iw400 Validform_error" datatype="NoticeTitle" value="@itemNotice.Title">
+                 </span>
+                 </li>
+                <li>
+					<span class="gg-basic-left">类型</span> 
+                    <span><select id="selectType">
+                        <option value="1" @(itemNotice.Type==1?"selected='selected'":"")>系统公告</option>
+                        <option value="2" @(itemNotice.Type==2?"selected='selected'":"")>网站公告</option>
+                        <option value="3" @(itemNotice.Type==3?"selected='selected'":"")>用户公告</option>
+                    </select>
+					</span>
+                </li>
+             </ul>
+			 <div class="gg-textarea">
+                       <script id="NoticeContent" name="NoticeContent" type="text/plain">
+                         @(Html.Raw(itemNotice.NoticeContent))
+                        </script>
+                        </div>
+                </div>
+         	<div class="gghj"><input value="发 布" class="btn-saveHouse" id="SubmitNotice" onclick="AddNotice()" type="button"/></div>
+         </div>
+		  </div>
+         
+         </div>
+</body>
+</html>

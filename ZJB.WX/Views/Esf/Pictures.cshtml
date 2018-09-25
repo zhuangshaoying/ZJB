@@ -1,0 +1,234 @@
+﻿@using System.Data
+@using ZJB.Api.Entity
+@using ZJB.Api.Models
+@model ZJB.Api.Models.HouseBasicInfoModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>@Model.Title-住家帮</title>
+    <link rel="stylesheet" href="~/Css/Esf/common.css">
+    <link rel="stylesheet" href="~/Css/Esf/manage.css">
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.8.3.js"></script>*@
+    <script src="~/Scripts/Esf/imageupload.js"></script>
+    <script src="~/Scripts/Esf/base.js"></script>
+    <style type="text/css">
+        .imglist {
+            height: auto;
+            /* padding: 0.7em 0.7em 0 0.7em; */
+            position: relative;
+            margin-bottom: -4px;
+            /* overflow: hidden; */
+            display: none;
+        }
+
+        .nav-bar span {
+            position: relative;
+            font-size: .12rem;
+            width: 50%;
+            color: #e84a01;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        .imglist li {
+            float: left;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            width: 80px;
+            height: 80px;
+            border: 1px solid #ddd;
+            background: no-repeat center center;
+            background-size: cover;
+            position: relative;
+            /* overflow: hidden;*/
+        }
+
+            .imglist li span {
+                position: absolute;
+                top: -4px;
+                right: -5px;
+                cursor: pointer;
+                width: 18px;
+                height: 18px;
+                background: url(/Images/esf/close_wt.png) no-repeat;
+                text-align: center;
+                line-height: 18px;
+                background-size: 16px;
+            }
+
+
+                .imglist li span i {
+                    font-size: 12px;
+                    color: #fff;
+                }
+
+            .imglist li img {
+                width: 50%;
+                height: 50%;
+                margin-top: 25%;
+                margin-left: 25%;
+            }
+
+        .elements-buttons .button {
+            background-color: #e84a01;
+            color: #fff;
+            font-size: .18rem;
+            line-height: .48rem;
+            height: .48rem;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $('#photoimg').die('click').live('change', function () {
+                var obj = $("#preview").find("li");
+                if (obj.length >= 9) {
+                    alert('最多只能上传9张图片');
+                } else {
+                    var status = $("#up_status");
+
+                    $("#imageform").ajaxForm({
+                        dataType: 'text',
+                        target: '#preview',
+                        beforeSubmit: function () {
+                            status.show();
+
+                        },
+                        success: function (data, jjj, xhr) {
+                            status.hide();
+
+                        },
+                        error: function (data) {
+                            status.hide();
+                            btn.show();
+                        }
+                    }).submit();
+
+                }
+            });
+            $(document).on('click', '.imgDelete', function () {
+                $(this).parent().remove();
+            });
+            $("button.submit").on('click', function () {
+                $("#postform").submit();
+            });
+
+        })
+        function imageupload() {
+            $('#photoimg').click();
+        }
+
+
+        var addimages= function () {
+            var mediaid = "";
+            $("#preview li").each(function (i, n) {
+                var obj = $(n)
+                mediaid += obj.attr("serverid") + ",";
+            });
+
+            if (mediaid == "") {
+                $("body").prepend(createDiv("请上传图片！"));
+                var k = setInterval(function () {
+                    $(".mod-smallnote").remove();
+                    $("#dt-login-cs").hide();
+                    clearInterval(k);
+                }, 1000);
+            }
+            else {
+                var pars = new Object();
+                pars["houseid"] = @Model.HouseID;
+                pars["imgurls"] = mediaid;
+                pars["imgtype"] = 1;
+                pars["communityid"] = @Model.CommunityID;
+                pars["userid"] = @ViewBag.UserID;
+                $.ajax({
+                    type: "post",
+                    url: "/Esf/AddHouseImage",
+                    data: pars,
+                    dataType: "json",
+                    success: function (data) {
+                        $("body").prepend(createDiv("上传成功！"));
+                        var k = setInterval(function () {
+                            $(".mod-smallnote").remove();
+                            $("#dt-login-cs").hide();
+                            clearInterval(k);
+                        }, 1000);
+                        window.location.href = "/esf/Complete";
+                    }
+                });
+            }
+        };
+
+
+
+    </script>
+</head>
+
+<body>
+    <div class="mod-manage" style="padding-bottom: 0.86rem;">
+        @*@if (ViewBag.EsfInfo != null)
+            {
+                foreach (HouseBasicInfoModel houseinfo in ViewBag.EsfInfo)
+                {*@
+
+        <div class="mod-prod-detail">
+            <a href="javascript:">
+
+                <div class="mod-prod-addr mod-addr-sell">
+                    <h2>@Model.CommunityName</h2>
+                    <p>期望售价：<b>@Model.Price</b>@Model.PriceUnit</p>
+                    <p> 户型：<b>@Model.Room 室 @Model.Hall 厅 @Model.Toilet 卫</b></p>
+                    <p> 面积：<b>@Model.BuildArea ㎡</b></p>
+                </div>
+            </a>
+
+            <div class="mod-prod-rel">
+                <dl>
+                    <dt>
+                        @*<span id="uploader-img" onclick="imageupload()"><img src="~/Images/esf/upload_icon.png" /></span>*@
+
+                        @*<span id="uploader-img" onclick="imageupload()" style="background: url(/Images/esf/upload_icon.png) no-repeat left center; background-size: auto 24px; width: 56px;"></span>*@
+
+                        <div class="imglist" style="display: block;">
+                            <ul id="preview"></ul>
+                            <div>
+                                <ul class="clearfix">
+                                    <li id="up_status" style="display: none">
+                                        <img src="~/images/Web/loading.gif"><span class="imgDelete">
+                                        </span>
+                                    </li>
+                                    <li onclick="imageupload()" style="background-image: url(/Images/esf/upload_icon.png);">
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="img-uploader"></div>
+                        </div>
+                    </dt>
+                </dl>
+            </div>
+            <div id="j-seek-history"></div>
+        </div>
+
+
+    </div>
+    <form method="post" action="@(Url.Action("uploadimage", "ImageUpload"))" id="imageform" encoding="multipart/form-data">
+        <input id="photoimg" type="file" style="display: none" name="photoimg">
+    </form>
+    <nav class="nav-bar">
+
+        <span href="javascript:" style="padding: 17px 0px; padding-top: 17px; border-right: 1px solid #ddd" onclick="addimages()"><p class="button button-next">下一步</p></span><span class="active" onclick="window.location.href='/esf/Complete'">跳过</span>
+    </nav>
+
+    @*@{ Html.RenderPartial("EsfNav", new { height = "35px", curNav = "add" }); }*@
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

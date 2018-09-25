@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@model List<ZJB.Api.Entity.SendsmsLog>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sendsms</title>
+    <link href="~/Content/common.css" rel="stylesheet" />
+    <link href="~/Content/totop.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="saleHouse" id="saleHouse">
+        <div class="saleHouse-main clear">
+            <div class="remain_mar">
+                <form id="bForm" action="@Url.Action("Sendsms", "User")" enctype="multipart/form-data" method="post">
+                    <div class="appmsg_edit_item">
+                        <label class="frm_label">电话</label>
+                        <span class="frm_input_box"><textarea id="tel" class="frm_input" name="tel"></textarea></span>
+                        <div class="frm_msg">多个号码用逗号隔开</div>
+                    </div>
+                    <div class="appmsg_edit_item">
+                        <label class="frm_label">内容</label>
+                        <span class="frm_input_box"><textarea id="content" class="frm_input" name="content"></textarea></span>
+                        <div class="frm_msg">已带签名【房产盒子】</div>
+                    </div>
+                    <input class="btn_primary" type="submit" value="发送" />
+                </form>
+                <table class="h_list mt20" width="100%" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <td>电话</td>
+                            <td width="257">内容</td>
+                            <td>发送人</td>
+                            <td>时间</td>
+                            <td>发送状态</td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody id="houseTable">
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Tel</td>
+                                    <td>@item.SmsContent</td>
+                                    <td>@item.Sender</td>
+                                    <td>@item.SendTime</td>
+                                    <td><span>@(item.SendResult)</span></td>
+                                         </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+ 
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Api.Entity
+@model  List<ZJB.Api.Entity.HouseTitle> 
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>获取标题</title>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/saleImport.css" rel="stylesheet" />
+    <link href="~/css/fanye.css" rel="stylesheet" />
+  
+</head>
+<body>
+    <div class="autoTitle">
+
+
+
+        <ul class="autoTitle-content">
+@{
+    foreach (HouseTitle item in Model)
+    {
+        <li><a onclick=" changTitle(this) ">@item.Title</a></li>
+
+      
+    }
+}
+    </ul>
+        <div class="float-r">
+            <input type="button" class="btn-green" value="下一批" onclick="getTitle()"></input>
+        </div>
+
+
+    </div>
+    <script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+    <script>
+        function getTitle() {
+            $.ajax({
+                url:  url_3,
+                data: $("#bForm").serialize(),
+                type: "post",
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    var html = "";
+                    $.each(data, function(i, item) {
+                        html += '<li><a onclick="changTitle(this)">' + item.Title + '</a></li>';
+                    
+                    });
+                 $(".autoTitle-content").html(html);
+                },
+                error: function (jqXHR) {
+                    alert($.parseJSON(jqXHR.responseText).msg);
+                }
+            });
+        }
+
+        function changTitle(thisObj) {
+            $("#saleHouse-title").val($(thisObj).html());
+            focusAndBlur("saleHouse-title");
+            autoDialog.close();
+        }
+    </script>
+</body>
+</html>

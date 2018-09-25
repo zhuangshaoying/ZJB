@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="zh" class="main-html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>住家帮管理系统</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/common.css" rel="stylesheet" />
+    <link href="~/Content/totop.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/common.js"></script>
+</head>
+<body>
+    <input id="contextPath" value='' type="hidden" />
+
+    <input id="staticPath" value='' type="hidden" />
+
+    <input id="postTypeIndex" value='1' type="hidden" />
+
+    <div class="main">
+        <div id="header_background">
+            <div id="header_center">
+                <div id="header_logo"><a href="/"></a></div>
+                <div class="loginOut"><a href="@Url.Action("LoginOut","User")">安全退出</a></div>
+				<div id="header_note" class="header-note">
+                    <span class="col-000">管理员</span>
+                    <input type="hidden" id="city" value="592" />
+                    <span class="col-000">欢迎您！</span>
+                </div>
+            </div>
+        </div>
+        <div class="container_box">
+            <div class="col_side">
+                <div id="menu_function" class="menu_box">
+                    <dl class="menu">
+                        <dt class="menu_title border-index" onclick="hrefLink('@Url.Action("MainRight", "Home")')"><i class="icon_menu function"></i><span class="main-font">管理主页</span> </dt>
+                    </dl>
+                    <dl class="menu menu_import menu_open">
+                        <dt class="menu_title"><i class="icon_menu manageComp"></i><span class="main-font">房源管理</span> </dt>
+                        <dd class="menu_item">
+
+                            <a id="houseManagerSell" href="javascript:hrefLink('@Url.Action("GetHouseMainView", "House",new {postType=1})','出售管理')">出售管理</a>
+                            <a id="houseManagerRent" href="javascript:hrefLink('@Url.Action("GetHouseMainView", "House", new {postType = 3})','出租管理')">出租管理</a>
+                            <a id="houseManagerRent" href="javascript:hrefLink('@Url.Action("HouseInterview", "House",new {})','房源预约管理')">预约管理</a> 
+                            <a id="housePostLog" href="javascript:hrefLink('@Url.Action("GetPostLogView", "PostLog")','发布日志')">发布日志</a> 
+                            <a id="communityManage" href="javascript:hrefLink('@Url.Action("CommunityManage", "House")','小区管理')">小区管理</a> 
+                            @*<a id="CommunityMapping" href="javascript:hrefLink('@Url.Action("CommunityMapping", "House", new { siteId = 3 })','小区匹配')">小区匹配</a>*@ 
+                        </dd>
+                    </dl>
+                    <dl class="menu">
+                        <dt class="menu_title"><i class="icon_menu service"></i><span class="main-font">用户管理</span> </dt>
+                        <dd class="menu_item">
+                            <a id="socailIndex" href="javascript:hrefLink('@Url.Action("Index", "Social")')">社交</a>
+                            <a id="userlist" href="javascript:hrefLink('@Url.Action("UserList", "User")')">用户管理</a>
+                            <a id="refresh" href="javascript:hrefLink('@Url.Action("InvitationCodeList", "User")')">邀 请 码</a>
+                            <a id="companylist" href="javascript:hrefLink('@Url.Action("CompanyList", "User")')">门店管理</a>
+                            <a id="feedback" href="javascript:hrefLink('@Url.Action("Index", "Feedback")')">用户反馈</a>
+                        @*<a id="sendsms" href="javascript:hrefLink('@Url.Action("Sendsms", "User")')">短信日志</a>*@ 
+                            <a id="userPointList" href="javascript:hrefLink('@Url.Action("PointsLog", "User")')">积分日志</a> 
+                        </dd>
+                    </dl>
+                  
+                    <dl class="menu">
+                        <dt class="menu_title"><i class="icon_menu manage"></i><span class="main-font">统计管理</span> </dt>
+                        <dd class="menu_item">
+                            <a id="everyDayStat" href="javascript:hrefLink('@Url.Action("EveryDayStat", "Stat")')">每日统计</a>
+                            <a id="siteAnalyse" href="javascript:hrefLink('@Url.Action("SiteAnalyse", "Stat")')">网站分析</a> 
+                            <a id="functionStat" href="javascript:hrefLink('@Url.Action("Index", "ControllerActionMap")')">功能统计</a> 
+                            <a id="IpStat" href="javascript:hrefLink('@Url.Action("IpAccessList", "Stat")')">IP统计</a> 
+                             <a id="UserAccessStat" href="javascript:hrefLink('@Url.Action("UserAccessList", "Stat")')">用户访问统计</a> 
+                        </dd>
+                    </dl>
+                    <dl class="menu">
+                        <dt class="menu_title"><i class="icon_menu notice"></i><span class="main-font">公告管理</span> </dt>
+                        <dd class="menu_item">
+                            <a  href="javascript:hrefLink('@Url.Action("NoticeList", "Notice")')">公告列表</a>
+                            <a  href="javascript:hrefLink('@Url.Action("NoticeAdd", "Notice")')">发布公告</a> 
+                        </dd>
+                    </dl>
+                    <dl class="menu">
+                        <dt class="menu_title"><i class="icon_menu jiekou"></i><span class="main-font">接口文档</span> </dt>
+                        <dd class="menu_item">
+                            <a href="javascript:hrefLink('@Url.Action("ApiList", "Apis")')">接口列表</a>
+                            <a href="javascript:hrefLink('@Url.Action("ApiAdd", "Apis",new {act=1 })')">发布接口</a>
+                            <a href="/db" target="_blank">数据库文档</a>
+                        </dd>
+                    </dl>
+                    <dl class="menu" style="display: none">
+                        <dt id="personManagerDT" class="menu_title"><i class="icon_menu setting"></i><span class="main-font">个人管理</span> </dt>
+                        <dd class="menu_item">
+
+                            <a href="@Url.Action("LoginOut","User")">安全退出</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col_main" id="col_main_function">
+                <iframe id="main-iframe" width="100%" height="100%" scrolling="auto" border="0" frameborder="no" src="/Home/MainRight" onload="loadingHide()"></iframe>
+                <!-- 正在加载中 -->
+                <div class="loading-bg"></div>
+                <div class="loading" style="display: none">
+                    <img width="100" height="100" src="/images/loading.gif"></img>
+                </div>
+            </div>
+
+            <!-- QQ联系 -->
+            <div id="qqcode-main" style="display: none">
+                <div class="qqcode">
+                    <div class="qqcode-header">在线客服</div>
+                    <ul class="qqcode-content">
+                        <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2605757603&site=qq&menu=yes"><span class="qqcode-content-img" title="点击咨询"></span><span class="qqcode-content-font">客服1</span></a></li>
+                    </ul>
+                </div>
+                <div class="qqcode-hide"><a href="javascript:qqcodeHide()">关闭</a> </div>
+            </div>
+
+            <!-- 返回顶部 -->
+            <div id="lrToolRb" class="lr-tool-rb" style="display:none;">
+                <a class="lr-gotop" title="返回顶部"><span class="lricon"></span></a><a class="lr-qrcode" title="单击展开二维码">
+                    <span class="lricon"></span>
+                    <br />
+                    微信关注
+                </a> <a class="lr-qqcode" title="联系客服">
+                    <img class="qqicon" width="24" height="26" src="/images/qq.png"></img><br />
+                    联系客服
+                </a>
+                <div class="lr-pop">
+                    <span class="lr-close">关闭</span><img class="lr-qcimg" src="/images/core.jpg"></img>
+                </div>
+                <div class="del-tip"><span class="lr-close">关闭</span> </div>
+            </div>
+
+            <!-- 公告通知 -->
+            <div id="noticeTip" style="display: none"></div>
+         
+
+            <!-- 房源提醒 -->
+            <div class="newHouse">
+                <a href="javascript:colseModifyTip()">
+                    <img width="20" height="20" src="/images/houseTip.gif"></img>
+                    <span id="newHouse-content">有新房源,请关注</span>
+                </a>
+            </div>
+        </div>
+        <div class="main-footer"></div>
+    </div>
+</body>
+
+</html>

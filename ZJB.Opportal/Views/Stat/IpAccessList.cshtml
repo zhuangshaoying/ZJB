@@ -1,0 +1,229 @@
+﻿@using ZJB.Api.Models;
+@model List<StatModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>@ViewBag.Title</title>
+    <link href='~/Content/common.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/saleManager.css' rel='stylesheet' type='text/css' />
+    <link href='~/Content/fanye.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+
+    <!--  隐藏参数   -->
+    <div>
+    </div>
+    <div id="saleHouse" class="saleHouse">
+        <div class="saleHouse-main">
+            <div class="selectHouse">
+                <!-- 数据内容区 -->
+                <div class="saleManager-state-content con1 mm30">
+                    <div class="search_bar dn" id="searchDiv" style="display: block;">
+                        <span class="srfrm_input_box search with_del append ">
+                            <a id="searchBt" href="javascript:" class="frm_input_append" onclick="searchbtn();"><i class="icon16_common search_gray">搜索</i>&nbsp;</a>
+                            <input id="keyInput" type="text" placeholder="IP" value="@ViewBag.KeyWord" class="srfrm_input">
+                        </span>
+                        <a class="btn_plugins_add" href="javascript:void(0)" onclick="ToggleTimePartSelect();">时间段筛选<i class="icon_common new"></i></a>
+                        @if ((int)ViewBag.BeginHour != 0 || (int)ViewBag.EndHour != 24)
+                        {
+                        <span style="color:#F0406A">
+                           选择了@(ViewBag.BeginHour)点-@(ViewBag.EndHour)点时间段
+                        </span>
+                        }
+                        <div class="selectTimePartBox" style="display:none;">
+                            <select id="selectBeginHour">
+                                <option value='0' selected="selected">0</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                                <option value='6'>6</option>
+                                <option value='7'>7</option>
+                                <option value='8'>8</option>
+                                <option value='9'>9</option>
+                                <option value='10'>10</option>
+                                <option value='11'>11</option>
+                                <option value='12'>12</option>
+                                <option value='13'>13</option>
+                                <option value='14'>14</option>
+                                <option value='15'>15</option>
+                                <option value='16'>16</option>
+                                <option value='17'>17</option>
+                                <option value='18'>18</option>
+                                <option value='19'>19</option>
+                                <option value='20'>20</option>
+                                <option value='21'>21</option>
+                                <option value='22'>22</option>
+                                <option value='23'>23</option>
+                                <option value='24'>24</option>
+                            </select>
+                            点-
+                            <select  id="selectEndHour">
+                                <option value='0'>0</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                                <option value='6'>6</option>
+                                <option value='7'>7</option>
+                                <option value='8'>8</option>
+                                <option value='9'>9</option>
+                                <option value='10'>10</option>
+                                <option value='11'>11</option>
+                                <option value='12'>12</option>
+                                <option value='13'>13</option>
+                                <option value='14'>14</option>
+                                <option value='15'>15</option>
+                                <option value='16'>16</option>
+                                <option value='17'>17</option>
+                                <option value='18'>18</option>
+                                <option value='19'>19</option>
+                                <option value='20'>20</option>
+                                <option value='21'>21</option>
+                                <option value='22'>22</option>
+                                <option value='23'>23</option>
+                                <option value='24' selected="selected">24</option>
+                            </select>
+                            点
+                            <a  href="javascript:" class="frm_input_append" onclick="searchbtn();"><i class="icon16_common search_gray">搜索</i>&nbsp;</a>
+                        </div>
+                    </div>
+                    <div class="table_wrp files list">
+                        <table class="h_list" width="100%" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <td>IP</td>
+                                    <td>访问次数</td>
+                                    <td>操作</td>
+                                </tr>
+                            </thead>
+                            <tbody id="filelist">
+                                @{
+                                    foreach (StatModel item in Model)
+                                    {
+                                    <tr>
+
+                                        <td>
+                                            @item.StatName
+                                        </td>
+                                        <td>
+                                            @item.Count
+                                        </td>
+                                        <td><a href="@Url.Action("UserAccessList", "Stat", new { IpAddress = @item.StatName, bh = @ViewBag.BeginHour, eh = @ViewBag.EndHour })">相关用户</a></td>
+                                    </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <div class="tool_area clearfix">
+                            <span class="totalSize"></span>
+                            <div class="pagination">
+                                <span class="page_nav_area">
+                                    <a href="@WrightPageUrl(1)" class="btn page_first"><i class="arrow"></i>首页</a>
+                                    @if (ViewBag.PageIndex == 1)
+                                    {
+                                        <a href="javascript:void(0);" class="btn page_prev"><i class="arrow"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@WrightPageUrl(ViewBag.PageIndex - 1)" class="btn page_prev"><i class="arrow"></i></a>
+                                    }
+                                    <span class="page_num">
+                                        <label>@ViewBag.PageIndex</label><span class="num_gap">/</span><label>@ViewBag.PageTotal</label>
+                                    </span>
+                                    @if (ViewBag.PageIndex == ViewBag.PageTotal)
+                                    {
+                                        <a href="javascript:void(0);" class="btn page_next"><i class="arrow"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@WrightPageUrl(ViewBag.PageIndex + 1)" class="btn page_next"><i class="arrow"></i></a>
+                                    }
+                                    <a href="@WrightPageUrl(ViewBag.PageTotal)" class="btn page_last">尾页</a>
+                                </span>
+                                <span class="goto_area">
+                                    <input type="text"><a href="javascript:void(0);" class="btn page_go">跳转</a>
+                                </span>
+                                <input type="hidden" value="@ViewBag.PageIndex" id="pageIndex" />
+                                <input type="hidden" value="@ViewBag.PageSize" id="pageSize" />
+                                <input type="hidden" value="@ViewBag.PageTotal" id="pageTotal" />
+
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src='~/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+
+    <script src='~/Scripts/common.js?v=115' type='text/javascript'></script>
+
+
+    <script src='~/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+
+
+
+
+
+    @helper WrightPageUrl(int pageIndex)
+{
+    var index = pageIndex;
+        @:/Stat/IpAccessList?pi=@index&ps=@ViewBag.PageSize&bh=@ViewBag.BeginHour&eh=@ViewBag.EndHour&keyWord=@ViewBag.KeyWord
+    }
+    <script type="text/javascript">
+        $(function () {
+            //翻页
+            $(".goto_area a.page_go").click(function () {
+                var pageindex = $(this).parent().find("input").val();
+                var reg = /^\+?[1-9][0-9]*$/;
+                if (typeof pageindex == "undefined" || pageindex == "" || !reg.test(pageindex)) {
+                    ShowMessage("请输入要跳转的页面", "error");
+                    return;
+                }
+                var pagesize = $("#pageSize").val();
+                var pagetotal = $("#pageTotal").val();
+                var keyword = $("#keyInput").val();
+                var bh = $("#selectBeginHour").val();
+                var eh = $("#selectEndHour").val();
+                if (parseInt(pageindex) > parseInt(pagetotal)) {
+                    ShowMessage("超过最大页面", "error");
+                    return;
+                }
+                var url = "/Stat/IpAccessList?pi=" + pageindex + "&ps=" + pagesize + "&keyword=" + keyword + "&bh=" + bh + "&eh=" + eh;
+                window.location.href = url;
+            });
+
+            $("#selectBeginHour").val(@ViewBag.BeginHour);
+            $("#selectEndHour").val(@ViewBag.EndHour);
+        });
+
+        function searchbtn() {
+            var pagesize = $("#pageSize").val();
+            var pageindex = $("#pageIndex").val();
+            var keyword = $("#keyInput").val();
+            var bh = $("#selectBeginHour").val();
+            var eh = $("#selectEndHour").val();
+            var url = "/Stat/IpAccessList?pi=" + pageindex + "&ps=" + pagesize + "&keyword=" + keyword + "&bh="+bh+"&eh="+eh;
+            window.location.href = url;
+        }
+        function ToggleTimePartSelect()
+        {
+            $(".selectTimePartBox").toggle();
+        }
+    </script>
+</body>
+</html>

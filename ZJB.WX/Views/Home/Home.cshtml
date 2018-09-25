@@ -1,0 +1,144 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>我的住家帮--住家帮(fchezi.com)</title>
+    <link rel="stylesheet" type="text/css" href="indexcss/common.css" />
+    <link rel="stylesheet" type="text/css" href="indexcss/app.css" />
+</head>
+<body class="index zh">
+    <header class="site-header">
+        <div class="container">
+            <nav class="navbar" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                    <a class="navbar-brand" href="index.html">住家帮</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">首页</a></li>
+                        <li><a href="gongneng.html">功能介绍</a></li>
+                        <li><a href="user.html">合作用户</a></li>
+                        <li><a href="javascript:;">免费下载</a></li>
+                        <li><a href="javascript:;">帮助中心</a></li>
+                        <li><a href="contact.html">联系我们</a></li>
+                    </ul>
+                    <ul class="navbar-button list-inline">
+                        <li><a class="btn btn-default login" href="@Url.Action("Login","User")">登录</a></li>
+                        <li><a class="btn btn-primary signup" href="@Url.Action("Register","User")">注册</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="site-jumbotron jumbotron">
+        <div class="row">
+            <div class="jumbotron-words zh">
+                <h2>高效的房产中介管理&营销助手</h2>
+                <img src="images/hero-title-zh@2x.png">
+                <ul class="app-list clearfix">
+                    <li>
+                        <a href="caiji.html">
+                            <div class="app-icon board"></div>
+                            <p class="app-name">房源采集</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="qunfa.html">
+                            <div class="app-icon wall"></div>
+                            <p class="app-name">房源群发</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="refresh.html">
+                            <div class="app-icon library"></div>
+                            <p class="app-name">自动刷新</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="weidian.html">
+                            <div class="app-icon event"></div>
+                            <p class="app-name">房产微店</p>
+                        </a>
+                    </li>
+                    <!--<li> <a href="/tour#review">
+                      <div class="app-icon review"></div>
+                      <p class="app-name zh">回顾</p>
+                      </a> </li>-->
+                </ul>
+                <p><a class="btn btn-primary btn-lg" role="button" href="/m/u/reg"> 立即注册</a></p>
+                <p><a href="/User/Login">注册企业版，免费使用</a></p>
+            </div>
+            <div class="jumbotron-image"> <img src="images/jumbotron-zh.jpg"> </div>
+        </div>
+    </div>
+    <div class="site-banner"></div>
+    <div class="site-content">
+        <div class="container">
+            <!-- Case -->
+            <div class="index-cases">
+                <!-- Contact us -->
+                <div class="row divide-line">
+                    <img src="images/line.png">
+                    <p class="divide-content">随时联系我们</p>
+                </div>
+                <div class="contact-cases clearfix">
+                    <div class="contact-item col-md-5 contact-location">
+                        <div class="contact-icon location"></div>
+                        <div class="contact-info">
+                            <h3>地址</h3>
+                            <p>厦门市思明区软件园</p>
+                        </div>
+                    </div>
+                    <div class="contact-item col-md-4">
+                        <div class="contact-icon phone"></div>
+                        <div class="contact-info">
+                            <h3>电话</h3>
+                            <p>13599929270</p>
+                        </div>
+                    </div>
+                    <div class="contact-item col-md-3">
+                        <div class="contact-icon email"></div>
+                        <div class="contact-info">
+                            <h3>邮箱</h3>
+                            <p>2605757603@qq.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer hack-webkit-render">
+        <div class="copyright text-center">
+            <div class="footer-logo">fchezi</div>
+            <p class="text">Copyright © 2014-2015 住家帮<span class="vertical-dot"></span></p>
+            <div class="sns-info" style="display: none">
+                <a class="sina-info" href="" target="_blank"></a> <a class="qq-info">
+                    <div class="pop">
+                        <label>官方 QQ 群</label>
+                        <p>群1：</p>
+                        <p>群2：</p>
+                        <p>群3：</p>
+                        <p>群4：</p>
+                    </div>
+                </a> <a class="weixin-info">
+                    <div class="pop">
+                        <label>微信客服</label>
+                        <p>请扫描二维码</p>
+                        <div class="qr-wrapper"></div>
+                    </div>
+                </a> <a class="douban-info" href="" target="_blank"></a> <a class="rss-info" href="" target="_blank"></a>
+            </div>
+        </div>
+    </footer>
+    <script id="gta-main" data-baidu="ec912ecc405ccd050e4cdf452ef4e85a" data-google="UA-41231871-1" data-mixpanel="a0378064615fc4a8c3dc1bca7a821e4c"></script>
+    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

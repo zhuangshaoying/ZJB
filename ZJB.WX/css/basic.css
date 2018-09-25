@@ -1,0 +1,120 @@
+table {
+	font-size: 12px;
+}
+dl, dt, dd, ul, li {
+	margin: 0;
+	padding: 0;
+}
+ul, dl {
+	list-style:none;
+}
+a {
+	color: #2E7DC6;
+	text-decoration: none;
+	cursor: pointer;
+}
+a:hover {
+	color: #029a14;
+}
+input, textarea, button, a {
+	outline: 0 none;
+}
+input, select, textarea {
+}
+.clearfix:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+	width: 100%;
+	visibility: hidden;
+}
+.f_l {
+	float: left;
+}
+.margins {
+	margin: 10px 0;
+}
+.msg_box {
+	border: 1px solid #D3D3D3;
+	border-top-style: none;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 2px 2px 0 #E3E3E3;
+	background: #F8F4C9;
+	padding: 5px 10px;
+	color: #666666;
+	margin:0 8px;
+	line-height:24px
+}
+.hidden {
+	display: none;
+}
+.block {/*for ie7*/
+	height: 0;
+	clear: both;
+	width: 100%;
+}
+.block10 {
+	height: 10px;
+	clear: both;
+	width: 100%;
+}
+.button {
+	border-radius: 2px 2px 2px 2px;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	display: inline-block;
+	line-height:18px;
+	margin: 0;
+	outline: 0 none;
+	text-align: center;
+	vertical-align: middle;
+}
+.button_primary, .button_update_primary {
+	background-color: #83cf63;
+	border: 1px solid #83cf63;
+	color: #FFFFFF;
+	text-shadow: none;
+	padding: 2px 8px;
+}
+.button_primary:hover, .button_update_primary:hover {
+	background-color: #029a14;
+	border: 1px solid #029a14;
+}
+.button_small {
+	border: 1px solid #dedede;
+	background: #f3f3f3;
+	color: #029a14;
+	text-shadow: none;
+	padding: 1px 3px;
+	margin-top:8px;
+}
+.button_big {
+	background-color: #35abe7;
+	background-image: -moz-linear-gradient(center top, #3599cc, #0e94d9);
+	border: 1px solid #07618f;
+	color: #FFFFFF;
+	text-shadow: none;
+	padding: 1px 6px;
+}
+.button_primary:hover, .button_small:hover {
+	background-color: #029a14;
+	border: 1px solid #029a14;
+	color:#fff;
+}
+.center {
+	text-align: center;
+}
+.form_body span, .form_body input {
+	display: inline-block;
+}
+.form_body span {
+	width: 50px;
+	text-align: right;
+}
+.form_body input {
+	border-top: 1px solid #D3D3D3;
+	width: 150px;
+	height: 24px;
+	line-height: 24px;
+}

@@ -1,0 +1,672 @@
+﻿@{
+    Layout = null;
+    bool isOpen = ViewBag.IsDebug;
+    isOpen = true;
+}
+
+@if (!isOpen)
+{
+    
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>房源搬家</title>
+	<link href='/css/common.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div class="saleHouse" id="saleHouse">
+  <div class="saleHouse-main ">
+        <div style="font-family:'微软雅黑';font-size:18px;padding:25px 0px 0px 20px;color:#222;line-height:24px">功能正在开发中，敬请期待……</div>
+    </div>
+</div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script> 
+<script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script> 
+<script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script> 
+<script src='/Scripts/updPass.js' type='text/javascript'></script> 
+<script src='/Scripts/common.js' type='text/javascript'></script>
+</body>
+</html>
+ 
+}
+else
+{
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>房源共享</title>
+
+    <link href='/css/common.css' rel='stylesheet' type='text/css' />
+
+    <link href='/css/saleManager.css' rel='stylesheet' type='text/css' />
+
+    <link href='/css/fanye.css' rel='stylesheet' type='text/css' />
+
+</head>
+
+
+<body>
+
+    <div id="saleHouse" class="saleHouse">
+
+        <ul class="sale-tab-sub">
+
+            <li class="sale-sub-menu selected"> <a href="javascript:">房源共享</a> </li>
+
+        </ul>
+
+        <div class="saleHouse-main saleManager-main mm30">
+
+            <div class="sharebuilding-select" style="margin-left:0px">
+
+                <select id="postType" style="height:28px;line-height:28px">
+
+                    <option value="0">全部类型</option>
+
+                    <option value="1">出售</option>
+
+                    <option value="3">出租</option>
+
+                </select>
+
+                <select id="district" style="height:28px;line-height:28px">
+
+                    <option value="0">全部区域</option>
+
+                </select>
+
+                <select id="shareOrgId" style="height:28px;line-height:28px">
+
+                    <option value="0">全部范围</option>
+
+                </select>
+
+                <select id="tagSelect" style="height:28px;line-height:28px">
+                    <option value="">不限</option>
+                    <option value="1">放心</option>
+                     <option value="2">急推</option>
+                     <option value="3">新房</option>
+                     <option value="4">集攻</option>
+                     <option value="0">无标签</option>
+                </select>
+
+                <input class="keywordArea" id="cell" placeholder="请输入小区" style="width: 155px;height:24px;line-height:24px" onkeypress="javascript:enterSumbit()" />
+
+                <input class="keywordArea" id="phone" placeholder="请输入电话号码" style="width: 150px;height:24px;line-height:24px" onkeypress="javascript:enterSumbit()" />
+
+                <select id="order" style="width: 160px;height:28px;line-height:28px">
+
+                    <option value="0">按到期时间由新到旧排序</option>
+
+                    <option value="1">按克隆次数由多到少排序</option>
+
+                </select>
+
+                <input id="research" class="btn-search float-r" type="button">
+
+                </input>
+
+            </div>
+
+            <div class="saleManager-state-content content-main con1">
+
+                <!-- 表格区 -->
+
+                <div class="shareBuilding-content">
+
+                    <table width="100%" cellspacing="0" cellpadding="0s" class="h_list">
+
+                        <thead>
+
+                            <tr>
+
+                                <td width="70">房源编号</td>
+
+                                <td width="472">基本信息</td>
+
+                                <td width="100">联系人</td>
+
+                                <td width="140">共享情况</td>
+
+                                <td width="100">共享期限</td>
+
+                                <td width="60">操作</td>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="houseTable"></tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="shareBuilding-tip" style="display: none"> 您所在的公司和门店还没有人共享过房源，<a id="redirectLink">点此</a>成为第一个共享房源的人吧！ </div>
+
+                <!-- 底部 -->
+
+                <div class="saleManager-bottom">
+
+                    <div class="float-r">
+
+                        <div id="saleManager-fanye" class="commom-fanye"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+
+    <script src='/Scripts/placeholder.js' type='text/javascript'></script>
+
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+
+    <script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script>
+
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+     <script src='~/Scripts/map.js' type='text/javascript'></script>
+
+    <script type="text/javascript">
+        var sharHouseOrg;
+        $(document).ready(function () {
+
+            $("#cell").placeholder();
+
+            $("#phone").placeholder();
+
+
+
+
+        });
+
+
+
+        var building_type_ary = ["不限", "住宅", "别墅", "商铺", "写字楼", "厂房"];
+
+        var post_type_ary = ["不限", "出售", "求购", "出租", "求租", ];
+        tagMap = new Map();
+
+        tagMap.put('1', '/images/secure.gif');
+        $(".tag_" + '1').attr("src", '/images/secure.gif');
+
+        tagMap.put('2', '/images/hot.gif');
+        $(".tag_" + '2').attr("src", '/images/hot.gif');
+
+        tagMap.put('3', '/images/new.gif');
+        $(".tag_" + '3').attr("src", '/images/new.gif');
+
+        tagMap.put('4', '/images/focus.gif');
+        $(".tag_" + '4').attr("src", '/images/focus.gif');
+        var dialog = null;
+
+        $(function () {
+
+            $("#research").click(function () {
+
+                pageNow = 1;
+
+                getShareBuildings();
+
+            });
+
+
+
+            $("#redirectLink").die().live("click", function () {
+
+                parent.$('#houseManagerSell').click();
+
+                var href = parent.$('#houseManagerSell').attr('href');
+
+                var url = href.substring(href.indexOf("'") + 1, href.lastIndexOf("'"));
+
+                parent.hrefLink(url);
+
+            });
+
+
+
+            $("a[name=clone_link]").die().live("click", function () {
+
+                var i = $(this).attr("index");
+
+                var b = buildings[i];
+
+                var url = "/House/GetHouse?postType=" + b.TradeType + "&buildingType=" +
+
+                        b.BuildType + "&editType=1&buildingId=" + b.HouseId + "&chouseId=" + b.HouseId + "&cloneSuccess=0";
+
+                dialog = art.dialog.open(url, {
+
+                    title: "房源克隆",
+
+                   
+                    width: 1006,
+
+                    height: 600
+
+                });
+
+            });
+
+        });
+
+
+        var imageW80H60Q85 = "?imageMogr2/strip|imageView2/2/w/80/h/60";
+        var pageNow = 1;
+        var pageSize = 10;
+        var buildings;
+
+        var allStores = null;
+
+        var tagList = null;
+
+        function getShareBuildings() {
+
+            if (dialog != null) {
+
+                dialog.close();
+
+            }
+
+            var cell = $("#cell").val();
+
+            cell = (cell == "请输入小区") ? "" : cell;
+
+            var phone = $("#phone").val();
+
+            phone = (phone == "请输入电话号码") ? "" : phone;
+            
+            var shareCompanyId = parseInt($("#shareOrgId").find("option:selected").attr("parentId")) > 0 ? 0 : $("#shareOrgId").val();
+            var shreCompanyStoreId = parseInt($("#shareOrgId").find("option:selected").attr("parentId")) > 0 ? $("#shareOrgId").val() : 0;
+
+            $.ajax({
+
+                type: "get",
+
+                url: "/House/GetShareHouseList",
+
+                data: {
+
+                    "isFirst": (($("#shareOrgId option").length > 1) ? "0" : "1"),
+
+                    "postType": $("#postType").val(),
+
+                    "shareCompanyId": shareCompanyId,
+
+                    "shareStoreId": shreCompanyStoreId,
+
+                    "districtId": $("#district").val(),
+
+                    "cell": cell,
+
+                    "tel": phone,
+
+                    "page": pageNow,
+
+                    "pageSize":10,
+
+                    "tags": $("#tagSelect").val(),
+
+                    "sort": $("#order").val()
+
+                },
+
+                dataType: "json",
+                beforeSend:function(){
+                    if (parent)
+                    {
+                        parent.loadingShow();
+                    }
+                },
+                success: function (data) {
+
+                    var districts = data.districts;
+
+                    if (districts != null) {
+
+                        $.each(districts, function (i, n) {
+
+                            $("#district").append("<option value='" + n.RegionID + "'>" + n.Name + "</option>");
+
+                        });
+
+                    }
+
+
+
+                    if (data.allStores != null && data.allStores.length>0) {
+
+                        allStores = data.allStores;
+
+                        $("#shareOrgId").html("<option value='0'>全部范围</option>");
+
+                        $.each(allStores, function (i, n) {
+
+                            $("#shareOrgId").append("<option value='" + n.CompanyId + "' parentId='"+n.ParentId+"'>" + n.Name + "</option>");
+
+                        });
+
+                    }
+
+
+
+                    buildings = data.buildings;
+
+                    var pageCount = parseInt(data.totalSize / pageSize) + ((data.totalSize % pageSize) == 0 ? 0 : 1);
+                    //翻页控件
+                    if (pageCount > 0) {
+                        $("#saleManager-fanye").paginate({
+
+                            count: pageCount,
+
+                            start: pageNow,
+
+                            display: 6,
+
+                            border: false,
+
+                            text_color: '#50b63f',
+
+                            text_hover_color: '#fff',
+
+                            background_color: '#fff',
+
+                            background_hover_color: '#50b63f',
+
+                            images: false,
+
+                            mouse: 'click',
+
+                            onChange: function () {
+
+                                pageNow = $(".jPag-current").html();
+
+                                getShareBuildings();
+
+                            }
+
+                        });
+
+                    }
+                    else {
+                        $("#saleManager-fanye").hide();
+                    }
+
+                    $("#houseTable").html("");
+
+                    if (!(buildings != null && buildings.length>0)) {
+
+                        $(".shareBuilding-content").hide();
+
+                        $(".shareBuilding-tip").show();
+
+                        return;
+
+                    }
+
+                    $.each(buildings, function (i, n) {
+
+                        var imgUrl;
+                        if (n.HouseImgPath == null || n.HouseImgPath=="") {
+
+                            imgUrl = "/images/null.png";
+
+                        } else {
+
+                         
+                            imgUrl = n.HouseImgPath+imageW80H60Q85;
+
+                        }
+
+                        var cloned = ((n.ShareIsClone != null && n.ShareIsClone>0) ? '<span style="color:#6bb05f">已克隆</span>' : '');
+
+                        var tags = '<div class="float-r">';
+
+
+
+                        if (n.Tag != null && n.Tag != '') {
+
+                            var tagArr = n.Tag.split(",");
+
+                            for (var j = 0; j < tagArr.length; j++) {
+                                if (tagMap.get(tagArr[j])) {
+                                    tags += '<span class="tags_pics"><img class="tag_' + tagArr[j] + '" src="' + tagMap.get(tagArr[j]) + '"></img></span>';
+                                }
+                            }
+
+                        }
+
+                        var multiFlag = (n.PicNum>0) ? '<span class="more_pics"></span>' : '';
+
+                        tags = tags + multiFlag + "</div>";
+
+
+
+                        //var priceUnit = ((n.TradeType == 3) ? "元/月" : "万元");
+                        var expDate = n.ShareExpireDay
+
+
+                        var distinctName = $("#district option[value=" + n.Distrctid + "]").html();
+                        var titleContent = '(' + (distinctName == undefined ? "" : distinctName) +
+
+                                ' ' + n.CommunityName + ')' + n.Title;
+
+                        titleContent = titleContent.length > 25 ? titleContent.substring(0, 25) + "..." : titleContent;
+
+                        var shareOrgId = n.ShareCompanyStoreId > 0 ? n.ShareCompanyStoreId : n.ShareCompanyId;
+
+                        var content =
+
+                            '<tr id="htr22">' +
+
+                            '<td width="50">' + n.HouseId + '</td>' +
+
+                            '<td>' +
+
+                                '<dl class="h_info">' +
+
+                                    '<dt class="h_pic">' +
+
+                                        '<a href="' + imgUrl + '" title="" target="_blank">' +
+
+                                            '<img width="80" height="60" src="' + imgUrl + '">' +
+
+                                        '</a>' +
+
+                                    '</dt>' +
+
+                                    '<dd>' +
+
+                                        '<div>' +
+
+                                            '<b style="color:#5b8b00; font-weight:normal">' +
+
+                                                '【' + post_type_ary[n.TradeType] + '】【' +
+
+                                                building_type_ary[n.BuildType] + '】' +
+
+                                            '</b>' +
+
+                                            tags +
+
+                                        '</div>' +
+
+                                    '</dd>' +
+
+                                    '<dd>' +
+
+                                        '<a title="' + n.Title + '" name="clone_link" index="' + i +
+
+                                        '">' + titleContent + '</a>' +
+
+                                    '</dd>' +
+
+                                    '<dd class="h_property">' +
+
+                                        '<span class="float-l h-property-left" style="width:264px">' +
+
+                                        '<span>' + n.CurFloor + '/' + n.MaxFloor + '层</span>&nbsp;&nbsp;' +
+
+                                        '<span>' + n.Room + '室' + n.Hall + '厅' + n.Toilet + '卫</span>&nbsp;&nbsp;' +
+
+                                        n.BuildArea + '㎡&nbsp;&nbsp;' +
+
+                                        '<b class="F_red">' + n.Price + '</b>' + n.PriceUnit + '&nbsp;&nbsp;' + cloned +
+
+                                        '</span>' +
+
+                                    '</dd>' +
+
+                                '</dl>' +
+
+                            '</td>' +
+
+                            '<td width="55">' +
+
+                                n.ShareName + '<br>' + n.ShareTel +
+
+                            '</td>' +
+
+                            '<td width="85"><span>范围：</span><span title="' +
+
+                                $("#shareOrgId option[value=" + shareOrgId + "]").html() + '">' +
+
+                                $("#shareOrgId option[value=" + shareOrgId + "]").html() +
+
+                                '</span><br><span class="clear">克隆数：<b class="F_red">' + n.ShareCount + '</b></span>' +
+
+                            '</td>' +
+
+                            '<td width="60">' + expDate + '</td>' +
+
+                            '<td width="30">' +
+
+                                '<a name="clone_link" index="' + i + '">克隆</a><br>' +
+
+                                ((n.IsMyShare != null && n.IsMyShare == 1) ? '<a onclick="updateshareOrgId(' +
+
+                                n.HouseId+ ')">修改</a>' : '') +
+
+                            '</td>' +
+
+                            '</tr>';
+
+                        $("#houseTable").append(content);
+
+                        $(".shareBuilding-tip").hide();
+
+                        $(".shareBuilding-content").show();
+
+                    });
+
+
+
+                    //if (tagList == null) {
+
+                    //    tagList = data.tagList;
+
+                    //    var tagSelectHtml = '<option value="">全部标签</option>';
+
+                    //    $.each(data.tagList, function (i, tag) {
+
+                    //        tagSelectHtml += '<option value="' + tag.tagName + '">' + tag.tagDesc + '</option>';
+
+                    //    });
+
+                    //    tagSelectHtml += '<option value="notTags">无标签</option>';
+
+                    //    $("#tagSelect").html(tagSelectHtml);
+
+                    //}
+
+                    //$.each(tagList, function (i, tag) {
+
+                    //    $(".tag_" + tag.tagName).attr("src", tag.icon);
+
+                    //});
+
+                },
+
+                complete: function (XMLHttpRequest, textStatus) {
+                    if (parent) {
+                        parent.loadingHide();
+                    }
+
+                }
+
+            });
+
+        }
+
+
+
+        function updateshareOrgId(buildingId) {
+
+            var url = "/House/GetHouesShareCompany?houseId=" +buildingId;
+
+            sharHouseOrg = art.dialog.open(url, {
+
+                title: '修改共享范围',
+
+                width: 280,
+
+                height: 340,
+
+                lock: true,
+
+                esc: false
+
+            });
+
+        }
+
+
+
+        function newWindow(url, param) {
+
+            window.open(url + param);
+
+        }
+
+
+
+        getShareBuildings();
+
+
+
+        function enterSumbit() {
+
+            var event = arguments.callee.caller.arguments[0] || window.event;//消除浏览器差异
+
+            if (event.keyCode == 13) {
+
+                getShareBuildings();
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+}

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>房价</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="apple-mobile-web-app-title" content="房价">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+    <script src="js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+    <div data-role="page">
+        <header style="display: none">
+            <div class="headBox">
+                <div class="mainNav">
+                    <a href="javascript:history.go(-1);" class="back"></a>
+                    <span class="navLine"></span>
+                    <p class="title">最新房价</p>
+                    <a href="#" class="navBtn">网站导航</a>
+                </div>
+            </div>
+        </header>
+        <div data-role="content">
+            <div class="newhouse">
+                <div class="s">
+                    <a href="javascript:;" onclick="showmenu('list-area-div')"><span class="areaid">区域不限<em></em></span></a>
+                    <span class="s1"></span>
+                    <a href="javascript:;" onclick="showmenu('list-price-div')"><span class="priceid">价格不限<em></em></span></a>
+                </div>
+            </div>
+            <div class="main">
+                <div class="news-list">
+                    <ul id="cell">
+                        <li><a href="housedetail.html"><span class="lp_name">融信后海</span><span class="lp_price gray">16000元<img src="images/p1.png" alt="" /></span></a></li>
+                        <li><a href="housedetail.html"><span class="lp_name">东二环泰禾广场</span><span class="lp_price red">17800元<img src="images/p2.png" alt="" /></span></a></li>
+                        <li><a href="housedetail.html"><span class="lp_name">贵安新天地</span><span class="lp_price gray">6800元<img src="images/p3.png" alt="" /></span></a></li>
+                    </ul>
+                    <div class="more_cell">
+                        <div class="more-cha">查看更多</div>
+                    </div>
+                </div>
+            </div>
+            <div class="f">
+                <div class="ee"></div>
+                <div class="e es">
+                    <span class="e1" style="top: 50%;"><i></i><a href="javascript:;" data-id='hide'>收起</a></span>
+                    <div class="e2">
+                        <div class="e2a" id="list-area-div">
+                            <i>区域筛选</i>
+                            <a href="#">不限</a>
+                            <a href="#">思明区</a>
+                        </div>
+                        <div class="e2a" id="list-price-div">
+                            <i>价格筛选</i>
+                            <a href="#">不限</a>
+                            <a href="#">0.6万下</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                function showmenu(id) {
+                    $(".f").show();
+                    $(".es").show().animate({ right: "0px" });
+                    if (id == "list-area-div") {
+                        $("#list-area-div").addClass("e2s");
+                        $("#list-price-div").addClass("e2a");
+                    }
+                    else if (id == "list-price-div") {
+                        $("#list-area-div").addClass("e2a");
+                        $("#list-price-div").addClass("e2s");
+                    }
+                }
+                $(function () {
+                    $("[data-id='hide']").click(function () {
+                        $(".es").animate({ right: "-31%" }, function () {
+                            $(this).hide();
+                            $(".f").hide();
+                            $("#list-area-div").removeClass("e2s");
+                            $("#list-price-div").removeClass("e2s");
+                        })
+                    });
+                })
+            </script>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
+</body>
+</html>

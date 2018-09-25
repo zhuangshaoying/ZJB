@@ -1,0 +1,354 @@
+﻿@using ZJB.Api.Models
+@model ZJB.Api.Models.HouseBasicInfoModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection" />
+    <title>0佣金租房</title>
+    <link rel="stylesheet" href="/css/zufang/reset.css" />
+    <link rel="stylesheet" href="/css/zufang/photoswipe.css" />
+    <link rel="stylesheet" href="/css/zufang/swiper.min.css" />
+    <link rel="stylesheet" href="/css/zufang/index.css" />
+    <link rel="stylesheet" href="/css/zufang/fxtool.css" />
+</head>
+<body>
+    <div class="load">
+        <div class="spinner">
+            <div class="spinner-container container1">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="search index-search">
+            <div id="dd" class="wrapper-dropdown" tabindex="1">
+                <span>厦门</span>
+                <input type="hidden" name="city" value="厦门市">
+            </div>
+            <input type="text" class="search-btn" placeholder="请输入小区名" readonly />
+        </div>
+    </header>
+    <section>
+        <div id="wrapper">
+            <div class="empty2"></div>
+            <div class="swiper-container swiper-border">
+                <div class="swiper-wrapper"> <a href="/esf/list?tradetype=3" class="swiper-slide" style="display:block;"> <img src="/images/zufang/tt.jpg"> </a> </div>
+                <div class="swiper-pagination">&nbsp;</div>
+            </div>
+            <ul id="index" class="j-list">
+                @if (ViewBag.Esflist != null)
+                {
+                    int i = 0;
+                    foreach (HouseBasicInfoModel house in ViewBag.Esflist)
+                    {
+                        <li class="house">
+                            <a href="javascript:void(0);" class="j-url" data-page="1">
+                                <p class="houseTop">
+                                    <span>@house.DistrctName</span><img src="/images/zufang/arrow-round.jpg"><br>
+                                    @*<span>124套房源</span>*@
+                                </p>
+                            </a>
+                            <div>
+                                <a href="javascript:void(0);" class="collect j-collect-btn collect-on"></a> <a href="javascript:void(0);" class="j-url">
+                                    <div class="houseImg" style="background-image: url(@house.HouseImgPath);">
+                                        <p class="value">￥@(house.Price.ToString("f0"))@house.PriceUnit</p>
+                                    </div>
+                                    <div class="houseTxt">
+                                        <p class="houseName">@house.CommunityName</p>
+                                        <p class="houseInfo">@(house.Room)室@(house.Hall)厅@(house.Toilet)卫&nbsp;&nbsp;&nbsp;@(house.BuildArea)m²</p>
+                                        <p class="face">
+                                            <b class="img vtag" style="background-image: url(@house.UserPic)"></b><br>
+                                            <span>@house.UserName</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                    }
+                }
+                    </ul>
+
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader-box">
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"> </div>
+                    <span></span>
+                </div>
+            </div>
+            <div class="empty2"></div>
+        </div>
+    </section>
+    <aside class="village">
+        <div class="search">
+            <input type="text" name="search" placeholder="请输入要搜索的房子名称" />
+            <button id="search"></button>
+            <p id="del" class="del">x</p>
+        </div>
+        <div class="history">
+            <p>行政区域</p>
+            <div class="word"> <a href="" class="btns">湖里区</a> <a href="" class="btns">思明区</a> <a href="" class="btns">海沧区</a> <a href="" class="btns">集美区</a> <a href="" class="btns">翔安区</a> <a href="" class="btns">同安区</a></div>
+        </div>
+        <div class="history">
+            <p>热门搜索</p>
+            <div class="word"> <a href="javascript:void(0);" data-url="wx.php?do=Brand&city=广州市" class="btns btns-on js-area">品牌公寓</a> </div>
+        </div>
+    </aside>
+    <footer>
+        <div class="footer">
+            <a href="/esf/zulist" class="on">
+                <img src="/images/zufang/zf-on.png" /><br>
+                首页
+            </a> <a href="/esf/MeMessage">
+                <span class="js-dot "><img src="/images/zufang/remind.png" /></span><br>
+                消息
+            </a> <a href="/esf/Publish?posttype=3">
+                <img src="/images/zufang/fz.png" /><br>
+                放租
+            </a> <a href="/esf/Me">
+                <img src="/images/zufang/me.png" /><br>
+                我
+            </a>
+        </div>
+    </footer>
+    <script type="text/javascript" src="/js/zufang/jquery.min.js"></script>
+    <script type='text/javascript' src='/js/zufang/doT.js' charset='utf-8'></script>
+    <script type="text/javascript" src="/js/zufang/index.js"></script>
+    <script type='text/javascript' src='/js/zufang/fxtool.js' charset='utf-8'></script>
+    <script type='text/javascript' src='/js/zufang/swiper.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='/js/zufang/jquery.cookie.js'></script>
+    <script>
+$(function() {
+
+    var page = 1;
+    var active = 1;
+    var usize = 1;
+
+    $(".swiper-container").height(window.innerWidth / 128 * 47);
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 1,
+        centeredSlides: true,
+        loop: true,
+        autoplay: 3000,
+        onInit: function(swiper) {
+            $(".swiper-pagination").show();
+        }
+    });
+
+    $(document).on("click", "a.j-url",
+    function() {
+        var currurl = window.location.href;
+        var scrollTop = $(window).scrollTop();
+        var url = currurl + '&top=' + scrollTop;
+        window.history.replaceState('', '', url);
+        window.location = $(this).data('url');
+    });
+    $(document).on("click", "a.js-area",
+    function() {
+        window.history.replaceState("", "", "http://www.zhujia001.com/esf/zulist");
+        window.location = $(this).data('url');
+    });
+
+    function getData(active, page) {
+        var city = $("input[name='city']").val();
+        var utop = $.getUrlParam('top') ? $.getUrlParam('top') : 0;
+
+        $(".load").fadeIn();
+        $.ajax({
+            url: 'wx.php?do=api',
+            type: 'get',
+            data: {
+                'active': active,
+                'page': page,
+                'usize': usize,
+                'ac': 'home',
+                'city': city
+            },
+            dataType: 'json',
+            success: function(result) {
+
+                var temp = doT.template($("#temp").html());
+                $('.j-list').html(temp(result));
+
+                $(window).scrollTop(utop);
+                window.history.replaceState("", "", "http://www.zhujia001.com/esf/zulist");
+
+                $(".load").fadeOut();
+
+            }
+
+        });
+    }
+
+    var wh = $(window).height(),
+    st;
+    //点击搜索框打开搜索页
+    $(document).on("click", ".search-btn",
+    function() {
+        $(".village").addClass("open");
+        st = $("body").scrollTop();
+        window.location.hash = "#searching";
+        $("#wrapper").delay(500).queue(function() {
+            $("body").scrollTop(0);
+            $(this).dequeue();
+        });
+    });
+    document.querySelector(".village").addEventListener("webkitTransitionEnd",
+    function() {
+        if ($(this).hasClass("open")) {
+            $("input[name='search']").focus();
+        }
+    });
+    //点击搜索页的取消按钮
+    //$(document).on("click",".back",function(){$("body").scrollTop(st);$(".village").removeClass("open");});
+    //点击返回按钮
+    window.onpopstate = function() {
+        var url = window.location.href;
+        if (/#searching/gi.test(url)) {
+            $(".village").addClass("open");
+        } else {
+            $("input[name='search']").blur();
+            $("body").scrollTop(st);
+            $(".village").removeClass("open");
+        }
+    };
+    document.addEventListener("touchmove",
+    function(event) {
+        if ($(".village").hasClass("open")) {
+            event.preventDefault();
+        }
+    });
+    //输入搜索框时，显示清除按钮
+    $(document).on("input propertychange", "input[name='search']",
+    function() {
+        if ($(this).val() != "") {
+            $("#del").show();
+        } else {
+            $("#del").hide();
+        }
+    });
+    //点击清除按钮
+    $("#del").click(function() {
+        $("input[name='search']").val("");
+        $(this).hide();
+
+    });
+    //点击搜索按钮
+    $("#search").click(function() {
+        keyword = $("input[name='search']").val();
+        window.location.href = "wx.php?do=Search&city=广州市&keyword=" + keyword;
+    });
+    /*
+					$(window).unload(function(){
+						window.history.replaceState("","","http://www.zhujia001.com/esf/zulist");
+					});
+					*/
+
+    $(document).on('click', ".j-collect-btn",
+    function() {
+
+        var btn = $(this);
+        var hid = btn.attr("data-hid");
+
+        if (btn.hasClass("collect-on")) {
+
+            $.confirm('确认取消收藏吗?',
+            function() {
+                collection(btn, hid)
+            },
+            function() {
+                return false;
+            });
+
+        } else {
+
+            collection(btn, hid)
+
+        }
+
+    });
+
+    function collection(btn, hid) {
+
+        $.ajax({
+            url: 'wx.php?do=collect',
+            type: 'get',
+            data: {
+                'hid': hid
+            },
+            dataType: 'json',
+            success: function(result) {
+
+                if (result.status == 'ok') {
+
+                    $.toast("收藏成功");
+                    btn.addClass("collect-on");
+
+                } else if (result.status == 'cancel') {
+                    $.toast("取消收藏成功");
+                    btn.removeClass("collect-on");
+
+                } else {
+                    $.toast("通信故障，请稍后再试");
+
+                }
+
+            }
+
+        });
+
+    }
+
+    //var dd = new DropDown($('#dd'));//绑定下拉菜单
+    //点击其他元素时隐藏下拉菜单
+    $(document).click(function() {
+        $('.wrapper-dropdown').removeClass('active');
+    });
+    // 加载第一页数据
+   // getData(active, page);
+    var pcity = $.getUrlParam('city');
+    if (pcity) {
+        $.cookie("a6df_ccity", pcity);
+    }
+});
+window.onload = function() {
+    if (document.readyState == "complete") {
+        setTimeout(function() {
+            $(".load").remove();
+        },
+        100);
+    }
+
+}
+    </script>
+  
+</body>
+</html>

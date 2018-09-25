@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>我的收藏</title>
+    <link rel="stylesheet" href="/css/esf/common.css">
+    <link rel="stylesheet" href="/css/esf/manage.css">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf/vendor.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf//all.css" media="all">
+    <script src="~/Scripts/Esf/scroll.js"></script>
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+
+            load();
+        })
+        var k = true;
+        var w = $(window);
+        var curp = 1;
+        function load() {
+            var pars = new Object();
+            pars["status"] = "1";
+            pars["cell"] = "";
+            pars["sort"] = "";
+            pars["houseId"] = "";
+            pars["title"] = "";
+            pars["tags"] = "";
+            pars["pageIndex"] = curp;
+            pars["pageSize"] = 10;
+            pars["userId"] = 0;
+            //pars["tradetype"] =0;
+            //pars["room"] =0;
+            //pars["minprice"] = 0;
+            //pars["maxprice"] = 0;
+            //pars["regionid"] = 0;
+            //pars["districtid"] = 0;
+
+            //pars["line"] = 0;
+            //pars["metroid"] = 0;
+            //pars["ismetro"] = 0;
+            pars["iscollect"] = 1;
+            pars["collectuserid"] = @ViewBag.UserId;
+
+            $.ajax({
+                type: "post",
+                url: "/Esf/GetEsfList",
+                data: pars,
+                dataType: "json",
+                success: function (data) {
+                    var reval = "";
+                    $("#totalSize").html(data.totalSize);
+                    if (data.list != undefined && data.list.length > 0) {
+                        $.each(eval(data.list), function (i, item) {
+                            reval += "<li class=\"bd05b\">";
+                            reval += "    <a class=\"pos-rt\" href=\"/Esf/EsfDetail?houseid=" + item.HouseID + "\">";
+                            if (item.Tag != "") {
+                                var itag = 0;
+                                var css1 = "";
+                                var css2 = "";
+                                $.each(item.Tag.split(','), function (i, item) {
+                                    if (item == 1) {
+                                        itag++;
+                                        if (itag == 2) {
+                                            css1 = " position-2";
+                                        }
+                                        else if (itag == 3) {
+                                            css2 = " style=\"  left: 3.4rem;\"";
+                                        }
+                                        reval += "<i " + css2 + " class=\"icon-tag-property-confirm " + css1 + "\"></i> ";
+                                    }
+                                    if (item == 2) {
+                                        itag++;
+                                        if (itag == 2) {
+                                            css1 = " position-2";
+                                        }
+                                        else if (itag == 3) {
+                                            css2 = " style=\"  left: 3.4rem;\"";
+                                        }
+                                        reval += "<i " + css2 + " class=\"icon-tag-sale-anxious " + css1 + "\"></i> ";
+                                    }
+                                    if (item == 3) {
+                                        itag++;
+                                        if (itag == 2) {
+                                            css1 = " position-2";
+                                        }
+                                        else if (itag == 3) {
+                                            css2 = " style=\"  left: 3.4rem;\"";
+                                        }
+                                        reval += "<i " + css2 + "  class=\"icon-tag-real-door " + css1 + "\"></i>";
+                                    }
+
+                                });
+                            }
+                            reval += "        <figure class=\"sell clearfix\">";
+                            reval += "            <figcaption class=\"item-img\"> <img alt=\"\" class=\"h5-all-img lazy-wd layzed\" src=\"" + item.HouseImgPath + "\" style=\"display: block;\"> </figcaption>";
+                            reval += "            <dl class=\"infor\">";
+                            reval += "                <dt class=\"title-dt\"> <span class=\"title\">" + item.CommunityName + "</span> </dt>";
+                            reval += "                <dd>" + item.Room + "室" + item.Hall + "厅" + item.Toilet + "卫 " + item.BuildArea + "平米 </dd>";
+                            //reval += "                <dd><span class=\"fdd-color\">76</span>人预约看房</dd>";
+
+                            if (item.HouseLabel != "" && item.HouseLabel != null) {
+                                reval += "<dd>";
+                                var varrHouseLabel = item.HouseLabel.split(' ');
+                                var itag = 0;
+                                var lblcss = "";
+                                $.each(varrHouseLabel, function (i, item) {
+
+                                    itag++;
+                                    if (itag == 1) {
+                                        lblcss = " mln ";
+                                    } else if (itag == 2) {
+                                        lblcss = " nbtt ";
+                                    }
+                                    else {
+                                        lblcss = " ditief ";
+                                    }
+                                    reval += "<span class=\"tag-item " + lblcss + "\">" + item + "</span> ";
+
+                                });
+
+                            }
+                            //reval += "                <dd><span class=\"tag-item mln\">满两年</span><span class=\"tag-item nbtt\">南北通透</span><span class=\"tag-item ditief\">靠近地铁</span></dd>";
+                            reval += "            </dl>";
+                            reval += "            <dl class=\"info-2\" data-house-id=\"1174878\">";
+                            //reval += "                <dd> <i class=\"icon-discount-green price-green\"></i><span class=\"price\"><span>" + item.Price + "</span><span class=\"price-amount pull-right\">万</span></span> </dd>";
+                            reval += "                <dd><span class=\"price\"><span>" + item.Price + "</span><span class=\"price-amount pull-right\">" + item.PriceUnit + "</span></span> </dd>";
+                            if (item.postType!=3) {
+                                reval += "                <dd> <span class=\"pull-right cr666\">" + parseInt( item.UnitPrice) + "元/平米</span> </dd>";
+                            }
+                            reval += "            </dl>";
+                            reval += "        </figure>";
+                            if (item.SiteName!=""&& parseInt(item.Line)>0) {
+                                reval += "        <aside class=\"subway text-overflow\">";
+                                reval += "            <div class=\"subway-content\"> <i class=\"icon-sh-subway\"></i> </div>";
+
+                                reval += +item.Line+"号线"+item.SiteName;
+                                reval += "        </aside>";
+
+                            }
+                            reval += "    </a>";
+                            reval += "</li>";
+                        });
+                        $(".list").append(reval);
+                        curp++;
+                    }
+                }
+            });
+        }
+
+
+    </script>
+    
+</head>
+<body>
+    <div class="view-touch">
+        <div class="sub-top">
+            <div class="boutique-esf">
+                <ul class="list"></ul>
+            </div>
+        </div>
+    </div>
+    @*<nav class="nav-bar"> <a class="active" href="@Url.Action("Index")">首页<b class="iconfont">&#xd608;</b></a> <a href="@Url.Action("Delegate")">发布房源<b class="iconfont">혇</b></a> <a href="@Url.Action("Me")">我的<b class="iconfont">혂</b></a> </nav>*@
+    @{ Html.RenderPartial("EsfNav", new { height = "35px", curNav = "add" }); }
+</body>
+</html>

@@ -1,0 +1,227 @@
+﻿@charset "utf-8";
+/**********站点管理**********/
+.web_item {
+	border-bottom:1px solid #ddd;
+	height:54px;
+	padding:0px 12px;
+	overflow:hidden
+}
+.web_item li {
+	float:left;
+	width:33.333%;
+}
+.web_item li span {
+	display:block;
+	height:54px;
+	color:#333;
+	font-size:14px;
+}
+.web_item li img {
+	vertical-align:middle;
+	margin-top:9px;
+}
+.zhanghao {
+	display:block;
+	line-height:54px
+}
+.chakanpwd {
+	display:block;
+	color:#ff5b0a
+}
+.mg {
+	margin:0px 6px
+}
+.editbtn {
+	background:#ff5b0a;
+	color:#fff;
+	border-radius:2px;
+	height:24px;
+	line-height:24px;
+	margin-top:15px;
+	float:left;
+	width:48%;
+	text-align:center;
+	margin-right:4%
+}
+.delbtn {
+	background:#eee;
+	color:#333;
+	margin-right:0
+}
+.addbtn {
+	display:block;
+	margin:15px 0px 0px;
+	background:#ff5b0a;
+	color:#fff;
+	border-radius:2px;
+	height:24px;
+	line-height:24px;
+	text-align:center;
+}
+.mybox {
+	padding:20px 12px
+}
+.mytxt {
+	display:block;
+	color:#a1a1a1;
+	font-size:12px;
+	line-height:20px
+}
+.kuang {
+	display:block;
+	border:1px solid #ddd;
+	padding:0px 10px;
+	margin-top:6px;
+	border-radius:4px;
+}
+.kuangpt {
+	width:100%;
+	height:32px;
+	line-height:32px;
+	font-size:14px;
+	border:none;
+	font-family:'微软雅黑'
+}
+.login_box {
+	background:#fff;
+	border:1px solid #c7ccd3;
+	border-radius:3px;
+}
+.login_item {
+	height:45px;
+	border-bottom:1px solid #c7ccd3;
+	padding:0px 15px 0px 20px;
+	line-height:45px;
+	position:relative	
+}
+.login_item:last-child {
+	border:none
+}
+.login_txt {
+	position:absolute;
+	width:64px;
+	height:45px;
+	line-height:45px;
+	left:15px;
+	color:#000;
+	font-size:18px;
+}
+.w84 {
+	width:84px
+}
+.line {
+	position:absolute;
+	left:80px;
+	top:14px;
+	height:20px;
+	width:1px;
+	background:#d1d1d1
+}
+.l100 {
+	left:100px
+}
+.shuru {
+	padding-left:75px
+}
+.p95 {
+	padding-left:95px
+}
+.shuru_btn {
+	font-family:'微软雅黑', Tahoma, Arial;
+	font-size:16px;
+	border:none;
+	height:30px;
+	line-height:30px;
+	width:100%
+}
+.jizhu {
+	margin-top:8px
+}
+.focus {
+	display:block;
+	background:url(/images/m/checkButtonSelected36x36.png) no-repeat left top;
+	background-size:18px 18px;
+	padding-left:22px;
+	color:#666b72;
+	font-size:14px;
+	line-height:18px;
+	cursor:pointer
+}
+.lost {
+	display:block;
+	background:url(/images/m/checkButtonCancel36x36.png) no-repeat left top;
+	background-size:18px 18px;
+	padding-left:22px;
+	color:#666b72;
+	font-size:14px;
+	line-height:18px;
+	cursor:pointer
+}
+.sub_box {
+	margin-top:15px
+}
+.sub_btn {
+	width:100%;
+	height:36px;
+	line-height:36px;
+	border:none;
+	background:#5f9bf8;
+	background-image:-webkit-gradient(linear,left top,left bottom,from(#ff5b0a),to(#ff5b0a));
+	background-image:-webkit-linear-gradient(#ff5b0a,#ff5b0a);
+	background-image:-moz-linear-gradient(#ff5b0a,#ff5b0a);
+	background-image:-ms-linear-gradient(#ff5b0a,#ff5b0a);
+	background-image:-o-linear-gradient(#ff5b0a,#ff5b0a);
+	background-image:linear-gradient(#ff5b0a,#ff5b0a); 
+	border-radius:4px;
+	color:#fff;
+	font-size:16px;
+	font-family:'微软雅黑', Tahoma, Arial;
+	text-align:center;
+	cursor:pointer
+}
+.gray {
+	color:#bbb
+}
+.tishi_top {
+	margin-top:60px;
+	background:url(/images/m/ask_ok@2x.png) no-repeat center top;
+	background-size:80px 80px;
+	padding-top:90px;
+	font-size:30px;
+	color:#3db15e;
+	text-align:center
+}
+.beizhu {
+	font-size:14px;
+	color:#a3a3a3;
+	padding:10px 12px;
+	text-align:center
+}
+.cancel {
+	position:absolute;
+	left:12px;
+	width:20px;
+	height:45px;
+	background:url(/images/m/login_close20x20.png) no-repeat left center;
+	/*background-size:20px 20px;*/
+	cursor:pointer
+}
+.yzmBtn {
+	width:88px;
+	height:26px;
+	border:1px solid #ccc;
+	margin: 0px;
+	padding:0px;
+	cursor: pointer;
+	background:#f4f4f4;
+	background-image:-webkit-gradient(linear,left top,left bottom,from(#f4f4f4),to(#f4f4f4));
+	background-image:-webkit-linear-gradient(#f4f4f4,#f4f4f4);
+	background-image:-moz-linear-gradient(#f4f4f4,#f4f4f4);
+	background-image:-ms-linear-gradient(#f4f4f4,#f4f4f4);
+	background-image:-o-linear-gradient(#f4f4f4,#f4f4f4);
+	background-image:linear-gradient(#f4f4f4,#f4f4f4); 
+	color:#333;
+	font-size:12px;
+	font-family:'微软雅黑', Tahoma, Arial;
+	text-align:center;
+}

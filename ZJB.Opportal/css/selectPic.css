@@ -1,0 +1,142 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*我的图库*/
+.selectPic {
+	width:770px;
+	margin:8px;
+	position:relative
+}
+.selectPic-left {
+	float:left;
+	width:350px;
+	margin-left: 10px;
+}
+.selectPic-right {
+	float:right;
+	height:28px;
+	line-height:4px;
+	margin-right: 4px;
+}
+.selectPic-right li {
+	display:block;
+	float:right;
+	width:80px;
+	height:20px;
+	line-height:20px;
+	font-size:12px;
+	border:1px solid #6fb45a;
+	margin:0 2px;
+	text-align:center
+}
+.selectPic-right li a {
+	color:#6fb45a;
+}
+.selectPic-content {
+	margin:4px;
+	float:left;
+}
+.selectPic-content li {
+	cursor:pointer;
+	padding:0px;
+	margin:0px;
+	height:120px
+}
+.select-content-input {
+	font-size:12px;
+	width:115px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+/*鼠标放大图*/
+.selectPic-show {
+	position:absolute;
+	z-index:10000;
+	background-color:#fff
+}
+.selectPic-img {
+	border:2px solid #50b63f
+}
+.houseTitle-font {
+	display:block;
+	height:48px;
+	line-height:48px;
+	text-align:center;
+	color:#ff6600;
+	font-size:14px
+}
+/*我的图库管理*/
+.myImgManage {
+	min-height:460px;
+	margin:10px 8px;
+	_height:460px
+}
+.myImgManage-header {
+	height:28px;
+}
+.myImgManage-left {
+	float:right;
+}
+.myImgManage-right {
+	float:right;
+	height:28px;
+	line-height:28px
+}
+.myImgManage-right li {
+	display:block;
+	float:right;
+	width:80px;
+	height:20px;
+	line-height:20px;
+	font-size:12px;
+	border:1px solid #6fb45a;
+	margin:0 2px;
+	text-align:center
+}
+.myImg-selected {
+	background-color:#6fb45a;
+}
+.myImg-selected a {
+	color:#fff
+}
+.myImgManage-content {
+	margin:8px 6px;
+	float:left;
+	font-size:12px
+}
+.myImgManage-select {
+	height:28px;
+	line-height:28px
+}
+.myImgManage-select select {
+	margin:0 10px;
+	width:100px;
+	height:24px
+}
+.myImgManage-content li {
+	width:120px;
+	text-align:center
+}
+.myImgManage-input {
+	margin:8px 0 0
+}
+.myImgManage-font {
+	display:inline-block;
+	width:110px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.myImgManage-bottom {
+	margin:0 8px;
+	height:28px;
+	font-size:12px
+}
+.myImyManageNoPic {
+	color:#f00;
+	font-size:15px;
+	height:200px;
+	line-height:200px;
+	text-align:center
+}

@@ -1,0 +1,204 @@
+﻿@{
+
+    Layout = null;
+    List<RegionPrice> regionPrices = ViewData["regionPrice"] != null ? (List<RegionPrice>) ViewData["regionPrice"] : new List<RegionPrice>();
+
+}
+@model List<Community>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>查房价-住家帮</title>
+    <meta name="applicable-device" content="mobile" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <script src="/js/jquery-1.8.3.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/iconfont.css">
+    <link type="text/css" rel="stylesheet" href="/css/esf/common.css">
+    <link type="text/css" rel="stylesheet" href="/css/esf/vendor.css">
+    <link type="text/css" rel="stylesheet" href="/css/searchprice.css">
+</head>
+
+<body>
+    <div class="h5-index-wrapper">
+        <header class="w-defaulthead">
+            <a class="back wk_iconfont" href="javascript:void(0);" onclick="goback()">&#xe610;</a>
+            <h1>查房价</h1>
+            <a class="menu WKBigDataBtn" href="@Url.Action("me", "esf")"></a>
+        </header>
+    </div>
+    <section class="bb">
+        <div class="search flexbox search0620">
+            <div class="searbox h14" id="myhouse-search">
+                <div class="inputbox center"><a class="input ipt"><i></i>请输入小区名或地址</a></div>
+            </div>
+        </div>
+    </section>
+    <!--搜索模块begin-->
+    <div id="search-panel" class="search-panel" style="display:none">
+        <div class="banner bd05b clearfix">
+            <a href="javascript:void(0);" class="nav-cancel">取消</a>
+            <div class="bar-search">
+                <form class="form-search" action="">
+                    <input type="search" id="jiansuo" class="input-search empty" name="keyword" value="" placeholder="请输入小区名或地址">
+                    <a class="close">关闭</a>
+                </form>
+            </div>
+        </div>
+        <div class="view-touch">
+            <div class="search-result">
+                <!--搜索历史记录begin-->
+                <!--搜索历史记录end-->
+                <!--搜索显示begin-->
+                <ul class="search-tip" style=""></ul>
+                <!--搜索显示end-->
+                <!--无搜索记录begin-->
+                <p class="inexistence" style="display:none">暂无搜索记录</p>
+                <!--无搜索记录end-->
+            </div>
+        </div>
+    </div>
+    <!--搜索模块end-->
+    <!--热门区县begin-->
+    <section class="mb8 qxcj">
+        <div class="mTitle">
+            <h2 class="no-b">热门区县</h2>
+        </div>
+        <ul class="t-house-list" id="horizontalBar">
+
+            @{
+                var i = 0;
+                foreach (var regionPrice in regionPrices)
+                {
+                    <li@(Html.Raw(i>3?" class=\"hotDisMore\" style=\"display: none;\"":""))>
+                        <a href="javascriot:;">
+                            <h1>@regionPrice.RegionName</h1>
+                            <div><span><i>@(regionPrice.SellPrice)元/㎡</i></span></div>
+                            <span class="@(regionPrice.SellPriceChange>=0?"jt-up":"jt-dn")">@(regionPrice.SellPriceChange > 0 ? regionPrice.SellPriceChange : (-1 * regionPrice.SellPriceChange))%</span>
+                        </a>
+                    </li>
+                    i++;
+                }
+            }
+         
+
+
+        </ul>
+        <a class="more_std" id="hotmore" href="javascript:void(0);"></a>
+    </section>
+    <!--热门区县end-->
+    <!--推荐小区begin-->
+    <section class="mBox" id="arealist">
+        <div class="mTitle">
+            <div class="mTitle">
+                <h2 class="no-b">推荐小区</h2>
+            </div>
+        </div>
+        <ul class="arealist" id="hotxq">
+            @{
+               
+                foreach (var item in Model)
+                {
+                    <li class="pdY14">
+                        <a href="/Community/Detail?communityId=@(item.CommunityID)">
+                            <div class="img"><img width="106" height="80" class="lazyload" src="@(string.IsNullOrEmpty(item.CoverImg)?"/images/nopic.jpg":item.CoverImg)" style="display: inline;">
+                            </div>
+                            <div class="info">
+                                <h1 class="round"> @(item.Name) </h1>
+                                <p><span class="red-df flor f14 ">@(item.SellPrice.ToString())元/㎡</span> @(item.DistrctName)-@(item.RegionName)
+                                </p>
+                                <p><span class="flor @(item.SellPriceChange>=0?"jt-up":"jt-dn") f14">@(item.SellPriceChange > 0 ? item.SellPriceChange : (-1 * item.SellPriceChange))%</span> @(HDictionary.Instance.BuildingType(Convert.ToString(item.BuildType)))&nbsp;&nbsp;@(string.IsNullOrEmpty(item.CompleteDate)?"": item.CompleteDate+ "年建造")
+                                </p>
+                                @*<p>二手房7套</p>*@
+                            </div>
+                        </a>
+                    </li>
+                }
+            }
+
+           </ul>
+        <div class="moreList"><a href="@Url.Action("Search","Community")" class="">查看全部推荐小区</a></div>
+    </section>
+    <!--推荐小区end-->
+
+<script language="javascript">
+    var goback = function() {
+        history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.com/';
+    }
+    $(function() {
+        $("#myhouse-search").bind("click", function() {
+            $("#search-panel").show();
+        });
+        $(".nav-cancel").bind("click", function() {
+            $("#search-panel").hide();
+        });
+        $("#jiansuo").bind("keyup", function() {
+            if ($(this).val() !== "") {
+                $(".history").hide();
+                $(".search-tip").show();
+                $(this).removeClass("empty");
+                $.ajax({
+                    type: "post",
+                    url: "/House/GetCellsByInput",
+                    data: "buildingType=1&inputStr=" + $(this).val(),
+                    dataType: "json",
+                    success: function(data) {
+                        var cells = data.cells;
+                        var xq = "";
+                        $.each(cells, function(i, n) {
+
+                            xq += "<li class=\"bd05b\">";
+                            xq += "    <a  href=\"/Community/Detail?communityId=" + n.cellCode + "\">";
+                            xq += "        <h6 class=\"infor-type\"> <span class=\"dpib\">" + n.cellName + "</span> </h6>";
+                            xq += "        <p class=\"search-hint\">" + n.address + "</p>";
+                            xq += "    </a>";
+                            xq += "</li>";
+
+                        });
+                        $(".search-tip").html(xq);
+
+                        //$(".keyList").find("dd").eq(0).children("a").addClass("upordownSelect");
+                        //$(".keyList").animate({ scrollTop: 0 }, 100);
+                        //j = 0;
+                        //top = 0;
+                        //scrollNum = 0;
+                    }
+                });
+            } else {
+                $(".history").show();
+                $(".search-tip").hide();
+                $(this).addClass("empty");
+            }
+        });
+        $("a.close").bind("click", function() {
+            $(".history").show();
+            $(".search-tip").hide();
+            $(this).addClass("empty");
+            $("#jiansuo").val("");
+            $("#house-search").val("");
+            curp = 1;
+            k = true;
+            $(".list li").remove();
+            $(".list").html("");
+            load();
+        });
+        $(".js-action-all-new-top-layer-close").bind("click", function() {
+            $(this).parent().hide();
+        });
+
+        //热门区县收缩
+        $("#hotmore").bind("click", function() {
+            $(this).toggleClass("up");
+            $(".hotDisMore").toggle();
+        })
+
+    })
+</script>
+
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>
+

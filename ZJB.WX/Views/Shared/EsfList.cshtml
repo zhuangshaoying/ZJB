@@ -1,0 +1,6 @@
+﻿@{
+    Layout = null;
+    var data = new RouteValueDictionary(this.Model);
+    var height = data["navHeight"] ?? data["height"] ?? "39px";
+    var curEsfNav = data["curNav"] ?? "home";
+}

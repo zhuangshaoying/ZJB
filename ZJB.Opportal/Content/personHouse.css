@@ -1,0 +1,114 @@
+@charset "utf-8";
+/* CSS Document */
+.personHouse-main {
+	margin:0 8px
+}
+/*自动刷新*/
+.personRefresh {
+	float:right;
+	height:36px;
+	line-height:36px;
+	font-weight:normal;
+	margin-right:8px;
+	font-size:12px
+}
+.personRefresh #coin1 {
+	margin:0px 4px;
+	height:14px
+}
+.personRefresh #coin2 {
+	height:14px
+}
+.houseTip {
+	margin:0 12px;
+	float:right;
+	font-size:12px
+}
+.houseTip a {
+	margin:6px 0
+}
+/*查询区*/
+.personHouse-select {
+	margin:10px auto;
+	font-size:12px
+}
+.personHouse-select .person-select-height {
+	height:26px;
+	line-height:26px
+}
+.personHouse-select a {
+	margin:0 8px
+}
+.personHouse-select a:hover {
+	color:#ff6600
+}
+.personHouse-select a:visited {
+	color:#ff6600
+}
+.personHouse-select li input[type='text'] {
+	height:22px;
+	line-height:22px;
+	margin:0 4px
+}
+.person-select-height select {
+	height:26px;
+	line-height:26px;
+	width:120px
+}
+.person-select-areaList a, .person-select-areaList span {
+	display:inline-block;
+	height:26px;
+	line-height:26px;
+	text-overflow:ellipsis;
+}
+.personHouse-select-area {
+	border:1px solid #5ea552;
+	padding:5px;
+	background-color:#e4ffe0;
+}
+.personHouse-select-area a {
+	display:inline-block;
+	height:24px;
+	line-height:24px;
+	text-overflow:ellipsis;
+	margin:0 4px
+}
+/*表格区*/
+	.h_houseCollect {
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.h_houseCollect span, .h_property span {
+	margin:0 8px 0 0
+}
+.personHouse-districtNa, .personHouse-areaNa, .personHouse-cell {
+	display:inline-block;
+	float:left
+}
+.personHouse-title a {
+	display:inline-block;
+	width:450px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.personHouse-addr {
+	display:inline-block;
+	float:left;
+	width:120px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.personHouse-pic {
+	padding:3px 5px;
+	background:#569c4a;
+	border-radius:3px;
+	color:#fff;
+}
+/*翻页功能*/
+.personHouse-bottom {
+	float:right;
+	margin:10px 8px
+}

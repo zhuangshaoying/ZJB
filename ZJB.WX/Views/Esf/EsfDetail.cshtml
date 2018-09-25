@@ -1,0 +1,1078 @@
+﻿@using ZJB.Api.Entity
+@using ZJB.Api.Models
+@model ZJB.Api.Models.HouseBasicInfoModel
+
+@{
+    PublicUserModel userInfo = ViewBag.UserInfo;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@Model.Title-住家帮</title>
+    <meta name="keywords" content="住家帮">
+    <meta name="description" content="住家帮为您提供厦门最新二手房信息，房源信息真实可靠，方便您在线预约看房、买房、卖房。">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+	<link href="~/Css/Esf/iconfont.css" rel="stylesheet">
+    <link href="~/Css/Esf/vendor.css" rel="stylesheet" />
+    <link href="~/Css/Esf/detail.css" rel="stylesheet" />
+    <link href="~/Css/Esf/gallery.css" rel="stylesheet" />
+    <link href="~/Css/Esf/swipe.css" rel="stylesheet" />
+    <link href="~/Css/Esf/list.css" rel="stylesheet" />
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/Esf/iscroll.js"></script>
+	<script type="text/javascript" src="~/Scripts/Esf/echarts.min.js"></script>
+    <style type="text/css">
+        .mod-smallnote.scale .smallnote-text {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .mod-smallnote.smallnote-mobile .smallnote-text {
+            padding: 0 20px;
+            font-size: 14px;
+            line-height: 35px;
+            border-radius: .3rem;
+        }
+
+        .mod-smallnote .smallnote-text {
+            color: #fff;
+            background: #3f454e;
+            display: inline-block;
+            opacity: 0;
+            padding: 5px 14px 4px;
+            border-radius: 3px;
+            -webkit-transform: scale(1.2);
+            -webkit-transition: -webkit-transform .4s ease, opacity .4s ease;
+            transform: scale(1.2);
+            transition: transform .4s ease, opacity .4s ease;
+        }
+
+
+        .mod-smallnote.smallnote-mobile {
+            margin: auto;
+            top: 0;
+            padding: 0 20px;
+            height: .36rem;
+        }
+
+        .mod-smallnote {
+            position: fixed;
+            left: 0;
+            top: 50px;
+            bottom: 0;
+            right: 0;
+            text-align: center;
+            height: 18px;
+            padding: 5px 14px 4px;
+            margin: 0 auto;
+            z-index: 100000;
+        }
+
+
+
+
+
+        .actiTit4 {
+            padding: 5px 3% 10px 3%;
+            position: relative;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            background-color: #fff;
+            border-bottom: 1px solid #d5d5d5;
+            background-color: #fff;
+        }
+
+            .actiTit4 .titleH5 {
+                color: #83868f;
+                font-size: 14px;
+                position: relative;
+                line-height: 35px;
+            }
+
+                .actiTit4 .titleH5 span {
+                    font-size: 12px;
+                    color: #898989;
+                }
+
+            .actiTit4 em {
+                color: #e60012;
+            }
+
+        em, i, cite {
+            font-style: normal;
+        }
+
+        .actiTit4 .titleH5 a {
+            float: right;
+            color: #898989;
+            font-size: 12px;
+            background: url(icon/icon_arrow.png) no-repeat right center;
+            background-size: 7px 13px;
+            -webkit-background-size: 7px 13px;
+            position: absolute;
+            right: 0;
+            top: 0px;
+            padding-right: 12px;
+        }
+
+
+        #wrapper {
+            overflow: hidden;
+        }
+
+        #scroller {
+            /*width: 780px;*/
+            overflow: hidden;
+            display: block;
+            background: #FFFFFF;
+            height: 50px;
+        }
+
+
+        ul, ol, li {
+            list-style: none;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        .boxImg li {
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+            border-radius: 100px;
+            float: left;
+            margin-right: 8px;
+        }
+
+        ul, ol, li {
+            list-style: none;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+
+
+        .boxImg img {
+            width: 100%;
+            height: 100%;
+        }
+
+        img {
+            width: auto\9;
+            height: auto;
+            width: 100%;
+            border: 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="focus-opt"><a href="javascript:;" onclick="goback()" class="back" style="z-index: 100; opacity: 1;"><i></i></a></div>
+        <!--焦点图-->
+        <div class="page-swipe">
+
+            <div class="swipe-box">
+                <div id="slider" class="swipe" style="visibility: visible;">
+                    <div class="swipe-wrap">
+                        @if (ViewBag.Images != null)
+                        {
+                            foreach (HouseImage img in ViewBag.Images)
+                            {
+                                <figure>
+                                    <div class="wrap2016">
+                                        <div class="image" style="background: url(@img.ImagePath) center no-repeat; background-size: cover"></div>
+                                    </div>
+                                </figure>
+
+                            }
+                        }
+                    </div>
+                    <span class="pic-count" id="pic-count"><span class="count-cur">1</span>/@ViewBag.ImgSum</span>
+                </div>
+                <nav>
+                    <ul id="position"></ul>
+                </nav>
+            </div>
+        </div>
+        <script src="~/Scripts/Esf/swipe2016.js"></script>
+
+        <script>
+            //头图轮显
+            var slider = Swipe(document.getElementById('slider'), {
+                auto: false,
+                continuous: true,
+                callback: function (pos) {
+                    $("#pic-count").find("span").html(pos + 1);
+                }
+            });
+        </script>
+        <!--焦点图/E-->
+        <section class="xqCaption mb8">
+            <h1>@Model.Title</h1>
+			<p class="houseId">发布时间：@Convert.ToDateTime(Model.AddDate).ToString("yyyy-MM-dd")</p>
+        </section>
+
+        <!--详细描述begin-->
+        <section class="xqBox mb8">
+			<div class="housedetail">
+			  <div class="layout">
+				<p class="name">总价</p>
+				<p>@Model.Price @Model.PriceUnit</p>
+			  </div>
+			  <div class="layout center">
+				<div class="centerbox">
+				  <p class="name">户型</p>
+				  <p><span>@Model.Room</span>室 <span>@Model.Hall</span>厅 <span>@Model.Toilet</span>卫</p>
+				</div>
+			  </div>
+			  <div class="layout">
+				<p class="name">建筑面积</p>
+				<p>@Model.BuildArea㎡</p>
+			  </div>
+			</div>
+<!--            <div class="price-box style2">
+                <p>
+                    <span class="f18 red-df"> @Model.Price @Model.PriceUnit </span>
+                    @if (Model.TradeType == 1 || Model.TradeType == 2)
+                    {
+                        <span class="f12 gray-8">(@Model.UnitPrice 元/㎡)</span>
+                    }
+
+                </p>
+            </div>-->
+			<div class="esfstag">
+                @if (!string.IsNullOrEmpty(Model.HouseLabel))
+                {
+                    var varrHouseLabel = Model.HouseLabel.Split(' ');
+                    for (int i = 0; i < varrHouseLabel.Length; i++)
+                    {
+                        if (i == 0 && !string.IsNullOrEmpty(varrHouseLabel[0]))
+                        {
+                            <span class="greenbg2">@varrHouseLabel[0]</span>
+                        }
+                        if (i == 1 && !string.IsNullOrEmpty(varrHouseLabel[1]))
+                        {
+                            <span class="redbg">@varrHouseLabel[1]</span>
+                        }
+                        if (i == 2 && !string.IsNullOrEmpty(varrHouseLabel[2]))
+                        {
+                            <span class="ora-b"> @varrHouseLabel[2]</span>
+                        }
+                    }
+
+                }
+
+            </div>
+            <div class="pdY10 xqlh">
+                <ul class="flextable">
+                    <li>
+                        <span>单价：</span>
+                        <p>@if (Model.TradeType == 1 || Model.TradeType == 2)
+                           {
+                               <p>@Model.UnitPrice 元/㎡</p>
+                           }
+                        </p>
+                    </li>
+                    <li>
+                        <span>楼层：</span>
+                        <p>@Model.CurFloor/@Model.MaxFloor 层</p>
+                    </li>
+                    <li>
+                        <span>朝向：</span>
+                        <p>@Model.PointTo</p>
+                    </li>
+                    <li>
+                        <span>装修：</span>
+                        <p>@Model.FitmentStatus</p>
+                    </li>
+                    <li>
+                        <span>年代：</span>
+                        <p>@Model.UsedYear</p>
+                    </li>
+                </ul>
+                @{
+                    if (userInfo.VipType == 99)
+                    {
+                   
+                <ul class="flextable row">
+              
+                    <li class="line"></li>
+                    <li><a id="wapesfagantxq_B02_07" href="@Url.Action("AddSales", "esf", new { hid = @Model.HouseID})" class="arr-rt"><span>按揭流程</span><em>报备客户</em></a></li>
+                </ul>
+                    }
+                }
+                <ul class="flextable row">
+                    <li class="line"></li>
+                    <li>
+                        <a href="@Url.Action("Detail", "Community", new { communityId = Model.CommunityID })" class="arr-rt">
+                            <span>小区：</span>
+                            <p> @Model.CommunityName </p>
+                        </a>
+					
+                    </li>
+                    <li class="line"></li>
+                    <li><a id="wapesfagantxq_B02_07" href="@Url.Action("Accusation", "esf", new {tpye = 1, houseid = @Model.HouseID})" class="arr-rt"><span>房源不真实？</span><em>举报虚假</em></a></li>
+                </ul>
+            </div>
+        </section>
+
+
+
+        <div class="actiTit4">
+            <div class="titleH5">
+                最近浏览<span>（共<em>@ViewBag.ReadNum </em>人）</span>
+
+            </div>
+            <div id="wrapper" style="z-index: 0;">
+                <ul id="scroller" class="boxImg">
+                    @if (ViewBag.Browse != null)
+                    {
+                        int ib = 4;
+                        foreach (PublicUserModel user in ViewBag.Browse)
+                        {
+                            ib++;
+                            <li> <img src="@user.Portrait"> </li>
+                        }
+                        <script>
+                            $(function() {
+                                $("#scroller").css("width","@(ib*50)px");
+                            })
+
+                        </script>
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <!--详细描述end-->
+        <!--房源描述begin-->
+        <section class="mBox">
+            <div class="mTitle con">
+                <h2 class="no-b">基本信息</h2>
+            </div>
+            <div class="xqIntroBox">
+                <div class="xqIntro all">
+                    <p>@Html.Raw(Model.Note) </p>
+					@*<div class="m-content salesbox">
+						<h4>主要卖点</h4>
+						<p>悟空找房！房型正气，南北通透，小区环境不错，物业管理挺好，采光好！</p>
+	
+						<h4>业主心态</h4>
+						<p>悟空找房！看房提前打电话</p>
+	
+						<h4>周边配套</h4>
+						<p>悟空找房！周边配套成熟</p>    
+               		</div>*@
+                </div>
+                <!--<a href="javascript:void(0);" class="more_xq"></a>-->
+            </div>
+        </section>
+        <!--房源描述end-->
+        <!--小区房价参考begin-->
+		<section class="mBox">
+            @{ Html.RenderAction("CommunityDetail", new { id = Model.CommunityID}); }
+
+		    <div class="xqIntroBox" style="display:none">
+				<h4 class="villageChart">用户评论</h4>
+				<div class="commentContent">
+					<div class="commentList">
+					  <div class="part1">
+						<div class="pic"><img src="/images/2.jpg"></div>
+						<span class="commentPhone">131****5788</span> </div>
+					  <div class="part2">建青对应小区，当时买的时候价格已经在9万单价了，现在已经涨了快10%了，整个小区的周边设施非常齐全，要买这个小区的别错过了</div>
+					  <div class="part3"><span><img src="/images/1.jpg"></span><span><img src="/images/1.jpg"></span><span><img src="/images/1.jpg"></span></div>
+					  <div class="part4 clearfix">
+						<p>2016-12-19 16:38:57</p>
+						<div class="goodBad"><span class="good"></span> <span class="goodNum">0</span></div>
+					  </div>
+					</div>
+					
+					<div class="commentList">
+					  <div class="part1">
+						<div class="pic"><img src="/images/2.jpg"></div>
+						<span class="commentPhone">131****5788</span> </div>
+					  <div class="part2">建青对应小区，当时买的时候价格已经在9万单价了，现在已经涨了快10%了，整个小区的周边设施非常齐全，要买这个小区的别错过了</div>
+					  <div class="part3"></div>
+					  <div class="part4 clearfix">
+						<p>2016-12-19 16:38:57</p>
+						<div class="goodBad"><span class="good"></span> <span class="goodNum">0</span></div>
+					  </div>
+					</div>
+				</div>
+				<div class="commentBtnBox">
+					<a class="commentsButton commentMore" href="javascript:;">查看更多</a><a class="commentsButton writeContent nullData WKBigDataBtn" href="javascript:;">我来点评</a>
+			    </div>
+			</div>
+        </section>
+	
+        @*<section class="mBox">
+            <ul class="xqTlist pdX14">
+            <li>小区房价参考<em class="f12">（元/㎡）</em></li>
+            </ul>
+            <div class="xqFJ" id="loupanTrend">
+            <img src="images/price-chart.jpg" width="100%">
+            <div class="zstName"><span><i></i><a href="javascript:;"> 特房美地雅登 </a></span><span><i></i><a href="javascript:;"> 翔安 </a></span><span><i></i><a href="javascript:;"> 厦门 </a></span></div>
+            </div>
+            <div class="cfjList">
+            <ul class="flexbox">
+            <li>
+            <p class="price">本月均价</p>
+            <p><span class="red-f0"> 25918 </span>元/㎡ </p>
+            </li>
+            <li>
+            <p>环比上月</p>
+            <p><span class="jt-up"> 6.20% </span></p>
+            </li>
+            <li>
+            <p class="f13">同比去年</p>
+            <p class="f12"><span class="jt-dn"> 81.47% </span></p>
+            </li>
+            </ul>
+            </div>
+            </section>*@
+        <!--小区房价参考end-->
+        <!--房源地址begin-->
+        @if (!string.IsNullOrEmpty(Model.Lng) && !string.IsNullOrEmpty(Model.Lat))
+        {
+            <section class="mBox">
+                <ul class="xqTlist pdX14">
+                    <li><a href="" class="arr-rt"> 地址：<span>@Model.Address</span></a></li>
+                </ul>
+                <div class="xqMap">
+                    <a href="javascript:void(0)">
+                        <img src="http://api.map.baidu.com/staticimage?width=300&height=130&zoom=13&markers=@Model.Lng,@Model.Lat&markerStyles=m,Y" class="lazyload" width="100%" alt="" style="height: 162px;">
+                        <span class="maptxt">@Model.CommunityName</span>
+                    </a>
+                    @*<a href=""><img class="lazyload" src="images/staticimage.png" width="100%" alt="" style="height: 162px;"><span class="maptxt">首开领翔国际</span></a>*@
+                </div>
+            </section>
+        }
+        <!--房源地址end-->
+        <!--交通配套begin-->
+        @if (!string.IsNullOrEmpty(Model.Traffic))
+        {
+            <section class="mBox">
+                <div class="mTitle con">
+                    <h2 class="no-b">交通配套</h2>
+                </div>
+                <div class="xqIntroBox moreXqBox">
+                    <div class="xqIntro">
+                        @*<p>原305)、708(原308)、709(原309)、750(原750A)、756(原厦56)、760(原605)、761(原608)、780、790、791(原厦69B)等路公车。</p>*@
+                        <p> @Model.Traffic </p>
+                    </div>
+                    <a href="javascript:void(0);" class="more_xq"></a>
+                </div>
+            </section>
+        }
+        <!--交通配套end-->
+        <!--交通配套begin-->
+        @if (!string.IsNullOrEmpty(Model.PeiTao))
+        {
+            <section class="mBox">
+                <div class="mTitle con">
+                    <h2 class="no-b">周边配套</h2>
+                </div>
+                <div class="xqIntroBox">
+                    <div class="xqIntro">
+                        <p> @Model.PeiTao </p>
+                        @*<p>银行：农商银行、建设银行、邮政银行、工商银行、平安银行等、</p>
+                            <p>医院：公共卫生医疗大楼 ，新店中心医院，第一医院分院~同民医院</p>
+                            <p>大学：文教园区</p>
+                            <p>高中：九年一贯制外国语学校 、</p>
+                            <p>幼儿园：大地幼儿园、小金星幼儿园、实验幼儿园、美地雅登实验幼儿园（在建）</p>
+                            <p>超市：翔安市民商业广场,洪前路商住廊带 ，汇景商城购物广场</p>
+                            <p>邮局：新店邮政银行旁</p>
+                            <p>其他：翔安区图书馆、体育场、篮球场（全开放） 翔安区政府路口站：709、752、756、760、761、763、790、791等路公交</p>*@
+                    </div>
+                    <a href="javascript:void(0);" class="more_xq"></a>
+                </div>
+            </section>
+        }
+        <!--交通配套end-->
+        <!--其他二手房源begin-->
+        @if (ViewBag.CommunityHouse != null)
+        {
+           
+                <section class="conListBox mb8">
+                    <div id="wapesfagantxq_B03_01" class="mTitle con">
+                        <a class="arr-rt" href="javascript:void(0);">
+                            <h2>相似房源推荐 </h2>
+                        </a>
+                    </div>
+                    <ul class="conList">
+                       @foreach (HouseBasicInfoModel houseinfo in ViewBag.CommunityHouse)
+                        { <li>
+                            <a href="/Esf/EsfDetail?houseid=@houseinfo.HouseID">
+                                <div class="img">
+                                    <img class="lazyload" alt="" src="@houseinfo.HouseImgPath" style="display: inline;">
+                                </div>
+                                <div class="txt">
+                                    <h3>@houseinfo.Title</h3>
+                                    <p class="f12 gray-8">
+                                        @houseinfo.BuildArea㎡ <span class="space"></span> @houseinfo.Room 室 @houseinfo.Hall 厅 @houseinfo.Toilet 卫
+                                    </p>
+                                    <p class="f14 red-df"> @houseinfo.Price @houseinfo.PriceUnit </p>
+                                </div>
+                            </a>
+                        </li>    
+            }
+                    </ul>
+                </section>
+           
+        }
+
+
+
+
+        <!--其他二手房源end-->
+        <div class="smBox mb8">免责声明：房源信息由网站用户提供，其真实性、合法性由信息提供者负责，最终以政府部门登记备案为准。本网站不声明或保证内容之正确性和可靠性，购买该房屋时，请谨慎核查。</div>
+        <div style="height:49px"></div>
+        <div class="floatBtns2">
+            <div class="left-btn">
+                <div class="flexbox">
+                    <!-- 收藏 -->
+                    <a href="javascript:void(0);" class="icon2 collect @(Model.Collect==1?"on":"")"><i></i>收藏</a>
+                </div>
+            </div>
+            <div class="right-btn">
+                <div class="flexbox">
+                    <!-- 看房优惠 -->
+                    <a onclick="divtjcs()" href="javascript:void(0);" class="tj-yh yykf"> <i></i> 谈价磋商 </a>
+                    <!-- 打电话   onclick="divshow()" int ChatId = 1, string ChatName = "测试聊天", int touserid = 1004638-->
+                    <a href='/chat/index?chatid=@Model.HouseID' class="tj-tel dadianhua"> <i></i> 直约业主 </a>@*tel:@Model.ShareTel*@
+                </div>
+            </div>
+        </div>
+        <a id="gotoup" style="position: fixed; height: 37px; width: 37px; right: 8px; bottom: 65px; z-index: 99; display: none; background: url(../../images/backtop.png) 50% 50% / 37px 37px no-repeat;">&nbsp;</a>
+    </div>
+
+    <!--收藏与取消收藏提示框begin-->
+    @*<div id="collectSuccess" class="favorite" style="display: none;"><i></i>添加收藏成功</div>
+        <div id="cancelCollect" class="favorite reset" style="display: none;"><i></i>已取消收藏</div>*@
+    <!--收藏与取消收藏提示框end-->
+    <!--点击放大图片和切换 start-->
+
+    <script src="~/Scripts/Esf/TouchSlide.1.1.js"></script>
+    <div class="bigswipe-box" style="display: none">
+        <div id="focuse_box">
+            <div class="out_box">
+                <ul class="content_box">
+                    @if (ViewBag.Images != null)
+                    {
+                        foreach (HouseImage img in ViewBag.Images)
+                        {
+                            <li>
+                                @if (img.ImageType == 1)
+                                {
+                                    <p class="img-title">
+                                        室内
+                                    </p>
+                                }
+                                else if (img.ImageType == 2)
+                                {
+                                    <p class="img-title">
+                                        房型
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="img-title">
+                                        小区
+                                    </p>
+                                }
+
+
+                                <img src="@img.ImagePath"> <span>1/4</span>
+                            </li>
+                        }
+                    }
+                    @*<li>
+                        <p class="img-title">客厅</p>
+                        <img src="images/esf/1.jpg"> <span>1/4</span>
+                        </li>
+                        <li>
+                        <p class="img-title">卧室</p>
+                        <img src="images/esf/2.jpg"> <span>2/4</span>
+                        </li>
+                        <li>
+                        <p class="img-title">厨房</p>
+                        <img src="images/esf/3.jpg"> <span>3/4</span>
+                        </li>
+                        <li>
+                        <p class="img-title">卫生间</p>
+                        <img src="images/esf/4.jpg"> <span>4/4</span>
+                        </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>+
+    <div>
+        <div id="dt-login-cs" class="dt-login-layer js-action-dt-login-layer js-action-nomove" style="display: none">
+            <div class="dt-login-layer-content js-action-dt-login-layer-content" style="transform: translate(0px, 0px); -webkit-transform: translate(0px, 0px);">
+
+                <div class="dtll-house icon-fdd-logo-gray-center">
+                    <img class="dtll-house__img js-action-dt-login-img" src="@Model.HouseImgPath" data-src="" alt="">
+                </div>
+                <i onclick="divclose()" class="dtll-close js-action-dt-login-close"></i>
+
+                <div class="dtll-title">@Model.CommunityName</div>
+                <div class="dtll-title-2">@Model.Room 室 @Model.Hall 厅&nbsp;&nbsp;&nbsp;@Model.Price@Model.PriceUnit</div>
+
+                <div class="dtll-box js-action-dt-login-box-1">
+                    <div class="dtll-box__title">我们帮您联系业主议价</div>
+
+                    <input style="width: 95%" class="dtll-box__pno js-action-dt-login-dtpno" id="txt_price" value="" placeholder="请输入您的心理价位~">
+                    <i style="padding-top: 29px;position: absolute;">@Model.PriceUnit</i>
+                    @if (string.IsNullOrEmpty(ViewBag.Tel) || ViewBag.Tel == "")
+                    {
+                        <input class="dtll-box__pno js-action-dt-login-dtpno" id="txt_cstel" maxlength="11" value="" placeholder="请输入您的手机号码~">
+                    }
+
+                    <button class="dtll-box__btn-pno js-action-dt-login-btn-pno" id="btn_Consult" style="background-color: #dddddd">提交</button>
+                </div>
+
+                @*<div class="dtll-box js-action-dt-login-box-2" style="display: none;">
+                    <button style="background-color: #dddddd" onclick="addInterview()" class="dtll-box__btn-auth js-action-dt-login-btn-auth" tabindex="102">完成</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+
+
+    <div>
+        <div id="dt-login-layer" class="dt-login-layer js-action-dt-login-layer js-action-nomove" style="display: none">
+            <div class="dt-login-layer-content js-action-dt-login-layer-content" style="transform: translate(0px, 0px); -webkit-transform: translate(0px, 0px);">
+
+                <div class="dtll-house icon-fdd-logo-gray-center">
+                    <img class="dtll-house__img js-action-dt-login-img" src="@Model.HouseImgPath" data-src="" alt="">
+                </div>
+                <i onclick="divclose()" class="dtll-close js-action-dt-login-close"></i>
+
+                <div class="dtll-title">@Model.CommunityName</div>
+                <div class="dtll-title-2">@Model.Room 室 @Model.Hall 厅&nbsp;&nbsp;&nbsp;@Model.Price@Model.PriceUnit </div>
+
+                <div class="dtll-box js-action-dt-login-box-1">
+                    <div class="dtll-box__title">您的预约信息会通知到业主</div>
+                    <div class="dtll-box__title1">买房顾问将会致电您确认看房时间</div>
+                    <input class="dtll-box__pno js-action-dt-login-dtpno" id="txt_tel" type="tel" value="" placeholder="输入手机号业主才能联系到您哦~" maxlength="11">
+                    <button class="dtll-box__btn-pno js-action-dt-login-btn-pno" id="js-action-dt-login-btn-pno" style="background-color: #dddddd">直约业主</button>
+                </div>
+
+                <div class="dtll-box js-action-dt-login-box-2" style="display: none;">
+                    <div class="dtll-box__title2">验证码已发送至:<span class="dtll-box__title2--pno js-action-dt-login-title2-pno"></span></div>
+                    <input class="dtll-box__auth js-action-dt-login-auth" type="tel" id="txt_code" value="" placeholder="请输入验证码" maxlength="4" tabindex="101">
+                    <button style="background-color: #dddddd" class="dtll-box__btn-auth js-action-dt-login-btn-auth" tabindex="102">完成</button>
+                    <span class="dtll-box__auth-resend-timer js-action-dt-login-auth-resend-timer-div">重新发送&nbsp;<span id="codetime">(30)</span></span>
+                    <div class="dtll-box__desc2 hide js-action-dt-login-auth-change-no-div">没收到验证码？<span class="dtll-box__desc2--span js-action-dt-login-auth-resend" data-analytics-track-event="{&quot;type&quot;:&quot;zy024&quot;}">重新发送</span>或者<span class="dtll-box__desc2--span js-action-dt-login-change-pno" data-analytics-track-event="{&quot;type&quot;:&quot;zy025&quot;}">更换手机号</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dt-shade" class="dt-login-layer js-action-dt-login-layer js-action-nomove"></div>
+
+
+    <script language="javascript">
+        var time;
+        var website = '@Model.HouseImgPath';
+        var url = location.href;
+        var share = {
+            'title': "",
+            'desc': "@Model.CommunityName-@(Model.BuildArea)平-@(Model.Room)室@(Model.Hall)厅@(Model.Toilet)卫-@(Model.Price)@(Model.PriceUnit)",
+            'imgUrl': website,
+            'link': url
+        };
+        var myScroll;
+        function loaded () {
+            myScroll = new IScroll('#wrapper', { eventPassthrough: true, scrollX: true, scrollY: false, preventDefault: false });
+        }
+
+
+        var countdown = 60;
+
+        function createDiv(txt) {
+            var html = "";
+            html += "<div class=\"mod-smallnote smallnote-mobile scale\"><div class=\"smallnote-text\">" + txt + "</div></div>";
+            return html;
+        }
+
+        function settime() {
+            if ($("#tel").val() != "") {
+                if (countdown == 60) {
+                    code();
+                }
+                if (countdown == 0) {
+                    //val.removeAttribute("disabled");
+                    //$("#" + val.id).html("免费获取验证码");
+                    //val.setAttribute("class", "smscodeBtn");
+                    //val.setAttribute("onclick", "settime(this)");
+                    clearTimeout(time);
+                    countdown = 60;
+
+                } else {
+                    //val.setAttribute("disabled", true);
+                    $("#codetime").html("(" + countdown + ")");
+                    //val.setAttribute("class", "smscodeBtn cr9b bdcr9b");
+                    //val.removeAttribute("onclick");
+                    countdown--;
+                }
+                time=  setTimeout(function() {
+                    settime();
+                }, 1000);
+            } else {
+                $("body").prepend(createDiv("手机号码不能为空！"));
+                var k = setInterval(function() {
+                    $(".mod-smallnote").remove();
+                    clearInterval(k);
+                }, 1000);
+
+            }
+        }
+
+        function divtjcs() {
+            $("#dt-login-cs").show();
+        }
+
+        function divshow() {
+
+            if ('@ViewBag.Tel' != 'null' && '@ViewBag.Tel' != "") {
+                var houseid = @Model.HouseID;
+                var pars = new Object();
+                pars["houseid"] = houseid;
+                pars["tpye"] = "0";
+                pars["userid"] = @Model.UserID;
+                pars["buildarea"] = '@Model.BuildArea㎡';
+                pars["huxing"] = '@(Model.Room)室@(Model.Hall)厅@(Model.Toilet)卫';
+                pars["communityname"] = '@Model.CommunityName';
+                pars["oid"] = '@Model.OpenId';
+                $("#dt-shade").show();
+                $.ajax({
+                    type: "post",
+                    url: "/Esf/SetInterview",
+                    data: pars,
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.Success == 1) {
+                            window.location = window.location.href;
+                        }
+                        $("body").prepend(createDiv(data.Message));
+                        var k = setInterval(function() {
+                            $(".mod-smallnote").remove();
+                            $("#dt-shade").hide();
+                            clearInterval(k);
+                        }, 1000);
+                        //alert(data.Message);
+                    }
+                });
+            } else {
+                $("#dt-login-layer").show();
+            }
+            //$(".dt-login-layer").show();
+            //$(".dt-login-layer").slideDown("slow");
+        }
+
+        function verify() {
+            $(".js-action-dt-login-box-1").hide();
+            $(".js-action-dt-login-box-2").show();
+            $(".js-action-dt-login-title2-pno").html($("#txt_tel").val());
+            settime();
+        };
+
+        //验证码;
+        function code() {
+            $.ajax({
+                type: "post",
+                url: "/Esf/IdentifyingCode",
+                data: "tel=" + $("#txt_tel").val(),
+                dataType: "json",
+                success: function(data) {
+
+                }
+            });
+        }
+
+        function saveConsult() {
+            $("#dt-shade").show();
+            if ($("#txt_price").val() == "") {
+                $("body").prepend(createDiv("您的心理价位不能为空"));
+                var k = setInterval(function() {
+                    $(".mod-smallnote").remove();
+                    $("#dt-shade").hide();
+                    clearInterval(k);
+                }, 1000);
+                return;
+            }
+            var pars = new Object();
+            pars["houseid"] = @Model.HouseID;
+            pars["tpye"] = "0";
+            pars["title"] = '@Model.Title';
+
+            if ('@ViewBag.Tel' != 'null' && '@ViewBag.Tel' != "") {
+                pars["tel"] = '@ViewBag.Tel';
+            } else {
+                if ($("#txt_cstel").val() == "") {
+                    $("body").prepend(createDiv("您的的手机号码不能为空"));
+                    var k = setInterval(function() {
+                        $(".mod-smallnote").remove();
+                        $("#dt-shade").hide();
+                        clearInterval(k);
+                    }, 1000);
+                    return;
+                }
+                pars["tel"] = $("#txt_cstel").val();
+
+            }
+            pars["price"] = $("#txt_price").val();
+            $.ajax({
+                type: "post",
+                url: "/Esf/AddConsult",
+                data: pars,
+                dataType: "json",
+                success: function(data) {
+                    if (data.Success == 1) {
+                        window.location = window.location.href;
+                    }
+                    $("body").prepend(createDiv(data.Message));
+                    var k = setInterval(function() {
+                        $(".mod-smallnote").remove();
+                        $("#dt-shade").hide();
+                        clearInterval(k);
+                    }, 1000);
+
+                }
+            });
+
+        }
+
+
+        function addInterview() {
+            $("#dt-shade").show();
+            var houseid = @Model.HouseID;
+            var pars = new Object();
+            pars["userid"] = @Model.UserID;
+            pars["houseid"] = houseid;
+            pars["tpye"] = "0";
+            pars["code"] = $("#txt_code").val();
+            pars["tel"] = $("#txt_tel").val();
+
+            pars["buildarea"] = '@Model.BuildArea㎡';
+            pars["huxing"] = '@(Model.Room)室@(Model.Hall)厅@(Model.Toilet)卫';
+            pars["communityname"] = '@Model.CommunityName';
+            pars["oid"] = '@Model.OpenId';
+            $.ajax({
+                type: "post",
+                url: "/Esf/AddInterview",
+                data: pars,
+                dataType: "json",
+                success: function(data) {
+                    if (data.Success == 1) {
+                        window.location = window.location.href;
+                    }
+                    $("body").prepend(createDiv(data.Message));
+                    var k = setInterval(function() {
+                        $(".mod-smallnote").remove();
+                        $("#dt-shade").hide();
+                        clearInterval(k);
+                    }, 1000);
+                }
+            });
+        }
+
+        function divclose() {
+            clearTimeout(time);
+            $("#dt-login-layer").hide();
+            $("#dt-login-cs").hide();
+        }
+
+        var goback = function() {
+            history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.com/esf/list';
+        }
+        $(function() {
+            loaded();
+            $("#txt_tel").keyup(function() {
+                if ($("#txt_tel").val().length == 11) {
+                    $("#js-action-dt-login-btn-pno").removeAttr("style");
+                    $("#js-action-dt-login-btn-pno").attr("onclick", "verify()");
+                } else {
+                    $("#js-action-dt-login-btn-pno").attr("style", "background-color: #dddddd");
+                    $("#js-action-dt-login-btn-pno").removeAttr("onclick", "");
+                }
+                //code
+            });
+            $("#txt_cstel").keyup(function() {
+                if ($("#txt_cstel").val().length == 11) {
+                    $("#btn_Consult").removeAttr("style");
+                    $("#btn_Consult").attr("onclick", "saveConsult()");
+                } else {
+                    $("#btn_Consult").attr("style", "background-color: #dddddd");
+                    $("#btn_Consult").removeAttr("onclick", "");
+                }
+                //code
+            });
+
+            $("#txt_price").keyup(function() {
+                if ($("#txt_price").val().length > 0) {
+                    if ($("#txt_cstel").length < 1) {
+                        $("#btn_Consult").removeAttr("style");
+                        $("#btn_Consult").attr("onclick", "saveConsult()");
+                    }
+
+                } else {
+                    $("#btn_Consult").attr("style", "background-color: #dddddd");
+                    $("#btn_Consult").removeAttr("onclick", "");
+                }
+                //code
+            });
+
+
+            $("#txt_code").keyup(function() {
+                if ($("#txt_code").val().length == 4) {
+                    $(".js-action-dt-login-btn-auth").removeAttr("style");
+                    $(".js-action-dt-login-btn-auth").attr("onclick", "addInterview()");
+                } else {
+                    $(".js-action-dt-login-btn-auth").attr("style", "background-color: #dddddd");
+                    $(".js-action-dt-login-btn-auth").removeAttr("onclick", "");
+                }
+                //code
+            });
+
+
+            //展开收起
+            $(".more_xq").bind("click", function() {
+                $(this).toggleClass("up");
+                $(this).parent().find("div").toggleClass("all");
+            });
+            //返回顶部
+            $("#gotoup").bind("touchstart touchmove touchend click", function() {
+                $('html,body').animate({
+                    scrollTop: '0px'
+                }, 300);
+            });
+            //收藏
+            $(".collect").bind("click", function() {
+                $(this).toggleClass("on");
+                if ($(this).hasClass("on")) {
+
+                    var pars = new Object();
+                    pars["houseid"] = @Model.HouseID;
+                    pars["type"] = "1";
+
+                    $.ajax({
+                        type: "post",
+                        url: "/Esf/SetCollect",
+                        data: pars,
+                        dataType: "json",
+                        success: function(data) {
+                            $("#collectSuccess").show();
+                            var k = setInterval(function() {
+                                $("#collectSuccess").hide();
+                                clearInterval(k);
+                            }, 1000);
+                        }
+                    });
+
+                } else {
+                    var pars = new Object();
+                    pars["houseid"] = @Model.HouseID;
+                    pars["type"] = "2";
+
+                    $.ajax({
+                        type: "post",
+                        url: "/Esf/SetCollect",
+                        data: pars,
+                        dataType: "json",
+                        success: function(data) {
+                            $("#cancelCollect").show();
+                            var k = setInterval(function() {
+                                $("#cancelCollect").hide();
+                                clearInterval(k);
+                            }, 1000);
+                        }
+                    });
+
+                }
+            });
+
+            //大图切换
+            $(".swipe-wrap .image").bind("click", function(e) {
+                $(".main").hide();
+                $(".bigswipe-box").fadeIn(500);
+                TouchSlide({
+                    slideCell: "#focuse_box",
+                    titCell: ".nav_box li",
+                    mainCell: ".content_box",
+                    autoPlay: false,
+                    effect: "left",
+                    delayTime: 300,
+                    interTime: 3000,
+                    endFun: function(i, c) {
+                        var words = $(".content_box li").eq(i + 1).find("span").text();
+                        $(".word_box").text(words);
+                    }
+                });
+                setTimeout(function() {
+                    var ht = $(window).height();
+                    console.log(ht);
+                    var m_wrap_ht = $('.m_wrap').height();
+                    $('.content_box li img').width($('body').width());
+                    $('.content_box li img').css({
+                        'max-height': ht - m_wrap_ht
+                    });
+                    $('.content_box li').css({
+                        'vertical-align': 'middle',
+                        'height': ht - m_wrap_ht
+                    });
+                    $('.content_box').height(ht - m_wrap_ht);
+                }, 10);
+                e.stopPropagation();
+                $(".content_box li img").bind("click", function(e) {
+                    e.stopPropagation()
+                })
+            });
+			
+			//评论点赞
+			$(".goodBad").bind("click",function(){
+				if($(this).find(".good").hasClass("clicked")) {
+					$(this).find(".good").removeClass("clicked");
+					$(this).find(".goodNum").html(parseInt($(this).find(".goodNum").html())-1);
+				}
+				else {
+				$(this).find(".good").addClass("clicked");
+					$(this).find(".goodNum").html(parseInt($(this).find(".goodNum").html())+1);
+				}
+			});
+			
+        })
+        $(document).click(function() {
+            $(".bigswipe-box").fadeOut(500);
+            $(".main").show()
+        })
+        $(window).scroll(function() {
+            if ($(window).scrollTop() >= 150) {
+                $("#gotoup").fadeIn(300);
+            } else {
+                $("#gotoup").fadeOut(300);
+            }
+        })
+
+    </script>
+
+    <script src="~/Scripts/Esf/wxshare.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

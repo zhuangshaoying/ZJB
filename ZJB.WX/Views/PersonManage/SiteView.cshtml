@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+}
+
+@using ZJB.Core.Utilities
+@model ZJB.Api.Entity.SiteManage
+    
+
+@if (Model.IsNoNull())
+{
+    @Html.Raw(Model.LoginHtml);
+}
+    

@@ -1,0 +1,324 @@
+/*
+ Authur:Ryan
+
+ Version:1.0 
+ */
+* {
+	padding: 0;
+	margin: 0;
+}
+.comeup-icon {
+	width: 19px !important;
+	height: 26px !important;
+}
+.main-bgcolorfive {
+	background-color: #FD5056;
+}
+/*identity-chooice*/
+.identity {
+	opacity: 0.85;
+	background-color: white;
+	text-align: center;
+	padding: 30px 20px 20px 20px;
+}
+.identity img {
+	width: 55px;
+	height: 57px;
+}
+.identity p {
+	margin-top: 8px;
+	margin-bottom: 0px;
+	color: #FD5056;
+	font-size: 16px;
+}
+.identity div:nth-child(1) {
+	border-right: 1px solid #e7e7e7;
+}
+/*order-opition*/
+.order-tip {
+	margin-top: 18px;
+	position: relative;
+	text-align: center;
+	font-size: 14px;
+}
+.order-tip div:nth-child(1) img {
+	width: 46px;
+	height: 19px;
+}
+.order-tip-bg {
+	padding-top: 10px;
+	background-color: #FD5056;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.clearance {
+	height: 10px;
+	background-color: #f0f0f0;
+}
+.order-tip-content {
+	background-color: white;
+}
+.order-tip-clearance {
+	height: 5px;
+	background-color: #f0f0f0;
+}
+.order-tip-heightone {
+	position: absolute;
+	top: -18px;
+	height: 18px;
+	left: 50%;
+	transform: translate(-50%, 0%);
+}
+.order-tip-itm {
+	font-size: 13px;
+	padding: 8px 0px;
+	margin: 0px 25px;
+}
+.order-tip-content .order-tip-itm:nth-child(1) {
+	border-bottom: 1px solid #c8c7cc;
+}
+.order-tip-content .order-tip-itm:nth-child(5) {
+	text-align: left;
+}
+.order-tip-content .mui-switch.mui-active {
+	border-color: #FD5056;
+	background-color: #FD5056;
+}
+/*暂无订阅业新加*/
+.noorder {
+	line-height: 91px;
+	color: white;
+	border: 1px solid white;
+	margin: 0 auto;
+	width: 91px;
+	height: 91px;
+	border-radius: 50%;
+	background-color: inherit;
+}
+.main-title1 {
+	position: inherit;
+	padding: 4px 0px;
+	color: #FD5056;
+	background: white;
+	font-size: 14px;
+	width: 100%;
+}
+/*我的订阅导航条样式*/
+.mui-bar {
+	background-color: #FD5056;
+}
+.main {
+	padding: 0px 15px;
+	margin-top: 77px;
+}
+.mui-action-back {
+	color: white;
+}
+.mui-action-back span {
+	font-size: 16px;
+}
+.mui-title {
+	color: white;
+}
+.main-title {
+	color: #FD5056;
+	background: white;
+	font-size: 14px;
+	width: 100%;
+	top: 45px;
+	position: fixed;
+	padding: 4px 0px;
+}
+/*orderbutton样式*/
+.order-button {
+	background-size: 63px 27px;
+	background-image: url(../images/order.png);
+	width: 63px !important;
+	height: 27px !important;
+	margin-top: 20px;
+}
+.mui-table-view .mui-media-object {
+	max-width: 63px;
+}
+/*模板列表样式*/
+.mui-control-content {
+	background-color: white;
+	min-height: 215px;
+}
+.mui-control-content .mui-loading {
+	margin-top: 50px;
+}
+.tab-nav1 {
+	background-color: #FD5056;
+	height: 2px;
+	margin: 0px 25px;
+}
+.tab-nav2 {
+	background-color: #FD5056;
+	height: 2px;
+	margin: 0px 25px;
+}
+.container {
+	padding-top: 5px;
+}
+.container-in {
+	background-color: white;
+}
+.container p {
+	margin-bottom: 5px;
+}
+.mui-table-view-cell:nth-child(1) .mui-media-body h3 span {
+	width: 16px;
+}
+.mui-table-view-cell:nth-child(1) .mui-media-body p span img {
+	width: 9px;
+}
+.mui-table-view-cell:nth-child(1) .mui-media-body p span {
+	font-size: 12px;
+}
+.order-button {
+	background-size: 63px 27px;
+	background-image: url(../images/order.png);
+	width: 63px !important;
+	height: 27px !important;
+	margin-top: 20px;
+}
+.mui-table-view .mui-media-object {
+	max-width: 63px;
+}
+.mui-media:nth-child(2) img {
+	width: 20px;
+	height: 15px;
+}
+.cj-title h3 span {
+	font-size: 16px;
+}
+.cj-growth p:nth-child(2) {
+	color: #FD5056;
+}
+.cj-growth p span:nth-child(2) {
+	margin-left: 5px;
+	font-size: 16px;
+}
+.cj-three p:nth-child(2) {
+	color: #FD5056;
+}
+.cj-three p span:nth-child(1) {
+	margin-left: 5px;
+	font-size: 16px;
+}
+.cj-price p:nth-child(2) {
+	color: #FD5056;
+	font-size: 16px;
+}
+.cj-time p:nth-child(2) {
+	color: #FD5056;
+	font-size: 16px;
+}
+.mui-table-view-cell {
+	padding: 8px 20px;
+}
+.mui-table-view-cell:after {
+	right: 25px;
+	left: 25px;
+}
+.mui-table-view {
+	margin-bottom: 5px;
+}
+/*tab颜色切换*/
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+	color: #FD5056;
+}
+/*订阅消息模板样式*/
+.cj-title p img {
+	width: 9px !important;
+}
+.cj-title h3 span:nth-child(1) {
+	font-size: 16px;
+}
+.cj-title h3 span:nth-child(3) {
+	font-size: 12px;
+	color: #FD5056;
+}
+.cj-title h3 span:nth-child(2) {
+	margin: 0px 5px 0px 7px;
+}
+.cj-title h3 span:nth-child(2) img {
+	width: 14px !important;
+	height: 9px;
+}
+.cj-title p span {
+	font-size: 12px;
+}
+/*弹出层模板样式*/
+			
+.layermchild {
+	background-color: #808080 !important;
+}
+.layer-width .mui-btn, button, input[type=button], input[type=reset], input[type=submit] {
+	border: none !important;
+	font-size: 16px;
+	padding: 15px;
+}
+/*每一个模板的具体样式*/
+.mui-table-view-cell {
+	padding: 8px 20px;
+}
+#item2mobile .mui-scroll-wrapper {
+	background-color: #f0f0f0;
+}
+#item2mobile .mui-scroll {
+	padding: 5px 10px;
+}
+#item2mobile .message-item {
+	background-color: white;
+	margin-bottom: 5px;
+	position: relative;
+}
+#item2mobile .mui-table-view-cell:after {
+	right: 20px;
+	left: 20px;
+}
+#item2mobile .message-item div:nth-child(1) div:nth-child(1) {
+	line-height: 1;
+	padding: 13px;
+}
+#item2mobile .mui-table-view-cell {
+	padding: 0px 20px 5px 20px;
+}
+.red-strip {
+	left: 58px;
+	top: 0px;
+	width: 5px;
+	height: 100%;
+	position: absolute;
+}
+.red-stripone {
+	margin: 0 auto;
+	width: 1px;
+	height: 15px;
+}
+.red-striptwo {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	margin: 3px auto;
+}
+.red-stripthree {
+	width: 1px;
+	height: 80%;
+	margin: 0 auto;
+}
+.red-stripfour {
+	left: 60px;
+	position: absolute;
+	width: 1px;
+	height: 5px;
+	margin: 0 auto;
+}
+
+@media (max-width: 360px) {
+.red-stripthree {
+	height: 74%;
+}
+}

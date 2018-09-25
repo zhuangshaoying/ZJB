@@ -1,0 +1,197 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=yes" name="format-detection" />
+    <title>聊天-@ViewBag.FName</title>
+    @*<link href="~/Css/chat/ChatCore.css" rel="stylesheet" />*@
+    <link href="~/Css/chat/reset.css" rel="stylesheet" />
+    <link href="~/Css/chat/index.css" rel="stylesheet" />
+    <link href="~/Css/chat/fxtool.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="css/reset.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/fxtool.css" />*@
+</head>
+<body>
+    <!-- loading start -->
+    <div id="xuboxPageHtml"></div>
+    <!-- loading end -->
+
+
+    <input type="hidden" id="@ViewBag.FUserid" data-name="" data-portrait="" data-id="" class="ChatCoreChild" />
+
+    <input type="hidden" id="Chatuser" data-groupid="@ViewBag.GroupId" data-name="@ViewBag.NickName" data-deptname="@ViewBag.ChatName" data-portrait="@ViewBag.Portrait" data-chatid="@ViewBag.ChatId" data-touserid="@ViewBag.FUserid" data-toname="@ViewBag.FName" data-id="@ViewBag.UserID" />
+    @*<script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type='text/javascript' src='js/fxtool.js' charset='utf-8'></script>
+        <script type='text/javascript' src='js/template.js' charset='utf-8'></script>*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    @*<script src="~/Scripts/Chat/index.js"></script>
+        <script src="~/Scripts/Chat/fxtool.js"></script>
+        <script src="~/Scripts/Chat/template.js"></script>*@
+    <script src="~/Scripts/layer/layer.min.js"></script>
+    <script>
+
+        //用户编号
+        var userid = $("#Chatuser").attr("data-id");
+        //用户名
+        var username = $("#Chatuser").attr("data-name");
+        //所属部门
+        var deptname = $("#Chatuser").attr("data-deptname");
+        var portrait = $("#Chatuser").attr("data-portrait");
+        //所属部门编号
+        var chatid = $("#Chatuser").attr("data-chatid");
+
+
+        var touserid = $("#Chatuser").attr("data-touserid");
+        var toname = $("#Chatuser").attr("data-toname");
+
+        var groupid = $("#Chatuser").attr("data-groupid");
+
+
+        $(function () {
+
+
+            var isSend = 0;
+            var isget = 0;
+
+            var mid = 5525;
+            var touid = 42101;
+            var uid = 44982;
+
+            //点击弹出层close按钮
+            $("#close").click(function () {
+                $(".shadow").fadeOut();
+            });
+
+            var charheight = 10000;
+
+
+            $('.chat').animate({ scrollTop: charheight }, 'slow');
+
+            //function sendMsg(content) {
+
+            //    if (isSend == 0) {
+            //        /* $.showIndicator();*/
+            //        isSend = 1;
+            //        $.ajax({
+            //            url: 'wx.php?do=Chat',
+            //            type: 'get',
+            //            data: { 'touid': touid, 'mid': mid, 'msg': content, 'uid': uid },
+            //            dataType: 'json',
+            //            success: function (result) {
+
+            //                if (result.status == "ok") {
+
+            //                    $('#chat').append(template('memsg', result));
+            //                    $('.chat').animate({ scrollTop: charheight }, 'slow');
+
+            //                }
+
+
+            //            },
+            //            complete: function () {
+            //                isSend = 0;
+            //                /*$.hideIndicator();*/
+            //            }
+
+
+            //        });
+            //    }
+            //}
+
+
+            //function getMsg() {
+
+
+            //    if (isget == 0) {
+            //        /* $.showIndicator();*/
+            //        isget = 1;
+            //        $.ajax({
+            //            url: 'wx.php?do=chat&ac=get',
+            //            type: 'get',
+            //            data: { 'mid': mid },
+            //            dataType: 'json',
+            //            success: function (result) {
+
+            //                if (result.status == "ok") {
+
+            //                    $('#chat').append(template('hemsg', result));
+            //                    $('.chat').animate({ scrollTop: charheight }, 'slow');
+
+            //                }
+
+
+            //            },
+            //            complete: function () {
+            //                isget = 0;
+            //                /*$.hideIndicator();*/
+            //            }
+
+
+            //        });
+            //    }
+            //}
+
+
+
+            //$("#send").click(function () {
+
+            //    ChatCore.transmit();
+            //    //var to = 42101;
+            //    //var msg = $("#content").val();
+
+            //    //if (msg == "") {
+            //    //    $.alert("消息内容不能为空！");
+            //    //    return;
+            //    //}
+            //    //$("#content").val("");
+            //    //sendMsg(msg);
+            //    //$('.chat').animate({ scrollTop: charheight }, 'slow');
+
+
+            //});
+            $("#chat").click(function () {
+                var isFocus = $("#content").is(":focus");
+                if (isFocus) {
+                    $("#content").blur();
+                }
+            });
+
+
+            //setInterval(function () {
+            //    getMsg();
+            //    //window.scrollTo(0,document.body.scrollHeight);
+            //}, 5000);
+
+
+
+
+        });
+        $(".load").remove();
+        window.onload = function () {
+            if (document.readyState == "complete") {
+                setTimeout(function () {
+                    $(".load").remove();
+
+                }, 100);
+            }
+        }
+    </script>
+    <script src="~/Scripts/Chat.js?v=1.0.0.1"></script>
+</body>
+</html>

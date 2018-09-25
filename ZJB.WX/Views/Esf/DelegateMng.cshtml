@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>房源管理-住家帮</title>
+    <link rel="stylesheet" href="/css/esf/common.css">
+    <link rel="stylesheet" href="/css/esf/manage.css">
+    <script type="text/javascript" src="/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/Esf/base.js"></script>
+
+    <script type="text/javascript">
+        var k = true;
+        var w = $(window);
+        var curp = 1;
+        function load() {
+            var pars = new Object();
+            pars["status"]="-1";
+            pars["cell"]="";
+            pars["sort"]="";
+            pars["houseId"]="";
+            pars["title"]="";
+            pars["tags="]="";
+            pars["pageIndex"]=curp;
+            pars["pageSize"]=100;
+            pars["userId"] = @ViewBag.UserId;
+
+            $.ajax({
+                type: "post",
+                url: "/Esf/GetEsfList",
+                data: pars,
+                dataType: "json",
+                success: function (data) {
+                    var reval = "";
+                    if (data.list != undefined && data.list.length > 0) {
+
+                        $.each(eval(data.list), function(i, item) {
+                            reval += "<section class=\"mod-prod-item mod-sell\">";
+                            reval += "      <header class=\"mod-title\">"+item.StatusName+"</header>";
+                            if (reval.Status==1) {
+                                reval += "      <div class=\"mod-prod-info stateful\" onClick=\"window.location='/Esf/EsfDetail?houseid="+item.HouseID+"'\">";
+                            } else {
+                                reval += "      <div class=\"mod-prod-info stateful\" onClick=\"window.location='/Esf/Detail?houseid="+item.HouseID+"'\">";
+                            }
+
+
+                            reval += "           <div class=\"mod-prod-txt\">";
+                            reval += "              <h2>"+item.CommunityName+"</h2>";
+                            reval += "              <strong>"+item.Address+"</strong> <span>¥ "+item.Price+" 万</span> " +
+                                "<div style=\"font-size: 14px;margin-left: .43rem;padding-top: 10px;\">预约：<i style=\"color:yellow\">"+(parseInt(item.InterviewNum) +parseInt(item.ConsultNum))+
+                                "</i>次</div><em class=\"icon iconfont\">혉</em>";
+                            reval += "           </div>";
+                            reval += "       </div>";
+                            reval += "</section>";
+                        });
+
+                        $(".mod-manage-container").append(reval);
+                        curp++;
+                    }
+                }
+            });
+        }
+
+        $(function() {
+            load();
+        });
+    </script>
+
+</head>
+
+<body>
+    <div class="mod-manage-container">
+
+
+    </div>
+    <nav class="nav-bar"> <a href="@Url.Action("Delegate")">发布房源<b class="iconfont">혒</b></a> <a class="active" href="@Url.Action("DelegateMng")">房源管理<b class="iconfont">혇</b></a> <a href="@Url.Action("Me")">我的<b class="iconfont">혂</b></a> </nav>
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

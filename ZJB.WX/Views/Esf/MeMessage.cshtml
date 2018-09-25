@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>我的信息</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="~/Css/Esf/style.css" rel="stylesheet" />
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/Esf/scroll.js"></script>
+    <style>
+        .dpList ul li {
+            padding: 8px 3% 12px;
+            width: 94%;
+            overflow: hidden;
+            border-bottom: 1px solid #e8e8e8;
+            background: #fff;
+            margin-top: 0px;
+        }
+    </style>
+    <script type="text/javascript">
+        var k = true;
+        var w = $(window);
+        var curp = 1;
+        var isread = 0;
+        function dpinfo(obj,read) {
+            $(".mes-tit").find("a").attr("class", "");
+            $(obj).attr("class", "active");
+            isread = read;
+            curp = 1;
+            k = true;
+            $("#dpme").html("");
+            load();
+        }
+
+        $(function() {
+            load();
+        });
+
+        function load() {
+            var regions="";
+            var pars = new Object();
+            pars["pageIndex"] = curp;
+            pars["pageSize"] = 10;
+            pars["userId"] =  @(ViewBag.UserID);
+            pars["isread"] = isread;
+            $.ajax({
+                type: "post",
+                url: "/Esf/GetMeMessage",
+                async: false,
+                data: pars,
+                dataType: "json",
+                success: function(data) {
+                    var regions = data.list;
+
+                    var reval = "";
+                    $("#totalSize").html(data.totalSize);
+                    var irow = 0;
+                    if (data.list != undefined && data.list.length > 0) {
+                        $.each(eval(data.list), function (i, item) {
+                            irow++;
+
+                            reval += "<li style=\"\" id=\"li_" + item.ID + "\">";
+                            reval += "  <div class=\"box\">";
+
+                            reval += "    <div class=\"info\">";
+                            if (isread==0) {
+                                reval += "      <p> <a href=\"/Esf/Bespoke?peruse=1&houseid=" + item.HouseID + "\">" + item.Message + "</a>";
+                            } else {
+                                reval += "      <p> <a href=\"/Esf/Bespoke?peruse=0&houseid=" + item.HouseID + "\">" + item.Message + "</a>";
+                            }
+                            reval += "</p>";
+                            reval += "    </div>";
+                            reval += "  </div>";
+                            reval += "</li>";
+                        });
+                        $("#dpme").append(reval);
+                        if (irow<10) {
+                            k = false;
+                        }
+                        curp= parseInt(parseInt(curp)+1);
+                    }
+                }});
+
+        };
+
+    </script>
+    <script src="~/Scripts/Esf/publicfuntion.js"></script>
+</head>
+<body>
+    <div class="header">
+        <ul>
+            <li class="back"><a onclick="goback()" href="javascript:void(0);"></a></li>
+            <li style="width: 60%;">我的消息</li>
+            <li></li>
+        </ul>
+    </div>
+    <div>
+        <div class="mes-tit">
+            <ul>
+                <li style="width: 50%;"><a href="javascript:void(0);" onclick="dpinfo(this,0)" class="active"><span>未阅读</span></a></li>
+                <li style="width: 50%;"><a href="javascript:void(0);" onclick="dpinfo(this,1)"><span>已阅读</span></a></li>
+            </ul>
+        </div>
+        <div class="dpList">
+            <ul id="dpme"></ul>
+        </div>
+    </div>
+</body>
+</html>

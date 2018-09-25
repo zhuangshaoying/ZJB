@@ -1,0 +1,124 @@
+﻿@using ZJB.Core.Utilities
+@using ZJB.WX.Models
+@model List<SiteManageViewModel>
+@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>站点管理</title>
+    <link href='/css/common.css' rel='stylesheet' type='text/css' />
+    <link href='/css/siteManage.css' rel='stylesheet' type='text/css' />
+    <link href='/css/main.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body onload="initAccount()">
+    <input id="city" type="hidden" value="592" />
+    <div class="saleHouse" id="saleHouse">
+        <div class="saleHouse-main">
+            <input id="contextPath" value='' type="hidden" />
+            <ul class="sale-content-tip guanli">
+                <li><span class="sale-tip-img"></span><span>贴心提示:</span></li>
+                <li>1、如果要修改账号名，请先删除旧账号再添加新账号。</li>
+                <li>2、如果您添加的帐号在对应网站修改了密码，请及时同步修改在本站对应帐号的密码，如果没及时同步修改，将会造成发布或者刷新失败。</li>
+                <li>3、目前每个网站最多只能添加1个账号。</li>
+            </ul>
+            <div class="lay_card_panel">
+                <div class="main_hd">
+                    <div class="clear">
+                        <ul class="sale-tab-sub pt15">
+                            <li class="sale-sub-menu selected"><a href="javascript:">全部网站</a> </li>
+                            <li class="sale-sub-menu"><a href="javascript:">已开通网站</a> </li>
+                            <li class="sale-sub-menu"><a href="javascript:">未开通网站</a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sites_list_panel">
+                    @foreach (SiteManageViewModel item in Model)
+                    {
+                        <div class="sites_list clear" userwebid="@item.SiteID" userId="@item.UserID">
+                            <dl>
+                                <dd class="sites_pay_type">
+                                    <span>
+                                        @(item.YunRefresh == true ? "可云刷新 " : "不可云刷新")
+                                    </span>
+                                </dd>
+                                <dd class="sites_logo">
+                                    <img width="100" height="40" src="@item.Logo" title="@item.SiteName">
+                                </dd>
+                                <dd class="sites_add">
+                                    <a class="ui-css ui-css-green add_account_function" userwebid="@item.UserID" webbasicid="@item.SiteID" userwebcount="1">添账号</a> 
+                                    <a class="ui-css ui-css-green" href="javascript:gotoReg('@(string.IsNullOrEmpty(item.RegisterUrl) ? "/" : item.RegisterUrl)')">去注册</a> 
+                                </dd>
+                                <dd class="sites_account" style="display: table">
+                                    <ul class="account_ul">
+                                        <li>
+                                            @if (item.UserID > 0)
+                                            {
+                                                <span class=@(item.SiteStatus != 1 ? "siteManage-account-error" : "siteManage-account-font")>
+                                                    <input type="radio" name="@item.SiteName" id="@(item.SiteUserName)_@item.SiteName" dis="@item.SiteStatus" liindex=1 userwebid="@item.SiteID" webbasicid="@item.SiteID" loginname='@(item.SiteUserName)' userwebcount="1" class="account-input" />
+                                                    <label title="@(item.SiteUserName)" class=@(item.SiteStatus != 1 ? "col-f60 font-bold" : "")>@(item.SiteUserName)</label>
+                                                </span>
+                                                if (item.SiteStatus != 1)
+                                                {
+                                                <span class="siteManage-account-disable">不可用</span>
+                                                }
+                                            }
+                                        </li>
+                                    </ul>
+                                </dd>
+                                <dd class="sites_manage" style="line-height: 0px">
+                                    @if (item.UserID > 0)
+                                    {
+                                        <ul class="manage_ul">
+                                            <li><a href="#" class="site_del_function ui-css ui-css-green">删除</a></li>
+                                            <li><a href="#" class="site_view_function ui-css ui-css-green">查看密码</a></li>
+                                            <li><a href="#" class="site_pwd_edit_function ui-css ui-css-green">修改</a></li>
+                                            <li><a class="ui-css ui-css-green" onclick="loginWeb(this)">登录后台</a></li>
+                                       
+                                           
+                                            <li ><a class="ui-css ui-css-green site_check_function">验证</a></li>
+                                        </ul>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div style="display: none">
+            <div id="site_view_win">
+                <ul class="form_body">
+                    <li>为保护您的帐号安全,请输入您在房产盒子的登录密码</li>
+                    <li>
+                        <input type="password" id="userPwd" class="dlmima" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+       <div style="display: none">
+           <div id="add_account_win">
+  <ul class="form_body add_account_input">
+    <li style="margin-top:0px"><span>用户名：</span>
+      <input id="loginName" type="text" class="modify_user" />
+    </li>
+    <li><span>密<em style="margin-left: 12px;"></em>码：</span>
+      <input id="loginPwd" type="password" class="modify_user" />
+    </li>
+  </ul>
+</div>
+
+       </div>
+    </div>
+    <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+    <script src='/Scripts/checkInput.js' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+    <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+    <script src='/Scripts/siteManage.js?v=1.5' type='text/javascript'></script>
+    <script src='/Scripts/common.js' type='text/javascript'></script>
+</body>
+</html>

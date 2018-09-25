@@ -1,0 +1,108 @@
+﻿@using ZJB.Api.Models;
+@model UserTaskStat
+@{
+    Layout = null;
+    string userName = (string)ViewBag.UserName;
+    string headImg = (string)ViewBag.Portrait;
+    if(string.IsNullOrEmpty(headImg))
+    {
+        headImg = "/Images/txDefault.png";
+    }
+    else{
+        headImg += "?imageMogr2/strip|imageView2/1/w/60/h/60/q/85";
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>房产盒子任务</title>
+<link href='/css/common.css' rel='stylesheet' type='text/css' />
+<link href='/css/main.css' rel='stylesheet' type='text/css' />
+<link href='/css/task.css' rel='stylesheet' type='text/css' />
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+ <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+<script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+<script src='/Scripts/common.js' type='text/javascript'></script>
+ <script src="~/Scripts/UserTask.js?v=1.3"></script>
+</head>
+
+<body>
+<div id="saleHouse" class="saleHouse">
+  <div class="saleHouse-main shejiao_main">
+    <div class="widget-overview ui-box clearfix">
+      <div class="team-meta pull-left"> <img src="@headImg" alt="Logo" class="team-logo pull-left">
+        <div class="pull-left">
+          <h3 class="team-title">@userName</h3>
+          <span>剩余积分：<span class="myPoints">@Model.UserPoints</span>&nbsp;<a href="http://shop126180188.taobao.com" target="_blank">【充值】</a></span> </div>
+      </div>
+      <ul class="pull-right">
+        <li>
+          <h5 class="myPoints">@Model.PointsCount</h5>
+          <h6>累计积分</h6>
+        </li>
+        <li>
+          <h5>@Model.CompleteCount</h5>
+          <h6>已完成任务</h6>
+        </li>
+      </ul>
+    </div>
+    <ul class="sale-tab-sub" style="padding-top:0px">
+      <li id="tab0" class="sale-sub-menu selected"><a id="table_0" href="javascript:" title="" onclick="switchTab(0)">未完成任务</a> </li>
+      <li id="tab1" class="sale-sub-menu"><a id="table_1" href="javascript:" title="" onclick="switchTab(1)">已完成任务</a> </li>
+      <li id="tab2" class="sale-sub-menu"><a id="table_2" href="javascript:" title="" onclick="switchTab(2)">盒子任务规则</a> </li>
+     
+    </ul>
+    <div class="js-app-main">
+      <div class="ui-box" id="task_0">
+      </div>
+      <div class="ui-box" id="task_1" style="display:none">
+       
+      </div>
+        <div class="ui-box" id="task_2" style="display:none">
+           <div class="task-rule">
+                <h3>关于盒子任务</h3>
+
+                <p>盒子任务是盒子为了更好的服务经纪人、引导经纪人更好的使用房产盒子系统，而开发的一套任务积分系统。</p>
+                <p>大家通过完成系统指派的盒子任务，可以收获：</p>
+                <ul>
+                    <li>1. 更好的了解、使用房产盒子系统</li>
+                    <li>2. 赚取盒子积分</li>
+                
+                </ul>
+
+                <h3>盒子积分有什么用？</h3>
+
+                <p>盒子积分在未来房产盒子的产品运营规划中将发挥重要作用：</p>
+                <ul>
+                    <li>1. 积分将会作为使用房产盒子系统的日常积分消耗（现定消耗20分/天）</li>
+                    <li>2. 积分将可以兑换相应服务和礼品</li>
+                    <li>3. 积分将可能作为加入VIP俱乐部的条件之一</li>
+               
+                </ul>
+                <p>在正式开始玩之前，大家积极先完成任务，积累更多积分哦！^_^</p>
+
+                <h3>任务更新</h3>
+                <ul>
+                    <li>1. 我们将结合房产盒子的新功能和新玩法，不定期更新任务</li>
+                    <li>2. 当有新任务出现时，页面上会显示提示，请进入“盒子任务”栏目查看任务详情</li>
+                </ul>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!--提示框-->
+<div class="modal-backdrop fade" style="display:none;"></div>
+<div class="modal hide task-notify-modal fade" style="margin-top: 0px" aria-hidden="false" style="display:none;">
+  <div class="modal-content"> <a href="javascript:;" onclick="TipFadeOut()" class="modal-close-icon">×</a>
+    <div>
+      <div class="task-complate"></div>
+      <h3 id="firstInShow">恭喜，你已经完成 2 项任务，感觉简单？再来几个！</h3>
+      <div class="action"> <a href="javascript:void(0)" onclick="TipFadeOut()" class="task-btn">去领奖</a> </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

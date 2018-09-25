@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body>
+    正在跳转到房产盒子注册页面 请稍等。。。。
+
+    <form id="frm" name="frm" method="POST" action="@Url.Action("Invite", "User")" target="_self">
+        <input type='hidden' name='from' value='@ViewBag.From'>
+        <input type='hidden' name='info' value='@ViewBag.Info'>
+
+    </form>
+    <script type="text/javascript">
+        setTimeout(function () { document.getElementById('frm').submit(); }, 10);
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿@model ZJB.Api.Models.UserReportModel  
+ <table class="indexRight-list-content clear">
+          <tr>
+            <td width="155">录入房源</td>
+            <td width="155">今日新增</td>
+            <td width="155">今日发布</td>
+            <td width="155">绑定网站个数</td>
+            <td width="157" style="border-right:none">异常账号个数</td>
+          </tr>
+          <tr>
+            <td>@Model.HouseCount</td>
+            <td>@Model.TodayHouseCount</td>
+            <td>@Model.TodayPostCount</td>
+            <td>@Model.UserSiteCount</td>
+            <td style="border-right:none">
+                @if(Model.ErrorUserSiteCount>0)
+                {
+                <a href="javascript:parent.hrefLink('@Url.Action("SiteManageView", "PersonManage")')" class="col-f60">@Model.ErrorUserSiteCount</a>
+                }
+                else
+                {
+                <span>0</span>
+                }</td>
+          </tr>
+        </table>

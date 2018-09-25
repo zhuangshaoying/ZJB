@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9063DB15-56DD-48FF-BB11-354282B37AEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZJB.Api</RootNamespace>
+    <AssemblyName>ZJB.Api</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageApi.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\ImageApi.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\Library\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\Library\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\Library\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2">
+      <HintPath>..\Library\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\Library\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\Library\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\Library\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\Library\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Qiniu, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Qiniu.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin, Version=4.11.6.388, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Senparc.Weixin.4.11.4\lib\net45\Senparc.Weixin.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP, Version=14.3.139.895, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Senparc.Weixin.MP.14.3.139\lib\net45\Senparc.Weixin.MP.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\ActionLogBll.cs" />
+    <Compile Include="BLL\ChatBll.cs" />
+    <Compile Include="BLL\CommunityBll.cs" />
+    <Compile Include="BLL\ApiBll.cs" />
+    <Compile Include="BLL\DynamicBll.cs" />
+    <Compile Include="BLL\FeedbackBll.cs" />
+    <Compile Include="BLL\GroupBll.cs" />
+    <Compile Include="BLL\HouseBll.cs" />
+    <Compile Include="BLL\News\NewsApi.cs" />
+    <Compile Include="BLL\NoticeBll.cs" />
+    <Compile Include="BLL\PostLogBll.cs" />
+    <Compile Include="BLL\PostManageBll.cs" />
+    <Compile Include="BLL\RefreshBll.cs" />
+    <Compile Include="BLL\RegionsBll.cs" />
+    <Compile Include="BLL\SiteManageBll.cs" />
+    <Compile Include="BLL\WxBll.cs" />
+    <Compile Include="BLL\UserBll.cs" />
+    <Compile Include="BLL\UserSiteManageBll.cs" />
+    <Compile Include="BLL\UserTaskLogBll.cs" />
+    <Compile Include="BLL\VoteSurveyBll.cs" />
+    <Compile Include="Common\CacheFactory.cs" />
+    <Compile Include="Common\CacheItemConstant.cs" />
+    <Compile Include="Common\CacheTimeGroup.cs" />
+    <Compile Include="Common\DateTimeConverter.cs" />
+    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\HouseUtility.cs" />
+    <Compile Include="Common\ICacheManager.cs" />
+    <Compile Include="Common\MemoryCacheManager.cs" />
+    <Compile Include="Common\QiniuService.cs" />
+    <Compile Include="Common\QiniuUtil.cs" />
+    <Compile Include="Common\QmyHelper.cs" />
+    <Compile Include="Common\QmySms.cs" />
+    <Compile Include="Common\SmsApi.cs" />
+    <Compile Include="Common\TextUtility.cs" />
+    <Compile Include="Common\WebConvert.cs" />
+    <Compile Include="Common\WeiXinPublic.cs" />
+    <Compile Include="DAL\ActionLogDal.cs" />
+    <Compile Include="DAL\ChatDal.cs" />
+    <Compile Include="DAL\CommunityDal.cs" />
+    <Compile Include="DAL\BaseDal.cs" />
+    <Compile Include="DAL\DbConfig.cs" />
+    <Compile Include="DAL\DynamicDal.cs" />
+    <Compile Include="DAL\FeedbackDal.cs" />
+    <Compile Include="DAL\GroupDal.cs" />
+    <Compile Include="DAL\HouseDal.cs" />
+    <Compile Include="DAL\News\WcmdocumentDal..cs" />
+    <Compile Include="DAL\NoticeDal.cs" />
+    <Compile Include="DAL\PostLogDal.cs" />
+    <Compile Include="DAL\PostManageDal.cs" />
+    <Compile Include="DAL\RefreshDal.cs" />
+    <Compile Include="DAL\RegionsDal.cs" />
+    <Compile Include="DAL\SiteManageDal.cs" />
+    <Compile Include="DAL\ApiDal.cs" />
+    <Compile Include="DAL\WxDal.cs" />
+    <Compile Include="DAL\UserDal.cs" />
+    <Compile Include="DAL\UserSiteManageDal.cs" />
+    <Compile Include="DAL\UserTaskLogDal.cs" />
+    <Compile Include="DAL\VoteSurveyDal.cs" />
+    <Compile Include="Entity\ELoginStatus.cs" />
+    <Compile Include="Entity\NCBaseRule.cs" />
+    <Compile Include="Entity\NCDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NCDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Api\ApiLogModel.cs" />
+    <Compile Include="Models\Api\ApiResponse.cs" />
+    <Compile Include="Models\Api\Credential.cs" />
+    <Compile Include="Models\Api\Meta.cs" />
+    <Compile Include="Models\Api\Metas.cs" />
+    <Compile Include="Models\BuildType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\ChatModel.cs" />
+    <Compile Include="Models\Community.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Community\CommunityDetailModel.cs" />
+    <Compile Include="Models\Community\SimilarCommunity.cs" />
+    <Compile Include="Models\Community\TargetLoupan.cs" />
+    <Compile Include="Models\CompanyModel.cs" />
+    <Compile Include="Models\ControllerActionMapModel.cs" />
+    <Compile Include="Models\Crm\Crm.cs" />
+    <Compile Include="Models\DynamicModel.cs" />
+    <Compile Include="Models\DynamicSupportModel.cs" />
+    <Compile Include="Models\Enum\HouseEnum.cs" />
+    <Compile Include="Models\Enum\LouPanOrderEnum.cs" />
+    <Compile Include="Models\Enum\PointsEnum.cs" />
+    <Compile Include="Models\Enum\SexEnum.cs" />
+    <Compile Include="Models\FactoryInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\FeedbackModel.cs" />
+    <Compile Include="Models\GroupMemberModel.cs" />
+    <Compile Include="Models\GroupModel.cs" />
+    <Compile Include="Models\HDictionary.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\HouseBasicInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\HouseCollectSource.cs" />
+    <Compile Include="Models\HouseCollectViewLog.cs" />
+    <Compile Include="Models\HouseCrawler.cs" />
+    <Compile Include="Models\HouseImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\HouseInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\HouseNumSumModel.cs" />
+    <Compile Include="Models\NewHouse\LouPan.cs" />
+    <Compile Include="Models\News\Wcmdocument.cs" />
+    <Compile Include="Models\Parame\ActionLogTopStatReq.cs" />
+    <Compile Include="Models\Parame\DynamicListReq.cs" />
+    <Compile Include="Models\Parame\FeedbackListReq.cs" />
+    <Compile Include="Models\Parame\GroupListParame.cs" />
+    <Compile Include="Models\Parame\GroupMemberListParame.cs" />
+    <Compile Include="Models\Parame\IpStatListReq.cs" />
+    <Compile Include="Models\Parame\HouseParames.cs" />
+    <Compile Include="Models\Parame\RefreshLogListReq.cs" />
+    <Compile Include="Models\Parame\StatReq.cs" />
+    <Compile Include="Models\Parame\UserAccessListReq.cs" />
+    <Compile Include="Models\Parame\VoteAddReq.cs" />
+    <Compile Include="Models\QiniuToken.cs" />
+    <Compile Include="Models\RefreshLogModel.cs" />
+    <Compile Include="Models\StatModel.cs" />
+    <Compile Include="Models\OfficeInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Parame\AppointLogListReq.cs" />
+    <Compile Include="Models\Parame\ChangeHouseStatusReq.cs" />
+    <Compile Include="Models\Parame\GetNoticeListReq.cs" />
+    <Compile Include="Models\Parame\GetNotReadNoticeListReq.cs" />
+    <Compile Include="Models\Parame\GetUserHouseCommunityListReq.cs" />
+    <Compile Include="Models\Parame\HouseListReq.cs" />
+    <Compile Include="Models\Parame\PostLogListParames.cs" />
+    <Compile Include="Models\PostLog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\PostManageModel.cs" />
+    <Compile Include="Models\PublicUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Regions.cs" />
+    <Compile Include="Models\ShopInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\SiteManage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\UserReportModel.cs" />
+    <Compile Include="Models\UserSiteManage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\UserTaskModel.cs" />
+    <Compile Include="Models\VillaInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Wx\KeyWordReply.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZJB.Core\ZJB.Core.csproj">
+      <Project>{ce002939-e88f-457d-80b3-5b109aae7e2b}</Project>
+      <Name>ZJB.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZJB.Web\ZJB.Web.csproj">
+      <Project>{347cd408-f464-4278-8f30-5f856e72d819}</Project>
+      <Name>ZJB.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Entity\NCDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NCDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

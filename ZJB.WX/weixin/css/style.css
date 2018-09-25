@@ -1,0 +1,208 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	border: 0 none;
+	font-family: "microsoft yahei";
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	outline: 0 none;
+	padding: 0;
+	vertical-align: baseline;
+}
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+* {
+	transition: all 0.4s ease 0s;
+	-moz-transition: all 0.4s ease 0s;
+	-ms-transition: all 0.4s ease 0s;
+	-webkit-transition: all 0.4s ease 0s;
+	-o-transition: all 0.4s ease 0s;
+}
+ul,li {
+	list-style:none
+}
+/* 设置HTML5元素为块 */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+/* 设置图片视频等自适应调整 */
+
+img {
+	max-width: 100%;
+	height: auto;
+	width: auto; /* ie8 */
+}
+.video embed, .video object, .video iframe {
+	width: 100%;
+	height: auto;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+/*---------------------------*/
+
+.wrp {
+	width:100%;
+	margin:0 auto;
+	max-width:640px;
+	min-width:320px;
+}
+.xm {
+	margin:0 12px;
+	color:#ff0000;
+}
+.xm label {
+	margin-right:10px;
+}
+.xm input {
+	margin-right:5px;
+	vertical-align:middle;
+}
+.app-wrap .tel {
+	border-top: 1px solid #dddddd;
+	border-bottom:1px solid #dddddd;
+	background: #fff;
+	height: 48px;
+	margin: 0 12px;
+}
+.app-wrap .tel input {
+	color:#333;
+	height: 20px;
+	font:16px/20px "微软雅黑";
+	display: block;
+	width: 100%;
+	border: 0 none;
+	padding: 0 12px;
+	margin-top: 14px;
+}
+.app-wrap .tel {
+	margin-top: 12px;
+}
+.yh {
+	margin-top: 30px;
+	height: 48px;
+	padding: 0 12px;
+}
+.yh input {
+	-webkit-appearance : none;
+	display: block;
+	width: 100%;
+	background: #FF9C00;
+	box-shadow:0 0 2px #E7456C;
+	font:18px/48px "微软雅黑";
+	color: #fff;
+	border: 0 none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.suc {
+	margin-top: 10px;
+	text-align: center;
+	font-size: 14px;
+	color: #FF9C00;
+	margin-bottom:30px;
+}
+.tle {
+	font:20px/20px "微软雅黑";
+	color:red;
+	text-align:center;
+	margin-bottom:20px;
+	display:block;
+}
+.tle img {
+	width:20px;
+	height:20px;
+	margin-right:2px;
+	vertical-align: middle;
+}
+.copyright {
+	color: #999;
+	font-size: 14px;
+	margin: 0 0 10px;
+	text-align: center;
+}
+.box {
+	background:#fff;
+	padding:10px 10px;
+	margin-bottom:10px
+}
+.mytitle {
+	font-size:17px;
+	font-weight:bold;
+	color:#a86f47;
+	height:25px;
+	line-height:25px;
+	text-align:center;
+	float:left;
+	padding:0px 5px;
+	background:#ffe0ca
+}
+.myem {
+	width:10px;
+	height:25px;
+	background:url(../images/arrow.png) right center;
+	background-size:auto 26px;
+	float:left
+}
+.myfr {
+	float:right;
+	font-size:15px;
+	color:#df243a;
+	line-height:25px;
+	text-align:right
+}
+.loupan_pic {
+	width:100%;
+	height:150px;
+	margin-top:8px
+}
+.xiangqing {
+	background:#ffe0ca;
+	padding:10px 10px 15px 10px
+}
+.xiangqing ul li {
+	float:left;
+	line-height:30px;
+	height:30px;
+	font-size:14px
+}
+.w60 {
+	width:65%
+}
+.w40 {
+	width:35%
+}
+.mybgs {
+	background:#ff9900;
+	height:26px;
+	line-height:26px;
+	display:block;
+	text-align:center
+}
+.mybgs a {
+	display:inline-block;
+	background:url(../images/tle_20.png) no-repeat left center;
+	background-size:15px 15px;
+	padding-left:20px;
+	color:#fff;
+	text-decoration:none
+}
+.canjia {
+	margin-top:10px
+}
+.canjia a {
+	display:block;
+	text-align:center;
+	font-size:16px;
+	color:#fff;
+	text-decoration:none;
+	height:36px;
+	line-height:36px;
+	background:#ff9900
+}

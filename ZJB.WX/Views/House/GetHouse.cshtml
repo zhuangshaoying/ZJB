@@ -1,0 +1,1427 @@
+﻿@using ZJB.Api.Common
+@using ZJB.Api.Models
+@using ZJB.Core.Utilities
+@using ZJB.WX.Models
+@using ZJB.Api.Entity;
+@using ZJB.Api.Models.Community
+@{
+    Layout = null;
+    int posttype = ViewBag.Posttype;
+    int editType = ViewBag.EditType;
+    int buildType = ViewBag.BuildingType;
+    int chouseId = ViewBag.ChouseId;
+    int isChange = chouseId > 0 ? 1 : 0;
+    int closeTip = chouseId > 0 ? 1 : 0;
+    int isCloned = ViewBag.ShowColned;///如果是克隆成功 则显示相应页面
+    switch (posttype)
+    {
+        case 1:
+            ViewBag.Title = "出售房源录入";
+            break;
+        case 2:
+            ViewBag.Title = "求购房源录入";
+            break;
+        case 3:
+            ViewBag.Title = "出租房源录入";
+            break;
+        case 4:
+            ViewBag.Title = "求租房源录入";
+            break;
+        default:
+            ViewBag.Title = "出售房源录入";
+            break;
+    }
+
+}
+@model  HouseModels
+@{
+    var itemHouseBasicInfo = Model.HouseBasicInfo;
+    var itemHouseInfo = Model.HouseInfo;
+    var itemVillaInfo = Model.VillaInfo;
+    var itemShopInfo = Model.ShopInfo;
+    var itemOfficeInfo = Model.OfficeInfo;
+    var itemFactoryInfo = Model.FactoryInfo;
+    var itemHouseImages = Model.HouseImages;
+    var regions = (CommunityDetailModel)ViewBag.RegionsModel;
+    if (regions == null)
+    {
+        regions = new CommunityDetailModel();
+    }
+    var selected = "";
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+@if (isCloned == 1)
+{
+
+
+    <head>
+        <link href="~/Css/common.css" rel="stylesheet" />
+        <style type="text/css">
+            .footer-tip {
+                color: green;
+                font-size: 20px;
+                font-weight: bold;
+                margin: 150px auto;
+                text-align: center;
+            }
+
+                .footer-tip li {
+                    margin: 20px 0;
+                }
+
+                .footer-tip a:hover {
+                    text-decoration: underline;
+                }
+        </style>
+    </head>
+    <body>
+
+
+        <ul class="footer-tip">
+            <li><h1>克隆成功！</h1></li>
+            <li>
+                <a id="link_goon">继续克隆</a>
+                <a onclick="redirectManager(1);">返回出售管理</a>
+                <a onclick="redirectManager(3);">返回出租管理</a>
+            </li>
+        </ul>
+        <script src="~/Scripts/jquery-1.8.3.js"></script>
+        <script type="text/javascript">
+	    $(document).ready(function() {
+	        if(window.parent)
+	        {
+	            window.parent.loadingHide();
+	        }
+	    });
+
+	    $(function() {
+	        $("#link_goon").click(function() {
+	            if(window.parent.frames[0])
+	            {
+	                window.parent.frames[0].getShareBuildings();
+	            }
+
+	        });
+	    });
+
+	    function redirectManager(postType) {
+	        if (postType == 1) {
+	            id = "houseManagerSell";
+	        } else {
+	            id = "houseManagerRent";
+	        }
+	        parent.parent.$("#" + id).click();
+	        var href = parent.parent.$("#" + id).attr("href");
+	        var url = href.substring(href.indexOf("'") + 1, href.lastIndexOf("'"));
+	        url += "&buildingType=1&isDraft=0";
+	        parent.parent.$("#" + id).parents(".menu").addClass("menu_open");
+	        parent.parent.$("#" + id).parents(".menu").siblings().removeClass("menu_open");
+	        parent.parent.hrefLink(url);
+	    }
+        </script>
+
+    </body>
+
+}
+else
+{
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href='~/css/common.css' rel='stylesheet' type='text/css' />
+        <link href='~/css/saleImport.css' rel='stylesheet' type='text/css' />
+        <link href='~/css/selectPic.css' rel='stylesheet' type='text/css' />
+        <link href='~/css/Validform.css' rel='stylesheet' type='text/css' />
+        <link href="~/css/uploadify.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body onload="changeLoadFlag()" id="importPage">
+        <div id="saleHouse" class="saleHouse">
+            <input type="hidden" value="/House" id="basePath" />
+            <input type="hidden" value="http://img.ZJB.com" id="staticPath" />
+
+            <!-- 出售房源管理Tab切换 -->
+            <div class="saleHouse-main">
+                <span class="fanhui"><input class="btn-red-return" type="button" value="返回房源管理" onclick="javascript:redirectManager()" /></span>
+                <ul class="sale-tab-sub">
+                    @{
+
+                        if (itemHouseBasicInfo.HouseID == 0 || itemHouseBasicInfo.BuildType == (int)BuildingType.House)
+                        {
+                            selected = "selected";
+                            <li id="saleHouse-basic-house" class="sale-sub-menu @selected"> <a href="javascript:">住&nbsp;&nbsp;宅</a> </li>
+                        }
+                    }
+                    @{
+                        if (itemHouseBasicInfo.HouseID == 0 || buildType == (int)BuildingType.Villa)
+                        {
+                            selected = buildType == (int)BuildingType.Villa ? "selected" : "";
+                            <li id="saleHouse-basic-villa" class="sale-sub-menu @selected"> <a href="javascript:">别&nbsp;&nbsp;墅</a> </li>
+                        }
+                    }
+                    @{
+                        if (itemHouseBasicInfo.HouseID == 0 || buildType == (int)BuildingType.Shop)
+                        {
+                            selected = buildType == (int)BuildingType.Shop ? "selected" : "";
+                            <li id="saleHouse-basic-shop" class="sale-sub-menu @selected"> <a href="javascript:">商&nbsp;&nbsp;铺</a> </li>
+                        }
+                    }
+                    @{
+                        if (itemHouseBasicInfo.HouseID == 0 || buildType == (int)BuildingType.Office)
+                        {
+                            selected = buildType == (int)BuildingType.Office ? "selected" : "";
+                            <li id="saleHouse-basic-office" class="sale-sub-menu @selected"> <a href="javascript:">写字楼</a> </li>
+                        }
+                    }
+                    @{
+                        if (itemHouseBasicInfo.HouseID == 0 || buildType == (int)BuildingType.Factory)
+                        {
+                            selected = buildType == (int)BuildingType.Factory ? "selected" : "";
+                            <li id="saleHouse-basic-factory" class="sale-sub-menu @selected"> <a href="javascript:">厂房/车位</a> </li>
+                        }
+                    }
+
+
+
+                </ul>
+                <ul class="import-keyway sale-tab-sub" style="display:none">
+                    <li id="tip_basic" class="sale-sub-menu selected"><a class="tip_basic" href="javascript:importScroll('basic')">基本信息</a></li>
+                    <li id="tip_houseType" class="sale-sub-menu"><a class="tip_houseType" srcolltype="houseType" href="javascript:importScroll('houseType')">住宅信息</a></li>
+                    <li id="tip_house" class="sale-sub-menu"><a class="tip_house" href="javascript:importScroll('house')">房源介绍</a></li>
+                    <li id="tip_pic" class="sale-sub-menu"><a class="tip_pic" href="javascript:importScroll('pic')">图片信息</a></li>
+                </ul>
+                <div class="import-main">
+                    <form id="bForm" action="@Url.Action("OperateHouse", "House")" enctype="multipart/form-data"
+                          onsubmit="return checkLoading()" method="post" onkeydown="return disableEnter(event)">
+                        <div>
+                            <input type="hidden" name="city" value="592" id="city" />
+                            <input type="hidden" name="postType" id="postType" value="@posttype" />
+                            <input type="hidden" name="buildingType" id="buildingType" value="@(buildType)" />
+                            @if (itemHouseBasicInfo.HouseID > 0)
+                            {
+                                <input type="hidden" name="houseid" id="houseid" value="@itemHouseBasicInfo.HouseID" />}
+                            <input type="hidden" name="editType" id="editType" value="@editType" />
+                            <input type="hidden" name="chouseId" id="chouseId" value="@chouseId" />
+                            <input type="hidden" name="isChange" id="isChange" value="@isChange" />
+                            <input type="hidden" name="closeTip" id="closeTip" value="@closeTip" />
+                            <input type="hidden" name="currentTimeMillis" id="currentTimeMillis" value="" />
+                            <input type="hidden" name="draftType" id="draftType" value="" />
+                        </div>
+                        <!-- 基本信息内容区 -->
+                        <div class="saleHouse-basic-content mt20">
+                            <div class="sale-nav">
+                                <span class="saleHouse-basic-header" id="basic">基本信息</span>
+                            </div>
+                            <div class="saleHouse-basic clear">
+                                <ul>
+                                    <li>
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>小区:</span> <span class="keyWordBox">
+                                            <input id="cell" name="cell" type="text" class="iw200" value="@(itemHouseBasicInfo.CommunityName)" autocomplete="off" />
+                                            <span style="margin-left:10px;" id="showPrice"></span>
+                                            <dl class="keyList"></dl>
+                                        </span>
+                                        <input type="hidden" name="cellCode" id="cellCode" value="@(itemHouseBasicInfo.CommunityID)" />
+                                    </li>
+                                    <li>
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>区域:</span> <span>
+                                            <select id="distrctSelect" name="distrct" class="iw92" onchange="javascript: changePosite()">
+                                                @if (regions != null && regions.DistrctList != null && regions.DistrctList.Count > 0)
+                                                {
+                                                    foreach (RegionsModel item in regions.DistrctList)
+                                                    {
+                                                        <option value="@item.RegionID">@item.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                            <span class="col-fd6e05 mr5">*</span>路段:
+                                        </span> <span>
+                                            <select id="areaSelect" name="area" class="iw92">
+                                                @if (regions != null && regions.RegionList != null && regions.RegionList.Count > 0)
+                                                {
+                                                    int? distictId = 0;
+
+                                                    if (regions.Community != null && regions.Community.Distrctid > 0)
+                                                    {
+                                                        distictId = regions.Community.Distrctid;
+                                                    }
+                                                    else if (regions.DistrctList != null && regions.DistrctList.Count > 0)
+                                                    {
+                                                        distictId = regions.DistrctList[0].RegionID;
+                                                    }
+                                                    List<RegionsModel> defaultRegionList = regions.RegionList.FindAll(s => s.DistrctID == distictId);
+                                                    if (defaultRegionList != null && defaultRegionList.Count > 0)
+                                                    {
+                                                        foreach (RegionsModel item in defaultRegionList)
+                                                        {
+                                                            <option class="@item.DistrctID" value="@item.RegionID">@item.Name</option>
+                                                        }
+                                                    }
+                                                }
+
+                                            </select>
+                                        </span>
+                                    </li>
+                                    <li class="import-titleTip">
+                                        <!-- 标题信息提示 -->
+                                        <div id="addrTipDiv" class="hdtop" style="display:none;left: 108px;top:36px;">
+                                            <div class="vldtop"></div>
+                                            <div class="titleTip-close"> <a href="javascript:titleWindowClose('addrTipDiv')"> <span class="tip-img"></span> </a> </div>
+                                            <ul></ul>
+                                        </div>
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>地址:</span> <span>
+                                            <input id="addr" name="addr" type="text" class="iw400" value="@itemHouseBasicInfo.Address" />
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>建筑面积:</span> <span>
+                                            <input id="houseArea" name="houseArea" type="text" class="iw92" value="@itemHouseBasicInfo.BuildArea" onkeypress="return checkFloat(event, this);" />平方米
+                                        </span>
+                                    </li>
+                                    <li style="display:none">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>使用面积:</span> <span>
+                                            <input id="areaUsed" name="areaUsed" type="text" class="iw92" value="@itemHouseBasicInfo.UsedArea" onkeypress="return checkFloat(event, this);" />平方米
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>户型:</span> <span>
+                                            <select class="iw48" name="room">
+                                                <option value="1">1</option>
+                                                <option value="2" selected="selected">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>室
+                                            <select class="iw48" name="hall">
+                                                <option value="0">0</option>
+                                                <option value="1" selected="selected">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>厅
+                                            <select class="iw48" name="kitchen">
+                                                <option value="0">0</option>
+                                                <option value="1" selected="selected">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>厨
+                                            <select class="iw48" name="toilet">
+                                                <option value="0">0</option>
+                                                <option value="1" selected="selected">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>卫
+                                            <select class="iw48" name="balcony">
+                                                <option value="0" selected="selected">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>阳台
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>价格:</span> <span>
+                                            <input id="price" name="price" type="text" value="@itemHouseBasicInfo.Price" class="iw92" value="" onkeypress="return checkFloat(event, this);" /><span>
+                                                <span id="priceTypeSpan" style="display: none">元/月</span><span id="priceTypeSpan2" style="display: none">万</span><span id="priceTypeSpan3" style="display: none">
+                                                    <span>
+                                                        <input name="priceType" value="元/平米·天" type="radio" id="priceType1" checked="checked" onchange="changePrice(1)" />
+                                                        <label for="priceType1">元/平米·天</label>
+                                                        <input name="priceType" value="元/平米·月" type="radio" id="priceType2" onchange="changePrice(1)" />
+                                                        <label for="priceType2">元/平米·月</label>
+                                                        <input name="priceType" value="元/月" type="radio" id="priceType3" onchange="changePrice(1)" />
+                                                        <label for="priceType3">元/月</label>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span> <span id="avgPriceTip" class="col-red"></span>
+                                    </li>
+                                    @if (posttype == 3)
+                                    {
+                                        <li class="clear">
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>支付方式:</span>
+                                            <span>
+                                                <select name="payType" class="iw92">
+                                                    <option value="押一付一">押一付一</option>
+                                                    <option value="押一付二">押一付二</option>
+                                                    <option value="押一付三" selected="selected">押一付三</option>
+                                                    <option value="押二付一">押二付一</option>
+                                                    <option value="押二付二">押二付二</option>
+                                                    <option value="押二付三">押二付三</option>
+                                                    <option value="半年付">半年付</option>
+                                                    <option value="年付">年付</option>
+                                                    <option value="面议">面议</option>
+                                                </select>
+                                            </span>
+                                        </li>
+                                    }
+                                    <li id="lowPayLi" style="display: none">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>最低首付:</span> <span>
+                                            <input id="lowPay" name="lowPay" type="text" class="iw92" value="@(itemHouseBasicInfo.LowPay)" onkeypress="return checkNumber(event);" />
+                                            <span class="col-f60">注：最低首付最少为价格的30%</span>
+                                        </span>
+                                    </li>
+                                    <li class="sale-year clear">
+                                        <span class="saleHouse-basic-left float-l"><span class="col-fd6e05 mr5">*</span>建造年代:</span> <span class="float-l ml5 mt5">
+                                            <input id="saleHouse-basic-year" type="text" name="ddlUsedYear" class="iw48 float-l" value="@(Convert.ToInt32(itemHouseBasicInfo.UsedYear) <1 ? 2000 : itemHouseBasicInfo.UsedYear)" onkeypress="return checkNumber(event);" />
+                                            <img src="/images/upd.png" border="0" usemap="#Map7" class="sale-yeae-img float-l" />
+                                            <map name="Map7" id="Map7">
+                                                <area shape="rect" coords="1,1,14,13" href="javascript:addone('saleHouse-basic-year');" />
+                                                <area shape="rect" coords="1,13,19,23" href="javascript:minusone('saleHouse-basic-year');" />
+                                            </map>年
+                                        </span>
+
+
+                                    </li>
+
+
+                                    <li class="clear sale-floor">
+                                        <span class="saleHouse-basic-left float-l"><span class="col-fd6e05 mr5">*</span>所在楼层:</span> <span class="float-l ml5 mt5">
+                                            <input id="saleHouse-basic-flooron" type="text" name="curFloor" class="iw48 float-l" value="@(itemHouseBasicInfo.CurFloor <1 ? 1 : itemHouseBasicInfo.CurFloor)" onkeypress="return checkNumber(event);" />
+                                            <img src="/images/upd.png" border="0" usemap="#Map8" class="sale-yeae-img float-l" />
+                                            <map name="Map8" id="Map8">
+                                                <area shape="rect" coords="1,1,13,13" href="javascript:addone('saleHouse-basic-flooron','saleHouse-basic-floorall',true);" />
+                                                <area shape="rect" coords="1,13,13,24" href="javascript:minusone('saleHouse-basic-flooron','saleHouse-basic-floorall',true);" />
+                                            </map>
+                                            <span class="float-l">楼,共</span>
+                                            <input id="saleHouse-basic-floorall" type="text" name="maxFloor" class="iw48 float-l" value="@(itemHouseBasicInfo.MaxFloor <1 ? 1 : itemHouseBasicInfo.MaxFloor)" onkeypress="return checkNumber(event);" />
+                                            <img src="/images/upd.png" border="0" usemap="#Map9" class="sale-yeae-img float-l" />
+                                            <map name="Map9" id="Map9">
+                                                <area shape="rect" coords="0,2,13,13" href="javascript:addone('saleHouse-basic-floorall','saleHouse-basic-flooron',false);" />
+                                                <area shape="rect" coords="1,13,14,24" href="javascript:minusone('saleHouse-basic-floorall','saleHouse-basic-flooron',false);" />
+                                            </map>
+                                            <span class="float-l">楼</span>
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>朝向:</span> <span>
+                                            <input name="pointTo" value="东" type="radio" id="pointTo1" /><label for="pointTo1">东</label>
+                                            <input name="pointTo" value="南" type="radio" id="pointTo2" /><label for="pointTo2">南</label>
+                                            <input name="pointTo" value="西" type="radio" id="pointTo3" /><label for="pointTo3">西</label>
+                                            <input name="pointTo" value="北" type="radio" id="pointTo4" /><label for="pointTo4">北</label>
+                                            <input name="pointTo" value="东南" type="radio" id="pointTo5" /><label for="pointTo5">东南</label>
+                                            <input name="pointTo" value="东西" type="radio" id="pointTo6" /><label for="pointTo6">东西</label>
+                                            <input name="pointTo" value="西南" type="radio" id="pointTo7" /><label for="pointTo7">西南</label>
+                                            <input name="pointTo" value="西北" type="radio" id="pointTo8" /><label for="pointTo8">西北</label>
+                                            <input name="pointTo" value="东北" type="radio" id="pointTo9" /><label for="pointTo9">东北</label>
+                                            <input name="pointTo" value="南北" type="radio" id="pointTo10" checked="checked" /><label for="pointTo10">南北</label>
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left">看房时间:</span> <span>
+                                            <input name="lookTime" value="随时看房" type="radio" id="lookTime1" /><label for="lookTime1">随时看房</label>
+                                            <input name="lookTime" value="非工作时间" type="radio" id="lookTime2" /><label for="lookTime2">非工作时间</label>
+                                            <input name="lookTime" value="电话预约" type="radio" id="lookTime3" checked="checked" /><label for="lookTime3">电话预约</label>
+                                            <input name="lookTime" value="其它" type="radio" id="lookTime4" /><label for="lookTime4">其它</label>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="saleHouse-basic-left">装修程度:</span> <span>
+                                            <input name="fitmentStatus" value="豪华装修" type="radio" id="housezx1" /><label for="housezx1">豪华装修</label>
+                                            <input name="fitmentStatus" value="精装修" type="radio" id="housezx2" /><label for="housezx2">精装修</label>
+                                            <input name="fitmentStatus" value="中等装修" type="radio" id="housezx3" checked="checked" /><label for="housezx3">中等装修</label>
+                                            <input name="fitmentStatus" value="简装修" type="radio" id="housezx4" /><label for="housezx4">简装修</label>
+                                            <input name="fitmentStatus" value="毛坯" type="radio" id="housezx5" /><label for="housezx5">毛坯</label>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="saleHouse-basic-left">内部编号:</span> <span>
+                                            <input id="internalNum" name="internalNum" type="text" class="iw92" value="@(itemHouseBasicInfo.InternalNum)" />
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>小区特色:</span> <span>
+                                            <input id="saleHouse-eare-tip" type="text" name="cellLabel" class="iw400 saleHouse-eare-tip" value="@(itemHouseBasicInfo.CellLabel)" />
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>房源标签:</span> <span>
+                                            <input id="saleHouse-house-tip" type="text" name="houseLabel" class="iw400 saleHouse-house-tip" value="@(itemHouseBasicInfo.HouseLabel)" />
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>一句话广告:</span> <span>
+                                            <input id="saleHouse-tongcheng-tip" type="text" name="yijuhua" class="iw400" value="@(itemHouseBasicInfo.YiJuHua)" />
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left">视频:</span> <span>
+                                            <input id="saleHouse-tongcheng-Video" type="text" name="video" class="iw400" value="@(itemHouseBasicInfo.Video)" />
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left">联系人:</span> <span>
+                                            <input id="saleHouse-tongcheng-Contacts" type="text" name="Contacts" class="iw400" value="@(itemHouseBasicInfo.Contacts)" />
+                                        </span>
+                                    </li>
+                                    <li class="clear">
+                                        <span class="saleHouse-basic-left">电话:</span> <span>
+                                            <input id="saleHouse-tongcheng-Tel" type="text" name="Tel" class="iw400" value="@(itemHouseBasicInfo.Tel)" />
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 独有信息内容区 -->
+                        <div class="saleHouse-special-content mt8">
+                            <!-- 住宅 -->
+                            <div class="saleHouse-basic-house">
+                                <div class="sale-nav"> <span class="saleHouse-basic-header" id="houseType">住宅信息</span> </div>
+                                <div class="saleHouse-basic clear">
+                                    <ul>
+                                        <li>
+                                            <span class="saleHouse-basic-left">房屋类别:</span> <span>
+                                                <input name="houseType" type="radio" value="公寓" id="houseType1" /><label for="houseType1">公寓</label>
+                                                <input name="houseType" type="radio" value="普通住宅" id="houseType2" checked="checked" /><label for="houseType2">普通住宅</label>
+                                                <input name="houseType" type="radio" value="平房" id="houseType3" /><label for="houseType3">平房</label>
+                                                <input name="houseType" type="radio" value="其它" id="houseType4" /><label for="houseType4">其它</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">住宅子类型:</span> <span>
+                                                <select class="iw92" name="houseSubType">
+                                                    <option value="多层[1-7层]"> 多层[1 - 7层] </option>
+                                                    <option value="多层（带电梯）">多层（带电梯）</option>
+                                                    <option value="小高层[8-20层]"> 小高层[8 - 20层] </option>
+                                                    <option value="高层[20层以上]">高层[20层以上]</option>
+                                                </select>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>房屋产权:</span> <span>
+                                                <select class="iw92" name="houseProperty">
+                                                    <option value="商品房" selected="selected">商品房</option>
+                                                    <option value="商住两用"> 商住两用 </option>
+                                                    <option value="经济适用房">经济适用房</option>
+                                                    <option value="使用权"> 使用权 </option>
+                                                    <option value="公房">公房</option>
+                                                    <option value="其它"> 其它 </option>
+                                                </select>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>产权年限:</span> <span>
+                                                <input name="landYear" type="radio" value="70年产权" id="landYear1" checked="checked" /><label for="landYear1">70年产权</label>
+                                                <input name="landYear" type="radio" value="50年产权" id="landYear2" /><label for="landYear2">50年产权</label>
+                                                <input name="landYear" type="radio" value="40年产权" id="landYear3" /><label for="landYear3">40年产权</label>
+                                            </span>
+                                        </li>
+                                        <li class="clear">
+                                            <span class="saleHouse-basic-left float-l mr5">房屋结构:</span> <span>
+                                                <input name="houseStructure" value="板楼" type="radio" id="houseStructure1" checked="checked" /><label for="houseStructure1">板楼</label>
+                                                <input name="houseStructure" value="塔楼" type="radio" id="houseStructure2" /><label for="houseStructure2">塔楼</label>
+                                                <input name="houseStructure" value="板塔结合" type="radio" id="houseStructure3" /><label for="houseStructure3">板塔结合</label>
+                                                <input name="houseStructure" value="砖混" type="radio" id="houseStructure4" /><label for="houseStructure4">砖混</label>
+                                                <input name="houseStructure" value="其它" type="radio" id="houseStructure5" /><label for="houseStructure5">其它</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>产证满二:</span> <span>
+                                                <input name="fiveYears" type="radio" value="1" id="fiveyeas1" checked="checked" /><label for="fiveyeas1">是</label>
+                                                <input name="fiveYears" type="radio" value="0" id="fiveyeas2" /><label for="fiveyeas2">否</label>
+                                                <!-- <input name = "fiveYears" type="radio" value="" id="fiveyeas3"></input><label for="fiveyeas3">还不确定</label> -->
+                                                <span class="col-999">房产证是否满二年，用于计算税费</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">唯一住房:</span> <span>
+                                                <input name="onlyHouse" type="radio" value="1" id="onlyHouse1" checked="checked" /><label for="onlyHouse1">是</label>
+                                                <input name="onlyHouse" type="radio" value="0" id="onlyHouse2" /><label for="onlyHouse2">否</label>
+                                                <span class="col-999">是否为业主唯一住房，用于计算税费</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">基础设施:</span> <span>
+                                                <input name="basicEquip" value="水" type="checkbox" id="basicEquip1" checked="checked" /><label for="basicEquip1">水</label>
+                                                <input name="basicEquip" value="电" type="checkbox" id="basicEquip2" checked="checked" /><label for="basicEquip2">电</label>
+                                                <input name="basicEquip" value="煤气/天然气" type="checkbox" id="basicEquip3" checked="checked" /><label for="basicEquip3">煤气/天然气</label>
+                                                <input name="basicEquip" value="有线电视" type="checkbox" id="basicEquip9" checked="checked" /><label for="basicEquip9">有线电视</label>
+                                                <input name="basicEquip" value="暖气" type="checkbox" id="basicEquip4" /><label for="basicEquip4">暖气</label>
+                                                <input name="basicEquip" value="电梯" type="checkbox" id="basicEquip5" /><label for="basicEquip5">电梯</label>
+                                                <input name="basicEquip" value="车位" type="checkbox" id="basicEquip6" /><label for="basicEquip6">车位</label>
+                                                <input name="basicEquip" value="露台" type="checkbox" id="basicEquip7" /><label for="basicEquip7">露台</label>
+                                                <input name="basicEquip" value="阁楼" type="checkbox" id="basicEquip8" /><label for="basicEquip8">阁楼</label>
+                                                <input name="basicEquip" value="储藏室/地下室" type="checkbox" id="basicEquip10" /><label for="basicEquip10">储藏室/地下室</label>
+                                                <input onclick="selectAll('basicEquip')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('basicEquip')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">配套设施:</span> <span>
+                                                <input name="advEquip" value="电话" type="checkbox" id="advEquip1" checked="checked" /><label for="advEquip1">电话</label>
+                                                <input name="advEquip" value="热水器" type="checkbox" id="advEquip2" checked="checked" /><label for="advEquip2">热水器</label>
+                                                <input name="advEquip" value="彩电" type="checkbox" id="advEquip3" /><label for="advEquip3">彩电</label>
+                                                <input name="advEquip" value="空调" type="checkbox" id="advEquip0" checked="checked" /><label for="advEquip0">空调</label>
+                                                <input name="advEquip" value="冰箱" type="checkbox" id="advEquip4" /><label for="advEquip4">冰箱</label>
+                                                <input name="advEquip" value="洗衣机" type="checkbox" id="advEquip5" /><label for="advEquip5">洗衣机</label>
+                                                <input name="advEquip" value="家具" type="checkbox" id="advEquip6" checked="checked" /><label for="advEquip6">家具</label>
+                                                <input name="advEquip" value="床" type="checkbox" id="advEquip8" checked="checked" /><label for="advEquip8">床</label>
+                                                <input name="advEquip" value="宽带网" type="checkbox" id="advEquip7" /><label for="advEquip7">宽带网</label>
+                                                <input name="advEquip" value="微波炉" type="checkbox" id="advEquip9" /><label for="advEquip9">微波炉</label>
+                                                <input name="advEquip" value="衣柜" type="checkbox" id="advEquip10" /><label for="advEquip10">衣柜</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"></span> <span>
+                                                <input name="advEquip" value="沙发" type="checkbox" id="advEquip11" /><label for="advEquip11">沙发</label>
+                                                <input name="advEquip" value="厨具" type="checkbox" id="advEquip12" /><label for="advEquip12">厨具</label>
+                                                <input name="advEquip" value="独立卫生间" type="checkbox" id="advEquip13" /><label for="advEquip13">独立卫生间</label>
+                                                <input onclick="selectAll('advEquip')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('advEquip')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 标签提示 -->
+                            <div class="tip-window cellLabel-window" style="display:none"></div>
+                            <!-- 标签提示 -->
+                            <div class="tip-window houseLabel-window" style="display:none"></div>
+                            <!-- 别墅 -->
+                            <div class="saleHouse-basic-villa" style="display:none">
+                                <div class="sale-nav" id="villaType"> <span class="saleHouse-basic-header">别墅信息</span> </div>
+                                <div class="saleHouse-basic clear">
+                                    <ul>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>别墅形式:</span> <span>
+                                                <input name="villaType" value="独栋" type="radio" checked="checked" id="villaxs1" /><label for="villaxs1">独栋</label>
+                                                <input name="villaType" value="双拼" type="radio" id="villaxs2" /><label for="villaxs2">双拼</label>
+                                                <input name="villaType" value="联排" type="radio" id="villaxs3" /><label for="villaxs3">联排</label>
+                                                <input name="villaType" value="叠加" type="radio" id="villaxs4" /><label for="villaxs4">叠加</label>
+                                                <input name="villaType" value="其它" type="radio" id="villaxs5" /><label for="villaxs5">其它</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">厅结构:</span> <span>
+                                                <input name="hallType" value="平层" type="radio" checked="checked" id="hallType1" /><label for="hallType1">平层</label>
+                                                <input name="hallType" value="挑高" type="radio" id="hallType2" /><label for="hallType2">挑高</label>
+                                                <input name="hallType" value="其它" type="radio" id="hallType3" /><label for="hallType3">其它</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>产权年限:</span> <span>
+                                                <input name="landYear2" type="radio" value="70年产权" id="landYear21" checked="checked" /><label for="landYear21">70年产权</label>
+                                                <input name="landYear2" type="radio" value="50年产权" id="landYear22" /><label for="landYear22">50年产权</label>
+                                                <input name="landYear2" type="radio" value="40年产权" id="landYear23" /><label for="landYear23">40年产权</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>产证满二:</span> <span>
+                                                <input name="fiveYears2" type="radio" value="1" id="fiveyeas21" checked="checked" /><label for="fiveyeas21">是</label>
+                                                <input name="fiveYears2" type="radio" value="0" id="fiveyeas22" /><label for="fiveyeas22">否</label>
+                                                <!-- 	<input name = "fiveYears2" type="radio" value="" id="fiveyeas23"></input><label for="fiveyeas23">还不确定</label> -->
+                                                <span class="col-999">房产证是否满二年，用于计算税费</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">唯一住房:</span> <span>
+                                                <input name="onlyHouse2" type="radio" value="1" id="onlyHouse21" checked="checked" /><label for="onlyHouse21">是</label>
+                                                <input name="onlyHouse2" type="radio" value="0" id="onlyHouse22" /><label for="onlyHouse22">否</label>
+                                                <span class="col-999">是否为业主唯一住房，用于计算税费</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">地下室:</span> <span>
+                                                <input name="basement" type="radio" value="1" id="villadxs1" checked="checked" /><label for="villadxs1">有</label>
+                                                <input name="basement" type="radio" value="0" id="villadxs2" /><label for="villadxs2">无</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">花园:</span> <span>
+                                                <input name="garden" type="radio" value="1" id="villahy1" /><label for="villahy1">有</label>
+                                                <input name="garden" type="radio" value="0" id="villahy2" checked="checked" /><label for="villahy2">无</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">车库:</span> <span>
+                                                <input name="garage" type="radio" value="1" id="villack1" checked="checked" /><label for="villack1">有</label>
+                                                <input name="garage" type="radio" value="0" id="villack2" /><label for="villack2">无</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">停车位:</span> <span>
+                                                <input name="parkLot" type="radio" value="1" id="villatcw1" checked="checked" /><label for="villatcw1">有</label>
+                                                <input name="parkLot" type="radio" value="0" id="villatcw2" /><label for="villatcw2">无</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">配套设施:</span> <span>
+                                                <input name="basicEquip1" value="露台" type="checkbox" id="villasb1" /><label for="villasb1">露台</label>
+                                                <input name="basicEquip1" value="楼阁" type="checkbox" id="villasb2" /><label for="villasb2">楼阁</label>
+                                                <input name="basicEquip1" value="游泳池" type="checkbox" id="villasb3" /><label for="villasb3">游泳池</label>
+                                                <input name="basicEquip1" value="阳光房" type="checkbox" id="villasb4" /><label for="villasb4">阳光房</label>
+                                                <input onclick="selectAll('basicEquip1')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('basicEquip1')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">室内设施:</span> <span>
+                                                <input name="advEquip1" value="电话" type="checkbox" id="advEquip11" checked="checked" /><label for="advEquip11">电话</label>
+                                                <input name="advEquip1" value="彩电" type="checkbox" id="advEquip12" checked="checked" /><label for="advEquip12">彩电</label>
+                                                <input name="advEquip1" value="热水器" type="checkbox" id="advEquip13" checked="checked" /><label for="advEquip13">热水器</label>
+                                                <input name="advEquip1" value="洗衣机" type="checkbox" id="advEquip14" /><label for="advEquip14">洗衣机</label>
+                                                <input name="advEquip1" value="冰箱" type="checkbox" id="advEquip15" /><label for="advEquip15">冰箱</label>
+                                                <input name="advEquip1" value="空调" type="checkbox" id="advEquip16" checked="checked" /><label for="advEquip16">空调</label>
+                                                <input name="advEquip1" value="家具" type="checkbox" id="advEquip17" checked="checked" /><label for="advEquip17">家具</label>
+                                                <input name="advEquip1" value="床" type="checkbox" id="advEquip24" checked="checked" /><label for="advEquip24">床</label>
+                                                <input name="advEquip1" value="宽带网" type="checkbox" id="advEquip18" /><label for="advEquip18">宽带网</label>
+                                                <input name="advEquip1" value="微波炉" type="checkbox" id="advEquip19" /><label for="advEquip19">微波炉</label>
+                                                <input name="advEquip1" value="衣柜" type="checkbox" id="advEquip20" /><label for="advEquip20">衣柜</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"></span> <span>
+                                                <input name="advEquip1" value="沙发" type="checkbox" id="advEquip21" /><label for="advEquip21">沙发</label>
+                                                <input name="advEquip1" value="厨具" type="checkbox" id="advEquip22" /><label for="advEquip22">厨具</label>
+                                                <input name="advEquip1" value="独立卫生间" type="checkbox" id="advEquip23" /><label for="advEquip23">独立卫生间</label>
+                                                <input onclick="selectAll('advEquip1')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('advEquip1')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 商铺 -->
+                            <div class="saleHouse-basic-shop" style="display:none">
+                                <div class="sale-nav" id="shopType"> <span class="saleHouse-basic-header">商铺信息</span> </div>
+                                <div class="saleHouse-basic clear">
+                                    <ul>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>商铺类型:</span> <span>
+                                                <select name="shopType" class="iw92">
+                                                    <option value="住宅底商"> 住宅底商 </option>
+                                                    <option value="商业街商铺" selected="selected">商业街商铺</option>
+                                                    <option value="旅游商铺"> 旅游商铺 </option>
+                                                    <option value="写字楼配套底商">写字楼配套底商</option>
+                                                    <option value="主题卖场"> 主题卖场 </option>
+                                                    <option value="酒店底商">酒店底商</option>
+                                                    <option value="百货/购物中心"> 百货 / 购物中心 </option>
+                                                    <option value="地下商场">地下商场</option>
+                                                    <option value="其它"> 其它 </option>
+                                                </select>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>商铺状态:</span> <span>
+                                                <input name="shopStatus" type="radio" value="营业中" id="shopStatus1" checked="checked" /><label for="shopStatus1">营业中</label>
+                                                <input name="shopStatus" type="radio" value="闲置中" id="shopStatus2" /><label for="shopStatus2">闲置中</label>
+                                                <input name="shopStatus" type="radio" value="新铺" id="shopStatus3" /><label for="shopStatus3">新铺</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">目标业态:</span> <span>
+                                                <input name="targetField" value="百货超市" type="checkbox" id="targetField1" checked="checked" /><label for="targetField1">百货超市</label>
+                                                <input name="targetField" value="酒店宾馆" type="checkbox" id="targetField2" /><label for="targetField2">酒店宾馆</label>
+                                                <input name="targetField" value="家居建材" type="checkbox" id="targetField3" /><label for="targetField3">家居建材</label>
+                                                <input name="targetField" value="服饰鞋包" type="checkbox" id="targetField4" /><label for="targetField4">服饰鞋包</label>
+                                                <input name="targetField" value="生活服务" type="checkbox" id="targetField5" /><label for="targetField5">生活服务</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"></span> <span>
+                                                <input name="targetField" value="美容美发" type="checkbox" id="targetField6" /><label for="targetField6">美容美发</label>
+                                                <input name="targetField" value="餐饮美食" type="checkbox" id="targetField7" /><label for="targetField7">餐饮美食</label>
+                                                <input name="targetField" value="休闲娱乐" type="checkbox" id="targetField8" /><label for="targetField8">休闲娱乐</label>
+                                                <input name="targetField" value="其它" type="checkbox" id="targetField9" /><label for="targetField9">其它</label>
+                                                <input onclick="selectAll('targetField')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('targetField')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">物业费:</span> <span>
+                                                <input id="fee2" name="fee2" type="text" class="iw92" value="0" datatype="fee" onkeypress="return checkFloat(event, this);" />
+                                                元/平米·月<span class="col-f60">注：若没有物业费时，为0。</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">是否分割:</span> <span>
+                                                <input name="divide2" value="1" type="radio" id="shopfg1" checked="checked" /><label for="shopfg1">是</label>
+                                                <input name="divide2" value="0" type="radio" id="shopfg2" /><label for="shopfg2">否</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">配套设施:</span> <span>
+                                                <input name="basicEquip2" value="客梯" type="checkbox" id="basicEquip21" checked="checked" /><label for="basicEquip21">客梯</label>
+                                                <input name="basicEquip2" value="货梯" type="checkbox" id="basicEquip22" checked="checked" /><label for="basicEquip22">货梯</label>
+                                                <input name="basicEquip2" value="扶梯" type="checkbox" id="basicEquip23" checked="checked" /><label for="basicEquip23">扶梯</label>
+                                                <input name="basicEquip2" value="暖气" type="checkbox" id="basicEquip24" /><label for="basicEquip24">暖气</label>
+                                                <input name="basicEquip2" value="空调" type="checkbox" id="basicEquip25" /><label for="basicEquip25">空调</label>
+                                                <input name="basicEquip2" value="停车位" type="checkbox" id="basicEquip26" /><label for="basicEquip26">停车位</label>
+                                                <input name="basicEquip2" value="水" type="checkbox" id="basicEquip27" checked="checked" /><label for="basicEquip27">水</label>
+                                                <input name="basicEquip2" value="燃气" type="checkbox" id="basicEquip28" /><label for="basicEquip28">燃气</label>
+                                                <input name="basicEquip2" value="网络" type="checkbox" id="basicEquip29" /><label for="basicEquip29">网络</label>
+                                                <input onclick="selectAll('basicEquip2')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('basicEquip2')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 写字楼 -->
+                            <div class="saleHouse-basic-office" style="display:none">
+                                <div class="sale-nav" id="officeType"> <span class="saleHouse-basic-header">写字楼信息</span> </div>
+                                <div class="saleHouse-basic clear">
+                                    <ul>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>写字楼类别:</span> <span>
+                                                <select name="officeType" class="iw92">
+                                                    <option value="纯写字楼" selected="selected">纯写字楼</option>
+                                                    <option value="商住楼"> 商住楼 </option>
+                                                    <option value="商业综合体楼">商业综合体楼</option>
+                                                    <option value="酒店写字楼"> 酒店写字楼 </option>
+                                                    <option value="其它">其它</option>
+                                                </select>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>写字楼级别:</span> <span>
+                                                <input name="officeLevel" value="甲级" type="radio" id="officeLevel1" checked="checked" /><label for="officeLevel1">甲级</label>
+                                                <input name="officeLevel" value="乙级" type="radio" id="officeLevel2" /><label for="officeLevel2">乙级</label>
+                                                <input name="officeLevel" value="丙级" type="radio" id="officeLevel3" /><label for="officeLevel3">丙级</label>
+                                                <input name="officeLevel" value="其它" type="radio" id="officeLevel4" /><label for="officeLevel4">其它</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">物业费:</span> <span>
+                                                <input type="text" id="fee3" name="fee3" class="iw92" value="0" datatype="fee" onkeypress="return checkFloat(event, this);" />
+                                                元/平米·月<span class="col-f60">注：若没有物业费时，为0。</span>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">是否分割:</span> <span>
+                                                <input name="divide3" value="1" type="radio" id="officefg1" checked="checked" /><label for="officefg1">是</label>
+                                                <input name="divide3" value="0" type="radio" id="officefg2" /><label for="officefg2">否</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">基础设施:</span> <span>
+                                                <input name="basicEquip3" value="客梯" type="checkbox" id="basicEquip31" checked="checked" /><label for="basicEquip31">客梯</label>
+                                                <input name="basicEquip3" value="货梯" type="checkbox" id="basicEquip32" checked="checked" />
+                                                <label for="basicEquip32">货梯</label>
+                                                <input name="basicEquip3" value="扶梯" type="checkbox" id="basicEquip33" /><label for="basicEquip33">扶梯</label>
+                                                <input name="basicEquip3" value="暖气" type="checkbox" id="basicEquip34" /><label for="basicEquip34">暖气</label>
+                                                <input name="basicEquip3" value="空调" type="checkbox" id="basicEquip35" /><label for="basicEquip35">空调</label>
+                                                <input name="basicEquip3" value="停车位" type="checkbox" id="basicEquip36" /><label for="basicEquip36">停车位</label>
+                                                <input name="basicEquip3" value="水" type="checkbox" id="basicEquip37" /><label for="basicEquip37">水</label>
+                                                <input name="basicEquip3" value="燃气" type="checkbox" id="basicEquip38" /><label for="basicEquip38">燃气</label>
+                                                <input name="basicEquip3" value="网络" type="checkbox" id="basicEquip39" /><label for="basicEquip39">网络</label>
+                                                <input onclick="selectAll('basicEquip3')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('basicEquip3')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 厂房/车位 -->
+                            <div class="saleHouse-basic-factory" style="display:none">
+                                <div class="sale-nav" id="factoryType"> <span class="saleHouse-basic-header">厂房信息</span> </div>
+                                <div class="saleHouse-basic clear">
+                                    <ul>
+                                        <li>
+                                            <span class="saleHouse-basic-left"><span class="col-fd6e05 mr5">*</span>类型:</span> <span>
+                                                <input name="factoryType" value="厂房" type="radio" id="factoryType1" checked="checked" /><label for="factoryType1">厂房</label>
+                                                <input name="factoryType" value="仓库" type="radio" id="factoryType2" /><label for="factoryType2">仓库</label>
+                                                <input name="factoryType" value="车位" type="radio" id="factoryType3" /><label for="factoryType3">车位</label>
+                                                <input name="factoryType" value="土地" type="radio" id="factoryType4" /><label for="factoryType4">土地</label>
+                                                <input name="factoryType" value="其它" type="radio" id="factoryType5" /><label for="factoryType5">其它</label>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="saleHouse-basic-left">基础设施:</span> <span>
+                                                <input name="basicEquip4" value="水" type="checkbox" id="basicEquip41" checked="checked" /><label for="basicEquip41">水</label>
+                                                <input name="basicEquip4" value="电" type="checkbox" id="basicEquip42" checked="checked" /><label for="basicEquip42">电</label>
+                                                <input name="basicEquip4" value="煤气" type="checkbox" id="basicEquip43" /><label for="basicEquip43">煤气</label>
+                                                <input name="basicEquip4" value="暖气" type="checkbox" id="basicEquip44" /><label for="basicEquip44">暖气</label>
+                                                <input name="basicEquip4" value="有线电视" type="checkbox" id="basicEquip45" /><label for="basicEquip45">有线电视</label>
+                                                <input name="basicEquip4" value="宽带" type="checkbox" id="basicEquip46" checked="checked" /><label for="basicEquip46">宽带</label>
+                                                <input name="basicEquip4" value="电话" type="checkbox" id="basicEquip47" /><label for="basicEquip47">电话</label>
+                                                <input name="basicEquip4" value="空调" type="checkbox" id="basicEquip48" /><label for="basicEquip48">空调</label>
+                                                <input onclick="selectAll('basicEquip4')" type="button" value="全选" class="quanxuan_btn" />
+                                                <input onclick="clearAll('basicEquip4')" type="button" value="清空" class="qk_btn" />
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 房源介绍内容区 -->
+                        <div class="saleHouse-intro-content">
+                            <div class="sale-nav" id="house"> <span>房源介绍</span> </div>
+                            <ul class="sale-content-tip">
+                                <li><span class="sale-tip-img"></span><span>贴心提示:</span></li>
+                                <li>1.房源标题目的：突出房子的主要特点，吸引客户，增加点击量和电话量。</li>
+                                <li>2.完整的房源标题应该是：<span class="col-fd6e05">商圈+卖点+楼盘名称+户型+卖点。</span></li>
+                            </ul>
+                            <ul class="saleHouse-intro-main">
+                                <li>
+                                    <span class="font-bold"><span class="col-fd6e05 mr5">*</span>信息标题:</span> <span>
+                                        好的标题是增加点击，吸引眼球第一步！
+                                        <input class="btn-green" onclick="getAutoView(1)" type="button" value="帮我写标题" />
+                                        <input type="hidden" value="1" id="pageIndex" name="pageIndex" />
+                                    </span>
+                                </li>
+                                <li class="import-titleTip">
+                                    <!-- 标题信息提示 -->
+                                    <div id="titleTipDiv" class="hdtop" style="display:none">
+                                        <div class="vldtop"></div>
+                                        <div class="titleTip-close"> <a href="javascript:titleWindowClose('titleTipDiv')"> <span class="tip-img"></span> </a> </div>
+                                        <ul></ul>
+                                    </div>
+                                    <span>
+                                        <input id="saleHouse-title" name="title" class="saleHouse-title iw400" type="text" value="@(itemHouseBasicInfo.Title)" />
+                                        <span id="titleNumsSpan" class="col-fd6e05 mr5"></span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="font-bold" id="cke_houseDescribe"><span class="col-fd6e05 mr5">*</span>信息描述:</span> <span>
+                                        300-500字效果为最佳，<span class="font-bold col-fd6e05">多彩文本</span> 更容易引起客户关注
+                                        <input class="btn-green" onclick="getAutoView(2)" type="button" value="帮我写描述" />
+                                        @* <input class="btn-green" type="button" value="我的描述" id="house_desc_btn" />
+                                            <input class="btn-green" type="button" value="中介模板" id="agent_desc_btn" />
+                                            <input class="btn-green" type="button" value="保存描述" id="save_desc_btn" />*@
+                                        <input class="btn-green" type="button" value="我的描述" id="house_desc_btn" />
+                                        <input class="btn-green" type="button" value="保存描述" id="save_desc_btn" />
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="saleHouse-textarea">
+                                @*<textarea id="houseDescribe" name="houseDescribe" >@(itemHouseBasicInfo.Note)</textarea>*@
+                                <script id="houseDescribe" name="houseDescribe" type="text/plain">
+                                    @(Html.Raw(itemHouseBasicInfo.Note))
+                                </script>
+
+                            </div>
+                            <div class="houseDesc-tip">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</div>
+                        </div>
+
+                        <!-- 图片信息内容区 -->
+                        <div class="sale-pic-content">
+                            <div class="sale-nav" id="pic"> <span>图片信息</span> </div>
+                            <ul class="sale-content-tip">
+                                <li><span class="sale-tip-img"></span><span>贴心提示:</span></li>
+                                <li>1.上传1张房型图，3张室内图，房源描述需要30个字以上的房源，就能获得<img width="30" height="18" src="/images/duotu.jpg" />标签。多图房源能获得比一般房源高出27.3%的点击率。</li>
+                                <li>2.上传的照片分辨率应大于300*200，非大图压缩方式仅支持小于500k的图片，大图模式可支持小于5M的图片。</li>
+                                <li>3.帮助：<a href="javascript:getHelp()">上传照片规则</a></li>
+                            </ul>
+                            <div class="sale-pic-main">
+                                <div class="sale-uploadType clear" style="display: none">
+                                    <div class="sale-main-left float-l">上传方式:</div>
+                                    <div class="sale-uploadType-right float-l">
+                                        @*<input name="picupload" value="0" type="radio" id="picupload1" onchange="singleClick()" /><label for="picupload1">普通上传</label>
+                                            <input name="picupload" value="1" type="radio" id="picupload2" onchange="mutilDivClick()" /><label for="picupload2">批量上传</label>*@
+                                        <input name="picupload" value="2" type="radio" id="picupload3" onchange="compressClick()" checked="checked" /><label for="picupload3">大图压缩批量上传</label>
+                                        <span class="col-fd6e05 picupload2-tip">大图压缩批量上传为此电脑最佳上传方式</span> <span class="col-fd6e05 picupload1-tip" style="display:none">您没有安装flash,请立即安装,谢谢。</span>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <input type="hidden" id="hideWaterMarkPic" value="" />
+                                <input type="hidden" id="hideWaterMarkPosition" value="0" />
+                                <div id="watermark-pic-position" class="sale-uploadType clear">
+                                    <div class="sale-main-left float-l">水印位置:</div>
+                                    <div class="sale-watermark-pic-right float-l" id="sale-watermark-content">
+
+                                    </div>
+                                </div>
+                                <div class="sale-uploadType clear">
+                                    <ul>
+                                        <li>
+                                            <div class="sale-main-left float-l">封 面 图:</div>
+                                            <ul class="sale-indexPic-right float-l">
+                                                <li>点击希望设定为封面的图片右下角的封面按钮<span></span>即可设定。</li>
+                                                <!-- 封面图 -->
+                                                <li id="coverDiv" class="mb8">
+                                                    <img id="coverImg" style="display: none" class="importp-img" src="" />
+                                                    <input id="coverType" type="hidden" value="" name="imageType" />
+                                                    <input id="coverUrl" type="hidden" value="" name="imgUrl" />
+                                                </li>
+                                                <li>
+                                                    <input type="hidden" value="" name="imgDescribeCover" />
+
+                                                    <input type="hidden" value="" id="coverIndex" />
+
+                                                </li>
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <iframe name="hidden_frame" id="hidden_frame" style="display:none"></iframe>
+                                <input type="hidden" id="temp_images" />
+                                <input type="hidden" id="personConfig-watermark" value="0" />
+                                <input type="hidden" id="personConfig-pos" value="1" />
+                                <input type="hidden" id="personConfig-img" />
+                                <!-- 室内照片 -->
+                                <div class="sale-housePic clear">
+                                    <div class="sale-main-left float-l">室内照片:</div>
+                                    <ul class="float-l">
+                                        <li>
+                                            <div id="singleDiv_IMG_I">
+                                                <input type="file" name="file" id="IMG_I" />
+                                                <input type="button" id="upload_IMG_I" onclick="javascript:uploadImg('IMG_I', '')" value="上传" class="btn-green" />
+                                            </div>
+                                            <div id="mutilDiv_IMG_I" style="display: none">
+                                                <input type="file" name="uploadify" id="uploadify_IMG_I" />
+                                                <div id="fileQueue_IMG_I"></div>
+                                            </div>
+                                            <div id="compressDiv_IMG_I" style="display: none" class="compressDiv_IMG_I">
+                                                <div id="filePicker_IMG_I" class="pluploader-container">
+                                                    <div class="pluploader-pick">
+                                                        <div style="padding-top: 6px;">选择图片</div>
+                                                    </div>
+                                                </div>
+                                                <div id="fileList_IMG_I" class="uploader-list"></div>
+                                            </div>
+                                        </li>
+                                        <li class="clear" style="height:23px;line-height:23px;margin:6px 0">
+                                            <span>最多10张。</span>
+                                            @*您可以</span> <span class="col-419d31">从我的图库选择</span>
+                                                <input class="btn-green my_img" type="button" value="我的图库" imagetype="IMG_I" />*@
+
+                                            <span>客厅/卧室/厨房等3张以上照片可帮助您获得较好效果！</span>
+                                        </li>
+                                        <li class="clear">
+                                            <div id="div_IMG_I" class="div-img"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- 房 型 图 -->
+                                <div class="sale-housePic clear">
+                                    <div class="sale-main-left float-l">房 型 图:</div>
+                                    <ul class="float-l">
+                                        <li>
+                                            <div id="singleDiv_IMG_M">
+                                                <input type="file" name="file" id="IMG_M" />
+                                                <input type="button" id="upload_IMG_M" onclick="javascript:uploadImg('IMG_M', '')" value="上传" class="btn-green" />
+                                            </div>
+                                            <div id="mutilDiv_IMG_M" style="display: none">
+                                                <input type="file" name="uploadify" id="uploadify_IMG_M" />
+                                                <div id="fileQueue_IMG_M"></div>
+                                            </div>
+                                            <div id="compressDiv_IMG_M" style="display: none" class="compressDiv_IMG_I">
+                                                <div id="filePicker_IMG_M" class="pluploader-container">
+                                                    <div class="pluploader-pick">
+                                                        <div style="padding-top: 6px;">选择图片</div>
+                                                    </div>
+                                                </div>
+                                                <div id="fileList_IMG_M" class="uploader-list"></div>
+                                            </div>
+                                        </li>
+                                        <li class="clear" style="height:23px;line-height:23px;margin:6px 0">
+                                            <span>最多&nbsp;5张。您可以</span>
+                                            @*<span class="col-419d31">从我的图库选择</span> 或者 <span class="col-419d31">从房型图库选择</span>
+                                                <input class="btn-green my_img" type="button" value="我的图库" imagetype="IMG_M" />
+                                                <input class="btn-green public_img" type="button" value="房型图库" imagetype="IMG_M" />*@
+                                            <!-- <input class="btn-green share_img" type="button" value="共享图库" imageType="IMG_M"></input> -->
+                                            <input class="btn-green" type="button" value="在线绘制" onclick="javascript:window.open('/drawtool.html');" />
+                                        </li>
+                                        <li class="clear" id="container_IMG_M-content" style="display:none;">
+                                            <div class="container-content-font" style="height:24px;line-height:24px">房产盒子图库推荐(选择您要的图片，即可出现在房源图列中):</div>
+                                            <div id="container_IMG_M" imgtype="IMG_M" class="containerImg"></div>
+                                        </li>
+                                        <li class="clear">
+                                            <div id="div_IMG_M" class="div-img"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- 小区照片 -->
+                                <div class="sale-housePic clear">
+                                    <div class="sale-main-left float-l">小区照片:</div>
+                                    <ul class="float-l">
+                                        <li>
+                                            <div id="singleDiv_IMG_O">
+                                                <input type="file" name="file" id="IMG_O" />
+                                                <input type="button" id="upload_IMG_O" onclick="javascript:uploadImg('IMG_O', '')" value="上传" class="btn-green" />
+                                            </div>
+                                            <div id="mutilDiv_IMG_O" style="display: none">
+                                                <input type="file" name="uploadify" id="uploadify_IMG_O" />
+                                                <div id="fileQueue_IMG_O"></div>
+                                            </div>
+                                            <div id="compressDiv_IMG_O" style="display: none" class="compressDiv_IMG_I">
+                                                <div id="filePicker_IMG_O" class="pluploader-container">
+                                                    <div class="pluploader-pick">
+                                                        <div style="padding-top: 6px;">选择图片</div>
+                                                    </div>
+                                                </div>
+                                                <div id="fileList_IMG_O" class="uploader-list"></div>
+                                            </div>
+                                        </li>
+                                        @*<li class="clear" style="height:23px;line-height:23px;margin:6px 0">
+                                                <span>最多10张。您可以</span> <span class="col-419d31">从我的图库选择</span> 或者 <span class="col-419d31">从小区图库选择</span>
+                                                <input class="btn-green my_img" type="button" value="我的图库" imagetype="IMG_O" />
+                                                <input class="btn-green my_area" type="button" value="小区图库" imagetype="IMG_O" />
+                                                <span>如果没有上传，发布后目标网站会默认配小区图</span>
+                                            </li>*@
+                                        <li class="clear" style="height:23px;line-height:23px;margin:6px 0">
+                                            <span>最多10张。</span><span>如果没有上传，发布后目标网站会默认配小区图</span>
+                                        </li>
+                                        <li class="clear" id="container_IMG_O-content" style="display:none;">
+                                            <div class="container-content-font">房产盒子图库推荐(选择您要的图片，即可出现在房源图列中):</div>
+                                            <div id="container_IMG_O" imgtype="IMG_O" class="containerImg"></div>
+                                        </li>
+                                        <li class="clear">
+                                            <div id="div_IMG_O" class="div-img"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- 底部按钮 -->
+                                <ul class="footer-button clear">
+                                    <li>
+                                        @{
+
+
+                                            if (editType > 0)
+                                            {
+                                                <input class="btn-saveHouse" type="submit" value="克隆房源" />
+                                            }
+                                            else
+                                            {
+                                                if (itemHouseBasicInfo.HouseID > 0)
+                                                {
+                                                    <input class="btn-saveHouse" type="button" value="另存房源" onclick="javascript:otherSub();" style="background: #e8e8e8;color: #a8a8a8;margin-right: 15px;" />
+                                                }
+                                                <input class="btn-saveHouse" type="submit" value="保存房源" />
+                                            }
+
+                                        }
+
+                                        @*<input class="btn-saveHouse" type="button" value="保存草稿" onclick="saveDraft(1)"  />*@
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script>
+        <script src='/Scripts/jquery.form.js' type='text/javascript'></script>
+        <script src='/Scripts/ajaxfileupload.js' type='text/javascript'></script>
+        <script src='/Scripts/common.js' type='text/javascript'></script>
+        <script src='/Scripts/placeholder.js' type='text/javascript'></script>
+        <script type="text/javascript" src="/Scripts/plugins/ueditor/ueditor.config.js"></script>
+        <!-- 编辑器源码文件 -->
+        <script type="text/javascript" src="/Scripts/plugins/ueditor/ueditor.all.js"></script>
+        <script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script>
+        <script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script>
+        <script src='/Scripts/plugins/lazyload/jquery.lazyload.js' type='text/javascript'></script>
+        <script src='/Scripts/plugins/Validform/Validform_v5.3.2_min.js' type='text/javascript'></script>
+        <script src='/Scripts/import.js?v=1.14' type='text/javascript'></script>
+        <script src='/Scripts/checkImport.js?v=02061' type='text/javascript'></script>
+        <script src='/Scripts/checkInput.js' type='text/javascript'></script>
+        <script src="/Scripts/plupload.full.min.js" type="text/javascript"></script>
+        <script src="/Scripts/zh_CN.js" type="text/javascript"></script>
+        <script src="/Scripts/jquery.uploadify.min.js" type="text/javascript"></script>
+
+        <script>
+                                                        var loadingFlag = false;
+                                                        var subNum = 0;
+                                                        function checkLoading() {
+                                                            if (!loadingFlag) {
+                                                                art.dialog({
+                                                                    title: "提示",
+                                                                    content: "页面未加载完成，请耐心等待",
+                                                                    ok: true
+                                                                });
+                                                                return false;
+                                                            }
+                                                            if (subNum == 0) {
+                                                                subNum++;
+                                                                vaildForm.resetStatus();
+                                                            }
+                                                            return true;
+                                                        }
+
+                                                        function changeLoadFlag() {
+                                                            var ue = UE.getEditor('houseDescribe');
+                                                            loadingFlag = true;
+                                                        }
+
+        </script>
+        @{if (itemHouseBasicInfo.HouseID > 0)
+            {
+                <script>
+
+                                                                $(document).ready(function () {
+                                                                    if ($("#postType").val() == 3) {
+                                                                        if (@(buildType) == 1 || @(buildType) == 2) {
+                                                                            $("#priceTypeSpan").show();
+                                                                            $("#priceTypeSpan3").hide();
+                                                                        } else {
+                                                                            $("#priceTypeSpan").hide();
+                                                                            $("#priceTypeSpan3").show();
+                                                                        }
+                                                                        price = $("#price").val();
+                                                                        index = price.indexOf(".");
+                                                                        if (index > -1) {
+                                                                            $("#price").val(price.substring(0, index));
+                                                                        }
+                                                                    } else {
+                                                                        $("#priceTypeSpan2").show();
+                                                                    }
+
+                                                                    var buildType = $("#buildingType").val();
+
+                                                                    switch (buildType) {
+                                                                        case "1":
+
+                                                                            setHouse('@(itemHouseBasicInfo.BuildType)', '@(itemHouseBasicInfo.Room)', '@(itemHouseBasicInfo.Hall)', '@(itemHouseBasicInfo.Toilet)', '@(itemHouseBasicInfo.Kitchen)', '@(itemHouseBasicInfo.Balcony)',
+                                                                                    '@(itemHouseInfo.AdvEquip)', '@(itemHouseInfo.HouseSubType)', '@(itemHouseInfo.HouseProperty)', '@(itemHouseInfo.LandYear)', '@(itemHouseInfo.HouseStructure)',
+                                                                                    '@(Convert.ToBoolean(itemHouseInfo.FiveYears) ? 1 : 0)', '@(itemHouseInfo.BasicEquip)', '@(Convert.ToBoolean(itemHouseInfo.OnlyHouse) ? 1 : 0)');  break;
+                                                                        case "2":
+
+                                                                            setVilla('@(itemVillaInfo.VillaType)','@(itemVillaInfo.HallType)', '@(itemHouseBasicInfo.Room)', '@(itemHouseBasicInfo.Hall)', '@(itemHouseBasicInfo.Toilet)', '@(itemHouseBasicInfo.Kitchen)', '@(itemHouseBasicInfo.Balcony)',
+                                                                                    '@(Convert.ToBoolean(itemVillaInfo.Basement) ? 1 : 0)', '@(Convert.ToBoolean(itemVillaInfo.Garden) ? 1 : 0)', '@(Convert.ToBoolean(itemVillaInfo.Garage) ? 1 : 0)', '@(Convert.ToBoolean(itemVillaInfo.ParkLot) ? 1 : 0)', '@(itemVillaInfo.BasicEquip)',
+                                                                                   '@(itemVillaInfo.AdvEquip)', '@(itemVillaInfo.LandYear)', '@(Convert.ToBoolean(itemVillaInfo.FiveYears) ? 1 : 0)', '@(Convert.ToBoolean(itemVillaInfo.OnlyHouse) ? 1 : 0)');  break;
+                                                                        case "3":
+                                                                            setShop(
+                                                                                  '@(itemShopInfo.ShopType)', '@(itemShopInfo.ShopStatus)', '@(itemShopInfo.TargetField)', '@(itemShopInfo.Fee)', '@(Convert.ToBoolean(itemShopInfo.Divide) ? 1 : 0)', '@(itemShopInfo.BasicEquip)',
+                                                                                  '@(itemHouseBasicInfo.PriceUnit)');  break;
+                                                                        case "4":
+                                                                            setOffice('@(itemOfficeInfo.OfficeType)', '@(itemOfficeInfo.OfficeLevel)', '@(itemOfficeInfo.Fee)', '@(Convert.ToBoolean(itemOfficeInfo.Divide) ? 1 : 0)', '@(itemOfficeInfo.BasicEquip)', '@(itemHouseBasicInfo.PriceUnit)');  break;
+                                                                        case "5":
+                                                                            setFactory('@(itemFactoryInfo.FactoryType)', '@(itemFactoryInfo.BasicEquip)', '@(itemHouseBasicInfo.PriceUnit)');  break;
+                                                                        default:
+                                                                    }
+
+
+                                                                    $("#distrctSelect").val('@(itemHouseBasicInfo.Distrctid)');
+                                                                    changePosite();
+                                                                    $("#areaSelect").val('@(itemHouseBasicInfo.RegionID)');
+                                                                    $("#payType").val("@(itemHouseBasicInfo.PayType)");
+                                                                    $("input[name=pointTo][value='@(itemHouseBasicInfo.PointTo)']").attr("checked", 'checked');
+                                                                    $("input[name=lookTime][value='@(itemHouseBasicInfo.LookHouseTime)']").attr("checked", 'checked');
+                                                                    $("input[name=fitmentStatus][value='@(itemHouseBasicInfo.FitmentStatus)']").attr("checked", 'checked');
+                                                                    if ('@(itemHouseBasicInfo.UsedYear)' != '0') {
+                                                                        $("#saleHouse-basic-year").val('@(itemHouseBasicInfo.UsedYear)');
+                                                                    }
+
+                                                                    // 显示图片
+
+                                                                    var hasCover = false;
+
+                                                                    @foreach (var item in itemHouseImages)
+        {
+
+            @Html.Raw(String.Format("createImgDiv('{0}', '{1}', '{3}', \"u\" + '{2}');", @item.ImagePath,
+            HouseUtility.GetHouseImgType(Convert.ToInt32(item.ImageType)),
+                 @item.HouseImageID, item.ImagePos));
+
+                                                    if (Convert.ToBoolean(item.IsCover))
+                                                    {
+                @Html.Raw(String.Format("setCover('{0}', \"u\" + {1});", HouseUtility.GetHouseImgType(Convert.ToInt32(item.ImageType)), @item.HouseImageID));
+                                                    }
+
+
+        }
+
+
+                                                                });
+
+
+                                                                function setFactory(factoryType, basicEquip, priceType) {
+                                                                    $("input[name=factoryType][value='" + factoryType + "']").attr("checked", 'checked');
+                                                                    $("input[name=priceType][value='" + priceType + "']").attr("checked", 'checked');
+                                                                    $("input[name=basicEquip4]").attr("checked", false);
+                                                                    if (basicEquip != '') {
+                                                                        var basicEquip = basicEquip.split(",");
+                                                                        for (var i = 0; i <basicEquip.length; i++) {
+                                                                            $("input[name=basicEquip4][value='" + basicEquip[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                function setOffice(officeType, officeLeve, hasFee, divide, basicEquip, priceType) {
+
+                                                                    $("select[name=officeType]  option[value='" + officeType + "']").attr("selected","selected");
+                                                                    $("input[name=officeLevel][value='" + officeLeve + "']").attr("checked", 'checked');
+                                                                    $("input[name=hasFee3][value='" + hasFee + "']").attr("checked", 'checked');
+                                                                    $("input[name=divide3][value='" + divide + "']").attr("checked", 'checked');
+                                                                    $("input[name=basicEquip3]").attr("checked", false);
+                                                                    if (basicEquip != '') {
+                                                                        var basicEquip = basicEquip.split(",");
+                                                                        for (var i = 0; i <basicEquip.length; i++) {
+                                                                            $("input[name=basicEquip3][value='" + basicEquip[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                    $("input[name=priceType][value='" + priceType + "']").attr("checked", 'checked');
+                                                                }
+
+                                                                function setShop(shopType, shopStatus, targetField, hasFee, divide, basicEquip, priceType) {
+
+                                                                    $("select[name=shopType] option[value='" + shopType + "']").attr("selected","selected");
+                                                                    $("input[name=shopStatus][value='" + shopStatus + "']").attr("checked", 'checked');
+                                                                    $("input[name=priceType][value='" + priceType + "']").attr("checked", 'checked');
+                                                                    if (targetField != '') {
+                                                                        var targetField = targetField.split(",");
+                                                                        $("input[name=targetField]").attr("checked", false);
+                                                                        for (var i = 0; i <targetField.length; i++) {
+                                                                            $("input[name=targetField][value='" + targetField[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                    $("input[name=hasFee2][value='" + hasFee + "']").attr("checked", 'checked');
+                                                                    $("input[name=divide2][value='" + divide + "']").attr("checked", 'checked');
+                                                                    $("input[name=basicEquip2]").attr("checked", false);
+                                                                    if (basicEquip != '') {
+                                                                        var basic = basicEquip.split(",");
+                                                                        for (var i = 0; i <basic.length; i++) {
+                                                                            $("input[name=basicEquip2][value='" + basic[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                function setVilla(villaType, hallType, room, hall, toilet, kitchen, balcony,
+                                                                        basement, garden, garage, parkLot, basicEquip, advEquip, landYear, fiveYears, onlyHouse) {
+                                                                    $("input[name=villaType][value='" + villaType + "']").attr("checked", 'checked');
+                                                                    $("input[name=hallType][value='" + hallType + "']").attr("checked", 'checked');
+                                                                    $("input[name=landYear2][value='" + landYear + "']").attr("checked", 'checked');
+                                                                    $("input[name=fiveYears2][value='" + fiveYears + "']").attr("checked", 'checked');
+                                                                    $("input[name=onlyHouse2][value='" + onlyHouse + "']").attr("checked", 'checked');
+                                                                    $("select[name=room] option[value='" + room + "']").attr("selected","selected");
+                                                                    $("select[name=hall]  option[value='" + hall + "']").attr("selected","selected");
+                                                                    $("select[name=toilet] option[value='" + toilet + "']").attr("selected","selected");
+                                                                    $("select[name=kitchen] option[value='" + kitchen + "']").attr("selected","selected");
+                                                                    $("select[name=balcony] option[value='" + balcony + "']").attr("selected","selected");
+                                                                    $("input[name=basement][value='" + basement + "']").attr("checked", 'checked');
+                                                                    $("input[name=garden][value='" + garden + "']").attr("checked", 'checked');
+                                                                    $("input[name=garage][value='" + garage + "']").attr("checked", 'checked');
+                                                                    $("input[name=parkLot][value='" + parkLot + "']").attr("checked", 'checked');
+                                                                    $("input[name=basicEquip1]").attr("checked",false);
+                                                                    if (basicEquip != '') {
+                                                                        var basic = basicEquip.split(",");
+                                                                        for (var i = 0; i <basic.length; i++) {
+                                                                            $("input[name=basicEquip1][value='" + basic[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+
+                                                                    $("input[name=advEquip1]").attr("checked", false);
+                                                                    if (advEquip != '') {
+                                                                        var basic = advEquip.split(",");
+                                                                        for (var i = 0; i <basic.length; i++) {
+                                                                            $("input[name=advEquip1][value='" + basic[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                function setHouse(houseType, room, hall, toilet, kitchen, balcony, advEquip, houseSubType,
+                                                                        houseProperty, landYear, houseStructure, fiveYears, basicEquip, onlyHouse) {
+                                                                    if (0 == 1) {
+                                                                        $("input[name=houseType][value='" + houseType + "']").attr("checked", 'checked');
+                                                                        $("select[name=room] option[value='" + room + "']").attr("selected","selected");
+                                                                        $("select[name=hall]  option[value='" + hall + "']").attr("selected","selected");
+                                                                        $("select[name=toilet] option[value='" + toilet + "']").attr("selected","selected");
+                                                                        $("select[name=kitchen] option[value='" + kitchen + "']").attr("selected","selected");
+                                                                        $("select[name=balcony] option[value='" + balcony + "']").attr("selected","selected");
+                                                                    } else {
+                                                                        $("input[name=houseType][value='" + houseType + "']").attr("checked", 'checked');
+                                                                        $("input[name=onlyHouse][value='" + onlyHouse + "']").attr("checked", 'checked');
+                                                                        $("select[name=houseSubType] option[value='" + houseSubType + "']").attr("selected","selected");
+                                                                        $("select[name=houseProperty]  option[value='" + houseProperty + "']").attr("selected","selected");
+                                                                        $("input[name=landYear][value='" + landYear + "']").attr("checked", 'checked');
+                                                                        $("select[name=room] option[value='" + room + "']").attr("selected","selected");
+                                                                        $("select[name=hall]  option[value='" + hall + "']").attr("selected","selected");
+                                                                        $("select[name=toilet] option[value='" + toilet + "']").attr("selected","selected");
+                                                                        $("select[name=kitchen] option[value='" + kitchen + "']").attr("selected","selected");
+                                                                        $("select[name=balcony] option[value='" + balcony + "']").attr("selected","selected");
+                                                                        $("input[name=houseStructure][value='" + houseStructure + "']").attr("checked", 'checked');
+                                                                        $("input[name=fiveYears][value='" + fiveYears + "']").attr("checked", 'checked');
+                                                                    }
+                                                                    $("input[name=basicEquip]").attr("checked", false);
+                                                                    if (basicEquip != '') {
+                                                                        var basic = basicEquip.split(",");
+                                                                        for (var i = 0; i <basic.length; i++) {
+                                                                            $("input[name=basicEquip][value='" + basic[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                    $("input[name=advEquip]").attr("checked",false);
+                                                                    if (advEquip != '') {
+                                                                        var basic = advEquip.split(",");
+                                                                        for (var i = 0; i <basic.length; i++) {
+                                                                            $("input[name=advEquip][value='" + basic[i] + "']").attr("checked", 'checked');
+                                                                        }
+                                                                    }
+                                                                }
+                </script>
+
+            }
+        }
+
+        <script>
+                                                            function disableEnter(evt) {
+                                                                var k = window.event ? evt.keyCode : evt.which;
+                                                                if (k == 13) {
+                                                                    $(".keyList").hide();
+                                                                    return false;
+                                                                }
+                                                                return true;
+                                                            }
+
+                                                            if (-1 == 0) {
+                                                                alert("房源录入成功!");
+                                                            }
+
+                                                            switch (@(buildType)) {
+                                                                case 1: houseDiv(); break;
+                                                                case 2: villaDiv(); break;
+                                                                case 3: shopDiv(); break;
+                                                                case 4: officeDiv(); break;
+                                                                case 5: factoryDiv(); break;
+                                                            }
+
+                                                            function changePosite() {
+                                                                var postSiteId =parseInt($("#distrctSelect").val());
+                                                                var html = "";
+                                                                var length = '206';
+                                                                var regionList=@(Html.Raw(jss.Serialize(regions.RegionList)));
+
+
+                                                                for(var j=0;j<regionList.length;j++)
+                                                                {
+                                                                    if (postSiteId==regionList[j].DistrctID) {
+                                                                        html += '<option value="'+regionList[j].RegionID+'">'+regionList[j].Name+'</option>';
+                                                                    }
+                                                                }
+
+
+
+                                                                $("#areaSelect").html(html);
+                                                            }
+
+                                                            var webNameArray = [];
+                                                            var titleLengthArray = [];
+                                                            var addrLengthArray = [];
+
+                                                            var title = '搜房帮:30:30'.split(":");
+                                                            webNameArray.push(title[0]);
+                                                            titleLengthArray.push(title[1]);
+                                                            addrLengthArray.push(title[2]);
+
+                                                            var title = '联合网:30:30'.split(":");
+                                                            webNameArray.push(title[0]);
+                                                            titleLengthArray.push(title[1]);
+                                                            addrLengthArray.push(title[2]);
+
+
+        </script>
+    </body>
+
+
+
+            }
+</html>

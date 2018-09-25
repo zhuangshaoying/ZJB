@@ -1,0 +1,123 @@
+﻿@{
+    Layout = null;
+    int tradeType = ViewBag.tradeType == null ? 0 : ViewBag.tradeType;
+    int totalSize = ViewBag.totalSize == null ? 0 : ViewBag.totalSize;
+    int pi = ViewBag.pi == null?1:ViewBag.pi;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>预约管理</title>
+<link href='/css/common.css' rel='stylesheet' type='text/css' />
+<link href='/css/reserveRel.css' rel='stylesheet' type='text/css' />
+<link href='/css/fanye.css' rel='stylesheet' type='text/css' />
+<link href="~/Css/saleManager.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="saleHouse" >
+  <input type="hidden" id="basePath" value="release-web"/>
+  <input type="hidden" id="postType" value="@tradeType"/>
+  <input type="hidden" id="pageIndex" value="@pi"/>
+  <input type="hidden" id="pageSize" value="10"/>
+  <input type="hidden" id="hour" value=""/>
+  <input type="hidden" id="minute" value=""/>
+  <div id="firstStep" class="saleHouse-main"> 
+    <!-- TAB切换 -->
+    <div class="sale-tab-bg clear">
+      <ul class="sale-tab-sub house-log">
+        <li id="tab0" class="sale-sub-menu selected"> <a href="javascript:" onclick="switchTab(this,1)">出售预约</a> </li>
+        <li id="tab1" class="sale-sub-menu"> <a href="javascript:" onclick="switchTab(this,3)">出租预约</a> </li>
+        <li id="tab2" class="sale-sub-menu"> <a href="javascript:" onclick="switchTab(this,0)">预约日志</a> </li>
+      </ul>
+    </div>
+    <div class="release-main" style="margin-top:10px"> 
+      <!-- 提示信息 -->
+        @*
+      <ul class="sale-content-tip">
+        <li><span class="sale-tip-img"></span><span>贴心提示:</span></li>
+        <li>1.预约发布的房源会占用您预约日期当天的发布条数。</li>
+        <li>2.显示您所有的发布推送任务记录,在发布界面设置为"预约发布"时将自动生成预约发布任务,还没有执行的预约发布任务可以修改发布时间。</li>
+      </ul>
+      *@
+      <!-- 日志筛选条件 -->
+      <div id="selectDiv" style="display: none">
+        <ul class="houseLog-select">
+          <li style="margin-left:0px">
+            <ul class="manage-list" onmouseover="selectOption('manage-list')">
+              <li class="manage-tip manage-eare-tip"><span id="handleType_span">不限</span><img width="19" height="26" src="/images/add_plus.jpg" /></li>
+              <li>
+                <input id="handleType" type="hidden" value="">
+                <ul id="handleType_ul" class="manage-list-content manage-eare-content" style="display:none">
+                  <li status="">不限</li>
+                  <li status="1">预约中</li>
+                  <li status="2">正在执行</li>
+                  <li status="3">已执行完毕</li>
+                  <li status="-1">已删除</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <ul class="houseLog-list houseLog-time" >
+              <li>
+                <input id="log_date" value="" class="Wdate houseLog-time-tip" type="text" onclick="SelectDate(this, 'yyyy-MM-dd')" onchange="getAppointmentLog(1)" readonly="readonly" />
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div  class="con1">
+        <table id="saleReserve" class="h_list clear" width="100%" cellspacing="0" cellpadding="0s">
+          <thead>
+            <tr>
+              <td>编号</td>
+              <td>执行时间</td>
+              <td>相关房源</td>
+              <td>相关网站</td>
+            </tr>
+          </thead>
+          <tbody id="appTable">
+          </tbody>
+        </table>
+        <div class="saleManager-bottom">
+            <div id="OperateDiv">
+          <div class="qx">
+            <input type="checkbox" id="reserveRel-all" onclick="selectAll()" /><label for="reserveRel-all">全选</label>
+          </div>
+          <div class="float-l">
+            <input type="button" class="btn_g" value="删除" onclick="deleteApp()" id="del_button" />
+          </div>
+                </div>
+          <div class="float-r">
+            <div id="saleManager-fanye" class="commom-fanye"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
+<script src='/Scripts/jquery-1.8.3.js' type='text/javascript'></script> 
+<script src='/Scripts/map.js' type='text/javascript'></script> 
+<script src='/Scripts/common.js' type='text/javascript'></script> 
+<script src='/Scripts/plugins/jPaginate/jquery.paginate.js' type='text/javascript'></script> 
+<script src='/Scripts/plugins/artDialog/jquery.artDialog.js?skin=chrome' type='text/javascript'></script> 
+<script src='/Scripts/plugins/artDialog/plugins/iframeTools.source.js' type='text/javascript'></script> 
+<script src='/Scripts/appointment.js' type='text/javascript'></script>
+<script src="~/Scripts/WebCalendar.js"></script>
+
+  
+      
+</body>
+      
+    @*<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>云刷新</title>
+</head>
+<body>
+    <div>
+        功能正在开发中，敬请期待……
+    </div>
+</body>*@
+</html>

@@ -1,0 +1,17 @@
+﻿@using ZJB.Api.Entity;
+@model List<Notice>
+
+@foreach(Notice item in Model)
+{
+    string noticeType="系统公告";
+    switch (item.Type)
+    {
+        case 1: noticeType = "系统公告"; break;
+        case 2: noticeType = "网站公告"; break;
+        case 3: noticeType = "用户公告"; break;
+        default: noticeType = "系统公告"; break;
+    }
+    DateTime createTime = (DateTime)@item.CreateTime;
+    
+<li><span>【@noticeType】@createTime.ToString("yyyy-MM-dd HH:mm")</span><a href="@Url.Action("DetailView", "Notice", new { noticeId=item.NoticeId})" class="ml8" id="@item.NoticeId">@item.Title</a></li>
+}

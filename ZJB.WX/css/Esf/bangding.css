@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+section, .whitebg {
+    background-color: #fff;
+}
+.pdX10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.uc-login li {
+    position: relative;
+    overflow: hidden;
+}
+.tit {
+    float: left;
+    font-size: 16px;
+    color: #83868f;
+    padding-top: 12px;
+}
+.input-box {
+    margin-left: 63px;
+    font-size: 15px;
+    color: #b3b6be;
+    border-bottom: 1px solid #f4f4f4;
+    line-height: 0;
+}
+.input-box input {
+    font-size: 15px;
+    height: 44px;
+    border: none;
+    color: #0c0d0e;
+}
+input.noutline {
+    outline: none;
+}
+.btn-code {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    height: 44px;
+}
+.btn-code a {
+    display: block;
+    margin-top: 10px;
+    width: 72px;
+    font-size: 12px;
+    line-height: 24px;
+    color: #ff6666;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #ff6666;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.btn-code a.noClick {
+    color: #cccfd8;
+    background: #fff;
+    border: 1px solid #e3e7ed;
+}
+.uc-login li:last-child .input-box {
+    border-bottom: 0;
+}
+.mt20 {
+    margin-top: 20px !important;
+}
+.btn-login {
+    display: block;
+    margin: 0 8px;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    color: #cccfd8;
+    background-color: #e3e7ed;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+.btn-login.click {
+    color: #fff;
+    background-color: #e83b3c;
+}
+

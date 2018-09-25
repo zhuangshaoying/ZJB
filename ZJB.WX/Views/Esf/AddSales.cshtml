@@ -1,0 +1,230 @@
+﻿
+@{
+
+    Layout = "";
+}
+<!doctype html>
+<html style="font-size: 40px;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <title>报备客户-住家帮</title>
+    <meta content="telephone=no" name="format-detection">
+    <meta name="apple-touch-fullscreen" content="yes">
+
+    <link href="~/Css/house/common.css" rel="stylesheet" />
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+
+    <link href="/css/esf/mobiscroll.css" rel="stylesheet" />
+    <link href="/css/esf/layer.css" rel="stylesheet" />
+
+    <script language="javascript">
+        function fnResize() { var e = document.documentElement.clientWidth, n = document.getElementsByTagName("html")[0]; n.style.fontSize = e / 10 + "px" } fnResize(), window.addEventListener("resize", function () { fnResize() }, !1);
+    </script>
+    <style type="text/css">
+        body {
+            text-align: left;
+            font: 14px/1.2 Helvetica, sans-serif, 微软雅黑, Arial;
+            color: #333;
+            max-width: 640px;
+            background: #ffffff;
+            margin: 0px auto;
+            position: relative;
+        }
+
+        .oon {
+            background: #64ac58;
+        }
+
+        .date-role .off {
+            background: #64ac58;
+            display: inline-block;
+            vertical-align: middle;
+            width: 45px;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            font-size: 14px;
+            background: #ccc;
+            border-radius: 13px;
+            margin-left: 8px;
+        }
+
+        .oon::-webkit-input-placeholder {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!--头部 begin-->
+    <header class="header">
+        <a href="javascript:void(0);" onclick="goback()" class="pull-left"></a>
+        <h2>报备客户</h2>
+    </header>
+    <form action="" method="post" novalidate>
+        <!--头部 end-->
+        <div class="filing-box" style="padding-bottom:0px">
+            <div class="field">
+                <span class="txt" style="width: 100px;">姓名</span>
+                <div class="pad"><input type="text" class="form-input form-input-small" value="" name="real_name" id="real_name" placeholder="请输入客户姓名" autocomplete="off"></div>
+                <div class="sex">
+                    <input type="hidden" name="client_role" value="女士">
+                    <span onclick="check(this,1)" class="client-role on" data-clientrole="先生">先生</span> <span onclick="check(this,2)" class="client-role " data-clientrole="女士">女士</span>
+                </div>
+            </div>
+        </div>
+        <div class="filing-box" style="padding-bottom:0px">
+            <div class="field">
+                <span class="txt" style="width: 100px;">手机</span>
+                <input type="text" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" class="form-input" value="" id="phone" name="phone" placeholder="请输入客户手机号码" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="filing-box" style="padding-bottom:0px">
+            <div class="field">
+                <span class="txt" style="width: 100px;">价格</span>
+                <input type="text" maxlength="11"  class="form-input" value="" id="price" name="price" placeholder="请输入房源价格（/元）" autocomplete="off">
+            </div>
+        </div>
+            <div class="select-date-box">
+                <div class="select-hd">
+                    <p>购房需求备注<span></span></p>
+                </div>
+                <div class="select-bd">
+
+                    <div class="form-ipt clearfix">
+
+                    </div>
+                    <div class="form-ipt clearfix">
+                        <textarea id="txt_notes" name="txt_notes" class="input-box" style="border: 1px solid #ddd;width: 103%;" placeholder="请填写备注" rows="6"></textarea>
+                        @*<span class="btm" style="width: 40%;"><input type="text" value="" class="ipt" readonly="" name="appDate" id="appDate" placeholder="选择带看日期"></span>
+                            <span class="btm" style="width: 40%;">
+                                <input type="text" value="" class="ipt oon" onclick="checkdate(this,'上午')" readonly="" style="width: 44%;float: left;" placeholder="上午">
+                                <input type="text" value="" class="ipt off" onclick="checkdate(this,'下午')" readonly="" style="width: 44%;float: left;" placeholder="下午">
+                            </span>*@
+                    </div>
+                    <input type="hidden" class="data-field" data-agentid="745">
+                    <div class="submit">
+                        <input type="hidden" name="getapi" value="wechat/customer/add">
+                        <input type="hidden" name="agent_id" value="745">
+                        <input type="hidden" name="property_id" value="120">
+                        <div class="queding"><a href="javascript:;" onclick="save()" class="submit-btn">立即报备</a></div>
+                    </div>
+
+                </div>
+            </div>
+      
+
+    </form>
+    <script src="/js/diyou.js"></script>
+    <script src="/js/base.js"></script>
+
+    <script type="text/javascript">
+        var datetime = '上午';
+        var xinbie = 1;
+        var goback = function () {
+            history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.cn';
+        }
+        diyou.use("common", function (fn) {
+            fn.mobileUtilMethod();
+        });
+        diyou.use("floor", function (fn) {
+            fn.selectDate();
+            fn.filingClient({ filing: false });
+        })
+        function check(obj, xb) {
+            $(".on").attr("class", "client-role ");
+            $(obj).attr("class", "client-role on");
+            xinbie = xb;
+        }
+        function checkdate(obj, xb) {
+            $(".oon").attr("class", "ipt off");
+            $(obj).attr("class", "ipt oon");
+            datetime = xb;
+        }
+        function save() {
+            var phone = $("#phone").val();
+            if (!(/^1(3|4|5|7|8)\d{9}$/.test(phone))) {
+                layer.open({
+                    content: "手机号码有误，请重填",
+                    style: "background: rgba(0, 0, 0, 0.5); color: #fff;font-size: 15px;",
+                    time: 5,
+                    end: function () {
+
+                    }
+                })
+                return false;
+            }
+            else if ($("#real_name").val() == "") {
+                layer.open({
+                    content: "客户姓名不能为空！",
+                    style: "background: rgba(0, 0, 0, 0.5); color: #fff;font-size: 15px;",
+                    time: 5,
+                    end: function () {
+
+                    }
+                })
+            }
+
+
+            else {
+                $(".submit-btn").removeAttr("onclick")
+                var pars = new Object(); 
+                pars["hid"] = @ViewBag.Hid
+                pars["FName"] = $("#real_name").val()
+                pars["FTel"] = $("#phone").val()
+                pars["Price"] = $("#price").val()
+                pars["sex"] = xinbie;
+                if (1==1) {
+                    pars["AppointmentTime"] = "";
+                } else {
+                    pars["AppointmentTime"] = $("#appDate").val() + " " + datetime;
+                }
+
+                pars["Notes"] = $("#txt_notes").val()
+                $.ajax({
+                    dataType: 'jsonp',
+                    type: "post",
+                    url: "/esf/AddBaoBei",
+                    data: pars,
+                    jsonpCallback: "jsonpCallback", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+                    jsonp: "success_jsonpCallback",
+                    success: function (datas) {
+                        if (datas[0].success == "-1") {
+                            layer.open({
+                                content: "该手机号码已被报备过了！！",
+                                style: "background: rgba(0, 0, 0, 0.5); color: #fff;font-size: 15px;",
+                                time: 5,
+                                end: function () {
+
+                                }
+                            })
+                            $(".submit-btn").attr("onclick", "save()")
+                        }
+                        else if (datas[0].success == "-2") {
+                            layer.open({
+                                content: datas[0].error,
+                                style: "background: rgba(0, 0, 0, 0.5); color: #fff;font-size: 15px;",
+                                time: 5,
+                                end: function () {
+
+                                }
+                            })
+                            $(".submit-btn").attr("onclick", "save()")
+                        }
+                        else {
+                            window.location.href = "/esf/Complete?hid=@(ViewBag.Hid)&type=2";
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $(".submit-btn").attr("onclick", "save()")
+                    }
+                });
+            }
+        }
+
+    </script>
+
+</body>
+</html>

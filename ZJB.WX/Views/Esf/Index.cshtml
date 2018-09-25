@@ -1,0 +1,323 @@
+﻿@using ZJB.Api.Models
+@model ZJB.Api.Models.HouseBasicInfoModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>厦门二手房-住家帮</title>
+    <meta name="keywords" content="住家帮">
+    <meta name="description" content="住家帮是国内首家移动互联网房产交易平台。通过移动互联网工具，为开发商、经纪公司、买房卖房者搭建了一个高效的、可信赖的O2O房产交易平台，是提供真房源、真服务、真交易的真房产电商。">
+    <meta name="applicable-device" content="mobile">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+    <meta name="imagemode" content="force">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf/vendor.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/Css/Esf/index.css" media="all">
+    <script language="javascript" src="/Scripts/Esf/jquery-1.7.1.min.js" type="text/javascript"></script>
+</head>
+<body class="h5-all-body all-body">
+	<div class="sideBar" id="sideBar">
+	  <ul>
+		<li class="active"><a href="/" class="WKBigDataBtn">首页</a></li>
+		<li class=""><a href="/esf/list" class="WKBigDataBtn">二手房</a></li>
+		<li class=""><a href="/esf/list?tradetype=3" class="WKBigDataBtn">租房</a></li>
+		<li class=""><a href="/esf/Publish" class="WKBigDataBtn">卖房</a></li>
+		<li class=""><a href="/esf/Me" class="WKBigDataBtn">个人中心</a></li>
+		<li class=""><a href="/home/about" class="WKBigDataBtn">关于住家帮</a></li>
+	  </ul>
+	</div><div id="main">
+    <div class="h5-index-wrapper js-action-index-wrapper">
+        <div class="h5-index-head js-action-index-head-div">
+            <div class="h5-index-head-top-back">
+                <div class="hdbg op_bg">
+					<a href="javascript:;" class="h5-index-head-nav-option clearfix js-action-nav-option" id="menuButton"><i class="userico"></i></a>
+					<div class="indexSearchBar">
+						<div class="city"><span class="cityText city-handle-index-2">厦门</span> <i class="iconArrow"></i> </div>
+						<div class="content js-action-index-search" data-analytics-track-event='{"type":"mp006"}'><i class="iconSearch"></i>请输入楼盘名/楼盘地址</div>
+					</div>
+					<div class="h5-index-close-city-pannel curpoint hide js-action-close-city-pannel" data-toggle="city"> <span class="h5-index-close-city-pannel-span city-handle-index-2"></span> <i class="h5-index-close-city-pannel-icon icon-city-down-arr"></i> </div>
+				</div>
+            </div>
+			
+            <div class="h5-index-banner js-action-index-banner">
+                <script src="/Scripts/Esf/TouchSlide.1.1.js"></script>
+                <div id="slideBox" class="slideBox">
+                    <div class="bd">
+                        <ul>
+                            <li><a class="pic" href=""><img src="../../Images/esf/banner1.jpg" /></a></li>
+                            <!--<li><a class="pic" href=""> <img src="../../Images/esf/banner2.jpg" /></a></li>-->
+                        </ul>
+                    </div>
+                    <div class="hd">
+                        <ul></ul>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    TouchSlide({
+                        slideCell: "#slideBox",
+                        titCell: ".hd ul",
+                        //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+                        mainCell: ".bd ul",
+                        effect: "leftLoop",
+                        autoPage: true,
+                        //自动分页
+                        autoPlay: true //自动播放
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="h5-index-menu">
+            <div class="h5-index-menu-filed">
+                <div class="clearfix usersltnone">
+                    <a class="h5-index-menu-a js-action-off-menu" href="/esf/list">
+                        <i class="h5-index-menu-toast icon-menu-off-toast js-action-off-menu-toast"></i>
+                        <span class="h5-index-menu-a-span icon-fdd-logo-gray-center">
+                            <img class="h5-index-menu-a-span-img layzed" src="../../Images/esf/i-2.png" style="display: inline;">
+                        </span> <span class="h5-index-menu-a-span-2">二手房</span>
+                    </a>
+                    <a class="h5-index-menu-a" href="/esf/list?tradetype=3">
+                        <span class="h5-index-menu-a-span icon-fdd-logo-gray-center">
+                            <img class="h5-index-menu-a-span-img layzed" src="../../Images/esf/i-1.png" style="display: inline;">
+                        </span> <span class="h5-index-menu-a-span-2">租房</span>
+                    </a>
+                    <a class="h5-index-menu-a" href="/esf/Publish">
+                        <span class="h5-index-menu-a-span icon-fdd-logo-gray-center">
+                            <img class="h5-index-menu-a-span-img layzed" src="../../Images/esf/i-4.png" style="display: inline;">
+                        </span> <span class="h5-index-menu-a-span-2">卖房</span>
+                    </a>
+			<a class="h5-index-menu-a js-action-off-menu" href="/esf/Me">
+                        <i class="h5-index-menu-toast icon-menu-off-toast js-action-off-menu-toast"></i>
+                        <span class="h5-index-menu-a-span icon-fdd-logo-gray-center">
+                            <img class="h5-index-menu-a-span-img layzed" src="../../Images/esf/i-8.png" style="display: inline;">
+                        </span> <span class="h5-index-menu-a-span-2">个人中心</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="h5-index-best-esf">
+            <div class="h5-index-components-title">
+                <a class="h5-index-components-title-content" href="/esf/list?cityid=592">
+                    <!--<span class="h5-index-components-title-content-1 backfdd"></span>-->
+                    <span class="h5-index-components-title-content-3" data-analytics-track-event="{&quot;type&quot;:&quot;mp002&quot;}">
+                        <span class="h5-index-components-title-content-3-span">
+                            查看更多
+                            <!--<span class="fdd-color-2">@ViewBag.TotalSize</span>套-->
+                        </span>
+                        <i class="h5-index-components-title-content-3-icon icon-right-arr-gray"></i>
+                    </span>
+                    <span class="h5-index-components-title-content-2">推荐房源</span>
+                </a>
+            </div>
+            <div class="h5-index-best-esf-list">
+                <div class="best-esf-list">
+                    <div class="best-esf-list-item js-action-index-2-best-esf">
+
+
+
+                        @if (ViewBag.Esflist != null)
+                        {
+                            int i = 0;
+                            foreach (HouseBasicInfoModel house in ViewBag.Esflist)
+                            {
+                                <div class="best-esf-tmp-content">
+                                    <a class="best-esf-item" href="/Esf/EsfDetail?houseid=@house.HouseID">
+                                        <figure class="best-esf-item-figure">
+                                            <figcaption class="best-esf-item-figcaption icon-fdd-logo-gray-center js-action-chk-ratio-common">
+                                                <img class="best-esf-item-img-2 layzed" src="@house.HouseImgPath" style="display: inline;">
+                                                <i class="icon-index2-tag-sale-anxious"></i>
+                                                <i class="icon-index2-tag-property-confirm position-2"></i>
+                                                <!--<div class="best-esf-item--price">
+                                                    <span class="best-esf-item--price--pre">￥</span>
+                                                    <span class="best-esf-item--price--value">@(house.Price.ToString("f0"))</span>
+                                                    <span class="best-esf-item--price--unit">@house.PriceUnit</span>
+                                                </div>-->
+                                            </figcaption>
+                                            <dl class="best-esf-item-dl">
+                                                <dd class="best-esf-item-dd best-esf-item-dd-1">@house.Title</dd>
+                                                <dd class="best-esf-item-dd best-esf-item-dd-2">@house.DistrctName-@house.RegionName&nbsp;&nbsp;@house.CommunityName</dd>
+                                                <dd class="best-esf-item-dd best-esf-item-dd-3"><p class="area">@(house.Room)室@(house.Hall)厅@(house.Toilet)卫&nbsp;&nbsp;&nbsp;@(house.BuildArea)m²</p><p class="hprice">@(house.Price.ToString("f0"))@house.PriceUnit</p></dd>
+                                                <dd class="best-esf-item-dd best-esf-item-dd-4">
+                                                    @{
+                                                        int itag = 0;
+                                                        var lblcss = "";
+                                                        foreach (var lab in house.HouseLabel.Split(' '))
+                                                        {
+                                                            itag++;
+                                                            if (itag == 1)
+                                                            {
+                                                                lblcss = " mln ";
+                                                            }
+                                                            //else if (itag == 2)
+                                                            //{
+                                                            //    lblcss = " nbtt ";
+                                                            //}
+                                                            else
+                                                            {
+                                                                lblcss = " ditief ";
+                                                            }
+                                                            <span class="tag-item">@lab</span>
+                                                        }
+
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </figure>
+                                    </a>
+                                </div>
+                                                            }
+                                                        }
+
+
+                    </div>
+                </div>
+            </div>
+			<div class="homeOption">
+            	<a class="likeMore" href="/esf/list?cityid=592"><span>查看更多</span></a>
+        	</div>
+        </div>
+    </div>
+<div class="sidebarBackground" id="sidebarBackground"></div>
+</div>
+    <!--搜索模块begin-->
+    <div id="search-panel" class="search-panel" style="display:none">
+        <div class="banner bd05b clearfix">
+            <a href="javascript:void(0);" class="nav-cancel">取消</a>
+            <div class="bar-search">
+                <form class="form-search" action="">
+                    <input type="search" id="jiansuo" class="input-search empty" name="keyword" placeholder="请输入小区名称">
+                    <a class="close">关闭</a>
+                </form>
+            </div>
+        </div>
+        <div class="view-touch">
+            <div class="search-result">
+                <!--搜索历史记录begin-->
+                <ul class="history">
+                    <li class="tit-search"><a>热门搜索</a></li>
+                    @*<li class="tag-li">
+                            <a href="javascript:void(0);">地铁房</a>
+                            <a href="javascript:void(0);">上海康城</a>
+                            <a href="javascript:void(0);">新凯家园</a>
+                        </li>*@
+                </ul>
+                <!--搜索历史记录end-->
+                <!--搜索显示begin-->
+                <ul class="search-tip" style="display:none"></ul>
+                <!--搜索显示end-->
+                <!--无搜索记录begin-->
+                <p class="inexistence" style="display:none">暂无搜索记录</p>
+                <!--无搜索记录end-->
+            </div>
+        </div>
+    </div>
+    <!--搜索模块end-->
+    <!--@{ Html.RenderPartial("EsfNav", new { height = "35px", curNav = "add" }); }-->
+	<footer class="publicFooter hideIndex">
+	<div class="bottomLink">
+		<div class="hotLine WKBigDataBtn">住家帮热线：<a style="color:#a8a8a8;" href="tel:0592-3158869">0592-3158869</a></div>
+		<div class="links"><a class="WKBigDataBtn" href="@Url.Action("About","Home")">关于住家帮</a></div>
+	</div>
+	<div class="bottomMessage">©2017 住家帮. 闽ICP备17008172号-1</div>
+</footer>
+    @{ Html.RenderPartial("Cnzz"); }
+    @*<nav class="nav-bar"> <a class="active" href="/esf/Index">首页<b class="iconfont">혈</b></a> <a href="/esf/Delegate">发布房源<b class="iconfont">혇</b></a> <a href="javascript:void(0)">我的<b class="iconfont">혂</b></a> </nav>*@
+    <!--返回顶部begin-->
+    <div class="cbbfixed" style="bottom: 65px; display:none"><a class="uptop cbbtn"> <!--<i class="icon-uptop"></i> --></a> </div>
+    <!--返回顶部end-->
+    <script language="javascript">
+        $(function () {
+			$("#menuButton").click(function(){$("#sideBar").addClass("w-sidebar-active");$("#main").addClass("w-sidebar-active")});
+			$("#sidebarBackground").click(function(){$("#sideBar").removeClass("w-sidebar-active");$("#main").removeClass("w-sidebar-active")});
+            $(".js-action-index-search").bind("click", function () {
+                $("#search-panel").show()
+            });
+            $(".nav-cancel").bind("click", function () {
+                $("#search-panel").hide()
+            });
+            $("#jiansuo").bind("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(".history").hide();
+                    $(".search-tip").show();
+                    $(this).removeClass("empty");
+                    $.ajax({
+                        type: "post",
+                        url: "/House/GetCellsByInput",
+                        data: "buildingType=1&inputStr=" + $("#jiansuo").val(),
+                        dataType: "json",
+                        success: function (data) {
+                            var cells = data.cells;
+                            $(".search-close").show();
+                            $(".hint-wrap").show();
+                            var xq = "";
+                            $.each(cells, function (i, n) {
+                                //$(".keyList").append("<dd><a index='" + i + "'>" + n.cellName + "</a></dd>");
+                                xq += "<li class=\"bd05b\">";
+                                xq += "    <a href=\"/esf/list?cell=" + n.cellName + "\">";
+                                xq += "        <h6 class=\"infor-type\"> <span class=\"dpib\">" + n.cellName + "</span> </h6>";
+                                xq += "        <p class=\"search-hint\">" + n.address + "</p>";
+                                xq += "    </a>";
+                                xq += "</li>";
+
+                            });
+                            $(".search-tip").html(xq);
+
+                            //$(".keyList").find("dd").eq(0).children("a").addClass("upordownSelect");
+                            //$(".keyList").animate({ scrollTop: 0 }, 100);
+                            //j = 0;
+                            //top = 0;
+                            //scrollNum = 0;
+                        }
+                    });
+
+
+
+
+
+
+                }
+                else {
+                    $(".history").show();
+                    $(".search-tip").hide();
+                    $(this).addClass("empty");
+                }
+            });
+            $("a.close").bind("click", function () {
+                $(".history").show();
+                $(".search-tip").hide();
+                $(this).addClass("empty");
+                $("#jiansuo").val("");
+            });
+            $(".js-action-all-new-top-layer-close").bind("click", function () {
+                $(this).parent().hide();
+            });
+
+            //返回顶部
+            $(".uptop").bind("touchstart touchmove touchend click", function () {
+                $('html,body').animate({
+                    scrollTop: '0px'
+                }, 300);
+            });
+        })
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= 150) {
+                $(".cbbfixed").fadeIn(300);
+            } else {
+                $(".cbbfixed").fadeOut(300);
+            }
+			/*if ($(window).scrollTop() >= 50) {
+                $(".hdbg").addClass("op_bg");
+            } else {
+                $(".hdbg").removeClass("op_bg");
+            }*/
+        })
+
+    </script>
+</body>
+</html>

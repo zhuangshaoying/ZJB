@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+<meta name="format-detection" content="telephone=no, email=no">
+<title>查房价-住家帮</title>
+<meta name="applicable-device" content="mobile" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<script src="js/jquery-1.8.3.js"></script>
+<link type="text/css" rel="stylesheet" href="css/iconfont.css">
+<link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/common.css">
+<link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/vendor.css">
+<link type="text/css" rel="stylesheet" href="css/searchprice.css">
+</head>
+
+<body>
+<div class="h5-index-wrapper">
+  <header class="w-defaulthead"><a class="back wk_iconfont" href="javascript:void(0);" onclick="goback()">&#xe610;</a>
+    <h1>查房价</h1>
+    <a class="menu WKBigDataBtn" href="javascript:;"></a> </header>
+</div>
+<section class="bb">
+  <div class="search flexbox search0620">
+    <div class="searbox h14" id="myhouse-search">
+      <div class="inputbox center"><a class="input ipt"><i></i>请输入小区名或地址</a></div>
+    </div>
+  </div>
+</section>
+<!--搜索模块begin-->
+<div id="search-panel" class="search-panel" style="display:none">
+  <div class="banner bd05b clearfix"> <a href="javascript:void(0);" class="nav-cancel">取消</a>
+    <div class="bar-search">
+      <form class="form-search" action="">
+        <input type="search" id="jiansuo" class="input-search empty" name="keyword" value="" placeholder="请输入小区名或地址">
+        <a class="close">关闭</a>
+      </form>
+    </div>
+  </div>
+  <div class="view-touch">
+    <div class="search-result"> 
+      <!--搜索历史记录begin--> 
+      
+      <!--搜索历史记录end--> 
+      <!--搜索显示begin-->
+      <ul class="search-tip" style="">
+      </ul>
+      <!--搜索显示end--> 
+      <!--无搜索记录begin-->
+      <p class="inexistence" style="display:none">暂无搜索记录</p>
+      <!--无搜索记录end--> 
+    </div>
+  </div>
+</div>
+<!--搜索模块end--> 
+
+<!--热门区县begin-->
+<section class="mb8 qxcj">
+  <div class="mTitle">
+    <h2 class="no-b">热门区县</h2>
+  </div>
+  <ul class="t-house-list" id="horizontalBar">
+    <li><a href="javascriot:;">
+      <h1>思明</h1>
+      <div><span><i>57433元/㎡</i></span></div>
+      <span class="jt-up">7.02%</span></a></li>
+    <li><a href="javascriot:;">
+      <h1>湖里</h1>
+      <div><span><i>52000元/㎡</i></span></div>
+      <span class="jt-dn">8.80%</span></a></li>
+    <li><a href="javascriot:;">
+      <h1>集美</h1>
+      <div><span><i>32571元/㎡</i></span></div>
+      <span class="jt-up">5.89%</span></a></li>
+    <li><a href="javascriot:;">
+      <h1>海沧</h1>
+      <div><span><i>30065元/㎡</i></span></div>
+      <span class="jt-up">2.35%</span></a></li>
+    <li><a href="javascriot:;">
+      <h1>翔安</h1>
+      <div><span><i>27318元/㎡</i></span></div>
+      <span class="jt-up">6.50%</span></a></li>
+    <li class="hotDisMore" style="display: none;"><a href="javascriot:;">
+      <h1>同安</h1>
+      <div><span><i>22565元/㎡</i></span></div>
+      <span class="jt-up">3.88%</span></a></li>
+    <li class="hotDisMore" style="display: none;"><a href="javascriot:;">
+      <h1>厦门周边</h1>
+      <div><span><i>13403元/㎡</i></span></div>
+      <span class="jt-up">9.31%</span></a></li>
+  </ul>
+  <a class="more_std" id="hotmore" href="javascript:void(0);"></a></section>
+<!--热门区县end--> 
+
+<!--推荐小区begin-->
+<section class="mBox" id="arealist">
+  <div class="mTitle">
+    <div class="mTitle">
+      <h2 class="no-b">推荐小区</h2>
+    </div>
+  </div>
+  <ul class="arealist" id="hotxq">
+    <li class="pdY14"><a href="xiaoqudetail.html">
+      <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+      <div class="info">
+        <h1 class="round"> 新景七星公馆 </h1>
+        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+        <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+        <p>二手房7套</p>
+      </div>
+      </a></li>
+    <li class="pdY14"><a href="xiaoqudetail.html">
+      <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+      <div class="info">
+        <h1 class="round"> 新景七星公馆 </h1>
+        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+        <p><span class="flor jtd-dn f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+        <p>二手房7套</p>
+      </div>
+      </a></li>
+    <li class="pdY14"><a href="xiaoqudetail.html">
+      <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+      <div class="info">
+        <h1 class="round"> 新景七星公馆 </h1>
+        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+        <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+        <p>二手房7套</p>
+      </div>
+      </a></li>
+    <li class="pdY14"><a href="xiaoqudetail.html">
+      <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+      <div class="info">
+        <h1 class="round"> 新景七星公馆 </h1>
+        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+        <p><span class="flor jtd-dn f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+        <p>二手房7套</p>
+      </div>
+      </a></li>
+    <li class="pdY14"><a href="xiaoqudetail.html">
+      <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+      <div class="info">
+        <h1 class="round"> 新景七星公馆 </h1>
+        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+        <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+        <p>二手房7套</p>
+      </div>
+      </a></li>
+  </ul>
+  <div class="moreList"><a href="xiaoqulist.html" class="">查看全部推荐小区</a></div>
+</section>
+<!--推荐小区end--> 
+
+<script language="javascript">
+var goback = function () {
+	history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.com/';
+}
+$(function(){
+	$("#myhouse-search").bind("click", function () {
+		$("#search-panel").show();
+	});
+	$(".nav-cancel").bind("click", function () {
+		$("#search-panel").hide();
+	});
+	$("#jiansuo").bind("keyup", function () {
+		if ($(this).val() !== "") {
+			$(".history").hide();
+			$(".search-tip").show();
+			$(this).removeClass("empty");
+			$.ajax({
+				type: "post",
+				url: "/House/GetCellsByInput",
+				data: "buildingType=1&inputStr=" + $(this).val(),
+				dataType: "json",
+				success: function (data) {
+					var cells = data.cells;
+					var xq = "";
+					$.each(cells, function (i, n) {
+
+						xq += "<li class=\"bd05b\">";
+						xq += "    <a onclick=\"xqinfo('" + n.cellName + "')\" href=\"javascript:;\">";
+						xq += "        <h6 class=\"infor-type\"> <span class=\"dpib\">" + n.cellName + "</span> </h6>";
+						xq += "        <p class=\"search-hint\">" + n.address + "</p>";
+						xq += "    </a>";
+						xq += "</li>";
+
+					});
+					$(".search-tip").html(xq);
+
+					//$(".keyList").find("dd").eq(0).children("a").addClass("upordownSelect");
+					//$(".keyList").animate({ scrollTop: 0 }, 100);
+					//j = 0;
+					//top = 0;
+					//scrollNum = 0;
+				}
+			});
+		} else {
+			$(".history").show();
+			$(".search-tip").hide();
+			$(this).addClass("empty");
+		}
+	});
+	$("a.close").bind("click", function () {
+		$(".history").show();
+		$(".search-tip").hide();
+		$(this).addClass("empty");
+		$("#jiansuo").val("");
+		$("#house-search").val("");
+		curp = 1;
+		k = true;
+		$(".list li").remove();
+		$(".list").html("");
+		load();
+	});
+	$(".js-action-all-new-top-layer-close").bind("click", function () {
+		$(this).parent().hide();
+	});
+	
+	//热门区县收缩
+	$("#hotmore").bind("click",function(){
+		$(this).toggleClass("up");
+		$(".hotDisMore").toggle();	
+	})
+	
+})
+</script>
+</body>
+</html>

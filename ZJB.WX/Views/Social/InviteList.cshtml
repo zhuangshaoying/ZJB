@@ -1,0 +1,43 @@
+﻿@using ZJB.Api.Entity;
+@using ZJB.Api.Models
+@model List<ZJB.Api.Models.UserSignTop>
+@{
+    string top1Img = "/images/first.png";
+    string top2Img = "/images/second.png";
+    string top3Img = "/images/third.png";
+    var TopIndex = 1;
+    Layout = null;
+}
+@foreach (UserSignTop item in Model)
+{
+    string touxiang = "";
+    if (item.Portrait == "")
+    {
+        touxiang = "/images/txDefault.png";
+    }
+    else
+    {
+        touxiang = item.Portrait;
+    }
+    <div class="paihang_item clearfix">
+        @if (TopIndex == 1)
+        {
+            <span class="pm_icon" style="width:36px"><img src="@top1Img" /></span>
+        }
+        else if (TopIndex == 2)
+        {
+            <span class="pm_icon" style="width:36px"><img src="@top2Img" /></span>
+        }
+        else if (TopIndex == 3)
+        {
+            <span class="pm_icon" style="width:36px"><img src="@top3Img" /></span>
+        }
+        else
+        {
+            <span class="pm_txt" style="width:30px">@TopIndex</span>;
+        }
+        <span class="touxiang" style="width:140px"><img src="@(touxiang)?imageMogr2/strip|imageView2/1/w/50/h/50/q/85" /><span class="mynames">@item.Name</span></span>
+        <span class="jf_num" style="width:35px">@item.SignCount</span>
+    </div>
+        TopIndex++;
+}

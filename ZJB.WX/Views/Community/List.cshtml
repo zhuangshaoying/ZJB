@@ -1,0 +1,517 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>查房价-住家帮</title>
+    <meta name="applicable-device" content="mobile" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <script src="js/jquery-1.8.3.js"></script>
+    <script src="js/xqsearch.js"></script>
+    <script src="http://www.zhujia001.com/Scripts/Esf/zjbiscroll.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/iconfont.css">
+    <link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/common.css">
+    <link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/vendor.css">
+    <link type="text/css" rel="stylesheet" href="http://www.zhujia001.com/css/esf/all.css">
+    <link type="text/css" rel="stylesheet" href="css/searchprice.css">
+</head>
+
+<body>
+    <div class="h5-index-wrapper">
+        <header class="w-defaulthead">
+            <a class="back wk_iconfont" href="javascript:void(0);" onclick="goback()">&#xe610;</a>
+            <h1>查房价</h1>
+            <a class="menu WKBigDataBtn" href="javascript:;"></a>
+        </header>
+    </div>
+    <section class="bb">
+        <div class="search flexbox search0620">
+            <div class="searbox h14" id="myhouse-search">
+                <div class="inputbox center"><a class="input ipt"><i></i>请输入小区名或地址</a></div>
+            </div>
+        </div>
+    </section>
+    <!--搜索模块begin-->
+    <div id="search-panel" class="search-panel" style="display:none">
+        <div class="banner bd05b clearfix">
+            <a href="javascript:void(0);" class="nav-cancel">取消</a>
+            <div class="bar-search">
+                <form class="form-search" action="">
+                    <input type="search" id="jiansuo" class="input-search empty" name="keyword" value="" placeholder="请输入小区名或地址">
+                    <a class="close">关闭</a>
+                </form>
+            </div>
+        </div>
+        <div class="view-touch">
+            <div class="search-result">
+                <!--搜索历史记录begin-->
+                <!--搜索历史记录end-->
+                <!--搜索显示begin-->
+                <ul class="search-tip" style=""></ul>
+                <!--搜索显示end-->
+                <!--无搜索记录begin-->
+                <p class="inexistence" style="display:none">暂无搜索记录</p>
+                <!--无搜索记录end-->
+            </div>
+        </div>
+    </div>
+    <!--搜索模块end-->
+    <!--搜索菜单begin-->
+    <div id="condition">
+        <div class="float" style="display: none;"></div>
+        <section id="sift">
+            <div class="lbTab">
+                <ul class="flexbox">
+                    <li name="whereChioce ide"> <a id="wapxfsy_D02_01"><i><span id="selareaname">区域</span></i></a></li>
+                    <li name="priceChioce ide"><a id="wapxfsy_D02_02"><i><span id="sellptype">价格</span> </i></a></li>
+                    <li name="characterChioce ide"><a id="wapxfsy_D02_03"><i><span id="selprice">排序</span> </i></a></li>
+                </ul>
+                <!-- 区域begin -->
+                <div class="whereChioce cont flexbox" style="display: none;">
+                    <section id="districtChioce" class="column2">
+                        <dl>
+                            <dd data-code="" onclick="getsection(this)"><a class="noarr" href="javascript:;">不限</a></dd>
+                            <dd onclick="getRegions(59201,this)"><a class="noarr" href="javascript:;">思明</a></dd>
+                            <dd onclick="getRegions(59202,this)"><a class="noarr" href="javascript:;">湖里</a></dd>
+                            <dd onclick="getRegions(59203,this)"><a class="noarr" href="javascript:;">集美</a></dd>
+                            <dd onclick="getRegions(59204,this)"><a class="noarr" href="javascript:;">海沧</a></dd>
+                            <dd onclick="getRegions(59205,this)"><a class="noarr" href="javascript:;">同安</a></dd>
+                            <dd onclick="getRegions(59206,this)"><a class="noarr" href="javascript:;">翔安</a></dd>
+                            <dd onclick="getRegions(59207,this)"><a class="noarr" href="javascript:;">厦门周边</a></dd>
+                        </dl>
+                    </section>
+                    <section id="districts_chaoyang" style="display: none" class="districts column3">
+                        <dl id="filter-section-ul"></dl>
+                    </section>
+                    <section id="subwayChioce" class="column2" style="display: none">
+                        <dl>
+                            <dd data-code="" onclick="Metro(0,this)"><a class="noarr" href="">不限</a></dd>
+                            <dd data-lineid="1" onclick="Metro(1,this)"><a class="noarr" href="javascript:;">1号线</a></dd>
+                            <dd data-lineid="2" onclick="Metro(2,this)"><a class="noarr" href="javascript:;">2号线</a></dd>
+                            <dd data-lineid="3" onclick="Metro(3,this)"><a class="noarr" href="javascript:;">3号线</a></dd>
+                            <dd data-lineid="4" onclick="Metro(4,this)"><a class="noarr" href="javascript:;">4号线</a></dd>
+                            <dd data-lineid="5" onclick="Metro(5,this)"><a class="noarr" href="javascript:;">5号线</a></dd>
+                            <dd data-lineid="6" onclick="Metro(6,this)"><a class="noarr" href="javascript:;">6号线</a></dd>
+                            <dd data-lineid="7" onclick="Metro(7,this)"><a class="noarr" href="javascript:;">7号线</a></dd>
+                            <dd data-lineid="8" onclick="Metro(8,this)"><a class="noarr" href="javascript:;">8号线</a></dd>
+                            <dd data-lineid="9" onclick="Metro(9,this)"><a class="noarr" href="javascript:;">9号线</a></dd>
+                            <dd data-lineid="10" onclick="Metro(10,this)"><a class="noarr" href="javascript:;">10号线</a></dd>
+                        </dl>
+                    </section>
+                    <section id="mysubwayChioce" style="display: none" class="districts column3">
+                        <dl id="subway-station-ul"></dl>
+                    </section>
+                </div>
+                <!-- 区域end -->
+                <!-- 总价begin -->
+                <div class="priceChioce cont" style="display: none;">
+                    <section id="priceChioce">
+                        <dl>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(0, 0, this)">不限</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(10000, 0, this)">10000元以下</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(10000, 20000, this)">10000-20000元</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(20000, 30000, this)">20000-30000元</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(30000, 40000, this)">30000-40000元</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(40000, 50000, this)">40000-50000元</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getprice(0, 50000, this)">50000元以上</a></dd>
+                        </dl>
+                    </section>
+                </div>
+                <!--总价end-->
+                <!--户型begin-->
+                <div class="characterChioce cont" style="display: none;">
+                    <section id="characterChioce">
+                        <dl>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(0,this)">不限</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(1, this)">均价从低到高</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(2, this)">均价从高到低</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(3, this)">涨跌幅从低到高</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(4, this)">涨跌幅从高到低</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(5, this)">竣工时间顺序</a></dd>
+                            <dd><a class="noarr" href="javascript:;" onclick="getorder(6, this)">竣工时间倒序</a></dd>
+                        </dl>
+                    </section>
+                </div>
+                <!-- 户型end -->
+            </div>
+        </section>
+    </div>
+    <!--搜索菜单end-->
+    <!--推荐小区begin-->
+    <section class="mBox" id="arealist">
+        <ul class="arealist" id="hotxq">
+            <li class="pdY14">
+                <a href="xiaoqudetail.html">
+                    <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+                    <div class="info">
+                        <h1 class="round"> 新景七星公馆 </h1>
+                        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+                        <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+                        <p>二手房7套</p>
+                    </div>
+                </a>
+            </li>
+            <li class="pdY14">
+                <a href="xiaoqudetail.html">
+                    <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+                    <div class="info">
+                        <h1 class="round"> 新景七星公馆 </h1>
+                        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+                        <p><span class="flor jtd-dn f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+                        <p>二手房7套</p>
+                    </div>
+                </a>
+            </li>
+            <li class="pdY14">
+                <a href="xiaoqudetail.html">
+                    <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+                    <div class="info">
+                        <h1 class="round"> 新景七星公馆 </h1>
+                        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+                        <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+                        <p>二手房7套</p>
+                    </div>
+                </a>
+            </li>
+            <li class="pdY14">
+                <a href="xiaoqudetail.html">
+                    <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+                    <div class="info">
+                        <h1 class="round"> 新景七星公馆 </h1>
+                        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+                        <p><span class="flor jtd-dn f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+                        <p>二手房7套</p>
+                    </div>
+                </a>
+            </li>
+            <li class="pdY14">
+                <a href="xiaoqudetail.html">
+                    <div class="img"><img width="106" height="80" class="lazyload" src="images/120x120.jpg" style="display: inline;"></div>
+                    <div class="info">
+                        <h1 class="round"> 新景七星公馆 </h1>
+                        <p><span class="red-df flor f14 ">83008元/㎡</span> 思明-滨北 </p>
+                        <p><span class="flor jtd-up f14">3.22%</span> 住宅&nbsp;&nbsp;2013年建造 </p>
+                        <p>二手房7套</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div id="drag" class="draginner moreList loading"><span><i></i>正在加载请稍后</span></div>
+    </section>
+    <!--推荐小区end-->
+
+    <script language="javascript">
+var goback = function () {
+	history.length >= 2 ? history.go(-1) : window.location = 'http://www.zhujia001.com/';
+}
+$(function(){
+	$("#myhouse-search").bind("click", function () {
+		$("#search-panel").show();
+	});
+	$(".nav-cancel").bind("click", function () {
+		$("#search-panel").hide();
+	});
+	$("#jiansuo").bind("keyup", function () {
+		if ($(this).val() !== "") {
+			$(".history").hide();
+			$(".search-tip").show();
+			$(this).removeClass("empty");
+			$.ajax({
+				type: "post",
+				url: "/House/GetCellsByInput",
+				data: "buildingType=1&inputStr=" + $(this).val(),
+				dataType: "json",
+				success: function (data) {
+					var cells = data.cells;
+					var xq = "";
+					$.each(cells, function (i, n) {
+
+						xq += "<li class=\"bd05b\">";
+						xq += "    <a onclick=\"xqinfo('" + n.cellName + "')\" href=\"javascript:;\">";
+						xq += "        <h6 class=\"infor-type\"> <span class=\"dpib\">" + n.cellName + "</span> </h6>";
+						xq += "        <p class=\"search-hint\">" + n.address + "</p>";
+						xq += "    </a>";
+						xq += "</li>";
+
+					});
+					$(".search-tip").html(xq);
+
+					//$(".keyList").find("dd").eq(0).children("a").addClass("upordownSelect");
+					//$(".keyList").animate({ scrollTop: 0 }, 100);
+					//j = 0;
+					//top = 0;
+					//scrollNum = 0;
+				}
+			});
+		} else {
+			$(".history").show();
+			$(".search-tip").hide();
+			$(this).addClass("empty");
+		}
+	});
+	$("a.close").bind("click", function () {
+		$(".history").show();
+		$(".search-tip").hide();
+		$(this).addClass("empty");
+		$("#jiansuo").val("");
+		$("#house-search").val("");
+		curp = 1;
+		k = true;
+		$(".list li").remove();
+		$(".list").html("");
+		load();
+	});
+	$(".js-action-all-new-top-layer-close").bind("click", function () {
+		$(this).parent().hide();
+	});
+
+	//热门区县收缩
+	$("#hotmore").bind("click",function(){
+		$(this).toggleClass("up");
+		$(".hotDisMore").toggle();
+	})
+})
+//区域搜索
+function getinfo(districtid, obj) {
+	$("#regionid").val(districtid);
+	$("#districtid").val(0);;
+}
+function getdistrct(districtid, regionid, obj) {
+	$("#regionid").val(regionid);
+	$("#districtid").val(districtid);
+	$("#line").val(0);
+	$("#metroid").val(0);
+	curp = 1;
+	k = true;
+	$("#filter-section-ul li").removeAttr("class");
+	$(obj).attr("class", "on");
+	$(".list li").remove();
+	$(".list").html("");
+	if($(obj).find("a").html()=="不限") {
+		$("#selareaname").html($("#districtChioce").find("dd.active a").html());
+	}
+	else {
+		$("#selareaname").html($(obj).find("a").html());
+	}
+	load();
+	$("[name*='ide']").attr("class", "");
+	hideAllOut();
+	hideChioce();
+	$(".float").hide();
+	$("#districts_chaoyang").hide()
+}
+
+function getRegions(districtid, obj) {
+	getinfo(districtid, obj);
+	var html = "";
+	html += "<dd class=\"\" onclick=\"getdistrct(" + districtid + ",0,this)\"><a class=\"noarr\" href=\"javascript:;\">不限</a></dd>";
+	html += "<dd class=\"\" onclick=\"getdistrct(" + districtid + ",1,this)\"><a class=\"noarr\" href=\"javascript:;\">SM商圈</a></dd>";
+	$("#filter-section-ul").html(html);
+	$("#districts_chaoyang").show();
+	$(obj).addClass("active");
+	$(obj).siblings().removeClass("active");
+	IScroll.refresh("#districts_chaoyang");
+	/*$.ajax({
+		type: "post",
+		url: "/Esf/Regions",
+		data: "cityid=592&distrctid=" + districtid,
+		dataType: "json",
+		success: function (data) {
+			var regions = data.list;
+			var irow = 0;
+			html += "<dd class=\"\" onclick=\"getdistrct(" + districtid + ",0,this)\"><a class=\"noarr\" href=\"javascript:;\">不限</a></dd>";
+			$.each(regions, function (i, n) {
+
+				html += "<dd class=\"\" onclick=\"getdistrct(" + districtid + "," + n.RegionID + ",this)\"><a class=\"noarr\" href=\"javascript:;\">" + n.Name +"</a></dd>";
+				irow++;
+			});
+			$("#filter-section-ul").html(html);
+			$("#districts_chaoyang").show();
+			$(obj).addClass("active");
+			$(obj).siblings().removeClass("active");
+			IScroll.refresh("#districts_chaoyang");
+		}
+	});*/
+}
+var k = true;
+var w = $(window);
+var curp = 1;
+
+function load() {
+	var pars = new Object();
+	pars["status"] = "1";
+	pars["cell"] = $("#house-search").val();
+	pars["sort"] = "";
+	pars["houseId"] = "";
+	pars["title"] = "";
+	pars["tags"] = "";
+	pars["pageIndex"] = curp;
+	pars["pageSize"] = 10;
+	pars["userId"] = 0;
+	pars["tradetype"] =1;
+	pars["room"] = $("#room").val();
+	pars["minprice"] = $("#minprice").val();
+	pars["maxprice"] = $("#maxprice").val();
+	pars["regionid"] = $("#regionid").val();
+	pars["districtid"] = $("#districtid").val();
+	pars["line"] = $("#line").val();
+	pars["metroid"] = $("#metroid").val();
+	pars["ismetro"] = 1;
+	/*$.ajax({
+		type: "post",
+		url: "/Esf/GetEsfList",
+		data: pars,
+		async: false,
+		dataType: "json",
+		success: function (data) {
+			var reval = "";
+			$("#totalSize").html(data.totalSize);
+			var irow = 0;
+			if (data.list != undefined && data.list.length > 0) {
+				$.each(eval(data.list), function (i, item) {
+					irow++;
+					reval += "<li class=\"bd05b\">";
+					reval += "    <a class=\"pos-rt\" href=\"/Esf/EsfDetail?houseid=" + item.HouseID + "\">";
+					if (item.Tag != "") {
+						var itag = 0;
+						var css1 = "";
+						var css2 = "";
+						$.each(item.Tag.split(','), function (i, item) {
+							if (item == 1) {
+								itag++;
+								if (itag == 2) {
+									css1 = " position-2";
+								}
+								else if (itag == 3) {
+									css2 = " style=\"  left: 3.4rem;\"";
+								}
+								reval += "<i " + css2 + " class=\"icon-tag-property-confirm " + css1 + "\"></i> ";
+							}
+							if (item == 2) {
+								itag++;
+								if (itag == 2) {
+									css1 = " position-2";
+								}
+								else if (itag == 3) {
+									css2 = " style=\"  left: 3.4rem;\"";
+								}
+								reval += "<i " + css2 + " class=\"icon-tag-sale-anxious " + css1 + "\"></i> ";
+							}
+							if (item == 3) {
+								itag++;
+								if (itag == 2) {
+									css1 = " position-2";
+								}
+								else if (itag == 3) {
+									css2 = " style=\"  left: 3.4rem;\"";
+								}
+								reval += "<i " + css2 + "  class=\"icon-tag-real-door " + css1 + "\"></i>";
+							}
+
+						});
+					}
+					reval += "        <figure class=\"sell clearfix\">";
+					reval += "            <figcaption class=\"item-img\"> <img alt=\"\" class=\"h5-all-img lazy-wd layzed\" src=\"" + item.HouseImgPath + "\" style=\"display: block;\"> </figcaption>";
+					reval += "            <dl class=\"infor\">";
+					reval += "                <dt class=\"title-dt\"> <span class=\"title\">" + item.Title + "</span> </dt>";
+					reval += "                <dd>" + item.DistrctName + "-" + item.RegionName + "&nbsp;&nbsp;" + item.CommunityName + "</dd>";
+					reval += "                <dd class=\"best-esf-item-dd-3\"><p class=\"area\">" + item.Room + "室" + item.Hall + "厅" + item.Toilet + "卫&nbsp;&nbsp;&nbsp;" + item.BuildArea + "平米</p><p class=\"hprice\">"+item.Price+"<span>"+item.PriceUnit+"</span></p></dd>";
+					//reval += "                <dd><span class=\"fdd-color\">76</span>人预约看房</dd>";
+
+					if (item.HouseLabel != "" && item.HouseLabel != null) {
+						reval += "<dd>";
+						var varrHouseLabel = item.HouseLabel.split(' ');
+						var itag = 0;
+						var lblcss = "";
+						$.each(varrHouseLabel, function (i, item) {
+
+							itag++;
+							if (itag == 1) {
+								lblcss = " mln ";
+							} else if (itag == 2) {
+								lblcss = " nbtt ";
+							}
+							else {
+								lblcss = " ditief ";
+							}
+							reval += "<span class=\"tag-item\">" + item + "</span> ";
+
+						});
+
+					}
+					reval += "            </dl>";
+					reval += "        </figure>";
+					reval += "    </a>";
+					reval += "</li>";
+				});
+				$(".list").append(reval);
+				curp++;
+
+				if (irow<10) {
+					k = false;
+				}
+
+			}
+			else {
+				reval += "<li class=\"nodata\">";
+				reval += "<div class=\"w-item noFindData\"><p class=\"text1\">暂时没有符合条件的房源</p><p class=\"text2\">您可以扩大搜索范围，找到更多房源</p></div>";
+				reval += "</li>";
+				$(".list").append(reval);
+			}
+		}
+	});*/
+}
+
+//价格搜索
+function getprice(min, max, obj) {
+	$("#minprice").val(min);
+	$("#maxprice").val(max);
+	$("#filter-price-ul li").removeAttr("class");
+	$(obj).attr("class", "on");
+	curp = 1;
+	k = true;
+	$(".list li").remove();
+	$(".list").html("");
+	load();
+	if($(obj).html()=="不限") {
+		$("#sellptype").html("价格");
+	}
+	else {
+		$("#sellptype").html($(obj).html());
+	}
+	$("[name*='ide']").attr("class", "");
+	hideAllOut();
+	hideChioce();
+	$(".float").hide();
+}
+
+//排序搜索
+function getorder(room, obj) {
+	$("#room").val(room);
+	$("#filter-room-ul li").removeAttr("class");
+	$(obj).attr("class", "on");
+	curp = 1;
+	k = true;
+	$(".list li").remove();
+	$(".list").html("");
+	if($(obj).html()=="不限") {
+		$("#selprice").html("户型");
+	}
+	else {
+		$("#selprice").html($(obj).html());
+	}
+	load();
+	$("[name*='ide']").attr("class", "");
+	hideAllOut();
+	hideChioce();
+	$(".float").hide();
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+    var txt = ViewBag.Text;
+    var count = ViewBag.Count;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HeadScript</title>
+</head>
+<body>
+    <div>
+        <form action="@Url.Action("HeadScript","Home")" method="get">
+        <input  value="@txt" name="txt" type="text" placeholder="文字"/>
+        <input  value="@count" name="count" type="text" placeholder="点赞数"/>
+        <input type="submit" value="确定"/>
+         </form>
+    </div>
+</body>
+</html>

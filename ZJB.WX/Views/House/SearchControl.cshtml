@@ -1,0 +1,306 @@
+﻿@using ZJB.Api.Entity
+@using ZJB.Core.Utilities
+@using ZJB.WX.Models
+
+@{
+
+    ZJB.WX.Models.HouseParameter houseParameter = (HouseParameter)ViewData["parameter"];
+    List<Regions> distrcs = ViewData["parameter"].IsNoNull() ? (List<Regions>)ViewData["distrcs"] : new List<Regions>();
+    List<Regions> regions = ViewData["parameter"].IsNoNull() ? (List<Regions>)ViewData["regions"] : new List<Regions>();
+    var buildType = houseParameter.BuildType ?? 0;
+    var orderby = houseParameter.OrderBy ?? 0;
+    var tradeName = houseParameter.Trade == "esf" ? "二手房" : "租房";
+}
+
+<div class="filter-box">
+    <div class="hd clear">
+        <ul class="tab-lst">
+            <li @(buildType == 0 ? "class=on" : "")> <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = null })"><span>全部@(tradeName)</span></a></li>
+            <li @(buildType == 1 ? "class=on" : "")> <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = 1 })"><span>住宅</span></a></li>
+            <li @(buildType == 2 ? "class=on" : "")> <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = 2 })"><span>别墅</span></a></li>
+            <li @(buildType == 3 ? "class=on" : "")> <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = 3 })"><span>商铺</span></a></li>
+            <li @(buildType == 4 ? "class=on" : "")> <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = 4 })"><span>写字楼</span></a></li>
+            <li @(buildType == 5 ? "class=on" : "")> <a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = 5 })"><span>产房/车位</span></a></li>
+
+        </ul>
+    </div>
+    <div>
+        <div class="bd" id="filter-options">
+            <dl class="dl-lst clear">
+                <dt>区域：</dt>
+                <dd data-index="0">
+                    <div class="option-list">
+                        @Html.RouteLink("不限", houseParameter, p =>
+                        {
+                            p.Distrct = null;
+                            p.Region = null;
+                        }, string.Empty, "on")
+                        @{
+                            if (distrcs != null && distrcs.Count > 0)
+                            {
+                                foreach (Regions distrc in distrcs)
+                                {
+                                    @Html.RouteLinkForRegion(distrc.Name, houseParameter, distrc.RegionID, string.Empty, "on")
+                                }
+                            }
+                        }
+                    </div>
+                    @{
+                        if (regions != null && regions.Count > 0)
+                        {
+                            <div class="option-list sub-option-list">
+                                @Html.RouteLink("不限", houseParameter, p => p.Region = null, string.Empty, "on")
+                                @foreach (Regions region in regions)
+                                {
+                                    @Html.RouteLink(region.Name, houseParameter, p => { p.Region = region.RegionID; p.Page = null; }, string.Empty, "on")
+                                }
+                            </div>
+                        }
+                    }
+                </dd>
+            </dl>
+            @{
+                if (houseParameter.Trade == "esf")
+                {
+         
+                    <dl class="dl-lst clear">
+                        <dt>售价：</dt>
+                        <dd data-index="1">
+                            <div class="option-list">
+                                @Html.RouteLink("不限", houseParameter, p => { p.MinPrice = null; p.MaxPrice = null; }, string.Empty, "on")
+
+                                @Html.RouteLink("100万以下", houseParameter, p => { p.MinPrice = 0; p.MaxPrice = 100; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("100-150万", houseParameter, p => { p.MinPrice = 100; p.MaxPrice = 150; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("150-200万", houseParameter, p => { p.MinPrice = 150; p.MaxPrice = 200; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("200-250万", houseParameter, p => { p.MinPrice = 200; p.MaxPrice = 250; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("250-300万", houseParameter, p => { p.MinPrice = 250; p.MaxPrice = 300; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("300-500万", houseParameter, p => { p.MinPrice = 300; p.MaxPrice = 500; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("500-1000万", houseParameter, p => { p.MinPrice = 500; p.MaxPrice = 1000; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("1000万以上", houseParameter, p => { p.MinPrice = 1000; p.MaxPrice = 99999; p.Page = null; }, string.Empty, "on")
+
+                                <div class="custom" data-type="price">
+                                    <div class="txt-box">
+                                        <input type="text" value="@(houseParameter.MinPrice)"  id="cminPrice" min="0" max="999999" name="b_q" class="txt" autocomplete="off" />
+                                    </div>
+                                    &nbsp;-&nbsp;
+                                    <div class="txt-box">
+                                        <input type="text" value="@(houseParameter.MaxPrice)" id="cmaxPrice" min="0" max="999999" name="b_q" autocomplete="off" class="txt" />
+                                    </div><span class="dev">万</span>
+                                    <input type="button" id="price_btn" class="ok" value="确定" style="display: none;" />
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                       }
+                else
+                {
+                     <dl class="dl-lst clear">
+                        <dt>租金：</dt>
+                        <dd data-index="1">
+                            <div class="option-list">
+                                @Html.RouteLink("不限", houseParameter, p => { p.MinPrice = null; p.MaxPrice = null; }, string.Empty, "on")
+
+                                @Html.RouteLink("500元以下", houseParameter, p => { p.MinPrice = 0; p.MaxPrice = 500; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("500-1000元", houseParameter, p => { p.MinPrice = 500; p.MaxPrice = 1000; p.Page = null; }, string.Empty, "on")
+                               @Html.RouteLink("1000-1500元", houseParameter, p => { p.MinPrice = 1000; p.MaxPrice = 1500; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("1500-2000元", houseParameter, p => { p.MinPrice = 1500; p.MaxPrice = 2000; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("2000-3000元", houseParameter, p => { p.MinPrice = 2000; p.MaxPrice = 3000; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("3000-5000元", houseParameter, p => { p.MinPrice = 3000; p.MaxPrice = 5000; p.Page = null; }, string.Empty, "on")
+                                @Html.RouteLink("5000元以上", houseParameter, p => { p.MinPrice = 5000; p.MaxPrice = 99999; p.Page = null; }, string.Empty, "on")
+                                <div class="custom" data-type="price">
+                                    <div class="txt-box">
+                                        <input type="text" value="@(houseParameter.MinPrice)"  id="cminPrice" min="0" max="999999" name="b_q" class="txt" autocomplete="off" />
+                                    </div>
+                                    &nbsp;-&nbsp;
+                                    <div class="txt-box">
+                                        <input type="text" value="@(houseParameter.MaxPrice)" id="cmaxPrice" min="0" max="999999" name="b_q" autocomplete="off" class="txt" />
+                                    </div><span class="dev">元</span>
+                                    <input type="button" id="price_btn" class="ok" value="确定" style="display: none;" />
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                }
+            }
+            <dl class="dl-lst clear">
+                <dt>面积：</dt>
+                <dd data-index="2">
+                    <div class="option-list">
+                        @Html.RouteLink("不限", houseParameter, p => { p.MinArea = null; p.MaxArea = null; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("50平米以下", houseParameter, p => { p.MinArea = 0; p.MaxArea = 50; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("50-90平米", houseParameter, p => { p.MinArea = 50; p.MaxArea = 90; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("90-130平米", houseParameter, p => { p.MinArea = 90; p.MaxArea = 130; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("130-180平米", houseParameter, p => { p.MinArea = 130; p.MaxArea = 180; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("180-220平米", houseParameter, p => { p.MinArea = 180; p.MaxArea = 220; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("220平米以上", houseParameter, p => { p.MinArea = 220; p.MaxArea = 9999; p.Page = null; }, string.Empty, "on")
+                        <div class="custom" data-type="area">
+                            <div class="txt-box">
+                                <input type="text" value="@(houseParameter.MinArea)" id="cminArea" min="0" max="999999" name="b_q" autocomplete="off" class="txt" />
+                            </div>
+                            &nbsp;-&nbsp;
+                            <div class="txt-box">
+                                <input type="text" value="@(houseParameter.MaxArea)" id="cmaxArea" min="0" max="999999" name="b_q" autocomplete="off" class="txt" />
+                            </div><span class="dev">㎡</span>
+                            <input type="button" id="area_btn" class="ok" value="确定" style="display: none;" />
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-lst clear">
+                <dt>房型：</dt>
+                <dd data-index="3">
+                    <div class="option-list">
+                        @Html.RouteLink("不限", houseParameter, p => { p.Layout = null; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("一室", houseParameter, p => { p.Layout = 1; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("二室", houseParameter, p => { p.Layout = 2; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("三室", houseParameter, p => { p.Layout = 3; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("四室", houseParameter, p => { p.Layout = 4; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("五室", houseParameter, p => { p.Layout = 5; p.Page = null; }, string.Empty, "on")
+                        @Html.RouteLink("五室以上", houseParameter, p => { p.Layout = 6; p.Page = null; }, string.Empty, "on")
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        @*<div class="filter-bar01" style="display: none">
+            <div id="sort-panel" class="sort-panel">
+                <div class="left">
+                    <div class="fs14"><span class="left">筛选：</span></div>
+                    <div class="right">
+                        <div class="d-1 dropdown">
+                            <span>朝向</span><i></i>
+                            <ul class="fil-item">
+                                <a href="@Url.RouteUrl("Map_HouseList", new { city = "xm", trade = "esf", page = 2 })">
+                                    <li>不限</li>
+                                </a>
+                                <a href="/seachhouse/j2t1r0/59204">
+                                    <li>朝东</li>
+                                </a>
+                                <a href="/seachhouse/j2t2r0/59204">
+                                    <li>朝南</li>
+                                </a>
+                                <a href="/seachhouse/j2t3r0/59204">
+                                    <li>朝西</li>
+                                </a>
+                                <a href="/seachhouse/j2t4r0/59204">
+                                    <li>朝北</li>
+                                </a>
+                                <a href="/seachhouse/j2t5r0/59204">
+                                    <li>朝南北</li>
+                                </a>
+                            </ul>
+                        </div>
+
+                        <div class="d-1 dropdown">
+                            <span>楼层</span><i></i>
+                            <ul class="fil-item">
+                                <a href="/seachhouse/j2/59204">
+                                    <li>全部</li>
+                                </a>
+                                <a href="/seachhouse/j2/59204">
+                                    <li>6层以下</li>
+                                </a>
+                                <a href="/seachhouse/j2t1r0/59204">
+                                    <li>6-12层</li>
+                                </a>
+                                <a href="/seachhouse/j2t2r0/59204">
+                                    <li>12层以上</li>
+                                </a>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="left">
+                    <div class="item-check">
+                        <ul>
+                            <li><a href="/ershoufang/a6bp2ep1/" class="check-a"><i></i>满五年唯一/满两年</a></li>
+                            <li><a href="/ershoufang/su1tf1a6bp2ep1/"><i></i>近地铁</a></li>
+                            <li><a href="/ershoufang/sc1tf1a6bp2ep1/"><i></i>学区房</a></li>
+                            <li><a href="/ershoufang/x1tf1a6bp2ep1/"><i></i>不限购</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        
+        @{
+            if (houseParameter.Region.IsNoNull() ||
+                houseParameter.Distrct.IsNoNull() ||
+                (houseParameter.MinPrice.IsNoNull() && houseParameter.MaxPrice.IsNoNull() && houseParameter.MaxPrice > 0) ||
+                (houseParameter.MinArea.IsNoNull() && houseParameter.MaxArea.IsNoNull() && houseParameter.MaxArea > 0) ||
+                (houseParameter.Layout.IsNoNull() && houseParameter.Layout > 0) ||
+                houseParameter.KeyWord.IsNoNull()
+                )
+            {
+                 <div id="filter-bar" class="filter-bar">
+                    <h3>条件：</h3>
+                    <div class="filter-conditions">
+                        <span id="filter-display-bar">
+                            @if (houseParameter.Distrct.IsNoNull() && houseParameter.Distrct>0)
+                            {
+                                int _distrct = Convert.ToInt32(houseParameter.Distrct);
+                                @Html.RouteLink(distrcs.Where(o => o.RegionID == _distrct).FirstOrDefault().Name, houseParameter, p => { p.Distrct = null; p.Region = null; }, string.Empty, string.Empty)
+                            }
+                            @if (houseParameter.Region.IsNoNull() && houseParameter.Region > 0)
+                            {
+                                int _region = Convert.ToInt32(houseParameter.Region);
+                                @Html.RouteLink(regions.Where(o => o.RegionID == _region).FirstOrDefault().Name, houseParameter, p => { p.Region = null; }, string.Empty, string.Empty)
+                            }
+                            @if (houseParameter.MinPrice.IsNoNull() && houseParameter.MaxPrice.IsNoNull() && houseParameter.MaxPrice > 0)
+                            {
+                                @Html.RouteLink(Convert.ToString(houseParameter.MinPrice) + "-" + Convert.ToString(houseParameter.MaxPrice) + "万", houseParameter, p => { p.MinPrice = null; p.MaxPrice = null; }, string.Empty, string.Empty)
+                            }
+                            @if (houseParameter.MinArea.IsNoNull() && houseParameter.MaxArea.IsNoNull() && houseParameter.MaxArea > 0)
+                            {
+                                @Html.RouteLink(Convert.ToString(houseParameter.MinArea) + "-" + Convert.ToString(houseParameter.MaxArea) + "平", houseParameter, p => { p.MinArea = null; p.MaxArea = null; }, string.Empty, string.Empty)
+
+                            }
+                            @if (houseParameter.Layout.IsNoNull() && houseParameter.Layout > 0) 
+                            {
+                                string[] strLayOut = { "", "一室", "二室", "三室", "四室", "五室", "五室以上" };
+                                @Html.RouteLink(strLayOut[Convert.ToInt32(houseParameter.Layout)], houseParameter, p => { p.Layout = null; }, string.Empty, string.Empty)
+                            }
+                            @if (houseParameter.KeyWord.IsNoNull())
+                            {
+                                
+                                @Html.RouteLink(houseParameter.KeyWord, houseParameter, p => { p.KeyWord = null; }, string.Empty, string.Empty)
+                            }
+                        </span><a href="@Url.RouteUrl("Map_HouseList", new HouseParameter { City = houseParameter.City, Trade = houseParameter.Trade, BuildType = houseParameter.BuildType })" id="filter-empty" class="del-all"><i></i>清空筛选选项</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            }
+        }
+
+     
+        <div class="filter-bar01">
+            <div class="sort-bar" id="sort-bar">
+                <span>排序：</span>
+                <div class="sort-parent @(orderby == 0?"on":"")">@Html.RouteLink("默认", houseParameter, p => { p.OrderBy = null; p.Page = null; }, string.Empty, "on") </div>
+                <div class="sort-parent @(orderby == 1?"on":"")">@Html.RouteLink("最新", houseParameter, p => { p.OrderBy = 1; p.Page = null; }, string.Empty, "on") </div>
+                <div class="sort-parent @(orderby == 2 || orderby == 3?"on":"")">
+                    <span>@(orderby == 2 ? "总价从低到高" : (orderby == 3 ? "总价从高到低" : "总价"))</span><i></i>
+                    <ul class="sort-children">
+                        <li>@Html.RouteLink("总价从低到高", houseParameter, p => { p.OrderBy = 2; p.Page = null; }, string.Empty, string.Empty)</li>
+                        <li>@Html.RouteLink("总价从高到低", houseParameter, p => { p.OrderBy = 3; p.Page = null; }, string.Empty, string.Empty)</li>
+                    </ul>
+                </div>
+                <div class="sort-parent @(orderby == 4 || orderby == 5?"on":"")">
+                    <span>@(orderby == 4 ? "单价从低到高" : (orderby == 5 ? "单价从高到低" : "单价"))</span><i></i>
+                    <ul class="sort-children">
+                        <li>@Html.RouteLink("单价从低到高", houseParameter, p => { p.OrderBy = 4; p.Page = null; }, string.Empty, string.Empty)</li>
+                        <li>@Html.RouteLink("单价从高到低", houseParameter, p => { p.OrderBy = 5; p.Page = null; }, string.Empty, string.Empty)</li>
+                    </ul>
+                </div>
+                <div class="sort-parent @(orderby == 6 || orderby == 7?"on":"")">
+                    <span>@(orderby == 6 ? "面积从低到高" : (orderby == 6 ? "面积从高到低" : "面积"))</span><i></i>
+                    <ul class="sort-children">
+                        <li>@Html.RouteLink("面积从低到高", houseParameter, p => { p.OrderBy = 6; p.Page = null; }, string.Empty, string.Empty)</li>
+                        <li>@Html.RouteLink("面积从高到低", houseParameter, p => { p.OrderBy = 7; p.Page = null; }, string.Empty, string.Empty)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

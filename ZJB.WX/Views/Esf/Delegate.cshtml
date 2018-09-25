@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <title>发布房源-住家帮</title>
+    <link rel="stylesheet" href="~/Css/Esf/common.css">
+    <link rel="stylesheet" href="~/Css/Esf/service.css">
+
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/Esf/base.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner" style="display: none"><img src="/images/banner.png"></div>
+        <div class="item">
+            <a id="sell_event" class="green" href="@Url.Action("Publish",new {posttype=1})">
+                <h2>二手房发布</h2>
+                <p id="sell"><span data-id="2">厦门</span></p>
+                <em class="iconfont">혉</em>
+            </a>
+        </div>
+        <div class="item">
+            <a id="rental_event" class="blue" href="@Url.Action("Publish",new {posttype=3})">
+                <h2>出租房发布</h2>
+                <p id="rental"><span data-id="2">厦门</span></p><em class="iconfont">혈</em>
+            </a>
+        </div>
+        <center class="item">
+            <span>客服电话</span><a class="context" href="tel:18559288092"><b>185-5928-8092</b></a>
+        </center>
+
+        <p class="sub-complete-w2" style="text-align:center;">
+            <img style="width: 200px;" src="/Images/esf/qrcodells.jpg">
+        </p>
+        <p class="sub-complete-w2" style="text-align:center;">长按关注公众号</p>
+        <p class="sub-complete-w2" style="text-align:center;">
+            看房通知等将收到微信消息提醒哦~
+        </p>
+    </div>
+    <nav class="nav-bar"> <a class="active" href="@Url.Action("Delegate")">发布房源<b class="iconfont">혒</b></a> <a href="@Url.Action("DelegateMng")">房源管理<b class="iconfont">혇</b></a> <a href="@Url.Action("Me")">我的<b class="iconfont">혂</b></a> </nav>
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

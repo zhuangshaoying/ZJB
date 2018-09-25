@@ -1,0 +1,222 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <link rel="stylesheet" href="/css/esf/search_sn.css" type="text/css">
+    <title>一键查房价-住家帮</title>
+    <meta name="keywords" content="厦门小区查询">
+    <meta name="description" content="住家帮为您提供厦门2017年最真实的房源成交记录">
+    <meta name="applicable-device" content="mobile" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <script src="~/Scripts/jquery-1.8.3.js"></script>
+    <script>
+        var goback = function () {
+            history.length >= 2 ? history.go(-1) : window.location = '/esf/list';
+        }
+    </script>
+    <style>
+        .fixed-first {
+            z-index: 100;
+            top: 1rem;
+            position: fixed;
+            background: #ffffff;
+            width: 1.7rem;
+            border-radius: 0 15px 15px 0;
+            height: .7rem;
+            text-align: center;
+            font-size: .3rem;
+            color: #fd5056;
+            line-height: .8rem;
+            font-family: "SimHei";
+        }
+
+            .fixed-first span img {
+                width: 24%;
+                margin: 0;
+            }
+			#guanzhu {
+				display: inline-block;
+				border: 1px solid #fff;
+				line-height: 18px;
+				font-size: 12px;
+				color: #fff;
+				padding: 0px 8px;
+				border-radius: 1px;
+				position: absolute;
+				right: 15px;
+				top: 15px;
+			}
+			.layermbox {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			z-index: 19891014;
+		}
+		.layermmain, .laymshade {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.laymshade {
+			background-color: rgba(0,0,0,.5);
+			pointer-events: auto;
+		}
+		.layermmain {
+			display: table;
+			font-family: Helvetica,arial,sans-serif;
+			pointer-events: none;
+		}
+		.layermmain, .laymshade {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.layermmain .section {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+		}
+		.layermanim {
+			animation-name: bounceIn;
+			-webkit-animation-name: bounceIn;
+		}
+		.layermchild {
+			text-align: left;
+			background-color: #fff;
+			font-size: 14px;
+			border-radius: 6px;
+			box-shadow: 0 0 8px rgba(0,0,0,.1);
+			pointer-events: auto;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+			-webkit-animation-duration: .18s;
+			animation-duration: .18s;
+		}
+		.layermbtn span, .layermchild {
+			display: inline-block;
+			position: relative;
+		}
+		.layermbox1 .layermchild {
+			border: none;
+			border-radius: 0;
+		}
+		.layermcont {
+			padding: 20px 15px;
+			line-height: 22px;
+			border-radius: 5px;
+		}
+		.layermbox1 .layermcont {
+			padding: 0;
+		}
+    </style>
+</head>
+<body class="home">
+	<span id="guanzhu">关注</span>
+    <div class="home-banner">一键查房价-住家帮</div>
+
+    <div class="formBox">
+        <div class="form">
+            <div class="form-group">
+                <span class="drop-toggle"><i></i></span>
+                <div id="city" class="city">厦门</div>
+                <ul class="List cityList none">
+                    @*<li onclick="getCityId(&quot;北京&quot;)" id="北京" class="select">北京</li>
+                    <li onclick="getCityId(&quot;上海&quot;)" id="上海">上海</li>
+                    <li onclick="getCityId(&quot;广州&quot;)" id="广州">广州</li>
+                    <li onclick="getCityId(&quot;深圳&quot;)" id="深圳">深圳</li>*@
+                    <li class="more">更多城市正在建设中...</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <input id="estate" type="text" placeholder="请输入小区名">
+                <input id="estateVal" type="hidden">
+                <ul id="communityList" class="houseList List none"></ul>
+            </div>
+            <div class="tishi">&nbsp;</div>
+            <div class="btn-group" style="margin: 0">
+                <div id="seller" data-role="2" class="btn btn-r" style="margin-left: 30%;">搜索</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layermbox1" class="layermbox layermbox1" index="1" style="display: none;">
+        <div class="laymshade"></div>
+        <div class="layermmain">
+            <div class="section">
+                <div class="layermchild  layermanim" style="width: 100%;">
+                    <div class="layermcont">
+                        <div style="text-align: center; width: 100%">
+                            <img style="width: 100%" src="/images/esf/qrcodells.jpg" border="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <script>
+     /*$(function () {
+         $("#seller").click(function () {
+             var query = {
+                 name: $("#estate").val()
+             };
+             $.post({
+                 url: "/Community/SearchByName",
+                 data: query,
+                 success: function (result) {
+                     alert(result);
+                     $("#communityList").empty();
+                     if (result.totalSize) {
+                         $.each(result.datas, function () {
+                             var item=this;
+                             $("#communityList").append("<li cid='" + item.CommuntityID + "'>" + item.Name + "</li>");
+                         });
+                     }
+                 }
+             })
+         });
+         $("#seller").click(function (e) {
+             var liObj = $(this);
+             window.location.href = "/Community/Detail?communityId=" + liObj.attr("cid");
+         });
+     });*/
+ </script>
+<script type="text/javascript">
+    
+    var city_name = '';
+    var website = 'http://www.zhujia001.com';
+    var url = location.href.split('#')[0];
+    city_id = '0';
+    share = {
+        'title': "住家帮-随时随地查房价",
+        'desc': "岂止是最好的查房价",
+        'imgUrl': website + "/images/share_logo.png",
+        'link': url
+    };
+	$(function(){
+		$("#guanzhu").bind("click", function () {
+			$("#layermbox1").show();
+		});
+		$(".laymshade").bind("click", function () {
+			$("#layermbox1").hide();
+		});
+	});
+</script>
+<script src="/Scripts/esf/font.js"></script>
+<script src="/Scripts/esf/zepto.js"></script>
+<script src="/Scripts/esf/sou.js?t=161109"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="/Scripts/esf/share.js"></script>
+    @{ Html.RenderPartial("Cnzz"); }
+</body>
+</html>

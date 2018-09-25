@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="font-size: 117.188px;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <title>我的客户明细</title>
+    <link href="~/css/esf/common.css" rel="stylesheet" />
+    <link href="~/Css/Esf/manage.css" rel="stylesheet" />
+    <script src="~/Scripts/Esf/jquery-1.7.1.min.js"></script>
+    <style type="text/css">
+        .divshow {
+            border-radius: 2px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            width: 100%;
+            margin-top: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function skipurl(obj) {
+            var href = $(obj).attr("data-href");
+            if (href != "") {
+                window.location.href = href;
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+
+
+    <div class="mod-manage" style="padding-bottom: 0.86rem;">
+        <div class="mod-prod-detail">
+
+
+            <div class="mod-prod-addr mod-addr-sell">
+
+
+                <a href="/LouPan/Detail?lpid=@Model.Loupanid">
+                    <h2>@Model.LoupanName </h2>
+                </a>
+                <p>@Model.Address                             </p>
+            </div>
+            <div class="mod-prod-rel">
+                <dl>
+                    <dt>
+                        <strong class="cl-hlight"> 客户：<span id="j-expect-price">@Model.FriendName</span> </strong>
+                        <div class="price_item">
+                            <b id="unitprice"> 电话：@Model.FriendTel</b>
+                        </div>
+
+                        @*<div class="price_item">
+                                时间：@Model.AddDate
+                            </div>*@
+                        @if (!string.IsNullOrEmpty(Model.AppointmentTime) && Model.AppointmentTime.IndexOf("undefined") < 0)
+                        {
+                            <div class="price_item">
+                                预约时间：@Model.AppointmentTime
+                            </div>
+                        }
+
+
+                    </dt>
+                </dl>
+            </div>
+
+            <div class="mod-prod-rel">
+                <dl>
+                    <dt>
+                        <strong class="cl-hlight"> 报备人：<span id="j-expect-price">@Model.TuiJianName</span> </strong>
+                        <div class="price_item">
+                            <b id="unitprice"> 电话：@Model.TuijianUserTel</b>
+                        </div>
+
+                        <div class="price_item">
+                            公司：@Model.CompanyName
+                        </div>
+
+                        @*<div class="price_item">
+                                 报备人：@Model.TuiJianName
+                            </div>*@
+
+                    </dt>
+                </dl>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Notes))
+            {
+                <div class="mod-prod-rel">
+                    <dl>
+                        <dt>
+                            <strong class="cl-hlight"> 购房需求：</strong>
+                            <div class="price_item">
+                                <b style="word-wrap: break-word;" id="unitprice"> @Model.Notes</b>
+                            </div>
+                        </dt>
+                    </dl>
+                </div>
+            }
+            <div class="mod-prod-rel">
+                <dl style="padding-right: 10px;">
+
+
+                    <dt onclick="skipurl(this)" data-href="@(ViewBag.UserType == "3" ? "/loupan/BBOperate?tjid=" + Model.ID.ToString() + "&type=1&lpid=" + Model.Loupanid : "")" style="position: relative;@(ViewBag.UserType == "3" ? "background: url(/images/esf/icon-title-more.png) no-repeat right center;":"")background-size: auto 16px;">
+
+                        <div class="price_item">
+                            <b id="unitprice">报备：@(Html.Raw((Model.State.ToString().ToUpper() == "Y" ? "<span style='color:green'>通过</span>" : (Model.State.ToString().ToUpper() == "N" ? "<span style='color:red'>不通过</span>" : "待审核"))))</b>
+                        </div>
+
+                    </dt>
+                    <dt onclick="skipurl(this)" data-href="@(ViewBag.UserType == "3" || !string.IsNullOrEmpty(Model.VisitTime) ? "/loupan/BBOperate?tjid=" + Model.ID.ToString() + "&type=2&lpid=" + Model.Loupanid : "")" style="position: relative;@(ViewBag.UserType == "3" || !string.IsNullOrEmpty(Model.VisitTime) ? "background: url(/images/esf/icon-title-more.png) no-repeat right center;" : "")background-size: auto 16px;">
+
+                        <div class="price_item">
+                            <b id="unitprice">带看：@(string.IsNullOrEmpty(Model.VisitTime) ? "未带看" : Model.VisitTime)</b>
+                        </div>
+
+                    </dt>
+                    <dt onclick="skipurl(this)" data-href="@(string.IsNullOrEmpty(Model.PayDepositTime)&&ViewBag.UserType == "3" ? "/loupan/BBOperate?tjid=" + Model.ID.ToString() + "&type=3&lpid=" + Model.Loupanid : "")" style="position: relative;@(ViewBag.UserType == "3" ? "background: url(/images/esf/icon-title-more.png) no-repeat right center;":"")background-size: auto 16px;">
+
+                        <div class="price_item">
+                            <b id="unitprice">认购：@(string.IsNullOrEmpty(Model.PayDepositTime) ? "未认购" : Model.PayDepositTime)</b>
+                        </div>
+
+                    </dt>
+                    <dt onclick="skipurl(this)" data-href="@(ViewBag.UserType == "3" ? "/loupan/BBOperate?tjid=" + Model.ID.ToString() + "&type=4&lpid=" + Model.Loupanid : "")" style="position: relative;@(ViewBag.UserType == "3" ? "background: url(/images/esf/icon-title-more.png) no-repeat right center;":"")background-size: auto 16px;">
+
+                        <div class="price_item">
+                            <b id="unitprice">成交：@(string.IsNullOrEmpty(Model.DealTime) ? "未成交" : Model.DealTime)</b>
+                        </div>
+
+                    </dt>
+                    @*<dt style="position: relative; background: url(/images/esf/icon-title-more.png) no-repeat right center; background-size: auto 16px;">
+
+                            <div class="price_item">
+                                <b id="unitprice">结佣：@(string.IsNullOrEmpty(Model.CommissionTime) ? "未结佣" : Model.CommissionTime)</b>
+                            </div>
+
+                        </dt>*@
+                </dl>
+            </div>
+
+
+            <div id="j-seek-history"></div>
+        </div>
+
+    </div>
+
+    <nav class="nav-bar">
+        <a class="" href="/">首页<b class="iconfont">혈</b></a>
+
+        <a class="" href="/esf/Me">我的<b class="iconfont">혂</b></a>
+    </nav>
+
+    @*<nav class="nav-bar"> <a href="/esf/Delegate">发布房源<b class="iconfont">혒</b></a> <a class="active" href="/esf/DelegateMng">房源管理<b class="iconfont">혇</b></a> <a href="/esf/Me">我的<b class="iconfont">혂</b></a> </nav>*@
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿@charset "utf-8";
+/*
+* @Author:      penghg	
+* @Update:      2014.5.04
+* @Update by:   penghg
+* @overview:    修改密码
+*/
+.modifyPass-content {
+	width:932px;
+	margin:20px auto 0px auto;
+	font-size:14px
+}
+.modifyPass-content li {
+	height:55px;
+	line-height:50px
+}
+.modifyPass-content label {
+	display:inline-block;
+	width:80px;
+	text-align:right
+}
+.modifyPass-input {
+	width:250px;
+	height:32px;
+	border:1px solid #6fb45a;
+	font-size:16px;
+	margin:-4px 2px 0 2px
+}
+.modifyPass-btn {
+	width:752px;
+	margin:0px auto
+}
+.modifyPass-btn .btn_g {
+	background:#44b549;
+	width:112px;
+	height:32px;
+	line-height:32px;
+	font-size:14px;
+	font-family:'微软雅黑';
+	margin-right:5px
+}
+@media (max-width:1024px) {
+.modifyPass-content {
+	width:750px;
+	margin:20px auto 0px auto;
+	font-size:14px
+}
+.modifyPass-btn {
+	width:572px;
+	margin:0px auto
+}	
+}

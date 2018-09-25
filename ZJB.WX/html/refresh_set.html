@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>刷新设置</title>
+<link href="/Css/basic.css" rel="stylesheet" />
+<link href="/Css/refresh.css" rel="stylesheet" />
+<link href="/Css/fanye.css" rel="stylesheet" />
+</head>
+
+<body>
+<!--一键刷新 end-->
+<div id="set_plan_win">
+  <div class="plan_content plan_content_function" style="width:860px">
+    <div class="msg_box margins">
+      <div class="f_l"> 建议： </div>
+      <div class="f_l"> 网民关注较多的高峰平均出现在上午10:00,下午 15:00-16:00,晚上20:00-21:00，您只需选择最早和最晚的刷新时间系统会自动根据7日网民的关注热点时间智能的为您安排刷新资源。 </div>
+      <div class="block"></div>
+    </div>
+    <div class="step_2 clearfix">
+		<div class="stp_1 float-l">
+        	<span class="stp_item">开始时间：</span>
+        	<select name="start_house" id="start_house" style="width:40px">
+            	<option value="8">8</option>
+            </select>
+            <span class="maohao">:</span>
+            <select name="start_minute" id="start_minute" style="width:40px">
+            	<option value="0">00</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="stp_1 float-l">
+        	<span class="stp_item">结束时间：</span>
+        	<select name="end_house" id="end_house" style="width:40px">
+            	<option value="8">8</option>
+            </select>
+            <span class="maohao">:</span>
+            <select name="end_minute" id="end_minute" style="width:40px">
+            	<option value="0">00</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="stp_1 float-l">
+        	<span class="stp_item">刷新模式：</span>
+        	<select name="refresh_mode" id="refresh_mode" style="width:50px">
+            	<option value="出售">出售</option>
+                <option value="出租">出租</option>
+            </select>
+        </div>
+        <div class="stp_1 float-l">
+        	<span class="stp_item">刷新间隔：</span>
+        	<select name="refresh_jiange" id="refresh_jiange" style="width:35px">
+            	<option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+            <span class="maohao">分钟</span>
+        </div>
+        <div class="stp_1 float-l">
+        	<span class="stp_item">刷新条数：</span>
+        	<select name="refresh_num" id="refresh_num" style="width:35px">
+            	<option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+        <div class="float-l">
+        	<input type="button" name="tianjia" id="tianjia" value="添加" class="btn_o rfbtn" />
+            <input type="reset" name="reset" id="reset" value="重置" class="btn_o btn_gray" />
+        </div>
+     </div>
+    <div class="saleManager-bottom" style="margin:30px 10px 10px">
+      <div class="qx">
+        <input type="checkbox" id="saleManager-all"><label for="saleManager-all">全选</label>
+      </div>
+      <div class="qx">
+        <input type="checkbox" id="saleManager-fan"><label for="saleManager-fan">反选</label>
+      </div>
+      <div>
+        <div id="buttonDiv0" class="btns float-l">
+          <input id="saleManager_push"  type="button" class="btn_o" value="编辑">
+          <input id="saleManager_reservePush" type="button" class="btn_o" value="删除">
+          <input type="button" class="btn_o" value="推荐时段一键添加" id="set_tags" style="width:140px">
+        </div>
+      </div>
+      <div class="float-r">
+        <div id="saleManager-fanye" class="commom-fanye jPaginate" style="padding-left: 64px;">
+          <div class="jPag-control-back"><a class="jPag-first" style="color: rgb(80, 182, 63); background-color: rgb(255, 255, 255);">首页</a><span class="jPag-sprevious">«</span></div>
+          <div style="overflow: hidden; width: 38px;">
+            <ul class="jPag-pages" style="width: 36px;">
+              <li><span class="jPag-current" style="color: rgb(255, 255, 255); background-color: rgb(80, 182, 63);">1</span></li>
+              <li><a style="color: rgb(80, 182, 63); background-color: rgb(255, 255, 255);">2</a></li>
+            </ul>
+          </div>
+          <div class="jPag-control-front" style="left: 106px;"><span class="jPag-snext">»</span><a class="jPag-last" style="color: rgb(80, 182, 63); background-color: rgb(255, 255, 255);">尾页</a></div>
+        </div>
+      </div>
+    </div>
+    <table class="h_list" width="100%" cellspacing="0" cellpadding="0" style="margin:0px 10px 20px;width:840px">
+        <thead>
+            <tr>
+                <td>编号</td>
+                <td>开始时间</td>
+                <td>结束时间</td>
+                <td>刷新模式</td>
+                <td>刷新间隔</td>
+                <td>刷新条数</td>
+            </tr>
+        </thead>
+        <tbody id="houseTable">
+        	<tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+           <tr>
+            	<td><input class="saleManager-state-checkbox" type="checkbox" name="buildCheck" value="1492" id="bid1492" style="margin:0px"></td>
+                <td>8:30</td>
+                <td>11:30</td>
+                <td>出售</td>
+                <td>30</td>
+                <td>3</td>
+           </tr>
+        </tbody>
+	</table>
+  </div>
+</div>
+<!--一键刷新 end-->
+</body>
+</html>
